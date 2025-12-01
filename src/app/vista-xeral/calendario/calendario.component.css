@@ -1,0 +1,198 @@
+.contenido {
+    background-color: #7b7b7b;
+    /* Color de fondo gris */
+    color: #ffffff;
+    /* Color de texto blanco */
+
+    /* Elimina los márgenes por defecto */
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    /* Para que cubra toda la pantalla */
+}
+
+/* Estilo para los enlaces */
+a {
+    color: white;
+    /* Color de los enlaces en blanco */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+/* Estilo para el mapa de navegación */
+#mapa_navegacion {
+    font-family: Arial, Helvetica, sans-serif;
+    /* Fuente para el texto */
+    font-size: 15px;
+    /* Tamaño de fuente */
+    margin: 10px 10px;
+    /* Márgenes */
+    height: 20px;
+    /* Altura */
+    padding: 10px;
+    /* Relleno */
+}
+
+/* Efecto al pasar el ratón sobre los enlaces dentro de #mapa_navegacion */
+#mapa_navegacion>a:hover {
+    opacity: 0.6;
+    /* Reduce la opacidad al pasar el ratón */
+}
+
+/* Estilo para el calendario */
+#calendario {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Estilo para los datos generales */
+.datos {
+    background-color: #1d1d1d;
+    /* Fondo gris oscuro */
+    margin: 70px 70px 70px;
+    /* Márgenes */
+    box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
+    /* Sombra con color azul */
+    padding: 5px;
+    /* Relleno */
+}
+
+/* Estilo para la información del calendario */
+.calendario_info {
+    text-align: center;
+    /* Centra el texto */
+    list-style-position: inside;
+    /* Posiciona los puntos de la lista dentro del contenedor */
+    margin-bottom: 60px;
+    /* Márgen inferior */
+}
+
+/* Caja principal con fondo degradado azul oscuro, borde y sombra luminosa */
+.astro-box {
+    background: linear-gradient(135deg, #0b1a3d, #122c5c);
+    /* Degradado diagonal azul oscuro */
+    border: 1px solid #2a4d8f;
+    /* Borde azul */
+    box-shadow: 0 0 20px 4px rgba(30, 80, 150, 0.7);
+    /* Sombra azul luminosa alrededor */
+    padding: 2rem;
+    /* Espacio interno */
+    border-radius: 8px;
+    /* Bordes redondeados */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Tipografía legible y moderna */
+}
+
+/* Título principal dentro de astro-box con sombra y color claro azulado */
+.astro-box h1.title {
+    text-shadow: 0 0 8px #6ea0ff;
+    /* Sombra luminosa azul alrededor del texto */
+    color: #c1d9ff;
+    /* Color texto azul muy claro */
+    font-weight: 700;
+    /* Negrita */
+}
+
+/* Elementos de lista de eventos con fondo, borde lateral y sombra */
+.evento-item {
+    background-color: #153563;
+    /* Fondo azul oscuro */
+    color: #d0dff9;
+    /* Texto azul claro */
+    border-left: 4px solid #4a7ed1;
+    /* Borde vertical izquierdo más claro */
+    margin-bottom: 1rem;
+    /* Separación inferior entre elementos */
+    padding: 1rem;
+    /* Espacio interno */
+    list-style: none;
+    /* Sin viñetas */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    /* Animación suave en hover */
+    border-radius: 4px;
+    /* Bordes ligeramente redondeados */
+    box-shadow: 0 1px 3px rgba(20, 50, 90, 0.5);
+    /* Sombra sutil para dar profundidad */
+
+    display: flex;
+    /* Layout flexible */
+    align-items: center;
+    /* Centrar verticalmente */
+    justify-content: flex-start;
+    /* Alinear al inicio horizontalmente */
+    gap: 1rem;
+    /* Espacio entre elementos hijos (nombre y fecha) */
+}
+
+/* Efecto hover para cambiar fondo y color del borde lateral */
+.evento-item:hover {
+    background-color: #1f497d;
+    /* Fondo azul más claro */
+    border-left-color: #9abff9;
+    /* Borde lateral azul muy claro */
+    cursor: pointer;
+    /* Cursor de mano para indicar clicable */
+}
+
+/* Texto en negrita para el nombre dentro de evento, sin reducción ni salto de línea */
+.evento-item strong {
+    flex-shrink: 0;
+    /* Evita que el texto se reduzca en tamaño */
+    font-weight: 600;
+    /* Negrita semi fuerte */
+    white-space: nowrap;
+    /* Sin salto de línea */
+}
+
+/* Estilo para la fecha dentro del evento: gris claro, tamaño pequeño, sin división en líneas */
+.evento-item span.has-text-grey-light {
+    color: #a0b9d8 !important;
+    /* Color gris claro con prioridad */
+    flex-shrink: 0;
+    /* No se reduce */
+    white-space: nowrap;
+    /* Sin salto de línea */
+    font-size: 0.9rem;
+    /* Tamaño de fuente algo menor */
+    opacity: 0.8;
+    /* Ligeramente transparente */
+}
+
+/* Clase general para texto gris claro */
+.has-text-grey-light {
+    color: #a0b9d8 !important;
+    /* Gris claro con prioridad */
+}
+
+/* Mensaje que aparece cuando no hay eventos, con fondo oscuro, borde punteado y sombra tenue */
+.mensaje-eventos-vacio {
+    font-size: 1.1rem;
+    /* Tamaño de fuente ligeramente mayor */
+    padding: 1.25rem;
+    /* Espacio interno */
+    background-color: #121222;
+    /* Fondo muy oscuro */
+    border: 1px dashed #444476;
+    /* Borde punteado azul oscuro */
+    border-radius: 8px;
+    /* Bordes redondeados */
+    margin-top: 2rem;
+    /* Margen superior */
+    margin-bottom: 2rem;
+    /* Margen inferior */
+    box-shadow: 0 0 10px rgba(120, 120, 255, 0.08);
+    /* Sombra azul muy suave */
+}
+
+
+/* Estilo para el calendario de noviembre */
+#calendario_noviembre {
+    margin: 50px 0 40px 0;
+    /* Márgenes */
+    border-radius: 15px;
+    /* Bordes redondeados */
+}

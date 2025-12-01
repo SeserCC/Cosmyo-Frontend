@@ -1,0 +1,61 @@
+/* Estilo principal de la barra de navegación: fondo oscuro y borde inferior */
+.navbar {
+    background-color: #1a1a1a;
+    /* Color de fondo oscuro */
+    border-bottom: 2px solid #333;
+    /* Borde inferior gris oscuro */
+}
+
+/* Estilo de los enlaces y elementos de la barra: color gris claro con !important para prioridad */
+.navbar-item,
+.navbar-link {
+    color: #ddd !important;
+    /* Color de texto gris claro */
+}
+
+/* Efecto hover para los items y enlaces: fondo semitransparente claro y bordes redondeados */
+.navbar-item:hover,
+.navbar-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Fondo blanco translúcido al pasar el cursor */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Estilo del dropdown de la barra: fondo gris oscuro, bordes redondeados y ocultar desbordes */
+.navbar-dropdown {
+    background-color: #242424;
+    /* Fondo ligeramente más claro que la barra */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    overflow: hidden;
+    /* Ocultar cualquier contenido que sobresalga */
+}
+
+/* Efecto hover para los items dentro del dropdown: fondo más visible */
+.navbar-dropdown .navbar-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Fondo blanco translúcido más marcado */
+}
+
+/* Espaciado a la derecha para los items alineados al final de la barra */
+.navbar-end .navbar-item {
+    padding-right: 20px;
+    /* Margen derecho para separar elementos */
+}
+
+/* Contenedor del icono de usuario: flex para centrar verticalmente */
+.user-icon {
+    display: flex;
+    /* Mostrar elementos en línea y flexibles */
+    align-items: center;
+    /* Centrar verticalmente los elementos */
+}
+
+/* Estilo del icono dentro del contenedor de usuario: tamaño y margen derecho */
+.user-icon i {
+    font-size: 20px;
+    /* Tamaño del icono */
+    margin-right: 8px;
+    /* Espacio a la derecha del icono */
+}

@@ -1,0 +1,252 @@
+a {
+    color: white;
+    /* Color de los enlaces blanco */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+body{
+ font-family: "Roboto";
+}
+
+/* Estilo general para el cuerpo de la página */
+.contenido {
+    background-image: url('/media/img/nebulosa_background.jpg');
+    /* Imagen de fondo de la nebulosa */
+    background-size: cover;
+    /* Hace que la imagen de fondo cubra todo el área visible */
+    background-attachment: fixed;
+    /* Hace que el fondo se quede fijo al desplazarse */
+    background-blend-mode: overlay;
+    /* Superpone la imagen de fondo con el color */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Oscurece la imagen de fondo para no robar protagonismo */
+    color: #ffffff;
+    /* Color del texto blanco */
+    margin: 0px;
+    /* Elimina márgenes por defecto */
+}
+
+/* Estilo para el título dentro de .titulo_texto */
+.titulo_texto>h1 {
+    text-align: center;
+    /* Centra el texto */
+    font-size: 50px;
+    /* Tamaño de fuente grande */
+    text-decoration: underline;
+    /* Subraya el título */
+
+    /* Fuente sans-serif */
+}
+
+/* Estilo para las cuentas, centrado */
+.cuentas {
+    margin-top: 50px;
+    /* Márgen superior */
+    font-size: 25px;
+    /* Tamaño de fuente */
+    text-align: center;
+    /* Centra el texto */
+    align-items: center;
+    /* Centra los elementos */
+}
+
+/* Estilo para los botones */
+.acceder {
+    font-size: 25px;
+    /* Tamaño de fuente */
+    background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
+    /* Fondo con gradiente */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    /* Aparece como puntero al pasar el ratón */
+    padding: 15px;
+}
+
+/* Estilo al pasar el ratón sobre el botón */
+.acceder:hover {
+    background: linear-gradient(45deg, #022c63, #12479b, #2d65b4);
+    /* Cambia el gradiente del botón */
+}
+
+/* Estilo para los párrafos dentro de .titulo_texto */
+.titulo_texto>p {
+    text-align: center;
+    /* Centra el texto */
+    font-size: 30px;
+    /* Tamaño de fuente */
+    /* Fuente sans-serif */
+}
+
+/* Estilo para el enlace de registro */
+#registrarse {
+    padding: 10px;
+    /* Relleno alrededor del enlace */
+}
+
+/* Estilo para los enlaces */
+a {
+    color: white;
+    /* Color de los enlaces blanco */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+/* Estilo para los párrafos dentro de #calendario_enlace */
+#calendario_enlace p {
+    font-size: 30px;
+    /* Tamaño de fuente grande */
+}
+
+/* Estilo para los enlaces dentro de #cabecera_enlaces al pasar el ratón */
+#cabecera_enlaces>a:hover {
+    color: #286bc2;
+    /* Cambia el color a azul al pasar el ratón */
+}
+
+/* Estilo para la sección de información */
+.informacion {
+    background-color: black;
+    /* Fondo negro */
+    height: 1350px;
+    /* Altura grande para la sección */
+}
+
+/* Estilo para el contenedor de calendario */
+#calendario_enlace {
+    margin-top: 200px;
+    /* Márgen superior */
+}
+
+/* Estilo para las imágenes con bordes redondeados y sombra */
+#iglesia,
+#nebulosa {
+    border-radius: 15px;
+    /* Bordes redondeados */
+    box-shadow: 0 4px 15px rgb(13, 69, 159, 0.7);
+    /* Sombra azul */
+}
+
+/* Estilo para el título de las imágenes */
+.imagenes_titulo {
+    grid-template-columns: repeat(2, 1fr);
+    /* Define 2 columnas */
+    grid-template-rows: 1fr;
+    /* 1 fila */
+    grid-column-gap: 400px;
+    /* Espaciado grande entre las columnas */
+    margin-top: 120px;
+    /* Márgen superior */
+    display: flex;
+    /* Usa flexbox */
+    text-align: center;
+    /* Centra el texto */
+    justify-content: center;
+    /* Centra los elementos */
+    font-size: 30px;
+    /* Tamaño de fuente */
+}
+
+/* Estilo para el calendario */
+.calendario {
+    display: flex;
+    /* Usa flexbox */
+    text-align: center;
+    /* Centra el texto */
+    flex-direction: column;
+    /* Organiza los elementos en columnas */
+    margin-bottom: 170px;
+    /* Márgen inferior */
+    margin-top: 200px;
+    /* Márgen superior */
+}
+
+/* Estilo para los planes de pago */
+.planes_pago {
+    display: flex;
+    /* Usa flexbox */
+    flex-direction: row;
+    /* Organiza los elementos en fila */
+    column-gap: 170px;
+    /* Espaciado entre las columnas */
+    text-align: center;
+    /* Centra el texto */
+    justify-content: center;
+    /* Centra los elementos */
+    margin: 0 30px 0 30px;
+    /* Márgenes izquierdo y derecho */
+    border-radius: 50px;
+    /* Bordes redondeados */
+    background-color: rgb(47, 46, 46);
+    /* Fondo gris oscuro */
+}
+
+/* Estilo para el plan Premium */
+.premium {
+    margin-bottom: 120px;
+    /* Márgen inferior */
+    color: gold;
+    /* Color dorado para el texto */
+}
+
+/* Estilo para el plan Lite */
+.lite {
+    margin-bottom: 120px;
+    /* Márgen inferior */
+
+    /* Fuente serif */
+}
+
+/* Estilo para los párrafos dentro de los planes de pago */
+.lite>p,
+.premium>p {
+    font-size: 50px;
+    /* Tamaño de fuente grande */
+}
+
+/* Estilo para las listas dentro de los planes de pago */
+.premium_lista,
+.lite_lista {
+    background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
+    /* Gradiente de fondo */
+    border-style: solid;
+    /* Bordes sólidos */
+    border-radius: 25px;
+    /* Bordes redondeados */
+    padding-right: 15px;
+    /* Relleno derecho */
+    font-size: 17px;
+    /* Tamaño de fuente pequeño */
+}
+
+/* Estilo para la lista Premium */
+.premium_lista {
+    background: linear-gradient(45deg, #6b2828, #a84242, #d33c3c);
+    /* Gradiente rojo para el plan premium */
+}
+
+/* Estilo para los contenedores de comunidad y fotos/videos */
+#comunidad_p,
+#fotos_videos_p {
+    background: linear-gradient(45deg, #033a82, #0d459f, #2363bc);
+    /* Gradiente azul */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    padding: 7px;
+    /* Relleno */
+}
+
+/* Estilo para la sección de usuarios de comunidad */
+.comunidad_usuarios {
+    margin-left: 40px;
+    /* Márgen izquierdo */
+}
+
+/* Estilo para los contenedores de fotos y videos */
+.contenedor_fotos_videos {
+    justify-content: center;
+    /* Centra los elementos */
+    margin-left: 60px;
+    /* Márgen izquierdo */
+}

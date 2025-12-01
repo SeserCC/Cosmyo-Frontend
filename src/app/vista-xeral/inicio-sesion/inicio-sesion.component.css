@@ -1,0 +1,228 @@
+/* Estilo general para el cuerpo de la página */
+.contenido {
+    padding: 10px;
+    background-color: #7b7b7b;
+    /* Color de fondo gris */
+    color: #ffffff;
+    /* Color de texto blanco */
+    margin: 0px;
+    /* Elimina los márgenes por defecto */
+    height: 100%;
+    width: 100%;
+    padding: 0px 0px 10px 0px;
+}
+
+/* Estilo para los enlaces */
+a {
+    color: white;
+    /* Color blanco para los enlaces */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+/* Estilo para la cabecera */
+.cabecera {
+    display: flex;
+    /* Usa flexbox para distribuir los elementos */
+    align-items: center;
+    /* Centra los elementos verticalmente */
+    background-color: black;
+    /* Fondo negro */
+    height: 80px;
+    /* Altura de la cabecera */
+    font-size: 20px;
+    /* Tamaño de la fuente */
+}
+
+/* Estilo para la sección de secciones (por ejemplo, menús o grupos de contenido) */
+.secciones {
+    display: flex;
+    /* Usa flexbox para organizar los elementos */
+    gap: 10px;
+    /* Espacio de 10px entre los elementos */
+}
+
+/* Estilo para los enlaces dentro de #cabecera_enlaces al pasar el ratón */
+#cabecera_enlaces>a:hover {
+    color: #286bc2;
+    /* Cambia el color del enlace a azul cuando se pasa el ratón */
+}
+
+/* Estilo para el contenedor de inicio de sesión */
+#inicio_sesion {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno de 5px */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
+#mapa_navegacion>a:hover {
+    opacity: 0.6;
+    /* Baja la opacidad de los enlaces cuando se pasa el ratón */
+}
+
+/* Alinea el último elemento de la cabecera hacia la derecha */
+.cabecera> :last-child {
+    margin-left: auto;
+    /* Empuja el último elemento hacia la derecha */
+}
+
+/* Estilo para los enlaces dentro de #cabecera_enlaces */
+#cabecera_enlaces {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /*Tipo de fuente de la cabecera de enlaces*/
+    margin-top: 15px;
+    /* Márgen superior de 15px */
+}
+
+/* Estilo para el icono de usuario (fuente Font Awesome) */
+.fa-solid.fa-user {
+    margin-top: 10px;
+    /* Márgen superior de 10px */
+    margin-right: 15px;
+    /* Márgen derecho de 15px */
+    font-size: 25px;
+    /* Tamaño grande para el icono */
+}
+
+/* Estilo para el contenedor de datos */
+.datos {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+    /* Relleno de 5px */
+    background-color: #1d1d1d;
+    /* Fondo gris oscuro */
+    margin: 70px 70px;
+    /* Márgenes alrededor del contenedor */
+    box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
+    /* Sombra azul alrededor del contenedor */
+}
+
+/* Estilo para el icono de flecha (Font Awesome) */
+.fa-solid.fa-arrow-left {
+    margin: 5px 0 0 15px;
+    /* Márgenes alrededor del icono */
+    font-size: 20px;
+    /* Tamaño del icono */
+}
+
+/* Estilo para el contenedor de usuario y contraseña */
+.usuario_contrasena {
+    max-width: 60%;
+    height: auto;
+    display: flex;
+    /* Usa flexbox */
+    flex-direction: column;
+    /* Organiza los elementos en columna */
+    row-gap: 15px;
+    /* Espacio de 10px entre las filas */
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    /* Fuente sans-serif */
+    /* Ancho del contenedor */
+    margin-left: 50px;
+    /* Márgen izquierdo de 50px */
+}
+
+/* Estilo para los títulos dentro de .usuario_contrasena */
+.usuario_contrasena>h1 {
+    font-size: 40px;
+    /* Tamaño grande para el título */
+    margin: 10px 0;
+    /* Márgenes alrededor del título */
+}
+
+/* Estilo para los inputs de tipo texto dentro de .usuario_contrasena */
+.usuario_contrasena input,
+select {
+    height: 28px;
+    /* Altura de 28px para los campos de texto */
+    border-radius: 20px;
+    /* Bordes redondeados */
+    border-style: none;
+    /* Elimina el borde del campo de texto */
+    padding-left: 10px;
+    /* Relleno a la izquierda de 10px */
+    background-color: #e0e0e0;
+    /* Fondo gris claro */
+}
+
+
+
+/* Estilo para el contenedor del captcha */
+#captcha {
+    display: grid;
+    /* Usa grid para organizar los elementos */
+    grid-template-columns: 50%;
+    /* Una sola columna de 130px */
+    grid-template-rows: repeat(2, 1fr);
+    /* Dos filas de igual tamaño */
+    row-gap: 15px;
+    /* Espacio de 15px entre las filas */
+    margin: 10px 50px;
+    /* Márgenes alrededor del contenedor */
+}
+
+#captcha_info {
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+}
+
+/* Estilo para los botones */
+button {
+    width: 30%;
+    /*Largo del boton*/
+    background: linear-gradient(to bottom, #5957ee, #0911ef);
+    /* Fondo con gradiente azul */
+    color: white;
+    /* Color blanco para el texto */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    height: 35px;
+    /* Altura del botón */
+    cursor: pointer;
+    /* Cambia el cursor a puntero */
+    border: none;
+    /* Elimina el borde del botón */
+    margin-bottom: 15px;
+}
+
+/* Estilo para iconos o elementos pequeños con tamaño fijo */
+.size-6 {
+    margin-bottom: -2px;
+    /* Ajuste fino para alinear verticalmente */
+    width: 17px;
+    /* Ancho fijo del elemento */
+    height: 17px;
+    /* Altura fija del elemento */
+}
+
+
+/* Estilo para el botón al pasar el ratón */
+button:hover {
+    background: linear-gradient(to top, #1e1bd6, #4d47c6);
+    /* Cambia el gradiente al pasar el ratón */
+}
+
+/* Estilo para mensajes de error de validación o fallos del formulario */
+.mensaje-error {
+    color: red;
+    /* Color rojo para indicar error de forma clara */
+    font-weight: bold;
+    /* Texto en negrita para mayor visibilidad */
+    font-size: 14px;
+    /* Tamaño de fuente moderado para no sobresalir demasiado */
+    margin-top: 5px;
+    /* Espacio superior respecto al elemento anterior */
+}
+
+/* Estilo general para campos de entrada y selección */
+input,
+select {
+    color: black;
+    /* Forzamos el color del texto a negro para mejor contraste */
+}

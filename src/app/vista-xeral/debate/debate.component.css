@@ -1,0 +1,268 @@
+/* Estilo general para el cuerpo de la página */
+.contenido {
+    background-color: #7b7b7b;
+    /* Color de fondo gris */
+    color: #ffffff;
+    /* Color del texto blanco */
+    margin: 0px;
+    /* Elimina los márgenes por defecto */
+}
+
+/* Estilo para los enlaces */
+a {
+    color: white;
+    /* Color de los enlaces en blanco */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+/* Efecto al pasar el ratón sobre los enlaces dentro de #cabecera_enlaces */
+#cabecera_enlaces>a:hover {
+    color: #1e67c7;
+    /* Cambia el color de los enlaces a azul claro al pasar el ratón */
+}
+
+/* Estilo para la cabecera */
+.cabecera {
+    position: fixed;
+    /* Fija la cabecera en la parte superior de la página */
+    width: 100%;
+    /* Hace que la cabecera ocupe todo el ancho */
+    margin-top: -100px;
+    /* Ajusta la posición vertical de la cabecera */
+    display: flex;
+    /* Usa flexbox para distribuir los elementos */
+    align-items: center;
+    /* Centra los elementos verticalmente */
+    background-color: black;
+    /* Fondo negro */
+    height: 70px;
+    /* Altura de la cabecera */
+    font-size: 20px;
+    /* Tamaño de la fuente */
+}
+
+/* Estilo para el icono de casa */
+.fa-solid.fa-house {
+    font-size: 14px;
+    /* Tamaño pequeño para el icono */
+}
+
+/* Estilo para las secciones dentro de la cabecera */
+.secciones {
+    display: flex;
+    /* Usa flexbox para distribuir los elementos */
+    gap: 10px;
+    /* Espaciado de 10px entre los elementos */
+}
+
+/* Alinea el último elemento de .cabecera a la derecha */
+.cabecera> :last-child {
+    margin-left: auto;
+    /* Empuja el último elemento hacia la derecha */
+}
+
+/* Estilo para los enlaces dentro de #cabecera_enlaces */
+#cabecera_enlaces {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /*Tipo de fuente de la cabecera de enlaces*/
+    margin-top: 15px;
+    /* Añade margen superior */
+}
+
+/* Estilo para el icono de usuario */
+.fa-solid.fa-user {
+    font-size: 25px;
+    /* Tamaño del icono */
+    margin-top: 5px;
+    /* Márgen superior */
+    margin-right: 15px;
+    /* Márgen derecho */
+}
+
+/* Estilo para el icono de flecha hacia la izquierda */
+.fa-solid.fa-arrow-left {
+    margin: 10px 0 0 15px;
+    /* Márgenes personalizados */
+    font-size: 20px;
+    /* Tamaño del icono */
+}
+
+/* Estilo para los bloques de datos */
+.datos {
+    background-color: #1d1d1d;
+    /* Fondo gris oscuro */
+    margin: 100px;
+    /* Márgenes alrededor del bloque */
+    box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
+    /* Sombra azul */
+    padding: 5px;
+    /* Relleno */
+}
+
+/* Estilo para los divs dentro de .datos */
+
+
+/* Estilo para el último div dentro de .datos */
+.datos>div:last-child {
+    margin-bottom: 50px;
+    /* Márgen inferior más grande */
+}
+
+/* Estilo para el mapa de navegación */
+#mapa_navegacion {
+    font-family: Arial, Helvetica, sans-serif;
+    /* Fuente sans-serif */
+    font-size: 15px;
+    /* Tamaño de fuente */
+    margin: 10px 10px;
+    /* Márgenes */
+    height: 30px;
+    /* Altura */
+
+}
+
+/* Efecto al pasar el ratón sobre los enlaces dentro de #mapa_navegacion */
+#mapa_navegacion>a:hover {
+    opacity: 0.6;
+    /* Reduce la opacidad al pasar el ratón */
+}
+
+/* Estilo para el bloque de comunidades */
+#comunidades {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Efecto para el último enlace dentro de #mapa_navegacion */
+#mapa_navegacion>a:last-child:hover {
+    opacity: 1;
+    /* Vuelve a la opacidad normal al pasar el ratón */
+}
+
+/* Estilo para los primeros párrafos dentro de los bloques de usuario */
+#usuario1_info>p:first-child {
+    font-size: 20px;
+    /* Tamaño de fuente grande para los primeros párrafos */
+}
+
+.size-6 {
+    margin-bottom: -2px;
+    width: 17px;
+    height: 17px;
+}
+
+/* Estilo para los contenedores de información de usuario */
+#usuario1_info {
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+    /* Fuente sans-serif */
+    padding-left: 20px;
+    /* Relleno izquierdo */
+    display: flex;
+    /* Usa flexbox */
+    column-gap: 5px;
+    /* Espaciado entre columnas */
+    flex-direction: row;
+    /* Dirección de los elementos en fila */
+    align-items: baseline;
+    /* Alinea los elementos en la línea base */
+    border-top-left-radius: 20px;
+    /* Bordes redondeados arriba a la izquierda */
+    border-top-right-radius: 20px;
+    /* Bordes redondeados arriba a la derecha */
+    margin-bottom: 0px;
+    /* Elimina margen inferior */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+    /* Sombra oscura */
+}
+
+/* Estilo para los bloques de texto de los usuarios */
+#usuario1_texto {
+    display: flex;
+    /* Usa flexbox */
+    flex-direction: column;
+    /* Dirección de los elementos en columna */
+    padding: 10px 20px;
+    /* Relleno interno */
+    background-color: #292929;
+    /* Fondo gris oscuro */
+    border-bottom-left-radius: 20px;
+    /* Bordes redondeados abajo a la izquierda */
+    border-bottom-right-radius: 20px;
+    /* Bordes redondeados abajo a la derecha */
+    border-style: none;
+    /* Sin borde */
+    margin-top: 0px;
+    /* Elimina margen superior */
+    padding-top: 10px;
+    /* Relleno superior */
+    text-align: justify;
+    /* Justifica el texto */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+    /* Sombra oscura */
+}
+
+/* Estilo para los párrafos dentro de los bloques de texto */
+#usuario1_info p {
+    font-size: 11px;
+    /* Tamaño pequeño para los párrafos */
+}
+
+/* Estilo para el mensaje que indica que no hay comentarios disponibles */
+.mensaje-comentarios-vacio {
+    font-size: 1.05rem;
+    /* Tamaño de fuente ligeramente más grande para mejor legibilidad */
+    padding: 1rem;
+    /* Espacio interno para separar el texto de los bordes */
+    background-color: #212133;
+    /* Fondo oscuro azulado para destacar el mensaje */
+    border: 1px solid #3a3a5e;
+    /* Borde sólido con tono azul oscuro */
+    border-radius: 8px;
+    /* Bordes redondeados para un diseño suave */
+    margin-top: 1.5rem;
+    /* Margen superior para separar de elementos previos */
+    margin-bottom: 1.5rem;
+    /* Margen inferior para separar de elementos siguientes */
+    box-shadow: 0 0 8px rgba(120, 120, 255, 0.1);
+    /* Sombra azul muy sutil para dar un efecto leve de profundidad */
+}
+
+
+/* Estilo para los botones de usuario */
+#boton_usuario1 {
+    border: none;
+    /* Sin borde */
+    background-color: #1d1d1d;
+    /* Fondo oscuro */
+    font-size: 12px;
+    /* Tamaño pequeño de la fuente */
+    color: #ffffff;
+    /* Texto blanco */
+    border-radius: 4px;
+    /* Bordes redondeados */
+    width: 70px;
+    /* Ancho del botón */
+    height: 25px;
+    /* Alto del botón */
+    background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
+    /* Fondo degradado azul */
+    cursor: pointer;
+    /* Cambia el cursor a puntero */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    /* Sombra */
+    margin-bottom: 10px;
+    /* Márgen inferior */
+    margin-top: 20px;
+    /* Márgen superior */
+}
+
+/* Efecto de hover para los botones de usuario */
+#boton_usuario1:hover {
+    background: linear-gradient(45deg, #032e67, #104293, #2d68ba);
+    /* Fondo más oscuro al pasar el ratón */
+}

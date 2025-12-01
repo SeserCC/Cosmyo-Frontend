@@ -1,0 +1,46 @@
+body {
+    background: radial-gradient(circle at top, #0b0c1a, #050511);
+    color: #e0e0e0;
+    font-family: 'Figtree', sans-serif;
+  }
+  
+  .astro-card {
+    background-color: rgba(8, 11, 23, 0.95);
+    border: 1px solid #00cfff;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+    padding: 2rem;
+  }
+
+  .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6); /* blanco tenue */
+    opacity: 1;
+  }
+  
+  .astro-btn {
+    background-color: #00cfff;
+    color: #0b0c1a;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+  }
+  
+  .astro-btn:hover {
+    background-color: #009ecf;
+  }
+  
+  a {
+    color: #77ddff;
+  }
+  
+  a:hover {
+    color: #00cfff;
+  }
+  
+  .mensaje-error {
+    font-size: 0.85rem;
+    color: #ff4d6d;
+    margin-top: 4px;
+  }
+  

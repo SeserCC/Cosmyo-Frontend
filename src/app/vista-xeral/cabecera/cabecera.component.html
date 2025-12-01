@@ -1,0 +1,58 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" [routerLink]="['/portada']">
+            <img src="media/img/logo.png" alt="Logo" style="max-height: 50px;">
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasic">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasic" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" [routerLink]="['/portada']">Inicio</a>
+            <a class="navbar-item" [routerLink]="['/foro']">Foros</a>
+            <a class="navbar-item" [routerLink]="['/foto']">Imagenes y videos</a>
+
+            <a class="navbar-item" [routerLink]="['/calendario']">Calendario Astronómico</a>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link user-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor"
+                        style="width: 1.5em; height: 1.5em; vertical-align: middle; margin-right: 0.4em;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                    Mi Cuenta
+                </a>
+                <div class="navbar-dropdown is-right">
+                    <ng-container *ngIf="usuarioActual">
+                        <a class="navbar-item" [routerLink]="['/publicaciones', usuarioActual?.id]">Tus
+                            publicaciones</a>
+                        <a class="navbar-item" [routerLink]="['/subirArchivo']">Subir
+                            imagen</a>
+                        <ng-container *ngIf="usuarioActual.rol == 'admin' ">
+                            <a class="navbar-item" [routerLink]="['/administracion']">Administracion</a>
+                        </ng-container>
+
+                        <hr class="navbar-divider">
+                        <p class="navbar-item" [routerLink]="['/perfil', usuarioActual?.id]"> {{usuarioActual?.name}}
+                        </p>
+                        <button class=" navbar-item" (click)="cerrarSesion()">Cerrar
+                            sesion</button>
+                    </ng-container>
+                    <ng-container *ngIf="!usuarioActual">
+                        <a class="navbar-item" [routerLink]="['/']"> Iniciar sesion</a>
+                        <a class="navbar-item" [routerLink]="['/registro']"> Registrarse</a>
+                    </ng-container>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

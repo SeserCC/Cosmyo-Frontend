@@ -1,0 +1,301 @@
+/* Estilo general para el cuerpo de la página */
+.contenido {
+    background-color: #7b7b7b;
+    /* Fondo gris claro */
+    color: #ffffff;
+    /* Color del texto blanco */
+    margin: 0px;
+    /* Elimina los márgenes por defecto */
+}
+
+/* Estilo para los enlaces */
+a {
+    color: white;
+    /* Color de los enlaces en blanco */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+/* Estilo para la cabecera */
+.cabecera {
+    position: fixed;
+    /* Fija la cabecera en la parte superior */
+    width: 100%;
+    /* Hace que la cabecera ocupe todo el ancho de la página */
+    margin-top: -100px;
+    /* Ajuste para posicionar la cabecera hacia arriba */
+    display: flex;
+    /* Usa flexbox para organizar los elementos */
+    align-items: center;
+    /* Centra los elementos verticalmente */
+    background-color: black;
+    /* Fondo negro */
+    height: 70px;
+    /* Altura de la cabecera */
+    font-size: 20px;
+    /* Tamaño de la fuente */
+}
+
+/* Estilo para las secciones dentro de la cabecera */
+.secciones {
+    display: flex;
+    /* Usa flexbox para distribuir los elementos */
+    gap: 10px;
+    /* Espaciado de 10px entre los elementos */
+}
+
+/* Alinea el último elemento de .cabecera a la derecha */
+.cabecera> :last-child {
+    margin-left: auto;
+    /* Empuja el último elemento hacia la derecha */
+}
+
+/* Estilo para los enlaces dentro de #cabecera_enlaces al pasar el ratón */
+#cabecera_enlaces>a:hover {
+    color: #286bc2;
+    /* Cambia el color a un tono de azul */
+}
+
+/* Estilo para #cabecera_enlaces */
+#cabecera_enlaces {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /*Tipo de fuente de la cabecera de enlaces*/
+    margin-top: 15px;
+    /* Añade un margen superior */
+}
+
+/* Estilo para el icono de usuario */
+.fa-solid.fa-user {
+    margin-right: 15px;
+    /* Añade margen a la derecha */
+    font-size: 25px;
+    /* Tamaño grande para el icono */
+}
+
+/* Estilo para el mapa de navegación */
+#mapa_navegacion {
+    font-family: Arial, Helvetica, sans-serif;
+    /* Fuente sans-serif */
+    font-size: 15px;
+    /* Tamaño de fuente */
+    margin: 10px 10px;
+    /* Márgenes */
+    height: 20px;
+    /* Altura */
+    padding: 8px;
+    /* Relleno */
+    margin: 0px;
+    /* Elimina márgenes */
+}
+
+/* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
+#mapa_navegacion>a:hover {
+    opacity: 0.6;
+    /* Reduce la opacidad al pasar el ratón */
+}
+
+/* Estilo para el bloque de búsqueda */
+#buscar_temas {
+    display: flex;
+    /* Usa flexbox para organizar los elementos */
+    justify-content: start;
+    /* Alinea los elementos al principio */
+}
+
+/* Estilo para el bloque del foro */
+#foro {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Estilo general para los bloques de datos */
+.datos {
+    background-color: #1d1d1d;
+    /* Fondo gris oscuro */
+    margin: 100px 70px 70px;
+    /* Márgenes alrededor del bloque */
+    box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
+    /* Sombra azul */
+    padding: 5px;
+    /* Relleno */
+}
+
+/* Estilo para los divs dentro de .datos */
+.datos>div {
+    border-bottom-style: solid;
+    /* Borde inferior sólido */
+    border-top-style: solid;
+    /* Borde superior sólido */
+    border-width: 1px;
+    /* Grosor del borde */
+    border-color: blue;
+    /* Color del borde azul */
+    background-color: #3b3b3b;
+    /* Fondo gris más claro */
+    margin: 10px 10px;
+    /* Márgenes */
+}
+
+/* Estilo para los párrafos dentro de .datos */
+.datos p {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* Fuente serif */
+    font-size: 20px;
+    /* Tamaño de fuente */
+    padding-left: 15px;
+    /* Relleno a la izquierda */
+}
+
+/* Estilo para el primer div dentro de .datos */
+.datos>div:first-child {
+    display: flex;
+    /* Usa flexbox */
+    justify-content: space-between;
+    /* Espacia los elementos entre los extremos */
+    border: none;
+    /* Elimina los bordes */
+    background-color: #1d1d1d;
+    /* Fondo oscuro */
+    cursor: default;
+    /* No permite interacción con el ratón */
+    margin-bottom: 15px;
+    /* Márgen inferior */
+}
+
+/* Estilo para los enlaces dentro de los divs de datos al pasar el ratón */
+.datos>div>p>strong>a:hover {
+    color: #006eff;
+    /* Cambia el color a azul claro */
+}
+
+/* Estilo para el campo de búsqueda */
+#buscar {
+    color: white;
+    /* Texto blanco */
+    width: 300px;
+    /* Ancho */
+    background-color: #585858;
+    /* Fondo gris */
+    padding-left: 7px;
+    /* Relleno a la izquierda */
+    border-style: none;
+    /* Sin borde */
+    border-radius: 2px;
+    /* Bordes redondeados */
+    font-size: 15px;
+    /* Tamaño de fuente */
+    height: 30px;
+    /* Alto */
+}
+
+/* Estilo para el mensaje que indica que no hay foros disponibles */
+.mensaje-foros-vacio {
+    font-size: 1.1rem;
+    /* Tamaño de fuente ligeramente mayor para mejor visibilidad */
+    padding: 1.25rem;
+    /* Espacio interno para separar el texto de los bordes */
+    background-color: #1b1b2f;
+    /* Fondo oscuro con tono azul profundo */
+    border: 1px dashed #505087;
+    /* Borde punteado con color azul grisáceo para un estilo menos rígido */
+    border-radius: 8px;
+    /* Bordes redondeados para un diseño más amigable */
+    margin-top: 2rem;
+    /* Margen superior para separar del contenido anterior */
+    margin-bottom: 2rem;
+    /* Margen inferior para separar del contenido siguiente */
+    box-shadow: 0 0 10px rgba(100, 100, 255, 0.1);
+    /* Sombra azul clara que aporta profundidad sutil */
+}
+
+/* Estilo para el campo de búsqueda al estar en foco */
+#buscar:focus {
+    outline-color: #006eff;
+    /* Color del borde cuando tiene el foco */
+    outline-style: solid;
+    /* Estilo del borde */
+    box-shadow: 0 4px 10px rgba(24, 98, 235, 0.6);
+    /* Sombra azul */
+}
+
+/* Estilo para el texto de sugerencia en el campo de búsqueda */
+#buscar::placeholder {
+    color: #b8aeae;
+    /* Color gris para el placeholder */
+}
+
+/* Estilo para los botones */
+button {
+    border: none;
+    /* Sin borde */
+    background-color: #1d1d1d;
+    /* Fondo oscuro */
+    font-size: 13px;
+    /* Tamaño de la fuente */
+    color: #ffffff;
+    /* Texto blanco */
+    border-radius: 4px;
+    /* Bordes redondeados */
+    width: 120px;
+    /* Ancho */
+    height: 30px;
+    /* Alto */
+    background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
+    /* Fondo degradado azul */
+    margin-left: 10px;
+    /* Márgen izquierdo */
+    cursor: pointer;
+    /* Cambia el cursor al pasar sobre el botón */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    /* Sombra oscura */
+}
+
+/* Estilo de hover para los botones */
+button:hover {
+    background: linear-gradient(45deg, #022c63, #12479b, #2d65b4);
+    /* Fondo más oscuro al pasar el ratón */
+}
+
+/* Estilo para el pie de página */
+.pie_pagina {
+    display: grid;
+    /* Usa grid para distribuir los elementos */
+    width: 20%;
+    /* Ancho del 20% */
+    margin-left: 20px;
+    /* Márgen izquierdo */
+    grid-template-columns: 160px 160px;
+    /* Define las columnas */
+    grid-template-rows: 30px 30px;
+    /* Define las filas */
+}
+
+/* Estilo para los párrafos dentro de .pie_pagina */
+.pie_pagina>p {
+    margin-top: 5px;
+    /* Márgen superior */
+}
+
+/* Estilo para el pie de página */
+footer {
+    background-color: #2c3e50;
+    /* Fondo gris oscuro */
+}
+
+/* Estilo para el logo */
+#logo {
+    margin-left: 10px;
+    /* Márgen izquierdo */
+}
+
+/* Estilo para el logo de contacto */
+#logo_contacto {
+    margin-left: 15px;
+    /* Márgen izquierdo */
+    margin-top: 5px;
+    /* Márgen superior */
+}

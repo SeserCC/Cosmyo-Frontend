@@ -1,0 +1,63 @@
+<div class="contenido">
+    <!-- Contenedor principal -->
+    <div class="datos">
+        <!-- Mapa de navegación -->
+        <div id="mapa_navegacion">
+            <a [routerLink]="['/portada']">
+                <i class="fa-solid fa-house"></i> Inicio
+            </a>
+            /
+            <strong id="tipo_plan">Tipo de plan</strong>
+        </div>
+
+        <!-- Título principal -->
+        <h1>Escoge tu plan</h1>
+
+        <!-- Contenedor de los planes de pago -->
+        <div class="planes_pago">
+            <!-- Plan Premium -->
+            <div class="premium">
+                <!-- Título del plan -->
+                <p style="font-size: 50px; margin-bottom: 15px;">Plan premium</p>
+
+                <!-- Precio del plan -->
+                <p id="pago_premium">4.5€/mes</p>
+
+                <!-- Lista de características -->
+                <div class="premium_lista">
+                    <ul>
+                        <li>Todo lo mencionado en el plan lite</li>
+                        <li>Descargas ilimitadas de las descargas</li>
+                        <li>Mayor capacidad de almacenamiento en publicaciones</li>
+                        <li>Clasificacion por insignias</li>
+                    </ul>
+                </div>
+
+                <!-- Botón para seleccionar el plan -->
+                <button id="boton_premium"> <a [routerLink]="['/registro']">Iniciar por 4.5€ al mes</a></button>
+            </div>
+
+            <!-- Plan Lite -->
+            <div class="lite">
+                <!-- Título del plan -->
+                <p style="font-size: 50px; margin-bottom: 15px;">Plan Lite</p>
+
+                <!-- Precio del plan -->
+                <p id="pago_lite">GRATUITO</p>
+
+                <!-- Lista de características -->
+                <div class="lite_lista">
+                    <ul>
+                        <li>Funcionalidad basica</li>
+                        <li>Subir publicaciones</li>
+                        <li>Capacidad maxima de descargas de 10 imagenes</li>
+                        <li>Permiso para acceder a los foros y comentar</li>
+                    </ul>
+                </div>
+
+                <!-- Botón para seleccionar el plan -->
+                <button id="boton_lite"> <a [routerLink]="['/registro']">Iniciar <strong>Gratis</strong></a></button>
+            </div>
+        </div>
+    </div>
+</div>

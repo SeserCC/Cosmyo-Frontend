@@ -1,0 +1,312 @@
+/* Estilo general para el cuerpo de la página */
+body {
+    background-color: #7b7b7b;
+    /* Color de fondo gris */
+    color: #ffffff;
+    /* Color de texto blanco */
+    margin: 0px;
+    /* Elimina márgenes por defecto */
+}
+
+/* Estilo para los enlaces */
+a {
+    color: white;
+    /* Color blanco para los enlaces */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+/* Estilo para la cabecera de la página */
+.cabecera {
+    position: fixed;
+    /* Fija la cabecera en la parte superior de la página */
+    width: 100%;
+    /* Ancho completo */
+    margin-top: -100px;
+    /* Ajusta la posición superior */
+    display: flex;
+    /* Usa flexbox para distribuir los elementos */
+    align-items: center;
+    /* Alinea los elementos verticalmente */
+    background-color: black;
+    /* Fondo negro */
+    height: 70px;
+    /* Altura de la cabecera */
+    font-size: 20px;
+    /* Tamaño de la fuente */
+}
+
+/* Estilo para el mapa de navegación */
+#mapa_navegacion {
+    font-family: Arial, Helvetica, sans-serif;
+    /* Fuente sans-serif */
+    font-size: 15px;
+    /* Tamaño de fuente */
+    margin: 10px 10px;
+    /* Márgenes alrededor del elemento */
+    height: 20px;
+    /* Altura de 20px */
+    padding: 8px;
+    /* Relleno alrededor del texto */
+    margin: 0px;
+    /* Elimina el margen por defecto */
+}
+
+/* Estilo para el tipo de plan */
+#tipo_plan {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno de 5px */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Estilo para el enlace dentro de #mapa_navegacion al pasar el ratón */
+#mapa_navegacion>a:hover {
+    opacity: 0.6;
+    /* Baja la opacidad del enlace cuando se pasa el ratón */
+}
+
+/* Estilo para las secciones de la página */
+.secciones {
+    display: flex;
+    /* Usa flexbox para organizar los elementos */
+    gap: 10px;
+    /* Espacio de 10px entre los elementos */
+}
+
+/* Alinea el último elemento dentro de .cabecera hacia la derecha */
+.cabecera> :last-child {
+    margin-left: auto;
+    /* Empuja el último elemento hacia la derecha */
+}
+
+/* Estilo para los enlaces dentro de #cabecera_enlaces al pasar el ratón */
+#cabecera_enlaces>a:hover {
+    color: #286bc2;
+    /* Cambia el color a azul cuando se pasa el ratón */
+}
+
+/* Estilo para los enlaces dentro de la cabecera */
+#cabecera_enlaces {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /*Tipo de fuente de la cabecera de enlaces*/
+    margin-top: 15px;
+    /* Márgen superior de 15px */
+}
+
+/* Estilo para el icono de usuario */
+.fa-solid.fa-user {
+    margin-top: 10px;
+    /* Márgen superior de 10px */
+    margin-right: 15px;
+    /* Márgen derecho de 15px */
+    font-size: 25px;
+    /* Tamaño grande para el icono */
+}
+
+/* Estilo para la sección de datos */
+.datos {
+    background-color: #1d1d1d;
+    /* Fondo gris oscuro */
+    margin: 100px 90px 70px;
+    /* Márgenes alrededor del contenedor */
+    padding: 5px;
+    /* Relleno de 5px */
+    box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
+    /* Sombra azul */
+}
+
+/* Estilo para el título dentro de .datos */
+.datos h1 {
+    text-align: center;
+    /* Centra el texto */
+    font-size: 50px;
+    /* Tamaño de fuente grande */
+    margin: 33px 0 20px 0;
+    /* Márgenes alrededor del título */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* Fuente sans-serif */
+    height: 65px;
+    /* Altura del título */
+}
+
+/* Estilo para la sección de planes de pago */
+.planes_pago {
+    display: grid;
+    /* Usa grid para organizar los elementos */
+    grid-template-columns: repeat(2, 1fr);
+    /* Dos columnas de igual tamaño */
+    grid-template-rows: 1fr;
+    /* Una fila */
+    text-align: center;
+    /* Centra el texto */
+    justify-content: center;
+    /* Centra los elementos dentro del grid */
+    margin: 0 50px;
+    /* Márgenes izquierdo y derecho */
+    border-radius: 50px;
+    /* Bordes redondeados */
+}
+
+/* Estilo para el plan premium */
+.premium {
+    font-size: 17px;
+    /* Tamaño de fuente */
+    margin: 0 100px 100px 100px;
+    /* Márgenes alrededor */
+    color: #ffdf28;
+    /* Color dorado */
+    list-style-position: inside;
+    /* Coloca los íconos de lista dentro del texto */
+}
+
+/* Estilo para el plan lite */
+.lite {
+    font-size: 17px;
+    /* Tamaño de fuente */
+    margin: 0 75px 100px 100px;
+    /* Márgenes alrededor */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* Fuente serif */
+    list-style-position: inside;
+    /* Coloca los íconos de lista dentro del texto */
+}
+
+/* Estilo para el título del plan premium */
+#pago_premium {
+    font-size: 35px;
+    /* Tamaño de fuente grande */
+    margin: 15px 0 15px 0;
+    /* Márgenes superior e inferior */
+}
+
+/* Estilo para el título del plan lite */
+#pago_lite {
+    font-size: 35px;
+    /* Tamaño de fuente grande */
+    margin: 15px 0 15px 0;
+    /* Márgenes superior e inferior */
+}
+
+/* Estilo para las listas dentro de los planes de pago */
+.premium_lista,
+.lite_lista {
+    background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
+    /* Fondo con gradiente azul */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* Fuente sans-serif */
+    border-style: solid;
+    /* Bordes sólidos */
+    border-radius: 25px;
+    /* Bordes redondeados */
+    padding-right: 15px;
+    /* Relleno derecho */
+}
+
+/* Estilo para la lista Premium (fondo con gradiente rojo) */
+.premium_lista {
+    background: linear-gradient(45deg, #6b2828, #a84242, #d33c3c);
+    /* Gradiente de color rojo */
+}
+
+/* Estilo para el botón Premium */
+#boton_premium {
+    margin-top: 50px;
+    /* Márgen superior de 50px */
+    border-style: none;
+    /* Elimina el borde del botón */
+    font-size: 20px;
+    /* Tamaño de fuente */
+    color: #ffffff;
+    /* Color del texto blanco */
+    border-radius: 7px;
+    /* Bordes redondeados */
+    width: 270px;
+    /* Ancho del botón */
+    height: 50px;
+    /* Altura del botón */
+    background: linear-gradient(45deg, #6b2828, #a84242, #d33c3c);
+    /* Fondo con gradiente rojo */
+    cursor: pointer;
+    /* Muestra el cursor como puntero */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    /* Sombra del botón */
+}
+
+/* Estilo para el botón Lite */
+#boton_lite {
+    margin-top: 50px;
+    /* Márgen superior de 50px */
+    font-size: 20px;
+    /* Tamaño de fuente */
+    border-style: none;
+    /* Elimina el borde */
+    color: white;
+    /* Color blanco para el texto */
+    border-radius: 7px;
+    /* Bordes redondeados */
+    width: 200px;
+    /* Ancho del botón */
+    height: 50px;
+    /* Altura del botón */
+    background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
+    /* Fondo con gradiente azul */
+    cursor: pointer;
+    /* Muestra el cursor como puntero */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    /* Sombra del botón */
+}
+
+/* Estilo para el botón Premium al pasar el ratón */
+#boton_premium:hover {
+    background: linear-gradient(45deg, #5e2323, #8b3636, #a72e2e);
+    /* Cambia el fondo a un gradiente más oscuro */
+}
+
+/* Estilo para el botón Lite al pasar el ratón */
+#boton_lite:hover {
+    background: linear-gradient(45deg, #032f69, #11479f, #2e69bc);
+    /* Cambia el fondo a un gradiente más oscuro */
+}
+
+/* Estilo para el pie de página */
+.pie_pagina {
+    display: grid;
+    /* Usa grid para organizar los elementos */
+    width: 20%;
+    /* Ancho del pie de página */
+    margin-left: 20px;
+    /* Márgen izquierdo */
+    grid-template-columns: 160px 160px;
+    /* Dos columnas */
+    grid-template-rows: 30px 30px;
+    /* Dos filas */
+}
+
+/* Estilo para los párrafos dentro de pie_pagina */
+.pie_pagina>p {
+    margin-top: 5px;
+    /* Márgen superior de 5px */
+}
+
+/* Estilo para el footer */
+footer {
+    background-color: #2c3e50;
+    /* Fondo oscuro para el pie de página */
+}
+
+/* Estilo para el logo */
+#logo {
+    margin-left: 10px;
+    /* Márgen izquierdo de 10px */
+}
+
+/* Estilo para el logo de contacto */
+#logo_contacto {
+    margin-left: 15px;
+    /* Márgen izquierdo de 15px */
+    margin-top: 5px;
+    /* Márgen superior de 5px */
+}

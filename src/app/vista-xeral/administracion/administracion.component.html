@@ -1,0 +1,1028 @@
+<div class="contenido">
+    <!-- Contenedor de la cabecera -->
+
+
+    <!-- Contenedor principal para los datos -->
+    <div class="datos">
+
+        <!-- Barra de navegación (breadcrumb) -->
+        <div id="mapa_navegacion">
+            <a [routerLink]="['/portada']">
+                <!-- Icono de casa -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6" width="16px">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg> Inicio
+            </a>
+            /
+            <strong id="publicacion">Administracion</strong>
+        </div>
+
+        <div class="container mt-5 p-5 has-background-dark has-text-light"
+            style="border-radius: 10px; background: linear-gradient(145deg, #0b0c28, #1a1b3d);">
+
+            <!-- Submenú de categorías -->
+            <div class="tabs is-toggle is-toggle-rounded is-centered mb-5">
+                <ul>
+                    <li [class.is-active]="categoriaSeleccionada === 'usuarios'">
+                        <a (click)="seleccionarCategoria('usuarios')">Usuarios</a>
+                    </li>
+                    <li [class.is-active]="categoriaSeleccionada === 'foros'">
+                        <a (click)="seleccionarCategoria('foros')">Foros</a>
+                    </li>
+                    <li [class.is-active]="categoriaSeleccionada === 'comentarios'">
+                        <a (click)="seleccionarCategoria('comentarios')">Comentarios</a>
+                    </li>
+                    <li [class.is-active]="categoriaSeleccionada === 'publicaciones'">
+                        <a (click)="seleccionarCategoria('publicaciones')">Publicaciones</a>
+                    </li>
+                    <li [class.is-active]="categoriaSeleccionada === 'eventos'">
+                        <a (click)="seleccionarCategoria('eventos')">Eventos</a>
+                    </li>
+                    <li [class.is-active]="categoriaSeleccionada === 'planes'">
+                        <a (click)="seleccionarCategoria('planes')">Planes</a>
+                    </li>
+                    <li [class.is-active]="categoriaSeleccionada === 'perfiles'">
+                        <a (click)="seleccionarCategoria('perfiles')">Perfiles</a>
+                    </li>
+                    <li [class.is-active]="categoriaSeleccionada === 'premiums'">
+                        <a (click)="seleccionarCategoria('premiums')">Premiums</a>
+                    </li>
+                    <li [class.is-active]="categoriaSeleccionada === 'gratuitos'">
+                        <a (click)="seleccionarCategoria('gratuitos')">Gratuitos</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div *ngIf="categoriaSeleccionada === 'usuarios' ">
+                <form [formGroup]="formularioCRUD" class="mb-5">
+                    <h2 class="title is-4 has-text-light mb-4">Usuarios</h2>
+                    <!-- Formulario para engadir usuarios -->
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Nome do usuario" formControlName="nombre">
+                        </div>
+                        <p *ngIf="formularioCRUD.get('nombre')?.touched && formularioCRUD.get('nombre')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el nombre
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="number" min="0"
+                                placeholder="Descargas" formControlName="descargas">
+                        </div>
+                        <p *ngIf="formularioCRUD.get('descargas')?.touched && formularioCRUD.get('descargas')?.invalid"
+                            class="help is-danger">
+                            Debes indicar la cantidad de descargas
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Email do usuario" formControlName="email">
+                        </div>
+                        <p *ngIf="formularioCRUD.get('email')?.touched && formularioCRUD.get('email')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el email
+                        </p>
+                    </div>
+
+                    <div *ngIf="!cambiar" class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth has-background-black-ter">
+                                <select formControlName="plan" class="has-background-black-ter has-text-light">
+                                    <option value="" selected>Selecciona un plan</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="gratuito">Gratuito</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p *ngIf="formularioCRUD.get('plan')?.touched && formularioCRUD.get('plan')?.invalid"
+                            class="help is-danger">
+                            Debes seleccionar un plan
+                        </p>
+                    </div>
+
+                    <ng-container *ngIf="!gratuito">
+                        <div *ngIf="!cambiar" class="field">
+                            <div class="control">
+                                <div class="select is-fullwidth has-background-black-ter">
+                                    <select formControlName="metodo_pago"
+                                        class="has-background-black-ter has-text-light">
+                                        <option value="" selected>Selecciona un metodo de pago</option>
+                                        <option value="bizum">Bizum</option>
+                                        <option value="tarjeta de credito">Tarjeta de credito</option>
+                                        <option value="tarjeta de debito">Tarjeta de debito</option>
+                                        <option value="pay-pal">Pay pal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p *ngIf="formularioCRUD.get('metodo_pago')?.touched && formularioCRUD.get('metodo_pago')?.invalid"
+                                class="help is-danger">
+                                Debes seleccionar un metodo pago
+                            </p>
+                        </div>
+
+                        <div *ngIf="!cambiar" class="field">
+                            <div class="control">
+                                <div class="select is-fullwidth has-background-black-ter">
+                                    <select formControlName="tipo_pago" class="has-background-black-ter has-text-light">
+                                        <option value="" selected>Selecciona tipo de pago</option>
+                                        <option value="mensual">Mensual (4,90€)</option>
+                                        <option value="anual">Anual (49,99€)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p *ngIf="formularioCRUD.get('tipo_pago')?.touched && formularioCRUD.get('tipo_pago')?.invalid"
+                                class="help is-danger">
+                                Debes seleccionar un tipo de pago
+                            </p>
+                        </div>
+                    </ng-container>
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth has-background-black-ter">
+                                <select formControlName="rol" class="has-background-black-ter has-text-light">
+                                    <option value="" selected>Selecciona un rol</option>
+                                    <option value="user">Usuario</option>
+                                    <option value="admin">Administrador</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p *ngIf="formularioCRUD.get('rol')?.touched && formularioCRUD.get('rol')?.invalid"
+                            class="help is-danger">
+                            Debes seleccionar un rol
+                        </p>
+                    </div>
+
+                    <div *ngIf="admin" class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="password"
+                                placeholder="Contraseña actual" formControlName="contrasinal_actual">
+                        </div>
+                        <p *ngIf="formularioCRUD.get('contrasinal_actual')?.touched && formularioCRUD.get('contrasinal_actual')?.invalid"
+                            class="help is-danger">
+                            Debes indicar la contraseña actual
+                        </p>
+                        <p *ngIf="error" class="help is-danger">
+                            {{this.errorMensaje}}
+                        </p>
+                    </div>
+
+                    <div *ngIf="!cambiar" class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="password"
+                                placeholder="Contraseña del usuario" formControlName="contrasinal">
+                        </div>
+                        <p *ngIf="formularioCRUD.get('contrasinal')?.touched && formularioCRUD.get('contrasinal')?.errors?.['required']"
+                            class="help is-danger">
+                            Debes indicar la contraseña
+                        </p>
+
+                        <p *ngIf="formularioCRUD.get('contrasinal')?.touched && formularioCRUD.get('contrasinal')?.errors?.['minlength']"
+                            class="help is-danger">
+                            Debe tener un minimo de 8 caracteres la contraseña
+                        </p>
+                    </div>
+
+                    <div *ngIf="!cambiar" class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="password"
+                                placeholder="Repite la contraseña" formControlName="contrasinal_confirmation">
+                        </div>
+                        <p *ngIf="formularioCRUD.get('contrasinal_confirmation')?.touched && formularioCRUD.get('contrasinal_confirmation')?.invalid"
+                            class="help is-danger">
+                            Debes repetir la contraseña
+                        </p>
+                    </div>
+
+                    <div *ngIf="cambiar" class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="password"
+                                placeholder="Nueva contraseña del usuario" formControlName="nueva_contrasinal">
+                        </div>
+                        <p *ngIf="formularioCRUD.get('nueva_contrasinal')?.touched && formularioCRUD.get('nueva_contrasinal')?.errors?.['required']"
+                            class="help is-danger">
+                            Debes indicar la nueva contraseña
+                        </p>
+                        <p *ngIf="formularioCRUD.get('nueva_contrasinal')?.touched && formularioCRUD.get('nueva_contrasinal')?.errors?.['minlength']"
+                            class="help is-danger">
+                            Debe tener un minimo de 8 caracteres la contraseña
+                        </p>
+                    </div>
+
+                    <div *ngIf="cambiar" class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="password"
+                                placeholder="Repetir contraseña" formControlName="nueva_contrasinal_confirmation">
+                        </div>
+                        <p *ngIf="formularioCRUD.get('nueva_contrasinal_confirmation')?.touched && formularioCRUD.get('nueva_contrasinal_confirmation')?.invalid"
+                            class="help is-danger">
+                            Debes repetir la contraseña
+                        </p>
+                    </div>
+
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button *ngIf="!cambiar" (click)="engadirUsuario()"
+                                [disabled]="formularioCRUD.invalid || formularioCRUD.get('contrasinal')?.value !== formularioCRUD.get('contrasinal_confirmation')?.value"
+                                class="button is-link">
+                                Engadir usuario
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button *ngIf="cambiar" (click)="modificarUsuario()"
+                                [disabled]="formularioCRUD.invalid || formularioCRUD.get('nueva_contrasinal')?.value !== formularioCRUD.get('nueva_contrasinal_confirmation')?.value"
+                                class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button (click)="cancelar(formularioCRUD)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Lista de usuarios -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de usuarios</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <li *ngFor="let usuario of usuarios" class="mb-3">
+                            <div class="columns is-vcentered">
+                                <div class="column is-8 has-text-light">
+                                    {{ usuario.name }} - {{ usuario.rol }} - {{ usuario.email }} <ng-container
+                                        *ngIf="usuario.descargas || usuario.descargas == 0"> - {{ usuario.descargas
+                                        }}</ng-container>
+                                </div>
+                                <div class="column is-4 is-flex is-justify-content-flex-end">
+                                    <button class="button is-small is-warning mr-2"
+                                        (click)="editar(usuario)">Editar</button>
+                                    <button class="button is-small is-danger"
+                                        (click)="eliminarUsuario(usuario.id!)">Eliminar</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div *ngIf="categoriaSeleccionada === 'foros'">
+                <form [formGroup]="formularioCRUDForo" class="mb-5">
+                    <!-- Formulario para engadir foro -->
+                    <h2 class="title is-4 has-text-light mb-4">Foros</h2>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Nome do foro" formControlName="tema">
+                        </div>
+                        <p *ngIf="formularioCRUDForo.get('tema')?.touched && formularioCRUDForo.get('tema')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el tema
+                        </p>
+                    </div>
+
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button *ngIf="!cambiar" (click)="engadirForo()" [disabled]="formularioCRUDForo.invalid"
+                                class="button is-link">
+                                Engadir foro
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button *ngIf="cambiar" (click)="modificarForo()" [disabled]="formularioCRUDForo.invalid"
+                                class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button (click)="cancelar(formularioCRUDForo)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Lista de foros -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de foros</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <!-- <p *ngIf="foros.length === 0">No hay foros</p> -->
+                        <li *ngFor="let foro of foros" class="mb-3">
+                            <div class="columns is-vcentered">
+                                <div class="column is-8 has-text-light">
+                                    {{ foro.tema }} - {{ foro.fecha_creacion | date:'yyyy-MM-dd'}}
+                                </div>
+                                <div class="column is-4 is-flex is-justify-content-flex-end">
+                                    <button class="button is-small is-warning mr-2"
+                                        (click)="editarForo(foro)">Editar</button>
+                                    <button class="button is-small is-danger"
+                                        (click)="eliminarForo(foro.id!)">Eliminar</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div *ngIf="categoriaSeleccionada === 'comentarios'">
+                <form [formGroup]="formularioCRUDComentario" class="mb-5">
+                    <!-- Formulario para engadir comentarios -->
+                    <h2 class="title is-4 has-text-light mb-4">Comentarios</h2>
+
+                    <div class="field">
+                        <div class="control">
+                            <textarea class="textarea has-background-black-ter has-text-light" placeholder="Comentario"
+                                formControlName="texto"></textarea>
+                        </div>
+                        <p *ngIf="formularioCRUDComentario.get('texto')?.touched && formularioCRUDComentario.get('texto')?.invalid"
+                            class="help is-danger">
+                            Debes indicar un texto
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth has-background-black-ter">
+                                <select formControlName="foro_id" class="has-background-black-ter has-text-light">
+                                    <option value="" selected>Selecciona un foro</option>
+                                    <ng-container *ngFor="let foro of foros">
+                                        <option value={{foro.id}}>{{foro.tema}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <p *ngIf="formularioCRUDComentario.get('foro_id')?.touched && formularioCRUDComentario.get('foro_id')?.invalid"
+                            class="help is-danger">
+                            Debes seleccionar un foro
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light"
+                                (change)="archivoSeleccionado($event)" #fileInputC type="file">
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button *ngIf="!cambiar" (click)="engadirComentario()"
+                                [disabled]="formularioCRUDComentario.invalid" class="button is-link">
+                                Engadir comentario
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button *ngIf="cambiar" (click)="modificarComentario()"
+                                [disabled]="formularioCRUDComentario.invalid" class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button (click)="cancelar(formularioCRUDComentario, fileInputC)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Lista de comentarios -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de comentarios</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <p *ngIf="comentarios?.length === 0">No hay comentarios</p>
+
+                        <li *ngFor="let comentario of comentarios" class="mb-3">
+                            <div class="columns is-vcentered">
+                                <div class="column is-8 has-text-light">
+                                    {{ comentario.texto }} - {{comentario.fecha_hora | date:'yyyy-MM-dd'}} <ng-container
+                                        *ngIf="comentario.foto"> - <img [src]="fotosComentarios + comentario.foto"
+                                            alt="Foto del usuario" width="100px"></ng-container>
+                                </div>
+                                <div class="column is-4 is-flex is-justify-content-flex-end">
+                                    <button class="button is-small is-warning mr-2"
+                                        (click)="editarComentario(comentario)">Editar</button>
+                                    <button class="button is-small is-danger"
+                                        (click)="eliminarComentario(comentario.id!)">Eliminar</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                    <!-- Botón anterior -->
+                    <button class="pagination-previous" (click)="mostrarComentarios(paginaActual-1)"
+                        [disabled]="paginaActual === 1">
+                        Anterior
+                    </button>
+
+                    <!-- Botón siguiente -->
+                    <button class="pagination-next" (click)="mostrarComentarios(paginaActual+1)"
+                        [disabled]="paginaActual === paginasTotales">
+                        Siguiente
+                    </button>
+
+                    <!-- Números de página -->
+                    <ul class="pagination-list">
+                        <li *ngFor="let pagina of paginas">
+                            <button class="pagination-link" [class.is-current]="pagina === paginaActual"
+                                (click)="mostrarComentarios(pagina)" [disabled]="pagina === paginaActual">
+                                {{pagina}}
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+            <div *ngIf="categoriaSeleccionada === 'publicaciones'">
+                <form [formGroup]="formularioCRUDPublicacion" (ngSubmit)="engadirPublicacion()" class="mb-5">
+                    <!-- Formulario para engadir imagenes -->
+                    <h2 class="title is-4 has-text-light mb-4">Publicaciones</h2>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light"
+                                (change)="archivoSeleccionado($event)" #fileInputP type="file">
+                        </div>
+                        <p *ngIf="faltaArchivo" class="help is-danger">
+                            Falta el archivo
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Titulo de la publicacion" formControlName="titulo">
+                        </div>
+                        <p *ngIf="formularioCRUDPublicacion.get('titulo')?.touched && formularioCRUDPublicacion.get('titulo')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el titulo
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Zona geografica" formControlName="zona_geografica">
+                        </div>
+                        <p *ngIf="formularioCRUDPublicacion.get('zona_geografica')?.touched && formularioCRUDPublicacion.get('zona_geografica')?.invalid"
+                            class="help is-danger">
+                            Debes indicar la zona geografica
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <textarea class="textarea has-background-black-ter has-text-light" placeholder="Descripcion"
+                                formControlName="descripcion"></textarea>
+
+                        </div>
+                        <p *ngIf="formularioCRUDPublicacion.get('descripcion')?.touched && formularioCRUDPublicacion.get('descripcion')?.invalid"
+                            class="help is-danger">
+                            Debes indicar una descripcion
+                        </p>
+                    </div>
+
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button *ngIf="!cambiar" type="submit"
+                                [disabled]="formularioCRUDPublicacion.invalid || faltaArchivo" class="button is-link">
+                                Engadir Publicacion
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button *ngIf="cambiar" type="button" (click)="modificarPublicacion()"
+                                [disabled]="formularioCRUDPublicacion.invalid" class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button type="button" (click)="cancelar(formularioCRUDPublicacion, fileInputP)"
+                                class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Lista de imagenes -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de Publicaciones</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <p *ngIf="publicaciones?.length == 0">No hay publicaciones</p>
+
+                        <li *ngFor="let publicacion of publicaciones" class="mb-4">
+                            <div class="columns is-vcentered">
+                                <!-- Imagen -->
+                                <div class="column is-3">
+                                    <div class="imagen-publicacion">
+                                        <img [src]="fotosPublicaciones + publicacion.imagen" alt="Imagen">
+                                    </div>
+                                </div>
+
+                                <!-- Texto -->
+                                <div class="column is-6 has-text-light">
+                                    <p><strong>Titulo:</strong> {{ publicacion.titulo }}</p>
+                                    <p><strong>Descripcion:</strong> {{ publicacion.descripcion }}</p>
+                                    <p><strong>Fecha: </strong> {{ publicacion.fecha_alta | date:'yyyy-MM-dd' }}
+                                        <ng-container *ngIf="publicacionSeleccionar?.id == publicacion.id"> <span
+                                                *ngIf="edicion">Editado</span></ng-container>
+                                    </p>
+                                </div>
+
+                                <!-- Botones -->
+                                <div class="column is-3 is-flex is-align-items-center is-justify-content-flex-end">
+                                    <button class="button is-small is-warning mr-2" type="button"
+                                        (click)="editarPublicacion(publicacion)">Editar</button>
+                                    <button class="button is-small is-danger" type="button"
+                                        (click)="eliminarPublicacion(publicacion.id)">Eliminar</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div *ngIf="categoriaSeleccionada === 'eventos'">
+                <form [formGroup]="formularioCRUDEvento" class="mb-5">
+                    <!-- Formulario para engadir eventos -->
+                    <h2 class="title is-4 has-text-light mb-4">Eventos</h2>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Informacion del evento" formControlName="nombre">
+                        </div>
+                        <p *ngIf="formularioCRUDEvento.get('nombre')?.touched && formularioCRUDEvento.get('nombre')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el evento
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="date"
+                                placeholder="Fecha del evento" formControlName="fecha">
+                        </div>
+                        <p *ngIf="formularioCRUDEvento.get('fecha')?.touched && formularioCRUDEvento.get('fecha')?.invalid"
+                            class="help is-danger">
+                            Debes indicar la fecha
+                        </p>
+                        <p *ngIf="error" class="help is-danger">
+                            {{this.errorMensaje}}
+                        </p>
+                    </div>
+
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button type="button" (click)="engadirEvento()" *ngIf="!cambiar"
+                                [disabled]="formularioCRUDEvento.invalid" class="button is-link">
+                                Engadir Evento
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button *ngIf="cambiar" type="button" (click)="modificarEvento()"
+                                [disabled]="formularioCRUDEvento.invalid" class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button type="button" (click)="cancelar(formularioCRUDEvento)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Lista de eventos -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de eventos</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <p *ngIf="eventos?.length === 0">No hay eventos</p>
+
+                        <li *ngFor="let evento of eventos" class="mb-3">
+                            <div class="columns is-vcentered">
+                                <div class="column is-8 has-text-light">
+                                    {{ evento.evento }} - {{ evento.fecha }}
+                                </div>
+
+                                <div class="column is-4 is-flex is-justify-content-flex-end">
+                                    <button class="button is-small is-warning mr-2" type="button"
+                                        (click)="editarEvento(evento)">Editar</button>
+                                    <button class="button is-small is-danger" type="button"
+                                        (click)="eliminarEvento(evento.id)">Eliminar</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div *ngIf="categoriaSeleccionada === 'planes'">
+                <form [formGroup]="formularioCRUDPlan" class="mb-5">
+                    <!-- Formulario para engadir eventos -->
+                    <h2 class="title is-4 has-text-light mb-4">Planes</h2>
+
+                    <div *ngIf="!cambiar" class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth has-background-black-ter">
+                                <select formControlName="plan" class="has-background-black-ter has-text-light">
+                                    <option value="" selected>Selecciona un plan</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="gratuito">Gratuito</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p *ngIf="formularioCRUDPlan.get('plan')?.touched && formularioCRUDPlan.get('plan')?.invalid"
+                            class="help is-danger">
+                            Debes seleccionar un plan
+                        </p>
+                    </div>
+
+                    <ng-container *ngIf="!gratuito">
+                        <div *ngIf="!cambiar" class="field">
+                            <div class="control">
+                                <div class="select is-fullwidth has-background-black-ter">
+                                    <select formControlName="metodo_pago"
+                                        class="has-background-black-ter has-text-light">
+                                        <option value="" selected>Selecciona un metodo de pago</option>
+                                        <option value="bizum">Bizum</option>
+                                        <option value="tarjeta de credito">Tarjeta de credito</option>
+                                        <option value="tarjeta de debito">Tarjeta de debito</option>
+                                        <option value="pay-pal">Google pay</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p *ngIf="formularioCRUDPlan.get('metodo_pago')?.touched && formularioCRUDPlan.get('metodo_pago')?.invalid"
+                                class="help is-danger">
+                                Debes seleccionar un metodo de pago
+                            </p>
+                        </div>
+
+                        <div *ngIf="!cambiar" class="field">
+                            <div class="control">
+                                <div class="select is-fullwidth has-background-black-ter">
+                                    <select formControlName="tipo_pago" class="has-background-black-ter has-text-light">
+                                        <option value="" selected>Selecciona tipo de pago</option>
+                                        <option value="mensual">Mensual (4,90€)</option>
+                                        <option value="anual">Anual (49,99€)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p *ngIf="formularioCRUDPlan.get('tipo_pago')?.touched && formularioCRUDPlan.get('tipo_pago')?.invalid"
+                                class="help is-danger">
+                                Debes seleccionar un tipo de pago
+                            </p>
+                        </div>
+                    </ng-container>
+
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button type="button" (click)="modificarPlanes()"
+                                [disabled]="formularioCRUDPlan.invalid || !planSeleccionar" class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+
+                        <div class="control">
+                            <button type="button" (click)="cancelar(formularioCRUDPlan)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <!-- Lista de planes -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de planes</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <p *ngIf="planes?.length === 0">No hay planes</p>
+
+                        <li *ngFor="let plan of planes" class="mb-3">
+                            <div class="columns is-vcentered">
+                                <div class="column is-8 has-text-light">
+                                    {{plan.user.name}} -
+                                    <ng-container *ngIf="plan.precio != 0">Premium: {{ plan.precio }} € - {{
+                                        plan.tipo_pago
+                                        }}
+                                        - {{ plan.metodo_pago }}</ng-container>
+                                    <ng-container *ngIf="plan.precio == 0">Gratuito</ng-container> - <ng-container
+                                        *ngIf="plan.anuncio">Anuncios
+                                        activados</ng-container> <ng-container *ngIf="!plan.anuncio">Anuncios
+                                        desactivados</ng-container>
+                                </div>
+
+                                <div class="column is-4 is-flex is-justify-content-flex-end">
+                                    <button class="button is-small is-warning mr-2" type="button"
+                                        (click)="editarPlan(plan)">Editar</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div *ngIf="categoriaSeleccionada === 'perfiles' ">
+                <form [formGroup]="perfilCRUD" class="mb-5">
+                    <h2 class="title is-4 has-text-light mb-4">Perfiles</h2>
+                    <!-- Formulario para editar perfiles -->
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Telefono del usuario" formControlName="telefono">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text" min="0"
+                                placeholder="Red social principal" formControlName="red_social_principal">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Nombre del usuario de la red social preferida"
+                                formControlName="usuario_red_social">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <textarea class="textarea has-background-black-ter has-text-light" placeholder="Comentario"
+                                formControlName="biografia"></textarea>
+                        </div>
+                        <p *ngIf="perfilCRUD.get('biografia')?.touched && perfilCRUD.get('biografia')?.invalid"
+                            class="help is-danger">
+                            Debes escribir un resumen de ti
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth has-background-black-ter">
+                                <select formControlName="estado" class="has-background-black-ter has-text-light">
+                                    <option value="" selected>Selecciona un estado</option>
+                                    <option value="activo">Activo</option>
+                                    <option value="inactivo">Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p *ngIf="perfilCRUD.get('estado')?.touched && perfilCRUD.get('estado')?.invalid"
+                            class="help is-danger">
+                            Debes seleccionar un estado
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Pais del usuario" formControlName="pais">
+                        </div>
+                        <p *ngIf="perfilCRUD.get('pais')?.touched && perfilCRUD.get('pais')?.invalid"
+                            class="help is-danger">
+                            Debes indicar tu pais
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light"
+                                (change)="archivoSeleccionado($event)" #fileInputC type="file">
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button (click)="modificarPerfil()" [disabled]="perfilCRUD.invalid"
+                                class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button (click)="cancelar(perfilCRUD)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Lista de perfiles -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de perfiles</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <li *ngFor="let perfil of perfiles" class="mb-3">
+                            <div class="columns is-vcentered" style="color: #eaeaea; padding: 1rem;">
+                                <!-- Imagen del perfil -->
+                                <div class="column is-2 has-text-centered">
+                                    <figure class="image is-96x96"
+                                        style="border-radius: 50%; overflow: hidden; margin: 0 auto;">
+                                        <img [src]="fotosPerfiles + perfil.foto" alt="Imagen de perfil">
+                                    </figure>
+                                </div>
+
+                                <!-- Datos del perfil -->
+                                <div class="column is-8">
+                                    <h3 class="title is-5" style="color: #ffd166; margin-bottom: 0.25rem;">
+                                        {{ perfil.user.name }}
+                                    </h3>
+                                    <p class="is-size-6 has-text-grey-light" style="margin-bottom: 0.5rem;">
+                                        <strong>Teléfono:</strong> {{ perfil.telefono || '—' }} <br>
+                                        <strong>Red social:</strong> {{ perfil.red_social_principal || 'No vinculada' }}
+                                        <br>
+                                        <strong>Usuario:</strong> {{ perfil.usuario_red_social || '—' }} <br>
+                                        <strong>Estado:</strong>
+                                        <span class="tag is-warning is-light" style="font-weight:600;">
+                                            {{ perfil.estado | titlecase }}
+                                        </span><br>
+                                        <strong>Registro:</strong> {{ perfil.fecha_registro | date:'yyyy-MM-dd' }}
+                                    </p>
+                                    <p class="is-size-7" style="color: #cfcfcf; font-style: italic;">
+                                        "{{ perfil.biografia || 'Sin biografía aún.' }}"
+                                    </p>
+                                </div>
+
+                                <!-- Botón editar -->
+                                <div class="column is-2 has-text-right">
+                                    <button class="button is-warning is-light" (click)="editarPerfil(perfil)">
+                                        <span class="icon"><i class="fas fa-edit"></i></span>
+                                        <span>Editar</span>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div *ngIf="categoriaSeleccionada === 'premiums'">
+                <form [formGroup]="formularioCRUDPremium" class="mb-5">
+                    <!-- Formulario para engadir eventos -->
+                    <h2 class="title is-4 has-text-light mb-4">Premiums</h2>
+
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth has-background-black-ter">
+                                <select formControlName="insignia" class="has-background-black-ter has-text-light">
+                                    <option value="" selected>Seleccionar una insignia</option>
+                                    <option value="nueva sangre">Nueva sangre</option>
+                                    <option value="veterano">Veterano</option>
+                                    <option value="maestro">Maestro</option>
+                                    <option value="astronomico">Astronómico</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p *ngIf="formularioCRUDPremium.get('insignia')?.touched && formularioCRUDPremium.get('insignia')?.invalid"
+                            class="help is-danger">
+                            Debes seleccionar una isignia
+                        </p>
+                    </div>
+
+
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button type="button" (click)="modificarPremium()"
+                                [disabled]="formularioCRUDPremium.invalid || !premiumSeleccionar"
+                                class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+
+                        <div class="control">
+                            <button type="button" (click)="cancelar(formularioCRUDPremium)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <!-- Lista de planes -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de premiums</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <p *ngIf="premiums?.length === 0">No hay usuarios premiums</p>
+
+                        <li *ngFor="let premium of premiums" class="mb-3">
+                            <div class="columns is-vcentered">
+                                <div class="column is-8 has-text-light">
+                                    {{premium.plans.user.name}} -
+                                    {{premium.insignia}}
+                                </div>
+
+                                <div class="column is-4 is-flex is-justify-content-flex-end">
+                                    <button class="button is-small is-warning mr-2" type="button"
+                                        (click)="editarPremium(premium)">Editar</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div *ngIf="categoriaSeleccionada === 'gratuitos'">
+                <form [formGroup]="formularioCRUDGratuito" class="mb-5">
+                    <!-- Formulario para engadir eventos -->
+                    <h2 class="title is-4 has-text-light mb-4">Gratuitos</h2>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="number"
+                                placeholder="Cantidad maxima de descargas" formControlName="cantidad_maxima_descargas">
+                        </div>
+                        <p *ngIf="formularioCRUDGratuito.get('cantidad_maxima_descargas')?.touched && formularioCRUDGratuito.get('cantidad_maxima_descargas')?.invalid"
+                            class="help is-danger">
+                            Debes indicar la cantidad maxima de descargass
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="number"
+                                placeholder="Limite de publicaciones" formControlName="limite_publicacion">
+                        </div>
+                        <p *ngIf="formularioCRUDGratuito.get('limite_publicacion')?.touched && formularioCRUDGratuito.get('limite_publicacion')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el limite de publicacion
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="number" min="2048"
+                                max="409600" placeholder="Tamaño maximo de archivo"
+                                formControlName="tamano_maximo_archivo">
+                        </div>
+                        <p *ngIf="formularioCRUDGratuito.get('tamano_maximo_archivo')?.touched && formularioCRUDGratuito.get('tamano_maximo_archivo')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el tamaño maximo de los archivos
+                        </p>
+                    </div>
+
+
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button type="button" (click)="modificarGratuito()"
+                                [disabled]="formularioCRUDGratuito.invalid || !gratuitoSeleccionar"
+                                class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+
+                        <div class="control">
+                            <button type="button" (click)="cancelar(formularioCRUDGratuito)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <!-- Lista de planes -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de gratuitos</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <p *ngIf="gratuitos?.length === 0">No hay usuarios gratuitos</p>
+
+                        <li *ngFor="let gratuito of gratuitos" class="mb-3">
+                            <div class="columns is-vcentered">
+                                <div class="column is-8 has-text-light">
+                                    {{gratuito.plans.user.name}} - <strong>Cantidad maxima de descargas:</strong>
+                                    {{gratuito.cantidad_maxima_descargas}} - <strong>Limite de
+                                        publicacion:</strong> {{gratuito.limite_publicacion}} - <strong>Tamaño maximo de
+                                        archivo:</strong>
+                                    {{gratuito.tamano_maximo_archivo}}
+                                </div>
+
+                                <div class="column is-4 is-flex is-justify-content-flex-end">
+                                    <button class="button is-small is-warning mr-2" type="button"
+                                        (click)="editarGratuito(gratuito)">Editar</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

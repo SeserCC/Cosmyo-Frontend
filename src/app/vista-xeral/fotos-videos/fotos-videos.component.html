@@ -1,0 +1,67 @@
+<div class="contenido">
+    <!-- Contenedor principal -->
+    <div class="datos">
+        <!-- Mapa de navegación -->
+        <div id="mapa_navegacion">
+            <a [routerLink]="['/portada']">
+                <i class="fa-solid fa-house"></i> Inicio
+            </a>
+            /
+            <strong id="fotos_videos">Imágenes y vídeos</strong>
+        </div>
+        <form [formGroup]="buscadorForm">
+            <div class="field has-addons is-fullwidth">
+
+                <div class="control is-expanded">
+                    <input type="text" id="busqueda" class="input" formControlName="titulo"
+                        placeholder="Buscar publicaciones...">
+                </div>
+                <div class="control">
+                    <button class="button" (click)="filtrarPublicaciones(buscadorForm.get('titulo')?.value)"
+                        style="background-color: #032e67; color: white;">
+                        Buscar
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+        <!-- Galería de imágenes -->
+        <div class="columns is-multiline is-variable is-4">
+            <div *ngIf="publicaciones?.length === 0" class="column is-12">
+                <p class="mensaje-galeria-vacia has-text-centered has-text-grey-light">
+                    ✨ Aún no hay publicaciones disponibles. ¡Vuelve pronto para explorar increíbles capturas del cosmos!
+                </p>
+            </div>
+
+            <li *ngFor="let publicacion of publicaciones" class="column is-12">
+
+                <div class="box has-background-black-ter publicacion-box">
+                    <!-- Imagen grande arriba -->
+                    <a [routerLink]="['/publicaciones', publicacion.user_id]">
+                        <div class="imagen-publicacion">
+                            <img [src]="fotosPublicaciones + publicacion.imagen" alt="Imagen">
+                        </div>
+                    </a>
+
+
+                    <!-- Texto debajo, centrado y bien espaciado -->
+                    <div class="contenido-publicacion has-text-light">
+                        <h3 class="title is-4">{{ publicacion.titulo }}</h3>
+                        <p class="descripcion subtitle is-6">{{ publicacion.descripcion }}</p>
+                        <p class="autor-fecha is-size-9">
+                            <strong>Autor:</strong> {{ publicacion.users.name }} &nbsp;|&nbsp;
+                            <strong>Fecha:</strong> {{ publicacion.fecha_alta }}
+                        </p>
+                    </div>
+                    <button (click)="darLike(publicacion.id)"><i class="fa fa-heart"
+                            [style.color]="colorLike[publicacion.id] ? 'red' : 'gray'"></i>{{likes[publicacion.id]}}</button>
+                </div>
+
+
+            </li>
+        </div>
+
+    </div>
+
+</div>

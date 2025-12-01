@@ -1,0 +1,65 @@
+<div class="contenido">
+    <!-- Formulario para subir archivos -->
+
+    <div class="datos">
+        <!-- Mapa de navegación para indicar la ubicación actual al usuario -->
+        <div id="mapa_navegacion">
+            <a [routerLink]="['/portada']">
+                <i class="fa-solid fa-house"></i> Inicio
+            </a>
+            /
+            <a [routerLink]="['/publicaciones']">Publicaciones</a>
+            /
+            <strong id="subir_archivos">Subir archivos</strong>
+            <!-- Enlace para regresar a la página anterior -->
+            <div class="contenedor-flecha">
+                <a [routerLink]="['/publicaciones']">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+        <form [formGroup]="formularioPublicacion" (ngSubmit)="engadirPublicacion()">
+            <!-- Campo para ingresar el título del archivo -->
+            <div class="titulo_info">
+                <label id="texto_titulo">Título</label>
+                <input class="titulo_archivo" formControlName="titulo" type="text">
+            </div>
+            <div *ngIf="formularioPublicacion.get('titulo')?.touched && formularioPublicacion.get('titulo')?.invalid"
+                class="erro">
+                Debes indicar el titulo
+            </div>
+
+            <!-- Campo para ingresar la descripción del archivo -->
+            <div id="descripcion_info">
+                <label id="texto_descripcion">Descripción</label>
+                <textarea class="descripcion_archivo" formControlName="descripcion"></textarea>
+            </div>
+            <div *ngIf="formularioPublicacion.get('descripcion')?.touched && formularioPublicacion.get('descripcion')?.invalid"
+                class="erro">
+                Debes indicar la descripcion
+            </div>
+
+            <!-- Selector de archivos con mensaje sobre los formatos aceptados -->
+            <label for="seleccionar_archivo" class="archivo">
+                <i class="fa-solid fa-upload"></i>Seleccionar archivo
+                <p>
+                    Formatos que aceptamos: JPG - JPEG - PNG - GIF - TIF - TIFF - MOV - MPG - MPEG - MP4 - AVI - WMV -
+                    WEBM
+                </p>
+            </label>
+            <input id="seleccionar_archivo" type="file" (change)="cargarArchivo($event)">
+            <div *ngIf="formularioPublicacion.get('archivo')?.touched && formularioPublicacion.get('archivo')?.invalid"
+                class="erro">
+                Debes subir una imagen
+            </div>
+
+            <!-- Botón para enviar el formulario -->
+            <button id="enlace_subir_archivo" type="submit">
+                Subir
+                <i class="fa-solid fa-upload"></i>
+            </button>
+        </form>
+    </div>
+
+
+</div>

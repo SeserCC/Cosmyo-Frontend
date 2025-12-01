@@ -1,0 +1,152 @@
+[
+    {
+        "ruta": "../media/img/publicaciones/foto1.jpg",
+        "titulo": "Mi primera foto",
+        "descripcion": "Aquí salgo yo en este vacío inmenso, jamás me había sentido tan emocionado y aterrorizado al mismo tiempo."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto2.jpg",
+        "titulo": "Bajo un cielo estrellado",
+        "descripcion": "Una noche tranquila, las estrellas parecían susurrar secretos del universo."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto3.jpeg",
+        "titulo": "Auroras en el horizonte",
+        "descripcion": "Las luces danzaban en el cielo, creando un espectáculo que parecía irreal."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto4.jpg",
+        "titulo": "La luna llena",
+        "descripcion": "Majestuosa y brillante, la luna iluminó todo con su luz plateada."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto5.jpg",
+        "titulo": "Atardecer dorado",
+        "descripcion": "El cielo ardía en tonos de oro mientras el sol se escondía en el horizonte."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto6.jpg",
+        "titulo": "Entre montañas",
+        "descripcion": "Las montañas se alzaban como guardianes del tiempo, firmes y solemnes."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto7.jpg",
+        "titulo": "Un mar de nubes",
+        "descripcion": "Parecía flotar sobre un océano algodonado, completamente surrealista."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto8.jpg",
+        "titulo": "La galaxia espiral",
+        "descripcion": "Los brazos de la galaxia se extendían en el cielo, llenos de estrellas y polvo cósmico."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto9.jpg",
+        "titulo": "Un amanecer cósmico",
+        "descripcion": "Los primeros rayos del sol parecían romper las sombras del universo."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto10.jpg",
+        "titulo": "Constelación desconocida",
+        "descripcion": "Un conjunto de estrellas formaba figuras que nunca antes había imaginado."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto11.jpg",
+        "titulo": "Cielo púrpura",
+        "descripcion": "El cielo teñido de púrpura ofrecía una vista fascinante y única."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto12.jpg",
+        "titulo": "El cometa brillante",
+        "descripcion": "Un cometa cruzó el cielo dejando una estela de luz que tardaré en olvidar."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto1.jpg",
+        "titulo": "Nebulosa multicolor",
+        "descripcion": "Un remolino de colores parecía flotar en el vacío."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto2.jpg",
+        "titulo": "La danza de las estrellas",
+        "descripcion": "Un espectáculo celestial de movimientos y brillos intermitentes."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto3.jpeg",
+        "titulo": "La vía láctea",
+        "descripcion": "Una franja brillante de la galaxia decoraba el cielo nocturno."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto4.jpg",
+        "titulo": "Un eclipse inolvidable",
+        "descripcion": "La luna y el sol se encontraron en un baile de sombras."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto5.jpg",
+        "titulo": "Misterio celeste",
+        "descripcion": "Una estrella particularmente brillante capturó toda mi atención."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto6.jpg",
+        "titulo": "Un reflejo estelar",
+        "descripcion": "El cielo se reflejaba en el agua como si fuera un espejo infinito."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto7.jpg",
+        "titulo": "Entre galaxias",
+        "descripcion": "Dos galaxias en una colisión cósmica ofrecían un espectáculo hipnótico."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto8.jpg",
+        "titulo": "Noche en el desierto",
+        "descripcion": "El cielo sobre el desierto era más brillante que nunca."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto9.jpg",
+        "titulo": "Luz en la oscuridad",
+        "descripcion": "Una estrella solitaria iluminaba un rincón oscuro del firmamento."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto10.jpg",
+        "titulo": "El cielo profundo",
+        "descripcion": "Millones de puntos de luz brillaban como joyas esparcidas en el espacio."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto11.jpg",
+        "titulo": "Una supernova",
+        "descripcion": "La explosión de una estrella transformaba el cielo en una obra de arte."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto12.jpg",
+        "titulo": "La estación espacial",
+        "descripcion": "Un pequeño punto luminoso atravesaba el cielo a gran velocidad."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto1.jpg",
+        "titulo": "Los anillos de Saturno",
+        "descripcion": "Saturno lucía sus anillos como una joya majestuosa en el firmamento."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto2.jpg",
+        "titulo": "Un cielo cristalino",
+        "descripcion": "La claridad del cielo revelaba detalles que rara vez se ven."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto3.jpeg",
+        "titulo": "La aurora boreal",
+        "descripcion": "Los tonos verdes y azules bailaban en el cielo como si fueran música visible."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto4.jpg",
+        "titulo": "Un agujero negro",
+        "descripcion": "Un punto oscuro en medio de la galaxia, rodeado de misterio."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto5.jpg",
+        "titulo": "La sombra de la Tierra",
+        "descripcion": "La sombra del planeta se proyectaba en la luna, perfecta y redonda."
+    },
+    {
+        "ruta": "../media/img/publicaciones/foto6.jpg",
+        "titulo": "Un viaje interestelar",
+        "descripcion": "El cielo nocturno invitaba a soñar con lo que está más allá."
+    }
+]

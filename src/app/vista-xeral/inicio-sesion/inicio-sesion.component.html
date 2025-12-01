@@ -1,0 +1,87 @@
+<div class="contenido">
+    <!-- Contenedor principal -->
+    <div class="datos">
+        <!-- Mapa de navegación -->
+        <div id="mapa_navegacion">
+            <a [routerLink]="['/portada']">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+            </a>
+            /
+            <strong id="inicio_sesion">Inicio sesión</strong>
+        </div>
+
+        <!-- Enlace para regresar a la página anterior -->
+        <a [routerLink]="['/portada']">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>
+        </a>
+
+
+        <!-- Contenedor del formulario de inicio de sesión -->
+        <form [formGroup]="formularioLogin" class="usuario_contrasena" (ngSubmit)="iniciarSesion($event)">
+            <!-- Título del formulario -->
+            <h1 class="title is-4 has-text-centered">Iniciar Sesión</h1>
+            <p *ngIf="errorMensaje" class="mensaje-error">
+                {{ errorMensaje }}
+            </p>
+            <!-- Campo de usuario -->
+            <label id="lusuario">
+                <svg width="16px" viewBox="-32 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="white"
+                        d="M64 224h13.5c24.7 56.5 80.9 96 146.5 96s121.8-39.5 146.5-96H384c8.8 0 16-7.2 16-16v-96c0-8.8-7.2-16-16-16h-13.5C345.8 39.5 289.6 0 224 0S102.2 39.5 77.5 96H64c-8.8 0-16 7.2-16 16v96c0 8.8 7.2 16 16 16zm40-88c0-22.1 21.5-40 48-40h144c26.5 0 48 17.9 48 40v24c0 53-43 96-96 96h-48c-53 0-96-43-96-96v-24zm72 72l12-36 36-12-36-12-12-36-12 36-36 12 36 12 12 36zm151.6 113.4C297.7 340.7 262.2 352 224 352s-73.7-11.3-103.6-30.6C52.9 328.5 0 385 0 454.4v9.6c0 26.5 21.5 48 48 48h80v-64c0-17.7 14.3-32 32-32h128c17.7 0 32 14.3 32 32v64h80c26.5 0 48-21.5 48-48v-9.6c0-69.4-52.9-125.9-120.4-133zM272 448c-8.8 0-16 7.2-16 16s7.2 16 16 16 16-7.2 16-16-7.2-16-16-16zm-96 0c-8.8 0-16 7.2-16 16v48h32v-48c0-8.8-7.2-16-16-16z" />
+                </svg>
+
+                <strong> Usuario:</strong>
+            </label>
+            <input id="usuario" class="input" type="text" placeholder="TON_618..." formControlName="usuario">
+            <p *ngIf="formularioLogin.get('usuario')?.invalid && formularioLogin.get('usuario')?.touched"
+                class="mensaje-error">
+                <span *ngIf="formularioLogin.get('usuario')?.hasError('required')">El usuario es obligatorio.</span>
+                <span *ngIf="formularioLogin.get('usuario')?.hasError('pattern')">Solo letras y números
+                    permitidos.</span>
+            </p>
+
+            <!-- Campo de contraseña -->
+            <label for="contrasena" id="lcontrasena">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16">
+                    <path fill="white" d="M400 224h-24V144C376 64.6 311.4 0 232 0S88 64.6 88 144v80H64c-35.3 
+                    0-64 28.7-64 64v160c0 35.3 28.7 64 64 64h336c35.3 0 64-28.7 
+                    64-64V288c0-35.3-28.7-64-64-64zM136 144c0-53 43-96 96-96s96 43 
+                    96 96v80H136v-80z" />
+                </svg>
+
+                <strong> Contraseña:</strong>
+            </label>
+            <input id="contrasena" class="input" type="password" placeholder="Contraseña..."
+                formControlName="contrasinal">
+            <p *ngIf="formularioLogin.get('contrasinal')?.invalid && formularioLogin.get('contrasinal')?.touched"
+                class="mensaje-error">
+                <span *ngIf="formularioLogin.get('contrasinal')?.hasError('required')">La contraseña es
+                    obligatoria.</span>
+                <span *ngIf="formularioLogin.get('contrasinal')?.hasError('minlength')">Mínimo 4 caracteres.</span>
+            </p>
+
+            <!-- Campo del captcha -->
+            <div id="captcha_info">
+                <input id="captcha_checkbox" formControlName="captcha" type="checkbox">
+                <label>No soy un robot</label>
+            </div>
+            <p *ngIf="formularioLogin.get('captcha')?.invalid && formularioLogin.get('captcha')?.touched"
+                class="mensaje-error">
+                Tienes que marcar el captcha
+            </p>
+
+            <!-- Botón de enviar -->
+            <button type="submit" id="continuar">
+                Iniciar sesión
+            </button>
+        </form>
+
+    </div>
+</div>

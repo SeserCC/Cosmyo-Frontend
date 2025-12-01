@@ -1,0 +1,142 @@
+<div class="contenido d-flex align-items-center justify-content-center min-vh-100">
+    <div class="astro-card w-100" style="max-width: 420px;">
+        <!-- Mapa de navegación -->
+        <div id="mapa_navegacion" class="mb-3">
+            <a [routerLink]="['/portada']">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125
+                 c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125
+                 1.125-1.125h2.25c.621 0 1.125.504
+                 1.125 1.125V21h4.125c.621 0
+                 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg> Inicio
+            </a>
+            / <strong id="inicio_sesion">Registro</strong>
+        </div>
+
+        <!-- Formulario -->
+        <form [formGroup]="formularioRegistro" (ngSubmit)="registro($event)">
+            <h1 class="text-center text-info mb-4">Registro</h1>
+
+            <!-- <p>{{errorMensaje}} Hola</p> -->
+
+            <!-- Nombre -->
+            <div class="mb-3">
+                <label class="form-label text-light"><strong>Nombre</strong></label>
+                <input type="text" class="form-control bg-dark text-light border-info" placeholder="TON_618..."
+                    formControlName="nombre">
+                <div *ngIf="formularioRegistro.get('nombre')?.invalid && formularioRegistro.get('nombre')?.touched"
+                    class="mensaje-error">
+                    <span *ngIf="formularioRegistro.get('nombre')?.hasError('required')">El usuario es
+                        obligatorio.</span>
+                    <span *ngIf="formularioRegistro.get('nombre')?.hasError('pattern')">Solo letras y números
+                        permitidos.</span>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label text-light"><strong>Email</strong></label>
+                <input type="email" class="form-control bg-dark text-light border-info" placeholder="ejemplo@email.com"
+                    formControlName="email">
+                <div *ngIf="formularioRegistro.get('email')?.invalid && formularioRegistro.get('email')?.touched"
+                    class="mensaje-error">
+                    <span *ngIf="formularioRegistro.get('email')?.hasError('required')">El email es obligatorio.</span>
+                </div>
+            </div>
+
+            <!-- Contraseña -->
+            <div class="mb-3">
+                <label class="form-label text-light"><strong>Contraseña</strong></label>
+                <input type="password" class="form-control bg-dark text-light border-info" placeholder="********"
+                    formControlName="contrasinal">
+                <div *ngIf="formularioRegistro.get('contrasinal')?.invalid && formularioRegistro.get('contrasinal')?.touched"
+                    class="mensaje-error">
+                    <span *ngIf="formularioRegistro.get('contrasinal')?.hasError('required')">La contraseña es
+                        obligatoria.</span>
+                    <span *ngIf="formularioRegistro.get('contrasinal')?.hasError('minlength')">Mínimo 8
+                        caracteres.</span>
+                </div>
+            </div>
+
+            <!-- Confirmar contraseña -->
+            <div class="mb-3">
+                <label class="form-label text-light"><strong>Confirmar contraseña</strong></label>
+                <input type="password" class="form-control bg-dark text-light border-info"
+                    placeholder="Repite la contraseña" formControlName="contrasinal_confirmation">
+                <div *ngIf="formularioRegistro.get('contrasinal_confirmation')?.invalid && formularioRegistro.get('contrasinal_confirmation')?.touched"
+                    class="mensaje-error">
+                    <span *ngIf="formularioRegistro.get('contrasinal_confirmation')?.hasError('required')">Debes repetir
+                        la
+                        contraseña.</span>
+                </div>
+            </div>
+
+            <!-- Plan -->
+            <div class="mb-3">
+                <label class="form-label text-light"><strong>Plan</strong></label>
+                <select class="form-select bg-dark text-light border-info" formControlName="plan">
+                    <option value="">Selecciona un plan</option>
+                    <option value="gratuito">Gratuito</option>
+                    <option value="premium">Premium</option>
+                </select>
+                <div *ngIf="formularioRegistro.get('plan')?.invalid && formularioRegistro.get('plan')?.touched"
+                    class="mensaje-error">
+                    <span *ngIf="formularioRegistro.get('plan')?.hasError('required')">Debes seleccionar un plan</span>
+                </div>
+            </div>
+
+            <!-- Campos Premium -->
+            <ng-container *ngIf="!gratuito">
+                <div class="mb-3">
+                    <label class="form-label text-light"><strong>Método de pago</strong></label>
+                    <select class="form-select bg-dark text-light border-info" formControlName="metodo_pago">
+                        <option value="">Selecciona un método de pago</option>
+                        <option value="bizum">Bizum</option>
+                        <option value="tarjeta de credito">Tarjeta de crédito</option>
+                        <option value="tarjeta de debito">Tarjeta de débito</option>
+                        <option value="pay-pal">PayPal</option>
+                    </select>
+
+                    <div *ngIf="formularioRegistro.get('metodo_pago')?.invalid && formularioRegistro.get('metodo_pago')?.touched"
+                        class="mensaje-error">
+                        <span *ngIf="formularioRegistro.get('metodo_pago')?.hasError('required')">Debes seleccionar un
+                            metodo de pago</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-light"><strong>Tipo de pago</strong></label>
+                    <select class="form-select bg-dark text-light border-info" formControlName="tipo_pago">
+                        <option value="">Selecciona tipo de pago</option>
+                        <option value="mensual">Mensual (4,99€)</option>
+                        <option value="anual">Anual (49,99€)</option>
+                    </select>
+                    <div *ngIf="formularioRegistro.get('tipo_pago')?.invalid && formularioRegistro.get('tipo_pago')?.touched"
+                        class="mensaje-error">
+                        <span *ngIf="formularioRegistro.get('tipo_pago')?.hasError('required')">Debes seleccionar un
+                            tipo de pago</span>
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- Captcha -->
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" formControlName="captcha" id="captcha_checkbox">
+                <label for="captcha_checkbox" class="form-check-label text-light">No soy un robot</label>
+                <div *ngIf="formularioRegistro.get('captcha')?.invalid && formularioRegistro.get('captcha')?.touched"
+                    class="mensaje-error">
+                    Tienes que marcar el captcha
+                </div>
+            </div>
+
+            <!-- Botón -->
+            <div class="text-end">
+                <button type="submit"
+                    [disabled]="formularioRegistro.invalid || formularioRegistro.get('contrasinal')?.value !== formularioRegistro.get('contrasinal_confirmation')?.value"
+                    class="astro-btn">Registrarme</button>
+            </div>
+        </form>
+    </div>
+</div>

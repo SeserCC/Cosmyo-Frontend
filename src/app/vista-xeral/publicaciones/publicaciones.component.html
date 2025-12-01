@@ -1,0 +1,165 @@
+<div class="contenido has-background-dark"
+    style="min-height: 100vh; background-image: radial-gradient(circle at 20% 20%, #1a237e 0%, #0d1b2a 100%); color: #e0e0e0; padding: 2rem;">
+
+    <!-- Encabezado tipo galaxia -->
+    <ng-container *ngIf="usuarioActual?.id == user_id">
+        <h1 class="title has-text-centered has-text-light mb-6"
+            style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">
+            🌠 Observatorio Estelar – Tus Publicaciones
+        </h1>
+    </ng-container>
+
+    <ng-container *ngIf="usuarioActual?.id != user_id">
+        <h1 class="title has-text-centered has-text-light mb-6"
+            style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">
+            🌠 Observatorio Estelar – {{usuarioPublicacionName}}
+        </h1>
+    </ng-container>
+
+
+    <div class="datos container">
+
+        <!-- Breadcrumb tipo constelación -->
+        <nav class="breadcrumb has-succeeds-separator is-small mb-4" aria-label="breadcrumbs">
+            <ul>
+                <li>
+                    <a [routerLink]="['/portada']" class="has-text-light">
+                        <i class="fa-solid fa-house"></i> Inicio
+                    </a>
+                </li>
+                <li class="is-active">
+                    <a class="has-text-info" aria-current="page"><i class="fa-solid fa-star"></i> Tus Publicaciones</a>
+                </li>
+            </ul>
+        </nav>
+
+        <form *ngIf="cambiar" [formGroup]="formularioCRUDImagen" class="box has-background-black-ter has-text-light"
+            style="border: 1px solid #3949ab; box-shadow: 0 0 25px rgba(63, 81, 181, 0.5); border-radius: 12px;">
+
+            <!-- Archivo -->
+            <div class="field">
+                <label class="label has-text-light"><i class="fa-solid fa-image"></i> Imagen</label>
+                <div class="control">
+                    <input class="input is-dark" type="file" (change)="archivoSeleccionado($event)" />
+                </div>
+                <p *ngIf="faltaArchivo" class="help is-danger">Falta el archivo</p>
+            </div>
+
+            <!-- Título -->
+            <div class="field">
+                <label class="label has-text-light"><i class="fa-solid fa-pen"></i> Título</label>
+                <div class="control">
+                    <input class="input is-dark" type="text" placeholder="Título de la publicación"
+                        formControlName="titulo" />
+                </div>
+                <p *ngIf="formularioCRUDImagen.get('titulo')?.touched && formularioCRUDImagen.get('titulo')?.invalid"
+                    class="help is-danger">
+                    Debes indicar el título
+                </p>
+            </div>
+
+            <div class="field">
+                <label class="label has-text-light"><i class="fa-solid fa-globe"></i> Zona geográfica</label>
+                <div class="control">
+                    <input class="input has-background-black-ter has-text-light" type="text"
+                        placeholder="Zona geográfica" formControlName="zona_geografica">
+                </div>
+                <p *ngIf="formularioCRUDImagen.get('zona_geografica')?.touched && formularioCRUDImagen.get('zona_geografica')?.invalid"
+                    class="help is-danger">
+                    Debes indicar la zona geográfica
+                </p>
+            </div>
+
+            <!-- Descripción -->
+            <div class="field">
+                <label class="label has-text-light"><i class="fa-solid fa-book-open"></i> Descripción</label>
+                <div class="control">
+                    <textarea class="textarea is-dark" placeholder="Descripción"
+                        formControlName="descripcion"></textarea>
+                </div>
+                <p *ngIf="formularioCRUDImagen.get('descripcion')?.touched && formularioCRUDImagen.get('descripcion')?.invalid"
+                    class="help is-danger">
+                    Debes indicar una descripción
+                </p>
+            </div>
+
+            <!-- Botones -->
+            <div class="field is-grouped mt-4 is-justify-content-center">
+                <div class="control">
+                    <button *ngIf="cambiar" type="button" class="button is-info"
+                        [disabled]="formularioCRUDImagen.invalid" (click)="modificarPublicacion()"
+                        style="background: linear-gradient(90deg, #3f51b5, #2196f3); border: none;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Modificar
+                    </button>
+                </div>
+                <div class="control">
+                    <button *ngIf="cambiar" type="button" class="button is-warning"
+                        (click)="cancelar(formularioCRUDImagen)">
+                        <i class="fa-solid fa-xmark"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+        <!-- Lista de publicaciones -->
+        <div class="box has-background-black-bis mt-6"
+            style="border: 1px solid #3f51b5; border-radius: 12px; box-shadow: 0 0 20px rgba(79, 195, 247, 0.3);">
+
+            <ul>
+                <p *ngIf="publicaciones?.length === 0" class="has-text-centered has-text-grey-light is-italic">
+                    🌌 Aún no has compartido ninguna publicación. ¡Comparte tu primera imagen astronómica!
+                </p>
+
+                <li *ngFor="let publicacion of publicaciones" class="mb-5 p-3"
+                    style="background: rgba(63, 81, 181, 0.1); border-radius: 10px; transition: 0.3s;">
+                    <div class="columns is-vcentered is-mobile">
+
+                        <!-- Imagen -->
+                        <div class="column is-3">
+                            <figure class="image is-square">
+                                <img [src]="publicacionFoto + publicacion.imagen" alt="Imagen de la publicación"
+                                    style="border-radius: 8px; box-shadow: 0 0 15px rgba(66, 165, 245, 0.5);" />
+                            </figure>
+                        </div>
+
+                        <!-- Información -->
+                        <div class="column is-6 has-text-light">
+                            <p><strong class="has-text-info">Título:</strong> {{ publicacion.titulo }}</p>
+                            <p><strong class="has-text-info">Descripción:</strong> {{ publicacion.descripcion }}</p>
+                            <p>
+                                <strong class="has-text-info">Fecha:</strong> {{ publicacion.fecha_alta |
+                                date:'yyyy-MM-dd'}}
+                                <ng-container *ngIf="publicacionSeleccionar?.id === publicacion.id && edicion">
+                                    <span class="tag is-info ml-2">Editado</span>
+                                </ng-container>
+                            </p>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="column is-3 is-flex is-align-items-center is-justify-content-flex-end">
+                            <button class="button is-small is-warning mr-2" type="button"
+                                (click)="editarPublicacion(publicacion)">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="button is-small is-danger" type="button"
+                                (click)="eliminarPublicacion(publicacion.id!)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Botón subir archivo -->
+        <div class="has-text-centered mt-5">
+            <a [routerLink]="['/subirArchivo']">
+                <button class="button is-link"
+                    style="background: linear-gradient(90deg, #1a237e, #0d47a1); border: none;">
+                    <i class="fa-solid fa-upload"></i> Subir archivo estelar
+                </button>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<!-- Contenedor principal para los datos -->
+<div class="contenido">
+
+    <div class="datos">
+
+        <!-- Barra de navegación (breadcrumb) -->
+        <div id="mapa_navegacion">
+            <a [routerLink]="['/portada']">
+                <!-- Icono de casa -->
+                <i class="fa-solid fa-house"></i> Inicio
+            </a>
+            /
+            <strong id="calendario">Calendario</strong>
+        </div>
+
+        <!-- Contenedor del calendario y su información -->
+        <div class="calendario_info">
+
+            <!-- Imagen representativa del calendario -->
+            <img id="calendario_noviembre" src="../media/img/calendarios/noviembre.jpg"
+                alt="Calendario astronomico de noviembre" width="800px">
+
+            <!-- Lista de eventos del mes -->
+            <section class="section has-background-dark has-text-white">
+                <div class="box astro-box">
+                    <h1 class="title has-text-centered has-text-white">{{ nombreMesActual }}</h1>
+                    <ul>
+                        <p *ngIf="eventos?.length === 0"
+                            class="mensaje-eventos-vacio has-text-centered has-text-grey-light">
+                            🔭 Aún no se han subido los eventos astronómicos. Esta sección se actualizará próximamente
+                            con
+                            fenómenos celestes destacados.
+                        </p>
+
+                        <li *ngFor="let evento of eventos" class="evento-item">
+                            <span class="has-text-grey-light is-pulled-right">{{ evento.fecha }}</span>
+                            <strong>{{ evento.evento }}</strong>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+/* Estilo general para el cuerpo de la página */
+.contenido {
+    /* Elimina los márgenes por defecto */
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    /* Para que cubra toda la pantalla */
+}
+
+/* Estilo para los enlaces */
+a {
+    color: white;
+    /* Color blanco para los enlaces */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+/* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
+#mapa_navegacion>a:hover {
+    opacity: 0.6;
+    /* Baja la opacidad de los enlaces cuando se pasa el ratón */
+}
+
+/* Estilo para el contenedor de datos */
+.datos {
+    padding: 10px;
+    /* Relleno de 5px */
+    background-color: #1d1d1d;
+    /* Fondo gris oscuro */
+    margin: 90px 70px 10px;
+    width: 90%;
+    /* Márgenes alrededor del contenedor */
+    box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
+    /* Sombra azul alrededor del contenedor */
+}
+
+#publicacion {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Errores */
+.erro {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}

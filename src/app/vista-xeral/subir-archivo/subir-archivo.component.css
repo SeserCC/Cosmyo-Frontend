@@ -1,0 +1,269 @@
+/* Estilo general para el cuerpo de la página */
+body {
+    background-color: #7b7b7b;
+    /* Color de fondo gris */
+    color: #ffffff;
+    /* Color de texto blanco */
+    margin: 0px;
+    /* Elimina los márgenes por defecto */
+}
+
+/* Estilo para los enlaces */
+a {
+    color: white;
+    /* Color blanco para los enlaces */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+/* Estilo para la cabecera */
+.cabecera {
+    position: fixed;
+    width: 100%;
+    margin-top: -130px;
+    display: flex;
+    /* Usa flexbox para distribuir los elementos */
+    align-items: center;
+    /* Centra los elementos verticalmente */
+    background-color: black;
+    /* Fondo negro */
+    height: 70px;
+    /* Altura de la cabecera */
+    font-size: 20px;
+    /* Tamaño de la fuente */
+}
+
+#subir_archivos {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Oculta el input de tipo archivo, ya que se usará un label personalizado como botón */
+#seleccionar_archivo {
+    display: none;
+}
+
+/* Estilo para el texto dentro del contenedor .archivo */
+.archivo>p {
+    color: #878383;
+    /* Color gris claro para el texto explicativo */
+}
+
+/* Estilo para el ícono de subir archivo (Font Awesome) dentro del label */
+label>.fa-solid.fa-upload {
+    font-size: 35px;
+    /* Tamaño grande para destacar el ícono */
+}
+
+/* Contenedor principal para el área de carga de archivos */
+.archivo {
+    display: flex;
+    /* Usa flexbox para disposición vertical */
+    flex-direction: column;
+    /* Organiza los elementos en columna */
+    row-gap: 10px;
+    /* Espacio entre elementos hijos */
+    padding-top: 15px;
+    /* Espaciado superior */
+    margin: 10px 20px;
+    /* Margen alrededor del contenedor */
+    background-color: #383636;
+    /* Fondo oscuro */
+    color: #cdc6c6;
+    /* Texto en color gris claro */
+    cursor: pointer;
+    /* Cambia el cursor al pasar sobre el área (clickable) */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    text-align: center;
+    /* Centra el contenido de texto */
+    border-style: dashed;
+    /* Borde discontinuo para aspecto de zona de carga */
+    border-color: #a59f9f;
+    /* Color del borde */
+    border-width: 2px;
+    /* Grosor del borde */
+    font-size: 17px;
+    /* Tamaño del texto */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* Fuente amigable y legible */
+}
+
+
+/* Estilo para el icono de flecha (Font Awesome) */
+.contenedor-flecha {
+    display: flex;
+    justify-content: flex-end;
+    /* Alinea el contenido a la derecha */
+}
+
+/* Estilo para el mapa de navegación */
+#mapa_navegacion {
+    font-family: Arial, Helvetica, sans-serif;
+    /* Fuente sans-serif */
+    font-size: 15px;
+    /* Tamaño de fuente */
+    margin: 10px 10px;
+    /* Márgenes alrededor del contenedor */
+    height: 20px;
+    /* Altura de 20px */
+    padding: 8px;
+    /* Relleno alrededor del texto */
+    margin: 0px;
+    /* Elimina el margen por defecto */
+}
+
+/* Estilo para el contenedor de inicio de sesión */
+#inicio_sesion {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno de 5px */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
+#mapa_navegacion>a:hover {
+    opacity: 0.6;
+    /* Baja la opacidad de los enlaces cuando se pasa el ratón */
+}
+
+/* Estilo para los enlaces dentro de #cabecera_enlaces */
+#cabecera_enlaces {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /*Tipo de fuente de la cabecera de enlaces*/
+    margin-top: 15px;
+    /* Márgen superior de 15px */
+}
+
+/* Estilo para el icono de usuario (fuente Font Awesome) */
+.fa-solid.fa-user {
+    margin-top: 10px;
+    /* Márgen superior de 10px */
+    margin-right: 15px;
+    /* Márgen derecho de 15px */
+    font-size: 25px;
+    /* Tamaño grande para el icono */
+}
+
+/* Estilo para el contenedor de datos */
+.datos {
+    max-width: 100%;
+    padding: 5px;
+    /* Relleno de 5px */
+    background-color: #1d1d1d;
+    /* Fondo gris oscuro */
+    margin: 130px 70px 145px;
+    /* Márgenes alrededor del contenedor */
+    box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
+    /* Sombra azul alrededor del contenedor */
+}
+
+/* Aplica estilos tanto al contenedor del título como al de la descripción */
+.titulo_info,
+#descripcion_info {
+    display: flex;
+    /* Usa flexbox para organizar el contenido */
+    flex-direction: column;
+    /* Dispone los elementos en columna */
+    justify-content: center;
+    /* Centra verticalmente el contenido dentro del contenedor */
+    padding: 15px;
+    /* Espaciado interno alrededor del contenido */
+}
+
+/* Estilo para el texto del título y la descripción */
+#texto_titulo,
+#texto_descripcion {
+    font-size: 25px;
+    /* Tamaño grande de fuente para destacar el texto */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* Fuente legible y moderna */
+    margin-bottom: 5px;
+    /* Espacio debajo del texto para separación con otros elementos */
+}
+
+.titulo_archivo:focus,
+.descripcion_archivo:focus {
+    outline-color: #006eff;
+    /* Color del borde cuando tiene el foco */
+    outline-style: solid;
+    /* Estilo del borde */
+    box-shadow: 0 4px 10px rgba(24, 98, 235, 0.8);
+    /* Sombra azul */
+}
+
+/* Estilos aplicados tanto al título del archivo como a su descripción */
+.titulo_archivo,
+.descripcion_archivo {
+    font-size: 17px;
+    /* Tamaño de letra moderado para buena legibilidad */
+    padding: 10px;
+    /* Espaciado interno para separar el texto del borde */
+    background-color: #706d6d;
+    /* Color de fondo gris oscuro */
+    border-style: none;
+    /* Elimina cualquier borde por defecto */
+    border-radius: 3px;
+    /* Bordes ligeramente redondeados para suavizar la apariencia */
+    height: 25px;
+    /* Altura fija, aunque puede ser modificada por min-height */
+    color: white;
+    /* Color del texto en blanco para buen contraste */
+    max-width: 98%;
+    /* Ancho máximo del 98% del contenedor padre */
+    min-height: 30px;
+    /* Altura mínima para garantizar espacio suficiente para el contenido */
+    min-width: 98%;
+    /* Ancho mínimo del 98%, asegurando consistencia en el diseño */
+}
+
+
+/* Estilo para los botones */
+button {
+    border: none;
+    /* Sin borde */
+    background-color: #1d1d1d;
+    /* Fondo oscuro */
+    font-size: 16px;
+    /* Tamaño de la fuente */
+    color: #ffffff;
+    /* Texto blanco */
+    border-radius: 4px;
+    /* Bordes redondeados */
+    width: 110px;
+    /* Ancho */
+    height: 30px;
+    /* Alto */
+    background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
+    /* Fondo degradado azul */
+    cursor: pointer;
+    /* Cambia el cursor al pasar sobre el botón */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    /* Sombra oscura */
+    margin: 10px 0 10px 18px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+a>button>.fa-solid.fa-upload {
+    margin-left: 10px;
+}
+
+/* Estilo de hover para los botones */
+button:hover {
+    background: linear-gradient(45deg, #022c63, #12479b, #2d65b4);
+    /* Fondo más oscuro al pasar el ratón */
+}
+
+.erro {
+    color: rgb(230, 20, 20);
+    font-size: 13px;
+    margin-left: 20px;
+    margin-top: 0;
+}

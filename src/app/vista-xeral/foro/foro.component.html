@@ -1,0 +1,62 @@
+<div class="contenido">
+    <!-- Contenedor principal de la sección -->
+    <div class="datos">
+        <!-- Barra superior de navegación y búsqueda -->
+        <div class="buscar_temas">
+            <!-- Mapa de navegación -->
+            <div id="mapa_navegacion">
+                <a [routerLink]="['/portada']">
+                    <i class="fa-solid fa-house"></i> Inicio
+                </a>
+                /
+                <strong id="foro">Foro</strong>
+            </div>
+            <button (click)="mostrarFormulario()">+ Nuevo Tema</button>
+        </div>
+
+        <form *ngIf="cambiar" [formGroup]="formularioCRUDForo" class="mb-5">
+            <!-- Formulario para engadir foro -->
+            <h2 class="title is-4 has-text-light mb-4">Foros</h2>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input has-background-black-ter has-text-light" type="text" placeholder="Nome do foro"
+                        formControlName="tema">
+                </div>
+                <p *ngIf="formularioCRUDForo.get('tema')?.touched && formularioCRUDForo.get('tema')?.invalid"
+                    class="help is-danger">
+                    Debes indicar el tema
+                </p>
+            </div>
+
+            <div class="field is-grouped is-grouped-multiline">
+                <div class="control">
+                    <button *ngIf="cambiar" (click)="engadirForo()" [disabled]="formularioCRUDForo.invalid"
+                        class="button is-link">
+                        Engadir foro
+                    </button>
+                </div>
+                <div class="control">
+                    <button *ngIf="cambiar" (click)="cancelar(formularioCRUDForo)" class="button is-warning">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- Foro -->
+        <p *ngIf="foros?.length === 0" class="mensaje-foros-vacio has-text-centered has-text-grey-light">
+            💬 Aún no se ha creado ningún foro. ¡Pronto podrás unirte a conversaciones sobre el universo y compartir tus
+            ideas!
+        </p>
+
+        <div *ngFor="let foro of foros"
+            style="position: relative; border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem;">
+            <a [routerLink]="['/debate', foro.id]">{{foro.tema}}</a>
+
+            <span style="position: absolute; bottom: 0.5rem; right: 0.5rem; font-size: 0.9rem; color: #868585;">
+                {{ foro.fecha }}
+            </span>
+        </div>
+
+    </div>
+</div>

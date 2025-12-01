@@ -1,0 +1,126 @@
+/* Estilo general del pie de página */
+.pie_pagina {
+    background-color: #222;
+    /* Fondo oscuro */
+    color: #ffffff;
+    /* Texto blanco para buen contraste */
+    text-align: center;
+    /* Centra el contenido */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* Tipografía legible */
+}
+
+/* Contenedor principal del contenido del pie de página */
+.contenedor {
+    display: flex;
+    /* Usa flexbox para distribuir elementos */
+    flex-wrap: wrap;
+    /* Permite que se ajusten en pantallas pequeñas */
+    justify-content: space-around;
+    /* Distribuye el espacio uniformemente */
+    max-width: 1200px;
+    /* Ancho máximo */
+    margin: auto;
+    /* Centrado horizontal */
+    padding: 20px;
+    /* Espaciado interior */
+}
+
+/* Títulos de las secciones del pie */
+.seccion h3 {
+    border-bottom: 2px solid #ffcc00;
+    /* Línea inferior decorativa */
+    padding-bottom: 5px;
+    /* Espaciado inferior */
+    margin-bottom: 10px;
+    /* Separación del contenido siguiente */
+}
+
+/* Lista de enlaces dentro de cada sección */
+.seccion ul {
+    display: grid;
+    /* Diseño tipo rejilla */
+    list-style: none;
+    /* Elimina viñetas */
+    padding: 2px;
+    gap: 10px;
+    /* Espaciado entre elementos */
+}
+
+/* Sección con descripción (puede usarse para datos de contacto, etc.) */
+.descripcion {
+    width: 20%;
+    /* Ocupa el 20% del ancho */
+}
+
+/* Estilo base de los enlaces */
+.seccion a {
+    color: #ffcc00;
+    /* Color amarillo para destacar */
+    text-decoration: none;
+    /* Quita subrayado por defecto */
+    position: relative;
+    /* Necesario para el pseudo-elemento ::after */
+    display: inline-block;
+    padding-bottom: 4px;
+    /* Espacio para la animación de subrayado */
+}
+
+/* Línea animada debajo del enlace al pasar el cursor */
+.seccion a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    /* Inicialmente sin ancho */
+    height: 2px;
+    background-color: #ffcc00;
+    transition: width 0.3s ease-in-out;
+    /* Animación suave */
+}
+
+.seccion a:hover::after {
+    width: 100%;
+    /* Muestra la línea completa al hacer hover */
+}
+
+/* Contenedor para íconos de redes sociales */
+.redes-sociales {
+    display: flex;
+    justify-content: center;
+    /* Centra horizontalmente */
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Estilo de cada ícono de red social */
+.redes-sociales .icono {
+    background-color: #444;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+}
+
+/* Estilo específico del ícono SVG */
+.redes-sociales .icono svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    /* Usa el color del texto para el ícono */
+}
+
+/* Estilo de la franja inferior con derechos de autor */
+.copy {
+    background-color: #111;
+    /* Aún más oscuro para diferenciar */
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #bbb;
+    /* Gris claro para el texto */
+    border-top: 1px solid #444;
+    /* Línea superior sutil */
+}

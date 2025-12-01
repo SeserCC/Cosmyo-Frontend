@@ -1,0 +1,271 @@
+<!-- perfil-usuario.component.html -->
+<section class="section">
+    <div class="container">
+        <!-- Cabecera con imagen temática -->
+        <div class=" box"
+            style="background: linear-gradient(rgba(2,6,23,0.75), rgba(2,6,23,0.75)), url('media/img/nebulosa_aguila.jpg') center/cover no-repeat; color: #fff;">
+            <div class="columns is-vcentered">
+                <div class="column is-9">
+                    <h1 class="title is-2" style="color: #ffd166;">
+                        {{ perfil?.user.name || 'Usuario' }}
+                    </h1>
+                    <h2 class="subtitle is-5" style="color: #e9c46a;">
+                        Explorador de cielos · {{ perfil?.pais || 'Desconocido' }}
+                    </h2>
+                </div>
+                <div class="column is-3 has-text-right">
+                    <button class="button is-warning is-light" (click)="editar()">
+                        <span class="icon"><i class="fas fa-edit"></i></span>
+                        <span>Editar perfil</span>
+                    </button>
+                    <button class="button is-warning is-light" (click)="editarPlan()">
+                        <span class="icon"><i class="fas fa-edit"></i></span>
+                        <span>Editar plan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card con foto y datos -->
+        <div class="card">
+            <div class="card-content">
+                <div class="columns">
+                    <!-- Foto -->
+                    <div class="column is-3 has-text-centered">
+                        <figure class="image is-128x128 is-inline-block"
+                            style="border-radius: 50%; overflow: hidden; box-shadow: 0 8px 24px rgba(2,12,27,0.2);">
+                            <img *ngIf="perfil?.foto; else placeholder" [src]="perfilFoto + perfil.foto"
+                                [alt]="perfil.user.name + ' foto'">
+                        </figure>
+                        <ng-template #placeholder>
+                            <figure class="image is-128x128 is-inline-block"
+                                style="border-radius: 50%; overflow: hidden; background: #0b132b; display:flex; align-items:center; justify-content:center;">
+                                <span style="color:#9fb6ff; font-weight:700;">★</span>
+                            </figure>
+                        </ng-template>
+
+                        <div class="mt-3">
+                            <p class="is-size-7 has-text-grey">Registrado</p>
+                            <p class="has-text-weight-semibold">{{ perfil?.fecha_registro | date:'longDate' }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Datos -->
+                    <div class="column is-6">
+                        <div class="content">
+                            <p class="is-size-6">
+                                <strong>Biografía</strong>
+                            </p>
+                            <p *ngIf="perfil?.biografia; else sinBio">{{ perfil.biografia }}</p>
+                            <ng-template #sinBio>
+                                <p class="has-text-grey">Este usuario aún no ha puesto una biografía.</p>
+                            </ng-template>
+
+                            <hr>
+
+                            <div class="columns is-mobile">
+                                <div class="column is-half">
+                                    <p class="is-size-7 has-text-grey">Teléfono</p>
+                                    <p><a *ngIf="perfil?.telefono" [href]="'tel:'+perfil.telefono">{{
+                                            perfil.telefono
+                                            }}</a><span *ngIf="!perfil?.telefono" class="has-text-grey">No
+                                            disponible</span></p>
+                                </div>
+
+                                <div class="column is-half">
+                                    <p class="is-size-7 has-text-grey">Red social</p>
+                                    <p *ngIf="perfil?.red_social_principal; else sinRed">
+                                        <a [href]="perfil.red_social_principal" target="_blank" rel="noopener">
+                                            {{ perfil.red_social_principal}}
+                                        </a>
+                                    </p>
+                                    <ng-template #sinRed>
+                                        <span class="has-text-grey">No vinculada</span>
+                                    </ng-template>
+                                </div>
+                            </div>
+
+                            <div class="columns is-mobile">
+                                <div class="column is-half">
+                                    <p class="is-size-7 has-text-grey">Usuario en la red</p>
+                                    <p>{{ perfil?.usuario_red_social || '—' }}</p>
+                                </div>
+                                <div class="column is-half">
+                                    <p class="is-size-7 has-text-grey">País</p>
+                                    <p>{{ perfil?.pais || '—' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado / acciones -->
+                    <div class="column is-3">
+                        <p class="is-size-7 has-text-grey">Estado</p>
+                        <div>
+                            <span class="tag" style="font-weight:600; padding: 0.5rem 0.75rem;">
+                                {{ perfil?.estado | titlecase }}
+                            </span>
+                        </div>
+
+                    </div>
+                </div> <!-- end columns -->
+            </div> <!-- end card-content -->
+
+            <!-- Contenedor de edición de perfil -->
+            <div *ngIf="cambiar" class="card mt-5" style="background-color: #0b132b; color: #fff;">
+                <div class="card-content">
+                    <h2 class="title is-4" style="color: #ffd166;">Editar perfil</h2>
+                    <p class="subtitle is-6 has-text-grey-light mb-4">
+                        Actualiza tu información y personaliza tu perfil estelar.
+                    </p>
+
+                    <form [formGroup]="perfilCRUD" (ngSubmit)="modificarPerfil()" class="content">
+                        <div class="columns">
+                            <!-- Columna izquierda -->
+                            <div class="column is-half">
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Teléfono</label>
+                                    <div class="control">
+                                        <input class="input" type="text" formControlName="telefono"
+                                            placeholder="Introduce tu número de teléfono">
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Red social principal</label>
+                                    <div class="control">
+                                        <input class="input" type="text" formControlName="red_social_principal"
+                                            placeholder="Ej: Twitter, Instagram...">
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Nombre de usuario en otra red</label>
+                                    <div class="control">
+                                        <input class="input" type="text" formControlName="usuario_red_social"
+                                            placeholder="@astrofan123">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Columna derecha -->
+                            <div class="column is-half">
+                                <div class="field">
+                                    <label class="label has-text-warning-light">País</label>
+                                    <div class="control">
+                                        <input class="input" type="text" formControlName="pais"
+                                            placeholder="Ej: España">
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Biografía</label>
+                                    <div class="control">
+                                        <textarea class="textarea" formControlName="biografia"
+                                            placeholder="Cuéntanos algo sobre ti..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Imagen de perfil -->
+                        <div class="field mt-4">
+                            <label class="label has-text-warning-light">Foto de perfil</label>
+                            <div class="control">
+                                <input class="input" type="file" (change)="archivoSeleccionado($event)"
+                                    accept="image/*">
+                            </div>
+                            <p *ngIf="faltaArchivo" class="help is-danger">
+                                Falta el archivo
+                            </p>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="field is-grouped is-justify-content-flex-end mt-5">
+                            <p class="control">
+                                <button type="button" class="button is-light" (click)="cancelar()">Cancelar</button>
+                            </p>
+                            <p class="control">
+                                <button type="submit" class="button is-warning"
+                                    [disabled]="perfilCRUD.invalid || !archivoSelect">Guardar
+                                    cambios</button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div *ngIf="cambiarPlan" class="card mt-5" style="background-color: #0b132b; color: #fff;">
+                <div class="card-content">
+                    <h2 class="title is-4" style="color: #ffd166;">Editar plan</h2>
+                    <p class="subtitle is-6 has-text-grey-light mb-4">
+                        Actualiza tu plan.
+                    </p>
+
+                    <form [formGroup]="planCRUD" (ngSubmit)="modificarPlan()" class="content">
+                        <div class="columns">
+                            <div class="field">
+                                <div class="control">
+                                    <select formControlName="plan" class="has-background-black-ter has-text-light">
+                                        <option value="" selected>Selecciona un plan</option>
+                                        <option value="premium">Premium</option>
+                                        <option value="gratuito">Gratuito</option>
+                                    </select>
+                                </div>
+                                <p *ngIf="planCRUD.get('plan')?.touched && planCRUD.get('plan')?.invalid"
+                                    class="help is-danger">
+                                    Debes seleccionar un plan
+                                </p>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <select formControlName="metodo_pago"
+                                        class="has-background-black-ter has-text-light">
+                                        <option value="" selected>Selecciona un metodo de pago</option>
+                                        <option value="bizum">Bizum</option>
+                                        <option value="tarjeta de credito">Tarjeta de credito</option>
+                                        <option value="tarjeta de debito">Tarjeta de debito</option>
+                                        <option value="google-pay">Google pay</option>
+                                    </select>
+                                </div>
+                                <p *ngIf="planCRUD.get('metodo_pago')?.touched && planCRUD.get('metodo_pago')?.invalid"
+                                    class="help is-danger">
+                                    Debes seleccionar un metodo_pago
+                                </p>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <select formControlName="tipo_pago" class="has-background-black-ter has-text-light">
+                                        <option value="" selected>Selecciona tipo de pago</option>
+                                        <option value="mensual">Mensual (4,90€)</option>
+                                        <option value="anual">Anual (49,99€)</option>
+                                    </select>
+                                </div>
+                                <p *ngIf="planCRUD.get('tipo_pago')?.touched && planCRUD.get('tipo_pago')?.invalid"
+                                    class="help is-danger">
+                                    Debes seleccionar un tipo de pago
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="field is-grouped is-justify-content-flex-end mt-5">
+                            <p class="control">
+                                <!--  Recuerda que cancelar resetea ambos formularios  -->
+                                <button type="button" class="button is-light" (click)="cancelar()">Cancelar</button>
+                            </p>
+                            <p class="control">
+                                <button type="submit" class="button is-warning" [disabled]="planCRUD.invalid">Guardar
+                                    cambios</button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div> <!-- end card -->
+    </div> <!-- end container -->
+</section>
