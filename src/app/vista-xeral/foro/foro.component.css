@@ -16,54 +16,6 @@ a {
     /* Elimina el subrayado de los enlaces */
 }
 
-/* Estilo para la cabecera */
-.cabecera {
-    position: fixed;
-    /* Fija la cabecera en la parte superior */
-    width: 100%;
-    /* Hace que la cabecera ocupe todo el ancho de la página */
-    margin-top: -100px;
-    /* Ajuste para posicionar la cabecera hacia arriba */
-    display: flex;
-    /* Usa flexbox para organizar los elementos */
-    align-items: center;
-    /* Centra los elementos verticalmente */
-    background-color: black;
-    /* Fondo negro */
-    height: 70px;
-    /* Altura de la cabecera */
-    font-size: 20px;
-    /* Tamaño de la fuente */
-}
-
-/* Estilo para las secciones dentro de la cabecera */
-.secciones {
-    display: flex;
-    /* Usa flexbox para distribuir los elementos */
-    gap: 10px;
-    /* Espaciado de 10px entre los elementos */
-}
-
-/* Alinea el último elemento de .cabecera a la derecha */
-.cabecera> :last-child {
-    margin-left: auto;
-    /* Empuja el último elemento hacia la derecha */
-}
-
-/* Estilo para los enlaces dentro de #cabecera_enlaces al pasar el ratón */
-#cabecera_enlaces>a:hover {
-    color: #286bc2;
-    /* Cambia el color a un tono de azul */
-}
-
-/* Estilo para #cabecera_enlaces */
-#cabecera_enlaces {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    /*Tipo de fuente de la cabecera de enlaces*/
-    margin-top: 15px;
-    /* Añade un margen superior */
-}
-
 /* Estilo para el icono de usuario */
 .fa-solid.fa-user {
     margin-right: 15px;
@@ -172,26 +124,6 @@ a {
     /* Cambia el color a azul claro */
 }
 
-/* Estilo para el campo de búsqueda */
-#buscar {
-    color: white;
-    /* Texto blanco */
-    width: 300px;
-    /* Ancho */
-    background-color: #585858;
-    /* Fondo gris */
-    padding-left: 7px;
-    /* Relleno a la izquierda */
-    border-style: none;
-    /* Sin borde */
-    border-radius: 2px;
-    /* Bordes redondeados */
-    font-size: 15px;
-    /* Tamaño de fuente */
-    height: 30px;
-    /* Alto */
-}
-
 /* Estilo para el mensaje que indica que no hay foros disponibles */
 .mensaje-foros-vacio {
     font-size: 1.1rem;
@@ -210,22 +142,6 @@ a {
     /* Margen inferior para separar del contenido siguiente */
     box-shadow: 0 0 10px rgba(100, 100, 255, 0.1);
     /* Sombra azul clara que aporta profundidad sutil */
-}
-
-/* Estilo para el campo de búsqueda al estar en foco */
-#buscar:focus {
-    outline-color: #006eff;
-    /* Color del borde cuando tiene el foco */
-    outline-style: solid;
-    /* Estilo del borde */
-    box-shadow: 0 4px 10px rgba(24, 98, 235, 0.6);
-    /* Sombra azul */
-}
-
-/* Estilo para el texto de sugerencia en el campo de búsqueda */
-#buscar::placeholder {
-    color: #b8aeae;
-    /* Color gris para el placeholder */
 }
 
 /* Estilo para los botones */

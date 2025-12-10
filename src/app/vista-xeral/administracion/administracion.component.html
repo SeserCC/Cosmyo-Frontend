@@ -92,58 +92,6 @@
                         </p>
                     </div>
 
-                    <div *ngIf="!cambiar" class="field">
-                        <div class="control">
-                            <div class="select is-fullwidth has-background-black-ter">
-                                <select formControlName="plan" class="has-background-black-ter has-text-light">
-                                    <option value="" selected>Selecciona un plan</option>
-                                    <option value="premium">Premium</option>
-                                    <option value="gratuito">Gratuito</option>
-                                </select>
-                            </div>
-                        </div>
-                        <p *ngIf="formularioCRUD.get('plan')?.touched && formularioCRUD.get('plan')?.invalid"
-                            class="help is-danger">
-                            Debes seleccionar un plan
-                        </p>
-                    </div>
-
-                    <ng-container *ngIf="!gratuito">
-                        <div *ngIf="!cambiar" class="field">
-                            <div class="control">
-                                <div class="select is-fullwidth has-background-black-ter">
-                                    <select formControlName="metodo_pago"
-                                        class="has-background-black-ter has-text-light">
-                                        <option value="" selected>Selecciona un metodo de pago</option>
-                                        <option value="bizum">Bizum</option>
-                                        <option value="tarjeta de credito">Tarjeta de credito</option>
-                                        <option value="tarjeta de debito">Tarjeta de debito</option>
-                                        <option value="pay-pal">Pay pal</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <p *ngIf="formularioCRUD.get('metodo_pago')?.touched && formularioCRUD.get('metodo_pago')?.invalid"
-                                class="help is-danger">
-                                Debes seleccionar un metodo pago
-                            </p>
-                        </div>
-
-                        <div *ngIf="!cambiar" class="field">
-                            <div class="control">
-                                <div class="select is-fullwidth has-background-black-ter">
-                                    <select formControlName="tipo_pago" class="has-background-black-ter has-text-light">
-                                        <option value="" selected>Selecciona tipo de pago</option>
-                                        <option value="mensual">Mensual (4,90€)</option>
-                                        <option value="anual">Anual (49,99€)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <p *ngIf="formularioCRUD.get('tipo_pago')?.touched && formularioCRUD.get('tipo_pago')?.invalid"
-                                class="help is-danger">
-                                Debes seleccionar un tipo de pago
-                            </p>
-                        </div>
-                    </ng-container>
                     <div class="field">
                         <div class="control">
                             <div class="select is-fullwidth has-background-black-ter">
@@ -635,38 +583,17 @@
 
                     <div *ngIf="!cambiar" class="field">
                         <div class="control">
-                            <div class="select is-fullwidth has-background-black-ter">
-                                <select formControlName="plan" class="has-background-black-ter has-text-light">
-                                    <option value="" selected>Selecciona un plan</option>
-                                    <option value="premium">Premium</option>
-                                    <option value="gratuito">Gratuito</option>
-                                </select>
-                            </div>
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Tipo de plan" formControlName="plan">
                         </div>
-                        <p *ngIf="formularioCRUDPlan.get('plan')?.touched && formularioCRUDPlan.get('plan')?.invalid"
-                            class="help is-danger">
-                            Debes seleccionar un plan
-                        </p>
                     </div>
 
                     <ng-container *ngIf="!gratuito">
                         <div *ngIf="!cambiar" class="field">
                             <div class="control">
-                                <div class="select is-fullwidth has-background-black-ter">
-                                    <select formControlName="metodo_pago"
-                                        class="has-background-black-ter has-text-light">
-                                        <option value="" selected>Selecciona un metodo de pago</option>
-                                        <option value="bizum">Bizum</option>
-                                        <option value="tarjeta de credito">Tarjeta de credito</option>
-                                        <option value="tarjeta de debito">Tarjeta de debito</option>
-                                        <option value="pay-pal">Google pay</option>
-                                    </select>
-                                </div>
+                                <input class="input has-background-black-ter has-text-light" type="text"
+                                    placeholder="Metodo de pago" formControlName="metodo_pago">
                             </div>
-                            <p *ngIf="formularioCRUDPlan.get('metodo_pago')?.touched && formularioCRUDPlan.get('metodo_pago')?.invalid"
-                                class="help is-danger">
-                                Debes seleccionar un metodo de pago
-                            </p>
                         </div>
 
                         <div *ngIf="!cambiar" class="field">
@@ -686,12 +613,25 @@
                         </div>
                     </ng-container>
 
+                    <ng-container *ngIf="planSeleccionar">
+                        {{planSeleccionar.user.name}}
+                    </ng-container>
+
                     <div class="field is-grouped is-grouped-multiline">
                         <div class="control">
-                            <button type="button" (click)="modificarPlanes()"
-                                [disabled]="formularioCRUDPlan.invalid || !planSeleccionar" class="button is-success">
-                                Modificar
-                            </button>
+                            <ng-container *ngIf="planSeleccionar?.user?.stripe_id">
+                                <button type="button" (click)="modificarPlanes()"
+                                    [disabled]="formularioCRUDPlan.invalid" class="button is-success">
+                                    Actualizar suscripcion
+                                </button>
+                            </ng-container>
+
+                            <ng-container *ngIf="!planSeleccionar?.user?.stripe_id">
+                                <button type="button" [disabled]="!planSeleccionar" (click)="accesoPremium()"
+                                    class="button is-success">
+                                    Actualizar a premium
+                                </button>
+                            </ng-container>
                         </div>
 
                         <div class="control">
@@ -715,14 +655,11 @@
                             <div class="columns is-vcentered">
                                 <div class="column is-8 has-text-light">
                                     {{plan.user.name}} -
-                                    <ng-container *ngIf="plan.precio != 0">Premium: {{ plan.precio }} € - {{
+                                    <ng-container *ngIf="plan.user.stripe_id">Premium: {{ plan.precio }} € - {{
                                         plan.tipo_pago
                                         }}
                                         - {{ plan.metodo_pago }}</ng-container>
-                                    <ng-container *ngIf="plan.precio == 0">Gratuito</ng-container> - <ng-container
-                                        *ngIf="plan.anuncio">Anuncios
-                                        activados</ng-container> <ng-container *ngIf="!plan.anuncio">Anuncios
-                                        desactivados</ng-container>
+                                    <ng-container *ngIf="!plan.user.stripe_id">Gratuito</ng-container>
                                 </div>
 
                                 <div class="column is-4 is-flex is-justify-content-flex-end">

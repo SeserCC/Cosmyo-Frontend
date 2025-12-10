@@ -1,0 +1,61 @@
+
+#mapa_navegacion {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    margin: 10px;
+    height: 20px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+}
+
+#mapa_navegacion>a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+#mapa_navegacion>a:hover {
+    opacity: 0.6;
+}
+
+/* Icono SVG de casa */
+.icon-home {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+    stroke: white;
+}
+
+/* Estilo para el bloque de pago */
+#pago {
+    background-color: #032e67;
+    padding: 5px 8px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+/* Estilo general para los bloques de datos */
+.datos {
+    background-color: #1d1d1d;
+    margin: 100px 70px 70px;
+    box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
+    padding: 10px;
+    border-radius: 8px;
+}
+/* Estilo astronómico */
+.astro-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: radial-gradient(circle at top left, #3b0066, #0a0018);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 12px rgba(160, 80, 255, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.icon-home {
+    width: 20px;
+    height: 20px;
+}

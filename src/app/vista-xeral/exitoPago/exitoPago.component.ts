@@ -6,10 +6,10 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   selector: 'app-pago',
   standalone: true,
   imports: [RouterLink, CommonModule],
-  templateUrl: './pago.component.html',
-  styleUrl: './pago.component.css'
+  templateUrl: './exitoPago.component.html',
+  styleUrl: './exitoPago.component.css'
 })
-export class PagoComponent {
+export class ExitoPagoComponent {
   constructor(private router: ActivatedRoute) {
 
   }

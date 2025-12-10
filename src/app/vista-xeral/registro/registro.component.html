@@ -73,54 +73,6 @@
                 </div>
             </div>
 
-            <!-- Plan -->
-            <div class="mb-3">
-                <label class="form-label text-light"><strong>Plan</strong></label>
-                <select class="form-select bg-dark text-light border-info" formControlName="plan">
-                    <option value="">Selecciona un plan</option>
-                    <option value="gratuito">Gratuito</option>
-                    <option value="premium">Premium</option>
-                </select>
-                <div *ngIf="formularioRegistro.get('plan')?.invalid && formularioRegistro.get('plan')?.touched"
-                    class="mensaje-error">
-                    <span *ngIf="formularioRegistro.get('plan')?.hasError('required')">Debes seleccionar un plan</span>
-                </div>
-            </div>
-
-            <!-- Campos Premium -->
-            <ng-container *ngIf="!gratuito">
-                <div class="mb-3">
-                    <label class="form-label text-light"><strong>Método de pago</strong></label>
-                    <select class="form-select bg-dark text-light border-info" formControlName="metodo_pago">
-                        <option value="">Selecciona un método de pago</option>
-                        <option value="bizum">Bizum</option>
-                        <option value="tarjeta de credito">Tarjeta de crédito</option>
-                        <option value="tarjeta de debito">Tarjeta de débito</option>
-                        <option value="pay-pal">PayPal</option>
-                    </select>
-
-                    <div *ngIf="formularioRegistro.get('metodo_pago')?.invalid && formularioRegistro.get('metodo_pago')?.touched"
-                        class="mensaje-error">
-                        <span *ngIf="formularioRegistro.get('metodo_pago')?.hasError('required')">Debes seleccionar un
-                            metodo de pago</span>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label text-light"><strong>Tipo de pago</strong></label>
-                    <select class="form-select bg-dark text-light border-info" formControlName="tipo_pago">
-                        <option value="">Selecciona tipo de pago</option>
-                        <option value="mensual">Mensual (4,99€)</option>
-                        <option value="anual">Anual (49,99€)</option>
-                    </select>
-                    <div *ngIf="formularioRegistro.get('tipo_pago')?.invalid && formularioRegistro.get('tipo_pago')?.touched"
-                        class="mensaje-error">
-                        <span *ngIf="formularioRegistro.get('tipo_pago')?.hasError('required')">Debes seleccionar un
-                            tipo de pago</span>
-                    </div>
-                </div>
-            </ng-container>
-
             <!-- Captcha -->
             <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" formControlName="captcha" id="captcha_checkbox">

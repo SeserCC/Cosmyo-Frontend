@@ -47,6 +47,10 @@
                         <div class="mt-3">
                             <p class="is-size-7 has-text-grey">Registrado</p>
                             <p class="has-text-weight-semibold">{{ perfil?.fecha_registro | date:'longDate' }}</p>
+                            <p class="has-text-weight-semibold">Tipo de plan: {{ premium ? 'PREMIUM' : 'Gratuito' }}</p>
+                            <p class="has-text-weight-semibold">{{ plan?.metodo_pago }}</p>
+                            <p class="has-text-weight-semibold">{{ plan?.tipo_pago }}</p>
+
                         </div>
                     </div>
 
@@ -175,9 +179,6 @@
                                 <input class="input" type="file" (change)="archivoSeleccionado($event)"
                                     accept="image/*">
                             </div>
-                            <p *ngIf="faltaArchivo" class="help is-danger">
-                                Falta el archivo
-                            </p>
                         </div>
 
                         <!-- Botones -->
@@ -186,8 +187,7 @@
                                 <button type="button" class="button is-light" (click)="cancelar()">Cancelar</button>
                             </p>
                             <p class="control">
-                                <button type="submit" class="button is-warning"
-                                    [disabled]="perfilCRUD.invalid || !archivoSelect">Guardar
+                                <button type="submit" class="button is-warning" [disabled]="perfilCRUD.invalid">Guardar
                                     cambios</button>
                             </p>
                         </div>
@@ -197,74 +197,85 @@
 
             <div *ngIf="cambiarPlan" class="card mt-5" style="background-color: #0b132b; color: #fff;">
                 <div class="card-content">
+                    <!-- Título -->
                     <h2 class="title is-4" style="color: #ffd166;">Editar plan</h2>
                     <p class="subtitle is-6 has-text-grey-light mb-4">
-                        Actualiza tu plan.
+                        Actualiza tu suscripción
                     </p>
 
-                    <form [formGroup]="planCRUD" (ngSubmit)="modificarPlan()" class="content">
+                    <form [formGroup]="planCRUD" class="content">
                         <div class="columns">
-                            <div class="field">
-                                <div class="control">
-                                    <select formControlName="plan" class="has-background-black-ter has-text-light">
-                                        <option value="" selected>Selecciona un plan</option>
-                                        <option value="premium">Premium</option>
-                                        <option value="gratuito">Gratuito</option>
-                                    </select>
+                            <!-- Columna izquierda -->
+                            <div class="column is-half">
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Plan</label>
+                                    <div class="control">
+                                        <select formControlName="plan" class="has-background-black-ter has-text-light">
+                                            <option value="" selected>Selecciona un plan</option>
+                                            <option value="premium">Premium</option>
+                                            <option value="gratuito">Gratuito</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <p *ngIf="planCRUD.get('plan')?.touched && planCRUD.get('plan')?.invalid"
-                                    class="help is-danger">
-                                    Debes seleccionar un plan
-                                </p>
+
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Método de pago</label>
+                                    <div class="control">
+                                        <input class="input" type="text" formControlName="metodo_pago"
+                                            placeholder="Método de pago">
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="field">
-                                <div class="control">
-                                    <select formControlName="metodo_pago"
-                                        class="has-background-black-ter has-text-light">
-                                        <option value="" selected>Selecciona un metodo de pago</option>
-                                        <option value="bizum">Bizum</option>
-                                        <option value="tarjeta de credito">Tarjeta de credito</option>
-                                        <option value="tarjeta de debito">Tarjeta de debito</option>
-                                        <option value="google-pay">Google pay</option>
-                                    </select>
+                            <!-- Columna derecha -->
+                            <div class="column is-half">
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Tipo de pago</label>
+                                    <div class="control">
+                                        <select formControlName="tipo_pago"
+                                            class="has-background-black-ter has-text-light">
+                                            <option value="" selected>Selecciona tipo de pago</option>
+                                            <option value="mensual">Mensual (4,90€)</option>
+                                            <option value="anual">Anual (49,99€)</option>
+                                        </select>
+                                    </div>
+                                    <p *ngIf="planCRUD.get('tipo_pago')?.touched && planCRUD.get('tipo_pago')?.invalid"
+                                        class="help is-danger">
+                                        Debes seleccionar un tipo de pago
+                                    </p>
                                 </div>
-                                <p *ngIf="planCRUD.get('metodo_pago')?.touched && planCRUD.get('metodo_pago')?.invalid"
-                                    class="help is-danger">
-                                    Debes seleccionar un metodo_pago
-                                </p>
                             </div>
-
-                            <div class="field">
-                                <div class="control">
-                                    <select formControlName="tipo_pago" class="has-background-black-ter has-text-light">
-                                        <option value="" selected>Selecciona tipo de pago</option>
-                                        <option value="mensual">Mensual (4,90€)</option>
-                                        <option value="anual">Anual (49,99€)</option>
-                                    </select>
-                                </div>
-                                <p *ngIf="planCRUD.get('tipo_pago')?.touched && planCRUD.get('tipo_pago')?.invalid"
-                                    class="help is-danger">
-                                    Debes seleccionar un tipo de pago
-                                </p>
-                            </div>
-
                         </div>
 
                         <!-- Botones -->
                         <div class="field is-grouped is-justify-content-flex-end mt-5">
                             <p class="control">
-                                <!--  Recuerda que cancelar resetea ambos formularios  -->
                                 <button type="button" class="button is-light" (click)="cancelar()">Cancelar</button>
                             </p>
-                            <p class="control">
-                                <button type="submit" class="button is-warning" [disabled]="planCRUD.invalid">Guardar
-                                    cambios</button>
-                            </p>
+
+                            <ng-container *ngIf="usuarioActual.stripe_id">
+                                <p class="control">
+                                    <button type="button" (click)="modificarPlan()" class="button is-warning"
+                                        [disabled]="planCRUD.invalid">
+                                        Actualizar suscripción
+                                    </button>
+                                </p>
+                            </ng-container>
+
+                            <ng-container *ngIf="!usuarioActual.stripe_id">
+                                <p class="control">
+                                    <button type="button" (click)="accesoPremium()" class="button is-warning"
+                                        [disabled]="planCRUD.get('tipo_pago')?.value == null">
+                                        Actualizar a plan premium
+                                    </button>
+                                </p>
+                            </ng-container>
                         </div>
                     </form>
                 </div>
             </div>
+
+
 
         </div> <!-- end card -->
     </div> <!-- end container -->

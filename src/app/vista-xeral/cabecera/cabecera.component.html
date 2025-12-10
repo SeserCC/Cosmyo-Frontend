@@ -32,6 +32,8 @@
                 </a>
                 <div class="navbar-dropdown is-right">
                     <ng-container *ngIf="usuarioActual">
+                        <a class="navbar-item" [routerLink]="['/perfil', usuarioActual?.id]"> {{usuarioActual?.name}}
+                        </a>
                         <a class="navbar-item" [routerLink]="['/publicaciones', usuarioActual?.id]">Tus
                             publicaciones</a>
                         <a class="navbar-item" [routerLink]="['/subirArchivo']">Subir
@@ -41,8 +43,6 @@
                         </ng-container>
 
                         <hr class="navbar-divider">
-                        <p class="navbar-item" [routerLink]="['/perfil', usuarioActual?.id]"> {{usuarioActual?.name}}
-                        </p>
                         <button class=" navbar-item" (click)="cerrarSesion()">Cerrar
                             sesion</button>
                     </ng-container>

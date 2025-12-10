@@ -12,7 +12,7 @@ import { AdministracionComponent } from './vista-xeral/administracion/administra
 import { RegistroComponent } from './vista-xeral/registro/registro.component';
 import { authGuard } from './auth.guard';
 import { PerfilComponent } from './vista-xeral/perfil/perfil.component';
-import { PagoComponent } from './vista-xeral/pago/pago.component';
+import { ExitoPagoComponent } from './vista-xeral/exitoPago/exitoPago.component';
 
 export const routes: Routes = [
     { path: "portada", component: InicioComponent },
@@ -25,7 +25,7 @@ export const routes: Routes = [
     { path: "perfil/:user_id", component: PerfilComponent },
     { path: "subirArchivo", component: SubirArchivoComponent, canActivate: [authGuard] },
     { path: "registro", component: RegistroComponent },
-    { path: "checkout/resultado", component: PagoComponent, canActivate: [authGuard] },
+    { path: "exito", component: ExitoPagoComponent, canActivate: [authGuard] },
     { path: "administracion", component: AdministracionComponent }, //Ruta protegida
     { path: "", component: InicioSesionComponent },
 ];

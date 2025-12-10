@@ -291,6 +291,14 @@ export class ServizoLoginService {
     return this.cliente.put<any>(this.apiBackend + '/plan/' + id, body, options);
   }
 
+  portalUrl(body: any, options?: { headers?: HttpHeaders }) {
+    return this.cliente.post<any>(this.apiBackend + '/stripe/portal', body, options);
+  }
+
+  accesoPremium(body: any, options?: { headers?: HttpHeaders }) {
+    return this.cliente.post<any>(this.apiBackend + '/crearSubscrpcion', body, options);
+  }
+
   mostrarLikes(publicacion_id: number, options?: { headers?: HttpHeaders }) {
     return this.cliente.get<any>(this.apiBackend + '/publicacionLikes/' + publicacion_id, options);
   }

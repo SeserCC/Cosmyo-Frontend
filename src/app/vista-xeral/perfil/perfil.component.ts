@@ -19,11 +19,14 @@ export class PerfilComponent implements OnInit {
   planSeleccionar: any;
   perfilCRUD: FormGroup;
   planCRUD: FormGroup;
+  desactivar: boolean;
   cambiar: boolean;
+  premium: boolean;
   cambiarPlan: boolean;
   perfilFoto = "http://localhost:8000/img/perfiles/";
   archivoSelect: File | null;
-  faltaArchivo: boolean = false;
+
+  usuarioActual: any;
 
   constructor(private servizo: ServizoLoginService, private router: ActivatedRoute) {
     this.perfilCRUD = new FormGroup({
@@ -35,9 +38,9 @@ export class PerfilComponent implements OnInit {
     });
 
     this.planCRUD = new FormGroup({
-      tipo_pago: new FormControl(''),
-      metodo_pago: new FormControl(''),
-      plan: new FormControl(''),
+      tipo_pago: new FormControl('Ninguno'),
+      metodo_pago: new FormControl({ value: 'Ninguno', disabled: true }),
+      plan: new FormControl({ value: '', disabled: true }),
     });
 
   }
@@ -62,6 +65,21 @@ export class PerfilComponent implements OnInit {
 
   }
 
+  usuarioLogueado() {
+    this.servizo.usuarioLogueado({
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.servizo.token}`,
+        'Accept': 'application/json',
+      }),
+    }).subscribe({
+      next: (data) => {
+        this.usuarioActual = data;
+        //this.desactivar = this.usuarioActual.stripe_id ? true : false;
+      }
+    });
+
+  }
+
   mostrarPlan() {
     {
       this.servizo.mostrarPlan(Number(this.router.snapshot.paramMap.get('user_id')), {
@@ -71,8 +89,8 @@ export class PerfilComponent implements OnInit {
         }),
       }).subscribe({
         next: (response) => {
-          this.plan = response;
-
+          this.plan = response.plan;
+          this.premium = response.premium;
         },
         error: (err) => {
           console.error('Error al mostrar el plan', err);
@@ -86,7 +104,7 @@ export class PerfilComponent implements OnInit {
     this.cambiar = true;// Activamos el modo edición
     this.cambiarPlan = false
     this.perfilSeleccionar = this.perfil;
-    console.log(this.perfilSeleccionar) // Guardamos el foro seleccionado
+    //console.log(this.perfilSeleccionar) // Guardamos el foro seleccionado
     // Rellenamos el formulario con los datos del foro
     this.perfilCRUD.patchValue({
       telefono: this.perfil.telefono,
@@ -101,11 +119,14 @@ export class PerfilComponent implements OnInit {
     this.cambiar = false;// Activamos el modo edición
     this.cambiarPlan = true; // Activamos el modo edición
     /* Eliminaste la variable planSeleccionar aqui */
+    console.log(this.plan);
     this.planCRUD.patchValue({
       plan: this.plan.anuncio ? "gratuito" : "premium",
       tipo_pago: this.plan.tipo_pago,
       metodo_pago: this.plan.metodo_pago,
     });
+    this.usuarioActual.stripe_id ? this.planCRUD.get('tipo_pago')?.disable() : this.planCRUD.get('tipo_pago')?.enable();
+
   }
 
   modificarPerfil() {
@@ -116,8 +137,6 @@ export class PerfilComponent implements OnInit {
 
       if (this.archivoSelect) {
         modificarPerfil.append('foto', this.archivoSelect);
-      } else {
-        this.faltaArchivo = true;
       }
 
       modificarPerfil.append('telefono', this.perfilCRUD.get('telefono')?.value);
@@ -154,6 +173,26 @@ export class PerfilComponent implements OnInit {
 
   }
 
+
+  portalUrl() {
+    let data = {
+      rol: this.usuarioActual.rol,
+      stripe_id: this.usuarioActual?.stripe_id
+    };
+
+    this.servizo.portalUrl(data, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.servizo.token}`,
+        'Accept': 'application/json',
+      })
+    }).subscribe({
+      next: (data) => {
+        window.location.href = data.url;
+      }
+
+    })
+  }
+
   modificarPlan(): void {
     /* this.cambiar = false; */
     if (this.plan) {
@@ -170,11 +209,11 @@ export class PerfilComponent implements OnInit {
         })
       }).subscribe({
         next: () => {
+          this.portalUrl();
           this.cambiarPlan = false;
           this.planCRUD.reset({
             plan: '',
             tipo_pago: '',
-            metodo_pago: ''
           }); // Limpiamos el formulario
         },
         error: (erro) => {
@@ -186,27 +225,43 @@ export class PerfilComponent implements OnInit {
     }
   }
 
+  accesoPremium() {
+    let data = {
+      id: this.usuarioActual.id,
+      tipo_pago: this.planCRUD.get('tipo_pago')?.value
+    };
+
+    this.servizo.accesoPremium(data, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.servizo.token}`,
+        'Accept': 'application/json',
+      })
+    }).subscribe({
+      next: (data) => {
+        window.location.href = data.url;
+
+      }
+    })
+  }
+
   archivoSeleccionado(event: any): void {
     this.archivoSelect = event.target.files[0];
-    this.faltaArchivo = false;
   }
 
   cancelar() {
+    this.desactivar = false;
     this.cambiar = false;
     this.cambiarPlan = false;
-    this.faltaArchivo = false;
     this.perfilCRUD.reset();
     this.planCRUD.reset();
 
   }
 
   ngOnInit(): void {
-    /* this.servizo.perfiles$.subscribe((perfil) => {
-      this.perfil = perfil;
-    }); */
     if (this.servizo.token) {
       this.mostrarPerfil();
       this.mostrarPlan();
+      this.usuarioLogueado();
     }
   }
 }
