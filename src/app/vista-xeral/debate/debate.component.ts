@@ -207,7 +207,7 @@ export class DebateComponent {
         }).subscribe(usuario => {
           this.usuarioLogueado = usuario;
         })
-        /* console.log(this.comentarios); */
+        /* (this.comentarios); */
         /* this.paginaActual = response.current_page;
         this.paginasTotales = response.last_page; */
 

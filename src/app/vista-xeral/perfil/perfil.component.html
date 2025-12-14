@@ -14,15 +14,24 @@
                     </h2>
                 </div>
                 <div class="column is-3 has-text-right">
-                    <button class="button is-warning is-light" (click)="editar()">
-                        <span class="icon"><i class="fas fa-edit"></i></span>
-                        <span>Editar perfil</span>
-                    </button>
-                    <button class="button is-warning is-light" (click)="editarPlan()">
-                        <span class="icon"><i class="fas fa-edit"></i></span>
-                        <span>Editar plan</span>
-                    </button>
+                    <div class="buttons is-flex is-flex-direction-column is-align-items-flex-end">
+                        <button class="button is-warning is-light mb-2" (click)="editar()">
+                            <span class="icon"><i class="fas fa-edit"></i></span>
+                            <span>Editar perfil</span>
+                        </button>
+
+                        <button class="button is-warning is-light mb-2" (click)="editarPlan()">
+                            <span class="icon"><i class="fas fa-edit"></i></span>
+                            <span>Editar plan</span>
+                        </button>
+
+                        <button class="button is-warning is-light" (click)="editarUsuario()">
+                            <span class="icon"><i class="fas fa-edit"></i></span>
+                            <span>Editar usuario</span>
+                        </button>
+                    </div>
                 </div>
+
             </div>
         </div>
 
@@ -44,14 +53,23 @@
                             </figure>
                         </ng-template>
 
-                        <div class="mt-3">
+                        <div class="user-info-card mt-3 p-4">
                             <p class="is-size-7 has-text-grey">Registrado</p>
-                            <p class="has-text-weight-semibold">{{ perfil?.fecha_registro | date:'longDate' }}</p>
-                            <p class="has-text-weight-semibold">Tipo de plan: {{ premium ? 'PREMIUM' : 'Gratuito' }}</p>
-                            <p class="has-text-weight-semibold">{{ plan?.metodo_pago }}</p>
-                            <p class="has-text-weight-semibold">{{ plan?.tipo_pago }}</p>
+                            <p class="has-text-weight-semibold has-text-white">{{ perfil?.fecha_registro |
+                                date:'longDate' }}</p>
 
+                            <div class="plan-badge mt-2 mb-2">
+                                <span class="tag is-medium" [ngClass]="premium ? 'is-warning' : 'is-dark'">
+                                    Tipo de plan: {{ premium ? 'PREMIUM' : 'Gratuito' }}
+                                </span>
+                            </div>
+
+                            <p class="has-text-weight-semibold has-text-light">Método de pago: {{ plan?.metodo_pago ||
+                                'No disponible' }}</p>
+                            <p class="has-text-weight-semibold has-text-light">Tipo de pago: {{ plan?.tipo_pago || 'No
+                                disponible' }}</p>
                         </div>
+
                     </div>
 
                     <!-- Datos -->
@@ -120,7 +138,7 @@
                 <div class="card-content">
                     <h2 class="title is-4" style="color: #ffd166;">Editar perfil</h2>
                     <p class="subtitle is-6 has-text-grey-light mb-4">
-                        Actualiza tu información y personaliza tu perfil estelar.
+                        Actualiza tu información personal
                     </p>
 
                     <form [formGroup]="perfilCRUD" (ngSubmit)="modificarPerfil()" class="content">
@@ -276,7 +294,90 @@
             </div>
 
 
+            <div *ngIf="cambiarUsuario" class="card mt-5" style="background-color: #0b132b; color: #fff;">
+                <div class="card-content">
+                    <!-- Título -->
+                    <h2 class="title is-4" style="color: #ffd166;">Editar usuario</h2>
+                    <p class="subtitle is-6 has-text-grey-light mb-4">
+                        Actualiza tu nombre y contraseña
+                    </p>
 
+                    <form [formGroup]="userCRUD" class="content">
+                        <div class="columns">
+                            <!-- Columna izquierda -->
+                            <div class="column is-half">
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Nombre de usuario</label>
+                                    <div class="control">
+                                        <input class="input" type="text" formControlName="nombre"
+                                            placeholder="Nombre de usuario">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Email de usuario</label>
+                                    <div class="control">
+                                        <input class="input" type="text" formControlName="email"
+                                            placeholder="Email de usuario">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Contraseña Actual</label>
+                                    <div class="control">
+                                        <input class="input" type="text" formControlName="contrasena_actual"
+                                            placeholder="Contraseña actual">
+                                    </div>
+                                    <p *ngIf="userCRUD.get('contrasena_actual')?.touched && userCRUD.get('contrasena_actual')?.invalid"
+                                        class="help is-danger">
+                                        Debes introducir la contraseña actual
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <!-- Columna derecha -->
+                            <div class="column is-half">
+
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Contraseña</label>
+                                    <div class="control">
+                                        <input class="input" type="text" formControlName="contrasena"
+                                            placeholder="Contraseña">
+                                    </div>
+                                    <p *ngIf="userCRUD.get('contrasena')?.touched && userCRUD.get('contrasena')?.invalid"
+                                        class="help is-danger">
+                                        Debes repetir la contraseña
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Contraseña confirmacion</label>
+                                    <div class="control">
+                                        <input class="input" type="text" formControlName="contrasena_confirmacion"
+                                            placeholder="Repite la contraseña">
+                                    </div>
+                                    <p *ngIf="userCRUD.get('contrasena_confirmacion')?.touched && userCRUD.get('contrasena_confirmacion')?.invalid"
+                                        class="help is-danger">
+                                        Debes repetir la contraseña
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="field is-grouped is-justify-content-flex-end mt-5">
+                            <p class="control">
+                                <button type="button" class="button is-light" (click)="cancelar()">Cancelar</button>
+                            </p>
+
+                            <p class="control">
+                                <button type="button" (click)="modificarUsuario()" class="button is-warning"
+                                    [disabled]="userCRUD.invalid || userCRUD.get('contrasena')?.value != userCRUD.get('contrasena_confirmacion')?.value">
+                                    Actualizar usuario
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div> <!-- end card -->
     </div> <!-- end container -->
 </section>

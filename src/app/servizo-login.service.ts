@@ -184,7 +184,7 @@ export class ServizoLoginService {
 
   // Engade un novo usuario ao servidor a partir do seu nome, rol y contraseña
   engadirComentario(body: any, options?: { headers?: HttpHeaders }) {
-    /* console.log(body); */
+    /* (body); */
     return this.cliente.post<any>(this.apiBackend + '/comentario', body, options);
   }
 

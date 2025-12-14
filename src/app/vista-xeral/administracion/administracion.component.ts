@@ -124,7 +124,7 @@ export class AdministracionComponent implements OnInit {
     this.formularioCRUDPublicacion.patchValue({
       imagen: this.archivoSelect
     });
-    /* console.log("imagen guardado en form"); */
+    /* ("imagen guardado en form"); */
     this.faltaArchivo = false;
   }
 
@@ -263,7 +263,7 @@ export class AdministracionComponent implements OnInit {
       // Actualizamos los datos del usuario con los valores del formulario
 
       if (this.usuarioSeleccionar.id == this.usuarioLogueado.id) {
-        this.usuarioSeleccionar.current_password = this.formularioCRUD.get('contrasinal_actual')?.value || undefined/*  || this.usuarioSeleccionar.current_password; */
+        this.usuarioSeleccionar.current_password = this.formularioCRUD.get('contrasinal_actual')?.value || undefined
       }
 
       this.usuarioSeleccionar.name = this.formularioCRUD.get('nombre')?.value;
@@ -593,7 +593,7 @@ export class AdministracionComponent implements OnInit {
       next: (publicacion) => {
         //Añadimos el tema mediante suscripcion
         this.publicaciones.push(publicacion);
-        /* console.log(this.archivoSelect) */
+        /* (this.archivoSelect) */
         this.formularioCRUDPublicacion.reset();
         /*  this.archivoSelect = null; */
       },
@@ -772,7 +772,7 @@ export class AdministracionComponent implements OnInit {
         },
         error: (erro) => {
           console.error("Error en el modificar del evento", erro);
-          console.log(this.eventoSeleccionar)
+          (this.eventoSeleccionar)
 
         }
       });
@@ -819,7 +819,7 @@ export class AdministracionComponent implements OnInit {
     this.error = false;
     /* this.cambiar = true; // Activamos el modo edición */
     this.planSeleccionar = plan; // Guardamos el evento seleccionado
-    console.log(this.planSeleccionar);
+    (this.planSeleccionar);
     // Rellenamos el formulario con los datos del evento
     this.formularioCRUDPlan.patchValue({
       plan: plan.user.stripe_id ? "premium" : "gratuito",
@@ -834,7 +834,7 @@ export class AdministracionComponent implements OnInit {
       stripe_id: this.planSeleccionar?.user?.stripe_id
     };
 
-    console.log(data);
+    (data);
 
     this.servizo.portalUrl(data, {
       headers: new HttpHeaders({
@@ -850,14 +850,14 @@ export class AdministracionComponent implements OnInit {
   }
 
   accesoPremium() {
-    //console.log(this.usuarioActual)
+    //(this.usuarioActual)
     let data = {
       rol: this.usuarioLogueado.rol,
       id: this.planSeleccionar.user_id,
       tipo_pago: this.formularioCRUDPlan.get('tipo_pago')?.value
     };
 
-    //console.log(data);
+    //(data);
 
     this.servizo.accesoPremium(data, {
       headers: new HttpHeaders({
@@ -890,14 +890,14 @@ export class AdministracionComponent implements OnInit {
       }).subscribe({
         next: () => {
           this.portalUrl();
-          console.log(this.planSeleccionar);
+          (this.planSeleccionar);
           this.formularioCRUDPlan.reset({
             metodo_pago: ''
           }); // Limpiamos el formulario
         },
         error: (erro) => {
           console.error("Error en el modificar del plan", erro);
-          /* console.log(this.eventoSeleccionar) */
+          /* (this.eventoSeleccionar) */
 
         }
       });
@@ -927,7 +927,7 @@ export class AdministracionComponent implements OnInit {
   editarPerfil(perfil: any) {
     this.cambiar = true; // Activamos el modo edición
     this.perfilSeleccionar = perfil;
-    /* console.log(this.perfilSeleccionar) */ // Guardamos el foro seleccionado
+    /* (this.perfilSeleccionar) */ // Guardamos el foro seleccionado
     // Rellenamos el formulario con los datos del foro
     this.perfilCRUD.patchValue({
       telefono: perfil.telefono,
@@ -1022,7 +1022,7 @@ export class AdministracionComponent implements OnInit {
       // Actualizamos el tema del foro
       this.premiumSeleccionar.insignia = this.formularioCRUDPremium.get('insignia')?.value;
 
-      console.log(this.premiumSeleccionar);
+      (this.premiumSeleccionar);
       // Llamamos al servicio para modificar
       this.servizo.modificarPremium(this.premiumSeleccionar.user_id, this.premiumSeleccionar, {
         headers: new HttpHeaders({
@@ -1031,14 +1031,14 @@ export class AdministracionComponent implements OnInit {
         })
       }).subscribe({
         next: () => {
-          /* console.log(this.planSeleccionar); */
+          /* (this.planSeleccionar); */
           this.formularioCRUDPremium.reset({
             insignia: ''
           }); // Limpiamos el formulario
         },
         error: (erro) => {
           console.error("Error en el modificar premium", erro);
-          /* console.log(this.eventoSeleccionar) */
+          /* (this.eventoSeleccionar) */
 
         }
       });
@@ -1093,12 +1093,12 @@ export class AdministracionComponent implements OnInit {
         })
       }).subscribe({
         next: () => {
-          /* console.log(this.planSeleccionar); */
+          /* (this.planSeleccionar); */
           this.formularioCRUDGratuito.reset(/*  */); // Limpiamos el formulario
         },
         error: (erro) => {
           console.error("Error en el modificar gratuito", erro);
-          /* console.log(this.eventoSeleccionar) */
+          /* (this.eventoSeleccionar) */
 
         }
       });
@@ -1115,7 +1115,7 @@ export class AdministracionComponent implements OnInit {
       }),
     }).subscribe({
       next: (response) => {
-        /* console.log("Eres admin", response); */
+        /* ("Eres admin", response); */
       },
       error: (err) => {
         if (err.status === 403 || err.status === 401) {

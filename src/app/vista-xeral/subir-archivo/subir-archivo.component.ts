@@ -66,7 +66,7 @@ export class SubirArchivoComponent implements OnInit {
       next: (publicacion) => {
         //Añadimos el tema mediante suscripcion
         this.publicaciones.push(publicacion);
-        /* console.log(this.archivoSelect) */
+        /* (this.archivoSelect) */
         this.formularioPublicacion.reset();
         /*  this.archivoSelect = null; */
         this.router.navigate(['/foto'])
