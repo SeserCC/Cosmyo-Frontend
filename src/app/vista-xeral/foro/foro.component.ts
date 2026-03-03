@@ -119,7 +119,6 @@ export class ForoComponent implements OnInit {
     })
   }
 
-  /*Recuerda cambiar esto*/
   // Método para eliminar un foro por su ID
   eliminarForo(id: number) {
     this.servizo.eliminarForo(id).subscribe({

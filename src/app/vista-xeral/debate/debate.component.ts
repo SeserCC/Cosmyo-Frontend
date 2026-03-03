@@ -95,7 +95,7 @@ export class DebateComponent {
       fileInput.value = '';
     }
 
-    formulario.reset();           // Se limpia el formulario
+    formulario.reset();// Se limpia el formulario
   }
 
   // Método para cargar los datos de un comentario en el formulario (modo edición)

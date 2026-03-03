@@ -593,9 +593,7 @@ export class AdministracionComponent implements OnInit {
       next: (publicacion) => {
         //Añadimos el tema mediante suscripcion
         this.publicaciones.push(publicacion);
-        /* (this.archivoSelect) */
         this.formularioCRUDPublicacion.reset();
-        /*  this.archivoSelect = null; */
       },
       error: (erro) => {
         console.error(erro);
