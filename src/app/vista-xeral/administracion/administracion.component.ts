@@ -70,9 +70,6 @@ export class AdministracionComponent implements OnInit {
       rol: new FormControl('', [Validators.required]), // Control para el rol
       descargas: new FormControl(0), // Control para las descargas
       email: new FormControl('', [Validators.required, Validators.email]), // Control para las descargas
-      plan: new FormControl('', [Validators.required]), // Control para las descargas
-      metodo_pago: new FormControl(''), // Control para las descargas
-      tipo_pago: new FormControl(''), // Control para las descargas
     });
 
     this.perfilCRUD = new FormGroup({
@@ -106,9 +103,9 @@ export class AdministracionComponent implements OnInit {
     });
 
     this.formularioCRUDPlan = new FormGroup({
-      plan: new FormControl('', [Validators.required]), // Control para el nombre
+      plan: new FormControl({ value: '', disabled: true }), // Control para el nombre
       tipo_pago: new FormControl('', [Validators.required]), // Control para la fecha
-      metodo_pago: new FormControl('', [Validators.required]), // Control para la fecha
+      metodo_pago: new FormControl({ value: '', disabled: true }), // Control para la fecha
     });
 
     this.formularioCRUDPremium = new FormGroup({
@@ -127,7 +124,7 @@ export class AdministracionComponent implements OnInit {
     this.formularioCRUDPublicacion.patchValue({
       imagen: this.archivoSelect
     });
-    /* console.log("imagen guardado en form"); */
+    /* ("imagen guardado en form"); */
     this.faltaArchivo = false;
   }
 
@@ -151,7 +148,6 @@ export class AdministracionComponent implements OnInit {
 
     formulario.reset({
       rol: '',
-      plan: '',
       metodo_pago: '',
       tipo_pago: '',
       descargas: 0,
@@ -168,12 +164,6 @@ export class AdministracionComponent implements OnInit {
       Validators.required,
       Validators.minLength(8)
     ]);
-
-    this.formularioCRUD.get("metodo_pago")?.clearValidators();
-    this.formularioCRUD.get("tipo_pago")?.clearValidators();
-
-    this.formularioCRUD.get("metodo_pago")?.updateValueAndValidity();
-    this.formularioCRUD.get("tipo_pago")?.updateValueAndValidity();
 
     this.formularioCRUD.get("contrasinal")?.updateValueAndValidity();
     this.formularioCRUD.get("contrasinal_confirmation")?.updateValueAndValidity();
@@ -202,14 +192,11 @@ export class AdministracionComponent implements OnInit {
       rol: this.formularioCRUD.value.rol,
       descargas: this.formularioCRUD.value.descargas,
       plan: this.formularioCRUD.value.plan,
-      metodo_pago: this.formularioCRUD.value.metodo_pago,
-      tipo_pago: this.formularioCRUD.value.tipo_pago,
     }
 
     this.servizo.engadirUsuario(nuevoUsuario, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
-
         'Accept': 'application/json',
       }),
     }).subscribe({
@@ -218,8 +205,6 @@ export class AdministracionComponent implements OnInit {
         this.usuarios.push(usuario);
         this.formularioCRUD.reset({
           rol: '',
-          plan: '',
-          metodo_pago: '',
           tipo_pago: '',
           descargas: 0,
         });
@@ -261,12 +246,8 @@ export class AdministracionComponent implements OnInit {
       email: usuario.email,
     });
 
-    this.formularioCRUD.get('metodo_pago')?.clearValidators();
-    this.formularioCRUD.get('tipo_pago')?.clearValidators();
     this.formularioCRUD.get('contrasinal')?.clearValidators();
     this.formularioCRUD.get('contrasinal_confirmation')?.clearValidators();
-    this.formularioCRUD.get("metodo_pago")?.updateValueAndValidity();
-    this.formularioCRUD.get("tipo_pago")?.updateValueAndValidity();
     this.formularioCRUD.get('contrasinal')?.updateValueAndValidity();
     this.formularioCRUD.get('contrasinal_confirmation')?.updateValueAndValidity();
   }
@@ -282,7 +263,7 @@ export class AdministracionComponent implements OnInit {
       // Actualizamos los datos del usuario con los valores del formulario
 
       if (this.usuarioSeleccionar.id == this.usuarioLogueado.id) {
-        this.usuarioSeleccionar.current_password = this.formularioCRUD.get('contrasinal_actual')?.value || undefined/*  || this.usuarioSeleccionar.current_password; */
+        this.usuarioSeleccionar.current_password = this.formularioCRUD.get('contrasinal_actual')?.value || undefined
       }
 
       this.usuarioSeleccionar.name = this.formularioCRUD.get('nombre')?.value;
@@ -304,9 +285,6 @@ export class AdministracionComponent implements OnInit {
 
           this.formularioCRUD.reset({
             rol: '',
-            plan: '',
-            metodo_pago: '',
-            tipo_pago: '',
             descargas: 0,
           });
         },
@@ -360,7 +338,6 @@ export class AdministracionComponent implements OnInit {
     this.servizo.eliminarUsuario(id, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
-
         'Accept': 'application/json',
       })
     }).subscribe({
@@ -616,9 +593,7 @@ export class AdministracionComponent implements OnInit {
       next: (publicacion) => {
         //Añadimos el tema mediante suscripcion
         this.publicaciones.push(publicacion);
-        /* console.log(this.archivoSelect) */
         this.formularioCRUDPublicacion.reset();
-        /*  this.archivoSelect = null; */
       },
       error: (erro) => {
         console.error(erro);
@@ -795,7 +770,7 @@ export class AdministracionComponent implements OnInit {
         },
         error: (erro) => {
           console.error("Error en el modificar del evento", erro);
-          console.log(this.eventoSeleccionar)
+          (this.eventoSeleccionar)
 
         }
       });
@@ -842,14 +817,58 @@ export class AdministracionComponent implements OnInit {
     this.error = false;
     /* this.cambiar = true; // Activamos el modo edición */
     this.planSeleccionar = plan; // Guardamos el evento seleccionado
+    (this.planSeleccionar);
     // Rellenamos el formulario con los datos del evento
     this.formularioCRUDPlan.patchValue({
-      plan: plan.anuncio ? "gratuito" : "premium",
-      tipo_pago: plan.tipo_pago,
+      plan: plan.user.stripe_id ? "premium" : "gratuito",
+      tipo_pago: plan.tipo_pago ? plan.tipo_pago : '',
       metodo_pago: plan.metodo_pago,
     });
   }
 
+  portalUrl() {
+    let data = {
+      rol: this.usuarioLogueado.rol,
+      stripe_id: this.planSeleccionar?.user?.stripe_id
+    };
+
+    (data);
+
+    this.servizo.portalUrl(data, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.servizo.token}`,
+        'Accept': 'application/json',
+      })
+    }).subscribe({
+      next: (data) => {
+        window.location.href = data.url;
+      }
+
+    })
+  }
+
+  accesoPremium() {
+    //(this.usuarioActual)
+    let data = {
+      rol: this.usuarioLogueado.rol,
+      id: this.planSeleccionar.user_id,
+      tipo_pago: this.formularioCRUDPlan.get('tipo_pago')?.value
+    };
+
+    //(data);
+
+    this.servizo.accesoPremium(data, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.servizo.token}`,
+        'Accept': 'application/json',
+      })
+    }).subscribe({
+      next: (data) => {
+        window.location.href = data.url;
+
+      }
+    })
+  }
 
   // Método para guardar la modificación de un evento
   modificarPlanes(): void {
@@ -868,16 +887,15 @@ export class AdministracionComponent implements OnInit {
         })
       }).subscribe({
         next: () => {
-          console.log(this.planSeleccionar);
+          this.portalUrl();
+          (this.planSeleccionar);
           this.formularioCRUDPlan.reset({
-            plan: '',
-            tipo_pago: '',
             metodo_pago: ''
           }); // Limpiamos el formulario
         },
         error: (erro) => {
           console.error("Error en el modificar del plan", erro);
-          /* console.log(this.eventoSeleccionar) */
+          /* (this.eventoSeleccionar) */
 
         }
       });
@@ -907,7 +925,7 @@ export class AdministracionComponent implements OnInit {
   editarPerfil(perfil: any) {
     this.cambiar = true; // Activamos el modo edición
     this.perfilSeleccionar = perfil;
-    /* console.log(this.perfilSeleccionar) */ // Guardamos el foro seleccionado
+    /* (this.perfilSeleccionar) */ // Guardamos el foro seleccionado
     // Rellenamos el formulario con los datos del foro
     this.perfilCRUD.patchValue({
       telefono: perfil.telefono,
@@ -1002,7 +1020,7 @@ export class AdministracionComponent implements OnInit {
       // Actualizamos el tema del foro
       this.premiumSeleccionar.insignia = this.formularioCRUDPremium.get('insignia')?.value;
 
-      console.log(this.premiumSeleccionar);
+      (this.premiumSeleccionar);
       // Llamamos al servicio para modificar
       this.servizo.modificarPremium(this.premiumSeleccionar.user_id, this.premiumSeleccionar, {
         headers: new HttpHeaders({
@@ -1011,14 +1029,14 @@ export class AdministracionComponent implements OnInit {
         })
       }).subscribe({
         next: () => {
-          /* console.log(this.planSeleccionar); */
+          /* (this.planSeleccionar); */
           this.formularioCRUDPremium.reset({
             insignia: ''
           }); // Limpiamos el formulario
         },
         error: (erro) => {
           console.error("Error en el modificar premium", erro);
-          /* console.log(this.eventoSeleccionar) */
+          /* (this.eventoSeleccionar) */
 
         }
       });
@@ -1073,12 +1091,12 @@ export class AdministracionComponent implements OnInit {
         })
       }).subscribe({
         next: () => {
-          /* console.log(this.planSeleccionar); */
+          /* (this.planSeleccionar); */
           this.formularioCRUDGratuito.reset(/*  */); // Limpiamos el formulario
         },
         error: (erro) => {
           console.error("Error en el modificar gratuito", erro);
-          /* console.log(this.eventoSeleccionar) */
+          /* (this.eventoSeleccionar) */
 
         }
       });
@@ -1095,7 +1113,7 @@ export class AdministracionComponent implements OnInit {
       }),
     }).subscribe({
       next: (response) => {
-        /* console.log("Eres admin", response); */
+        /* ("Eres admin", response); */
       },
       error: (err) => {
         if (err.status === 403 || err.status === 401) {

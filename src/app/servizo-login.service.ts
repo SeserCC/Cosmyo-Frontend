@@ -184,7 +184,7 @@ export class ServizoLoginService {
 
   // Engade un novo usuario ao servidor a partir do seu nome, rol y contraseña
   engadirComentario(body: any, options?: { headers?: HttpHeaders }) {
-    /* console.log(body); */
+    /* (body); */
     return this.cliente.post<any>(this.apiBackend + '/comentario', body, options);
   }
 
@@ -289,6 +289,14 @@ export class ServizoLoginService {
 
   modificarPlan(id: number, body: any, options?: { headers?: HttpHeaders }) {
     return this.cliente.put<any>(this.apiBackend + '/plan/' + id, body, options);
+  }
+
+  portalUrl(body: any, options?: { headers?: HttpHeaders }) {
+    return this.cliente.post<any>(this.apiBackend + '/stripe/portal', body, options);
+  }
+
+  accesoPremium(body: any, options?: { headers?: HttpHeaders }) {
+    return this.cliente.post<any>(this.apiBackend + '/crearSubscrpcion', body, options);
   }
 
   mostrarLikes(publicacion_id: number, options?: { headers?: HttpHeaders }) {
