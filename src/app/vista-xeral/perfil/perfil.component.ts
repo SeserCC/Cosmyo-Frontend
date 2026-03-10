@@ -69,6 +69,7 @@ export class PerfilComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error al mostrar el perfil', err);
+          /* Te falta añadir un reenvio a la pagina 404 indicando que no existe el usuario */
         }
       })
     }
