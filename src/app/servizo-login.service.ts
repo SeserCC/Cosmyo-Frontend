@@ -8,6 +8,7 @@ import { Foro } from './foro';
 import { Comentario } from './comentario';
 import { Evento } from './evento';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 
 @Injectable({
@@ -27,7 +28,7 @@ export class ServizoLoginService {
   token = ''; // String para almacenar tokens
   apiURL: string = 'https://67bf735ab2320ee05013c327.mockapi.io/usuarios';
   apiURLcomentario: string = 'https://682f73b7f504aa3c70f41673.mockapi.io/comentarios';
-  apiBackend: string = 'http://127.0.0.1:8000/api';
+  apiBackend: string = environment.apiBackend;
   usuarioActual: any; // Usuario actualmente logeado
   tokens$: BehaviorSubject<string>;
   usuarioActual$: BehaviorSubject<any>; // Usuario actualmente logeado
