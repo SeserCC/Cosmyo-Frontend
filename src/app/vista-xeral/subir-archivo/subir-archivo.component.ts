@@ -14,10 +14,11 @@ import { HttpHeaders } from '@angular/common/http';
   templateUrl: './subir-archivo.component.html',
   styleUrl: './subir-archivo.component.css'
 })
-export class SubirArchivoComponent implements OnInit {
+export class SubirArchivoComponent /* implements OnInit */ {
   // Array que contiene todas las imágenes/publicaciones
   publicaciones: any[] = [];
 
+  urlImagen: '';
   // Formulario reactivo para añadir una publicación (imagen)
   formularioPublicacion: FormGroup;
 
@@ -39,25 +40,48 @@ export class SubirArchivoComponent implements OnInit {
   cargarArchivo(event: any) {
     this.archivoSelect = event.target.files[0];  // Se guarda el primer archivo seleccionado
     this.faltaArchivo = false;                        // Reiniciamos el flag de falta de archivo, pues ahora hay uno
+    this.urlArchivo();
+  }
+
+
+  urlArchivo() {
+    if (this.archivoSelect) {
+      this.servizo.subirArchivo(this.archivoSelect).subscribe({
+        next: (response: any) => {
+          {
+            this.urlImagen = response.secure_url;
+          }
+        }
+      })
+    }
+
   }
 
   // Función para añadir una nueva publicación llamando al servicio correspondiente
   engadirPublicacion(): void {
-    const nuevoPublicacion = new FormData();
+    /* const nuevoPublicacion = new FormData();
     nuevoPublicacion.append('titulo', this.formularioPublicacion.get('titulo')?.value);
     nuevoPublicacion.append('descripcion', this.formularioPublicacion.get('descripcion')?.value);
     nuevoPublicacion.append('zona_geografica', this.formularioPublicacion.get('zona_geografica')?.value);
+    nuevoPublicacion.append('imagen', this.urlImagen); */
 
-    if (this.archivoSelect) {
-      nuevoPublicacion.append('imagen', this.archivoSelect);
+    const nuevaPublicacion = {
+      titulo: this.formularioPublicacion.value.titulo,
+      descripcion: this.formularioPublicacion.value.descripcion,
+      zona_geografica: this.formularioPublicacion.value.zona_geografica,
+      imagen: this.urlImagen,
+    }
+
+    /* if (this.archivoSelect) {
+
       this.faltaArchivo = false;
 
     } else {
       this.faltaArchivo = true;
       return;
-    }
+    } */
 
-    this.servizo.engadirPublicacion(nuevoPublicacion, {
+    this.servizo.engadirPublicacion(nuevaPublicacion, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
         'Accept': 'application/json',
@@ -78,8 +102,8 @@ export class SubirArchivoComponent implements OnInit {
   }
 
   // Método que se ejecuta al inicializar el componente
-  ngOnInit(): void {
+  /* ngOnInit(): void {
 
-  }
+  } */
 
 }
