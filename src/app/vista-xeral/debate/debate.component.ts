@@ -17,11 +17,15 @@ export class DebateComponent {
   // Array donde se almacenan todos los comentarios
   comentarios: any[];
 
+  urlImagen = '';
+
+  foro: any
+
+  esconderCheckbox = false;
+
   usuarioLogueado: any;
 
   paginas: number[] = [];
-
-  fotosComentarios = "http://localhost:8000/img/comentarios/";
 
   paginaActual: number;
 
@@ -49,7 +53,8 @@ export class DebateComponent {
   // Constructor del componente, se inyecta el servicio y se inicializa el formulario
   constructor(private servizo: ServizoLoginService, private router: ActivatedRoute) {
     this.formularioCRUDComentario = new FormGroup({
-      texto: new FormControl('', [Validators.required]) // Campo obligatorio para el texto del comentario
+      texto: new FormControl('', [Validators.required]), // Campo obligatorio para el texto del comentario
+      eliminarImagen: new FormControl(false) // Campo para eliminar la imagen
     });
   }
 
@@ -90,7 +95,7 @@ export class DebateComponent {
   // Método para cancelar una edición y limpiar el formulario
   cancelar(formulario: FormGroup, fileInput?: HTMLInputElement) {
     // Se sale del modo edición
-
+    this.cambiar = false;
     if (fileInput) {
       fileInput.value = '';
     }
@@ -102,6 +107,9 @@ export class DebateComponent {
   editarComentario(comentario: any) {
     this.cambiar = true;                     // Se activa el modo edición
     this.comentarioSeleccionar = comentario; // Se guarda el comentario seleccionado
+    /* if (this.comentarioSeleccionar.foto = null) {
+      this.esconderCheckbox = true;
+    } */
     this.formularioCRUDComentario.patchValue({
       texto: comentario.texto,              // Se carga el texto del comentario en el formulario
     });
@@ -117,6 +125,11 @@ export class DebateComponent {
 
       if (this.archivoSelect) {
         modificarComentario.append('foto', this.archivoSelect);
+      }
+
+      if (this.formularioCRUDComentario.value.eliminarImagen) {
+        modificarComentario.append('eliminarImagen', 'true');
+
       }
 
       modificarComentario.append('texto', this.formularioCRUDComentario.get('texto')?.value);
@@ -197,7 +210,8 @@ export class DebateComponent {
       }),
     }).subscribe({
       next: (response) => {
-        this.comentarios = response;
+        this.comentarios = response.comentarios.data;
+        this.foro = response.foro;
 
         this.servizo.usuarioLogueado({
           headers: new HttpHeaders({

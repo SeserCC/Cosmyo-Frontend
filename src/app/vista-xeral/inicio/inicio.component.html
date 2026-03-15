@@ -28,7 +28,9 @@
             <div class="comunidad_usuarios">
                 <a [routerLink]="['/foro']">
                     <p style="margin-bottom: 20px;" id="comunidad_p">Comunidad formada por usuarios</p>
-                    <img id="nebulosa" src="media/img/nebulosa_aguila.jpg" alt="Nebulosa del águila" width="320px">
+                    <img id="nebulosa"
+                        src="https://res.cloudinary.com/astronexus-cloud/image/upload/v1773364982/nebulosa_aguila_wffkfs.jpg"
+                        alt="Nebulosa del águila" width="320px">
                 </a>
             </div>
 
@@ -36,7 +38,8 @@
             <div class="contenedor_fotos_videos">
                 <a [routerLink]="['/foto']">
                     <p style="margin-bottom: 20px;" id="fotos_videos_p">Ver fotos y videos</p>
-                    <img id="iglesia" src="media/img/iglesia_espacio.jpg" alt="Iglesia y espacio" width="370px">
+                    <img id="iglesia" [src]="urlCloud + 'v1773360310/zfvu7qzqdamrnzpadkml.jpg'" alt="Iglesia y espacio"
+                        width="370px">
                 </a>
             </div>
         </div>
@@ -47,7 +50,7 @@
             <div class="calendario">
                 <a id="calendario_enlace" [routerLink]="['/calendario']">
                     <p>Nuestro calendario astronómico</p>
-                    <img src="media/img/calendario.jpg" alt="Calendario" width="700px">
+                    <img [src]="urlCloud +'v1773364980/calendario_sokce4.webp'" alt="Calendario" width="700px">
                 </a>
             </div>
 
@@ -61,7 +64,7 @@
                             <div class="premium_lista">
                                 <ul>
                                     <li>Todo lo mencionado en el plan lite</li>
-                                    <li>Descargas ilimitadas de las descargas</li>
+                                    <li>Descargas ilimitadas de las publicaciones</li>
                                     <li>Mayor capacidad de almacenamiento en publicaciones</li>
                                     <li>Clasificacion por insignias</li>
                                 </ul>
@@ -75,7 +78,6 @@
                             <p>Plan Lite</p>
                             <div class="lite_lista">
                                 <ul>
-                                    <li>Funcionalidad básica</li>
                                     <li>Subir publicaciones</li>
                                     <li>Capacidad máxima de descargas de 10 publicaciones</li>
                                     <li>Permiso para acceder a los foros y comentar</li>

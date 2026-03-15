@@ -212,17 +212,17 @@ export class ServizoLoginService {
     return this.cliente.post<any>(this.apiBackend + '/publicacion', body, options);
   }
 
-  subirArchivo(file: File) {
+  /* subirArchivo(file: File) {
     const formData = new FormData();
 
-    formData.append("publicacion", file);
+    formData.append("file", file);
     formData.append("upload_preset", "astro_upload");
 
     return this.cliente.post(
-      "https://api.cloudinary.com/v1_1/astronexus_cloud/image/upload",
+      "https://api.cloudinary.com/v1_1/astronexus-cloud/image/upload",
       formData
     );
-  }
+  } */
 
   // Modificamos os valores indicando ao servidor
   modificarPublicacion(id: number, body: any, options?: { headers?: HttpHeaders }) {

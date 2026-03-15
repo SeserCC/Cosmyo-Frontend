@@ -180,6 +180,27 @@ a {
     /* Sombra oscura */
 }
 
+.foro-info{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    background:#2f2f2f;
+    color:#d6d6d6;
+
+    padding:6px 12px;
+    border-radius:20px;
+
+    font-size:14px;
+    font-weight:500;
+
+    border:10px solid #4a4a4a;
+}
+
+.foro-info i{
+    color:#4fa3ff;
+}
+
 /* Estilo para los bloques de texto de los usuarios */
 #usuario1_texto {
     display: flex;

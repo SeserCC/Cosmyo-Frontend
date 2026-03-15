@@ -16,35 +16,35 @@
             /
             <a [routerLink]="['/foro']">Foros</a>
             /
-            <strong id="comunidades">Comunidades</strong>
+            <strong id="comunidades">Comentarios</strong>
         </div>
 
-        <!-- Botón para regresar al Inicio sesion -->
-        <a [routerLink]="['/']"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-            </svg></a>
+        <h1 class="display-6 border-bottom pb-2 mb-2">
+            <i class="fa-solid fa-comments text-primary me-2"></i>
+            {{ foro?.tema }}
+        </h1>
+
+        <span *ngIf="comentarios?.length !==0" class="badge bg-primary fs-6 mb-3">
+            {{ comentarios?.length }} comentarios
+        </span>
 
         <p *ngIf="comentarios?.length === 0" class="mensaje-comentarios-vacio has-text-centered has-text-grey-light">
             🗨️ Aún no hay comentarios. ¡Sé el primero en compartir tu opinión o iniciar la conversación!
         </p>
 
-
         <ng-container *ngFor="let comentario of comentarios">
-            <!-- <p style="position: relative; border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem;">
-                {{comentario.user.foros.tema}}
-            </p> -->
+
             <div id="usuario1_info">
                 <!-- Información del usuario -->
                 <p><strong>{{comentario.user?.name}}</strong></p>
-                <p>{{comentario?.fecha_hora}}</p>
+                <p>{{comentario?.fecha_hora | date:'dd/MM/yyyy HH:mm'}}</p>
             </div>
             <div id="usuario1_texto">
                 <!-- Contenido del mensaje del usuario -->
                 <p>{{comentario.texto}}</p>
 
-                <ng-container *ngIf="comentario.foto"><img [src]="fotosComentarios + comentario.foto"
-                        alt="Foto del usuario" width="500px"></ng-container>
+                <ng-container *ngIf="comentario.foto"><img [src]="comentario.foto" alt="Foto del usuario"
+                        width="500px"></ng-container>
                 <ng-container *ngIf="comentario.user_id == usuarioLogueado?.id">
                     <div class="column is-4 is-flex is-justify-content-flex-end">
                         <button class="button is-small is-warning mr-2"
@@ -117,6 +117,13 @@
                         [disabled]="formularioCRUDComentario.invalid" class="button is-success">
                         Modificar
                     </button>
+                </div>
+
+                <div class="control">
+
+                    <label *ngIf="cambiar">Eliminar foto</label>
+                    <input *ngIf="cambiar" formControlName="eliminarImagen" type="checkbox">
+
                 </div>
                 <div class="control">
                     <button (click)="cancelar(formularioCRUDComentario, fileInputC)" class="button is-warning">

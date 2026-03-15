@@ -42,55 +42,72 @@ a {
     /* Bordes redondeados */
 }
 
-/* Oculta el input de tipo archivo, ya que se usará un label personalizado como botón */
-#seleccionar_archivo {
-    display: none;
-}
-
-/* Estilo para el texto dentro del contenedor .archivo */
-.archivo>p {
-    color: #878383;
-    /* Color gris claro para el texto explicativo */
-}
-
 /* Estilo para el ícono de subir archivo (Font Awesome) dentro del label */
 label>.fa-solid.fa-upload {
     font-size: 35px;
     /* Tamaño grande para destacar el ícono */
 }
 
-/* Contenedor principal para el área de carga de archivos */
+/* Ocultar input file */
+#seleccionar_archivo {
+    display: none;
+}
+
+/* CONTENEDOR */
 .archivo {
     display: flex;
-    /* Usa flexbox para disposición vertical */
     flex-direction: column;
-    /* Organiza los elementos en columna */
+    align-items: center;
+    justify-content: center;
     row-gap: 10px;
-    /* Espacio entre elementos hijos */
-    padding-top: 15px;
-    /* Espaciado superior */
+    padding: 20px;
     margin: 10px 20px;
-    /* Margen alrededor del contenedor */
+
     background-color: #383636;
-    /* Fondo oscuro */
     color: #cdc6c6;
-    /* Texto en color gris claro */
+
     cursor: pointer;
-    /* Cambia el cursor al pasar sobre el área (clickable) */
-    border-radius: 5px;
-    /* Bordes redondeados */
+    border-radius: 8px;
     text-align: center;
-    /* Centra el contenido de texto */
-    border-style: dashed;
-    /* Borde discontinuo para aspecto de zona de carga */
-    border-color: #a59f9f;
-    /* Color del borde */
-    border-width: 2px;
-    /* Grosor del borde */
+
+    border: 2px dashed #a59f9f;
+
     font-size: 17px;
-    /* Tamaño del texto */
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    /* Fuente amigable y legible */
+
+    transition: all .3s ease;
+}
+
+/* Icono */
+.archivo i {
+    font-size: 28px;
+}
+
+/* Texto explicativo */
+.archivo>p {
+    color: #878383;
+    font-size: 14px;
+}
+
+/* Hover */
+.archivo:hover {
+    border-color: #d0d0d0;
+    background: #444242;
+}
+
+/* CUANDO HAY ARCHIVO */
+.archivo.archivo-cargado {
+    border-color: #4CAF50;
+    background-color: #2f3f2f;
+    color: #9df59d;
+    box-shadow: 0 0 12px rgba(76, 175, 80, 0.6);
+}
+
+/* nombre archivo */
+.nombre_archivo {
+    font-size: 14px;
+    color: #bdf7bd;
+    word-break: break-all;
 }
 
 
@@ -166,7 +183,9 @@ label>.fa-solid.fa-upload {
 
 /* Aplica estilos tanto al contenedor del título como al de la descripción */
 .titulo_info,
-#descripcion_info {
+#descripcion_info,
+.zona_geografica_info,
+.descripcion_archivo {
     display: flex;
     /* Usa flexbox para organizar el contenido */
     flex-direction: column;
@@ -179,7 +198,8 @@ label>.fa-solid.fa-upload {
 
 /* Estilo para el texto del título y la descripción */
 #texto_titulo,
-#texto_descripcion {
+#texto_descripcion,
+#texto_zona_geografica {
     font-size: 25px;
     /* Tamaño grande de fuente para destacar el texto */
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -189,7 +209,8 @@ label>.fa-solid.fa-upload {
 }
 
 .titulo_archivo:focus,
-.descripcion_archivo:focus {
+.descripcion_archivo:focus,
+.zona_geografica:focus {
     outline-color: #006eff;
     /* Color del borde cuando tiene el foco */
     outline-style: solid;
@@ -200,7 +221,8 @@ label>.fa-solid.fa-upload {
 
 /* Estilos aplicados tanto al título del archivo como a su descripción */
 .titulo_archivo,
-.descripcion_archivo {
+.descripcion_archivo,
+.zona_geografica {
     font-size: 17px;
     /* Tamaño de letra moderado para buena legibilidad */
     padding: 10px;

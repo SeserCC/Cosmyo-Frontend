@@ -43,7 +43,7 @@
                     <div class="column is-3 has-text-centered">
                         <figure class="image is-128x128 is-inline-block"
                             style="border-radius: 50%; overflow: hidden; box-shadow: 0 8px 24px rgba(2,12,27,0.2);">
-                            <img *ngIf="perfil?.foto; else placeholder" [src]="perfilFoto + perfil.foto"
+                            <img *ngIf="perfil?.foto; else placeholder" [src]="perfil.foto"
                                 [alt]="perfil.user.name + ' foto'">
                         </figure>
                         <ng-template #placeholder>
@@ -323,7 +323,7 @@
                                 <div class="field">
                                     <label class="label has-text-warning-light">Contraseña Actual</label>
                                     <div class="control">
-                                        <input class="input" type="text" formControlName="contrasena_actual"
+                                        <input class="input" type="password" formControlName="contrasena_actual"
                                             placeholder="Contraseña actual">
                                     </div>
                                     <p *ngIf="userCRUD.get('contrasena_actual')?.touched && userCRUD.get('contrasena_actual')?.invalid"
@@ -340,7 +340,7 @@
                                 <div class="field">
                                     <label class="label has-text-warning-light">Contraseña</label>
                                     <div class="control">
-                                        <input class="input" type="text" formControlName="contrasena"
+                                        <input class="input" type="password" formControlName="contrasena"
                                             placeholder="Contraseña">
                                     </div>
                                     <p *ngIf="userCRUD.get('contrasena')?.touched && userCRUD.get('contrasena')?.invalid"
@@ -351,7 +351,7 @@
                                 <div class="field">
                                     <label class="label has-text-warning-light">Contraseña confirmacion</label>
                                     <div class="control">
-                                        <input class="input" type="text" formControlName="contrasena_confirmacion"
+                                        <input class="input" type="password" formControlName="contrasena_confirmacion"
                                             placeholder="Repite la contraseña">
                                     </div>
                                     <p *ngIf="userCRUD.get('contrasena_confirmacion')?.touched && userCRUD.get('contrasena_confirmacion')?.invalid"

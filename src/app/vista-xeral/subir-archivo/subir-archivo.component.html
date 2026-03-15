@@ -8,7 +8,7 @@
                 <i class="fa-solid fa-house"></i> Inicio
             </a>
             /
-            <a [routerLink]="['/publicaciones']">Publicaciones</a>
+            <a [routerLink]="['/foto']">Galeria</a>
             /
             <strong id="subir_archivos">Subir archivos</strong>
             <!-- Enlace para regresar a la página anterior -->
@@ -39,14 +39,31 @@
                 Debes indicar la descripcion
             </div>
 
+            <div class="zona_geografica_info">
+                <label id="texto_zona_geografica">Zona geografica</label>
+                <input class="zona_geografica" formControlName="zona_geografica" type="text">
+            </div>
+            <div *ngIf="formularioPublicacion.get('zona_geografica')?.touched && formularioPublicacion.get('zona_geografica')?.invalid"
+                class="erro">
+                Debes indicar la zona geografica
+            </div>
+
             <!-- Selector de archivos con mensaje sobre los formatos aceptados -->
-            <label for="seleccionar_archivo" class="archivo">
-                <i class="fa-solid fa-upload"></i>Seleccionar archivo
-                <p>
+            <label for="seleccionar_archivo" class="archivo" [class.archivo-cargado]="faltaArchivo">
+                <i class="fa-solid" [ngClass]="faltaArchivo ? 'fa-circle-check' : 'fa-upload'"></i>
+
+                {{ faltaArchivo ? 'Archivo seleccionado' : 'Seleccionar archivo' }}
+
+                <p *ngIf="!faltaArchivo">
                     Formatos que aceptamos: JPG - JPEG - PNG - GIF - TIF - TIFF - MOV - MPG - MPEG - MP4 - AVI - WMV -
                     WEBM
                 </p>
+
+                <p *ngIf="faltaArchivo" class="nombre_archivo">
+                    {{ nombreArchivo }}
+                </p>
             </label>
+
             <input id="seleccionar_archivo" type="file" (change)="cargarArchivo($event)">
             <div *ngIf="formularioPublicacion.get('archivo')?.touched && formularioPublicacion.get('archivo')?.invalid"
                 class="erro">
