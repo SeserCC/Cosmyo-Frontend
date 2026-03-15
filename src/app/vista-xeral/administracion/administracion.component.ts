@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ServizoLoginService } from '../../servizo-login.service';
 import { FormsModule, FormGroup, Validators, FormControl, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -59,7 +59,7 @@ export class AdministracionComponent implements OnInit {
   categoriaSeleccionada: string = "usuarios";
 
   //Validamos
-  constructor(private servizo: ServizoLoginService, private formularioPublicacion: FormBuilder, private router: Router, private url: ActivatedRoute) {
+  constructor(private servizo: ServizoLoginService, private formularioPublicacion: FormBuilder, private router: Router, private url: ActivatedRoute, @Inject(PLATFORM_ID) private platform_id: Object) {
     this.formularioCRUD = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.minLength(4)]), // Control para el nombre de usuario
       contrasinal: new FormControl('', [Validators.required, Validators.minLength(8)]), // Control para el nombre de usuario
@@ -1105,49 +1105,51 @@ export class AdministracionComponent implements OnInit {
 
   // Método ejecutado al iniciar el componente, carga todos los datos desde el servicio
   ngOnInit(): void {
-
-    this.servizo.middlewareAdmin({
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
-      next: (response) => {
-        /* ("Eres admin", response); */
-      },
-      error: (err) => {
-        if (err.status === 403 || err.status === 401) {
-          this.router.navigate(['/portada']);
+    if (isPlatformBrowser(this.platform_id)) {
+      this.servizo.middlewareAdmin({
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${this.servizo.token}`,
+          'Accept': 'application/json',
+        }),
+      }).subscribe({
+        next: (response) => {
+          /* ("Eres admin", response); */
+        },
+        error: (err) => {
+          if (err.status === 403 || err.status === 401) {
+            this.router.navigate(['/portada']);
+          }
         }
+      })
+
+      this.servizo.usuarioActual$.subscribe((usuario) => {
+        this.usuarioLogueado = usuario;
+      });
+
+
+      if (this.servizo.token) {
+
+        this.mostrarPerfil();
+
+        this.mostrarUsuarios();
+
+        this.mostrarForos();
+
+        this.mostrarComentarios(1);
+
+        this.mostrarPublicaciones();
+
+        this.mostrarEventos();
+
+        this.mostrarPlanes();
+
+        this.mostrarPremiums();
+
+        this.mostrarGratuitos();
+
       }
-    })
-
-    this.servizo.usuarioActual$.subscribe((usuario) => {
-      this.usuarioLogueado = usuario;
-    });
-
-
-    if (this.servizo.token) {
-
-      this.mostrarPerfil();
-
-      this.mostrarUsuarios();
-
-      this.mostrarForos();
-
-      this.mostrarComentarios(1);
-
-      this.mostrarPublicaciones();
-
-      this.mostrarEventos();
-
-      this.mostrarPlanes();
-
-      this.mostrarPremiums();
-
-      this.mostrarGratuitos();
-
     }
+
 
     this.formularioCRUD.get('plan')?.valueChanges.subscribe(valor => {
       if (valor == 'gratuito') {
