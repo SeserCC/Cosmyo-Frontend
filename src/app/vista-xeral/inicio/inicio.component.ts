@@ -14,6 +14,7 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class InicioComponent implements OnInit {
 
+  urlCloud = 'https://res.cloudinary.com/astronexus-cloud/image/upload/';
   usuarioActual: any;
   constructor(public servizo: ServizoLoginService) {
 

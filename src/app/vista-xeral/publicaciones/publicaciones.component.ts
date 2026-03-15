@@ -15,7 +15,6 @@ import { HttpHeaders } from '@angular/common/http';
   styleUrl: './publicaciones.component.css'
 })
 export class PublicacionesComponent implements OnInit {
-  publicacionFoto = "http://localhost:8000/img/publicaciones/";
 
   // Array que almacena las publicaciones
   publicaciones: any[];
@@ -68,8 +67,9 @@ export class PublicacionesComponent implements OnInit {
 
   // Método que se ejecuta cuando se selecciona un archivo desde el input file
   archivoSeleccionado(event: any): void {
-    this.archivoSelect = event.target.files[0];  // Se guarda el archivo seleccionado
-    this.faltaArchivo = false;                    // Se resetea el flag que indica si falta archivo
+    this.archivoSelect = event.target.files[0];  // Se guarda el archivo seleccionado    
+    
+  
   }
 
   // Método para cancelar la edición o creación, reseteando el formulario y la UI
@@ -121,7 +121,7 @@ export class PublicacionesComponent implements OnInit {
 
   // Método para iniciar la edición de una publicación
   editarPublicacion(publicacion: any) {
-    this.cambiar = true;                // Cambiamos estado para mostrar el formulario o la UI de edición
+    this.cambiar = true;     // Cambiamos estado para mostrar el formulario o la UI de edición         
     this.publicacionSeleccionar = publicacion;  // Guardamos la publicación a editar
     // Rellenamos el formulario con los valores actuales de la publicación
     this.formularioCRUDImagen.patchValue({
@@ -131,6 +131,8 @@ export class PublicacionesComponent implements OnInit {
     });
 
     this.archivoSelect = null; // Limpiamos cualquier archivo seleccionado previo
+
+    
   }
 
   mostrarPublicaciones() {

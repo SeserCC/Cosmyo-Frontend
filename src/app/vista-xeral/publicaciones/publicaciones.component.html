@@ -87,7 +87,8 @@
             <div class="field is-grouped mt-4 is-justify-content-center">
                 <div class="control">
                     <button *ngIf="cambiar" type="button" class="button is-info"
-                        [disabled]="formularioCRUDImagen.invalid" (click)="modificarPublicacion()"
+                        [disabled]="formularioCRUDImagen.invalid"
+                        (click)="modificarPublicacion()"
                         style="background: linear-gradient(90deg, #3f51b5, #2196f3); border: none;">
                         <i class="fa-solid fa-wand-magic-sparkles"></i> Modificar
                     </button>
@@ -118,7 +119,7 @@
                         <!-- Imagen -->
                         <div class="column is-3">
                             <figure class="image is-square">
-                                <img [src]="publicacionFoto + publicacion.imagen" alt="Imagen de la publicación"
+                                <img [src]="publicacion.imagen" alt="Imagen de la publicación"
                                     style="border-radius: 8px; box-shadow: 0 0 15px rgba(66, 165, 245, 0.5);" />
                             </figure>
                         </div>
@@ -130,9 +131,9 @@
                             <p>
                                 <strong class="has-text-info">Fecha:</strong> {{ publicacion.fecha_alta |
                                 date:'yyyy-MM-dd'}}
-                                <ng-container *ngIf="publicacionSeleccionar?.id === publicacion.id && edicion">
+                                <!-- <ng-container *ngIf="publicacionSeleccionar?.id === publicacion.id && edicion">
                                     <span class="tag is-info ml-2">Editado</span>
-                                </ng-container>
+                                </ng-container> -->
                             </p>
                         </div>
 

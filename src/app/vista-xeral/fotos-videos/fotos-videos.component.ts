@@ -52,6 +52,8 @@ export class FotosVideosComponent implements OnInit {
     })
   }
 
+  
+
   mostrarPublicaciones() {
 
     this.servizo.mostrarPublicaciones({
@@ -61,6 +63,7 @@ export class FotosVideosComponent implements OnInit {
       }),
     }).subscribe({
       next: (response) => {
+
         this.publicaciones = response[0];
         this.likes = response[1];
         this.usuarioActual = response[2];
