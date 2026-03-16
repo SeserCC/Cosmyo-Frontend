@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "01-OlaMundo:build:production"
+              "buildTarget": "astronexus:build:production"
             },
             "development": {
-              "buildTarget": "01-OlaMundo:build:development"
+              "buildTarget": "astronexus:build:development"
             }
           },
           "defaultConfiguration": "development"
