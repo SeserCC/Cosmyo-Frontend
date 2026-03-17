@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ServizoLoginService } from '../../servizo-login.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { error } from 'node:console';
@@ -28,7 +28,7 @@ export class FotosVideosComponent implements OnInit {
   usuarios: any[];
 
   // Constructor del componente, se inyecta el servicio de login y el router
-  constructor(private servizo: ServizoLoginService, private formularioBuscador: FormBuilder) {
+  constructor(private servizo: ServizoLoginService, private formularioBuscador: FormBuilder, @Inject(PLATFORM_ID) private platform_id: Object) {
     this.buscadorForm = this.formularioBuscador.group({
       titulo: ['']
     })
@@ -138,10 +138,10 @@ export class FotosVideosComponent implements OnInit {
 
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
-    this.mostrarPublicaciones();
-    this.mostrarUsuarios();
-    /* if (this.servizo.token) { 
-    } */
+    if (isPlatformBrowser(this.platform_id)) {
+      this.mostrarPublicaciones();
+      this.mostrarUsuarios();
+    }
 
   }
 
