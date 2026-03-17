@@ -35,7 +35,7 @@ export class CalendarioComponent implements OnInit {
 
     this.servizo.mostrarEventos({
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
+        /* 'Authorization': `Bearer ${this.servizo.token}`, */
         'Accept': 'application/json',
       }),
     }).subscribe({
@@ -53,10 +53,7 @@ export class CalendarioComponent implements OnInit {
 
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
-
-    if (this.servizo.token) {
-      this.mostrarEventos();
-    }
+    this.mostrarEventos();
   }
 
 

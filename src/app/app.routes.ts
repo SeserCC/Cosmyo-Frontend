@@ -16,11 +16,11 @@ import { ExitoPagoComponent } from './vista-xeral/exitoPago/exitoPago.component'
 
 export const routes: Routes = [
     { path: "portada", component: InicioComponent },
-    { path: "calendario", component: CalendarioComponent, canActivate: [authGuard] },
-    { path: "foto", component: FotosVideosComponent, canActivate: [authGuard] },
-    { path: "debate/:foro_id", component: DebateComponent, canActivate: [authGuard] },
-    { path: "foro", component: ForoComponent, canActivate: [authGuard] },
-    { path: "publicaciones/:user_id", component: PublicacionesComponent, canActivate: [authGuard] },
+    { path: "calendario", component: CalendarioComponent },
+    { path: "foto", component: FotosVideosComponent },
+    { path: "debate/:foro_id", component: DebateComponent },
+    { path: "foro", component: ForoComponent },
+    { path: "publicaciones/:user_id", component: PublicacionesComponent },
     { path: "tipoPlan", component: TipoPlanComponent },
     { path: "perfil/:user_id", component: PerfilComponent },
     { path: "subirArchivo", component: SubirArchivoComponent, canActivate: [authGuard] },

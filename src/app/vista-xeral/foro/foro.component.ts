@@ -104,7 +104,7 @@ export class ForoComponent implements OnInit {
 
     this.servizo.mostrarForos({
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
+        /* 'Authorization': `Bearer ${this.servizo.token}`, */
         'Accept': 'application/json',
       }),
     }).subscribe({
@@ -133,10 +133,9 @@ export class ForoComponent implements OnInit {
   // Método que se ejecuta al iniciar el componente
   ngOnInit(): void {
     // Se suscribe al observable que notifica cambios en la lista de foros
-    if (this.servizo.token) {
 
-      this.mostrarForos();
-    }
+    this.mostrarForos();
+
   }
 
 }

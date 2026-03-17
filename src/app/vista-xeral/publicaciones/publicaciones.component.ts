@@ -68,8 +68,8 @@ export class PublicacionesComponent implements OnInit {
   // Método que se ejecuta cuando se selecciona un archivo desde el input file
   archivoSeleccionado(event: any): void {
     this.archivoSelect = event.target.files[0];  // Se guarda el archivo seleccionado    
-    
-  
+
+
   }
 
   // Método para cancelar la edición o creación, reseteando el formulario y la UI
@@ -132,14 +132,14 @@ export class PublicacionesComponent implements OnInit {
 
     this.archivoSelect = null; // Limpiamos cualquier archivo seleccionado previo
 
-    
+
   }
 
   mostrarPublicaciones() {
     this.user_id = Number(this.router.snapshot.paramMap.get('user_id'));
     this.servizo.publicacionesUsuario(this.user_id, {
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
+        /* 'Authorization': `Bearer ${this.servizo.token}`, */
         'Accept': 'application/json',
       }),
     }).subscribe({
@@ -175,8 +175,9 @@ export class PublicacionesComponent implements OnInit {
 
   // Método que se ejecuta al iniciar el componente
   ngOnInit(): void {
+    this.mostrarPublicaciones();
     if (this.servizo.token) {
-      this.mostrarPublicaciones();
+
       this.usuarioLogueado();
     }
   }
