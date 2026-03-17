@@ -9,5 +9,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './pie.component.css'
 })
 export class PieComponent {
-
+    anioActual: number = new Date().getFullYear();
 }

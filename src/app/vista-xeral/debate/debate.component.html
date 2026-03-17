@@ -83,7 +83,7 @@
             </ul>
         </nav> -->
 
-        <form [formGroup]="formularioCRUDComentario" class="mb-5">
+        <form *ngIf="usuarioLogueado" [formGroup]="formularioCRUDComentario" class="mb-5">
             <!-- Formulario para engadir comentarios -->
             <h2 class="title is-4 has-text-light mb-4">Comentarios</h2>
 
@@ -132,7 +132,9 @@
                 </div>
             </div>
         </form>
-
+        <!-- <ng-container *ngIf="!usuarioLogueado">
+            <p>Si quieres comentar, inicia sesión</p>
+        </ng-container> -->
 
     </div>
 </div>

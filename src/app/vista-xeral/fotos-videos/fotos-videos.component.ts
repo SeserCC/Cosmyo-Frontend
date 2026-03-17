@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ServizoLoginService } from '../../servizo-login.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-fotos-videos',
@@ -21,19 +22,16 @@ export class FotosVideosComponent implements OnInit {
   like: boolean = false;
   likes: number[] = [];
   colorLike: boolean[] = [];
+  mensajeSesion = '';
 
   // Array con todos los usuarios disponibles (probablemente para asociar autores a imágenes)
   usuarios: any[];
 
   // Constructor del componente, se inyecta el servicio de login y el router
-  constructor(private servizo: ServizoLoginService, private formularioBuscador: FormBuilder) {
+  constructor(private servizo: ServizoLoginService, private formularioBuscador: FormBuilder, @Inject(PLATFORM_ID) private platform_id: Object) {
     this.buscadorForm = this.formularioBuscador.group({
       titulo: ['']
     })
-  }
-
-  cancelar() {
-
   }
 
 
@@ -52,10 +50,7 @@ export class FotosVideosComponent implements OnInit {
     })
   }
 
-  
-
   mostrarPublicaciones() {
-
     this.servizo.mostrarPublicaciones({
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
@@ -64,11 +59,10 @@ export class FotosVideosComponent implements OnInit {
     }).subscribe({
       next: (response) => {
 
-        this.publicaciones = response[0];
-        this.likes = response[1];
-        this.usuarioActual = response[2];
-        this.colorLike = response[3];
-
+        this.publicaciones = response.publicacions;
+        this.likes = response.likes;
+        this.usuarioActual = response.user;
+        this.colorLike = response.userActualLike;
       },
       error: (err) => {
         console.error('❌ Error al mostrar las publicaciones', err);
@@ -108,17 +102,25 @@ export class FotosVideosComponent implements OnInit {
           },
           error: (err) => {
             console.error("Error en el like de la publicacion", err);
+
           }
         })
 
+      },
+      error: (err) => {
+        console.log('Sesion no iniciada');
+        this.mensajeSesion = 'Debes iniciar sesion para dar like';
+
       }
     })
+
+
   }
 
   mostrarUsuarios() {
     this.servizo.mostrarUsuarios({
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
+        /* 'Authorization': `Bearer ${this.servizo.token}`, */
         'Accept': 'application/json',
       }),
     }).subscribe({
@@ -136,10 +138,8 @@ export class FotosVideosComponent implements OnInit {
 
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
-
-    if (this.servizo.token) {
+    if (isPlatformBrowser(this.platform_id)) {
       this.mostrarPublicaciones();
-
       this.mostrarUsuarios();
     }
 

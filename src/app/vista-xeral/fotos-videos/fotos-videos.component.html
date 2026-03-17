@@ -54,8 +54,17 @@
                             <strong>Fecha:</strong> {{ publicacion.fecha_alta }}
                         </p>
                     </div>
-                    <button (click)="darLike(publicacion.id)"><i class="fa fa-heart"
-                            [style.color]="colorLike[publicacion.id] ? 'red' : 'gray'"></i>{{likes[publicacion.id]}}</button>
+                    <ng-container *ngIf="usuarioActual">
+                        <button (click)="darLike(publicacion.id)"><i class="fa fa-heart"
+                                [style.color]="colorLike[publicacion.id] ? 'red' : 'gray'"></i>{{likes[publicacion.id]}}</button>
+                    </ng-container>
+                    <ng-container *ngIf="!usuarioActual"><button (click)="darLike(publicacion.id)"><i
+                                class="fa fa-heart gray"></i></button>
+                    </ng-container>
+                    <ng-container *ngIf="mensajeSesion !== ''">
+                        <p>{{mensajeSesion}}</p>
+                    </ng-container>
+
                 </div>
 
 

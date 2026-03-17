@@ -87,8 +87,7 @@
             <div class="field is-grouped mt-4 is-justify-content-center">
                 <div class="control">
                     <button *ngIf="cambiar" type="button" class="button is-info"
-                        [disabled]="formularioCRUDImagen.invalid"
-                        (click)="modificarPublicacion()"
+                        [disabled]="formularioCRUDImagen.invalid" (click)="modificarPublicacion()"
                         style="background: linear-gradient(90deg, #3f51b5, #2196f3); border: none;">
                         <i class="fa-solid fa-wand-magic-sparkles"></i> Modificar
                     </button>
@@ -138,7 +137,10 @@
                         </div>
 
                         <!-- Botones -->
-                        <div class="column is-3 is-flex is-align-items-center is-justify-content-flex-end">
+
+
+                        <div *ngIf="usuarioActual && usuarioActual.id == user_id"
+                            class="column is-3 is-flex is-align-items-center is-justify-content-flex-end">
                             <button class="button is-small is-warning mr-2" type="button"
                                 (click)="editarPublicacion(publicacion)">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -148,13 +150,14 @@
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
+
                     </div>
                 </li>
             </ul>
         </div>
 
         <!-- Botón subir archivo -->
-        <div class="has-text-centered mt-5">
+        <div *ngIf="usuarioActual && usuarioActual.id == user_id" class="has-text-centered mt-5">
             <a [routerLink]="['/subirArchivo']">
                 <button class="button is-link"
                     style="background: linear-gradient(90deg, #1a237e, #0d47a1); border: none;">
