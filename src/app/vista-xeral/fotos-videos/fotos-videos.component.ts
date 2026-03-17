@@ -4,6 +4,7 @@ import { ServizoLoginService } from '../../servizo-login.service';
 import { CommonModule } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-fotos-videos',
@@ -21,6 +22,7 @@ export class FotosVideosComponent implements OnInit {
   like: boolean = false;
   likes: number[] = [];
   colorLike: boolean[] = [];
+  mensajeSesion = '';
 
   // Array con todos los usuarios disponibles (probablemente para asociar autores a imágenes)
   usuarios: any[];
@@ -30,10 +32,6 @@ export class FotosVideosComponent implements OnInit {
     this.buscadorForm = this.formularioBuscador.group({
       titulo: ['']
     })
-  }
-
-  cancelar() {
-
   }
 
 
@@ -52,10 +50,7 @@ export class FotosVideosComponent implements OnInit {
     })
   }
 
-  
-
   mostrarPublicaciones() {
-
     this.servizo.mostrarPublicaciones({
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
@@ -64,11 +59,10 @@ export class FotosVideosComponent implements OnInit {
     }).subscribe({
       next: (response) => {
 
-        this.publicaciones = response[0];
-        this.likes = response[1];
-        this.usuarioActual = response[2];
-        this.colorLike = response[3];
-
+        this.publicaciones = response.publicacions;
+        this.likes = response.likes;
+        this.usuarioActual = response.user;
+        this.colorLike = response.userActualLike;
       },
       error: (err) => {
         console.error('❌ Error al mostrar las publicaciones', err);
@@ -108,17 +102,25 @@ export class FotosVideosComponent implements OnInit {
           },
           error: (err) => {
             console.error("Error en el like de la publicacion", err);
+
           }
         })
 
+      },
+      error: (err) => {
+        console.log('Sesion no iniciada');
+        this.mensajeSesion = 'Debes iniciar sesion para dar like';
+
       }
     })
+
+
   }
 
   mostrarUsuarios() {
     this.servizo.mostrarUsuarios({
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
+        /* 'Authorization': `Bearer ${this.servizo.token}`, */
         'Accept': 'application/json',
       }),
     }).subscribe({
@@ -136,12 +138,10 @@ export class FotosVideosComponent implements OnInit {
 
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
-
-    if (this.servizo.token) {
-      this.mostrarPublicaciones();
-
-      this.mostrarUsuarios();
-    }
+    this.mostrarPublicaciones();
+    this.mostrarUsuarios();
+    /* if (this.servizo.token) { 
+    } */
 
   }
 

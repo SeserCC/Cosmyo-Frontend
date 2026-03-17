@@ -205,7 +205,7 @@ export class DebateComponent {
 
     this.servizo.mostrarComentariosForos(Number(this.router.snapshot.paramMap.get('foro_id')), {
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
+        /* 'Authorization': `Bearer ${this.servizo.token}`, */
         'Accept': 'application/json',
       }),
     }).subscribe({
@@ -213,6 +213,7 @@ export class DebateComponent {
         this.comentarios = response.comentarios.data;
         this.foro = response.foro;
 
+        //Da error porque no se detecta sesion, pero igual funciona
         this.servizo.usuarioLogueado({
           headers: new HttpHeaders({
             'Authorization': `Bearer ${this.servizo.token}`,
@@ -240,9 +241,9 @@ export class DebateComponent {
 
   // Método que se ejecuta al iniciar el componente
   ngOnInit(): void {
-    if (this.servizo.token) {
-      this.mostrarComentariosForos();
-    }
+
+    this.mostrarComentariosForos();
+
   }
 
 }
