@@ -44,7 +44,7 @@ export class FotosVideosComponent implements OnInit {
     }).subscribe({
       next: (response) => {
 
-        this.publicaciones = response[0];
+        this.publicaciones = response.publicacions;
 
       }
     })
@@ -109,7 +109,7 @@ export class FotosVideosComponent implements OnInit {
       },
       error: (err) => {
         console.log('Sesion no iniciada');
-        this.mensajeSesion = 'Debes iniciar sesion para dar like';
+        this.mensajeSesion = 'Debes iniciar sesión para dar like';
 
       }
     })
