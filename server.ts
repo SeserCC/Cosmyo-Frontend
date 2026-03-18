@@ -12,23 +12,28 @@ export function app(): express.Express {
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
-  server.use(express.static(browserDistFolder));
-
   const commonEngine = new CommonEngine();
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
+  server.get('/sitemap.xml', (req, res) => {
+    res.type('application/xml'); // importante
+    res.sendFile(join(browserDistFolder, 'sitemap.xml'));
+  });
+
+  server.use(express.static(browserDistFolder));
+
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
-  server.get('**', express.static(browserDistFolder, {
+/*   server.get('**', express.static(browserDistFolder, {
     maxAge: '1y',
     index: 'index.html',
-  }));
+  })); */
 
   // All regular routes use the Angular engine
-  server.get('**', (req, res, next) => {
+  server.get('*', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine
