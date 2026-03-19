@@ -22,15 +22,22 @@ export function app(): express.Express {
     res.sendFile(join(browserDistFolder, 'sitemap.xml'));
   });
 
+  server.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.sendFile(join(browserDistFolder, 'robots.txt'));
+  });
+
+  
   server.use(express.static(browserDistFolder));
 
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
-/*   server.get('**', express.static(browserDistFolder, {
-    maxAge: '1y',
-    index: 'index.html',
-  })); */
+  /*   server.get('**', express.static(browserDistFolder, {
+      maxAge: '1y',
+      index: 'index.html',
+    })); */
+
 
   // All regular routes use the Angular engine
   server.get('*', (req, res, next) => {
