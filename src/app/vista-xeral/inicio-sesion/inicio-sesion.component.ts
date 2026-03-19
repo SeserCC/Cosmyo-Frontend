@@ -59,7 +59,7 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
           if (response.user.rol == "admin") {
             this.router.navigate(['/administracion']);
           } else {
-            this.router.navigate(['/portada']);
+            this.router.navigate(['/']);
           }
         },
 
@@ -71,6 +71,7 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
             this.formularioLogin.reset()
           } else {
             this.errorMensaje = "Error inesperado del servidor";
+            console.error("El servidor no responde correctemante", err);
           }
 
         }

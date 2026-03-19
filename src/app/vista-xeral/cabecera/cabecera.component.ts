@@ -24,7 +24,7 @@ export class CabeceraComponent implements OnInit {
 
   // Método para cerrar sesión
   cerrarSesion() {
-    // Elimina el usuario guardado en sessionStorage
+    // Elimina el usuario guardado en localStorage
 
     this.servizo.cerrarSesion(this.usuarioActual, {
       headers: new HttpHeaders({
@@ -37,7 +37,7 @@ export class CabeceraComponent implements OnInit {
         this.usuarioActual = null
         this.servizo.usuarioActual$.next(null);
         // Redirige a la portada de la aplicación
-        this.router.navigate(['/portada']);
+        this.router.navigate(['/']);
       }
     })
 
