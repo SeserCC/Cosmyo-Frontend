@@ -55,7 +55,7 @@ export class RegistroComponent {
       }),
     }).subscribe({
       next: () => {
-        this.router.navigate(['/portada']);
+        this.router.navigate(['/']);
 
       },
       error: (erro) => {

@@ -15,7 +15,7 @@ import { PerfilComponent } from './vista-xeral/perfil/perfil.component';
 import { ExitoPagoComponent } from './vista-xeral/exitoPago/exitoPago.component';
 
 export const routes: Routes = [
-    { path: "portada", component: InicioComponent },
+    { path: "", component: InicioComponent },
     { path: "calendario", component: CalendarioComponent },
     { path: "foto", component: FotosVideosComponent },
     { path: "debate/:foro_id", component: DebateComponent },
@@ -27,5 +27,5 @@ export const routes: Routes = [
     { path: "registro", component: RegistroComponent },
     { path: "exito", component: ExitoPagoComponent, canActivate: [authGuard] },
     { path: "administracion", component: AdministracionComponent }, //Ruta protegida
-    { path: "", component: InicioSesionComponent },
+    { path: "login", component: InicioSesionComponent },
 ];

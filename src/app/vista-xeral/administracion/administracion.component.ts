@@ -1117,7 +1117,7 @@ export class AdministracionComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 403 || err.status === 401) {
-            this.router.navigate(['/portada']);
+            this.router.navigate(['/']);
           }
         }
       })
