@@ -44,7 +44,7 @@ export class ServizoLoginService {
 
     // Verifica si el código se ejecuta en el navegador antes de acceder a localStorage
     if (isPlatformBrowser(this.plataformId)) {
-      const token = sessionStorage.getItem('token');
+      const token = localStorage.getItem('token');
       this.token = token ? token : '';
       if (this.token != '') {
         this.usuarioLogueado({
@@ -74,7 +74,7 @@ export class ServizoLoginService {
           this.token = response.accessToken;
           this.tokens$.next(this.token);
 
-          sessionStorage.setItem("token", this.token);
+          localStorage.setItem("token", this.token);
 
           observable.next(response);
           observable.complete();
@@ -91,7 +91,7 @@ export class ServizoLoginService {
       this.cliente.post<any>(this.apiBackend + '/logoutAPI', body, options).subscribe({
         next: (response) => {
 
-          sessionStorage.removeItem('token');
+          localStorage.removeItem('token');
           // this.tokens$.next(this.token);
 
           observable.next(response);
@@ -112,7 +112,7 @@ export class ServizoLoginService {
           this.token = response.accessToken;
           this.tokens$.next(this.token);
 
-          sessionStorage.setItem("token", this.token);
+          localStorage.setItem("token", this.token);
 
           this.usuarioLogueado({
             headers: new HttpHeaders({

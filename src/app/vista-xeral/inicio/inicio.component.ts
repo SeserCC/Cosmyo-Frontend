@@ -35,9 +35,5 @@ export class InicioComponent implements OnInit {
     this.servizo.usuarioActual$.subscribe((usuario) => {
       this.usuarioActual = usuario;
     });
-
-    /*     if (this.servizo.token) {
-          this.usuarioLogueado();
-        } */
   }
 }

@@ -4,12 +4,12 @@ import { CanActivateFn, Router } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state) => {
   let router = inject(Router); // Inxectamos o Router (singleton) para poder redirixir o tráfico
-  // Recuperamos o valor do usuario actual dende sessionStorage
+  // Recuperamos o valor do usuario actual dende localStorage
   let platformId = inject(PLATFORM_ID);
-  // Comprobamos se había usuario gardado en sessionStorage
+  // Comprobamos se había usuario gardado en localStorage
 
   if (isPlatformBrowser(platformId)) {
-    let usuario = sessionStorage.getItem("token");
+    let usuario = localStorage.getItem("token");
     if (usuario) {
       return true;
     }
