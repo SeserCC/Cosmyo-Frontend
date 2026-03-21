@@ -1,6 +1,6 @@
 
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ServizoLoginService } from '../../servizo-login.service';
 import { HttpHeaders } from '@angular/common/http';
@@ -16,24 +16,16 @@ export class InicioComponent implements OnInit {
 
   urlCloud = 'https://res.cloudinary.com/astronexus-cloud/image/upload/';
   usuarioActual: any;
-  constructor(public servizo: ServizoLoginService) {
+  constructor(public servizo: ServizoLoginService, @Inject(PLATFORM_ID) private platformId: Object) {
 
   }
 
-  /* usuarioLogueado() {
-    this.servizo.usuarioLogueado({
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe(usuario => {
-      this.usuarioActual = usuario;
-    })
-  } */
-
   ngOnInit(): void {
-    this.servizo.usuarioActual$.subscribe((usuario) => {
-      this.usuarioActual = usuario;
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.servizo.usuarioActual$.subscribe((usuario) => {
+        this.usuarioActual = usuario;
+      });
+    }
+
   }
 }
