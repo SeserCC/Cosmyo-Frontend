@@ -201,6 +201,7 @@ export class PerfilComponent implements OnInit {
 
   portalUrl() {
     let data = {
+      id: this.usuarioActual.id,
       rol: this.usuarioActual.rol,
       stripe_id: this.usuarioActual?.stripe_id
     };

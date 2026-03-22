@@ -7,7 +7,7 @@
 
         <!-- Barra de navegación (breadcrumb) -->
         <div id="mapa_navegacion">
-            <a [routerLink]="['/portada']">
+            <a [routerLink]="['/']">
                 <!-- Icono de casa -->
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6" width="16px">
@@ -353,7 +353,7 @@
                             <div class="columns is-vcentered">
                                 <div class="column is-8 has-text-light">
                                     {{ comentario.texto }} - {{comentario.fecha_hora | date:'yyyy-MM-dd'}} <ng-container
-                                        *ngIf="comentario.foto"> - <img [src]="fotosComentarios + comentario.foto"
+                                        *ngIf="comentario.foto"> - <img [src]="comentario.foto"
                                             alt="Foto del usuario" width="100px"></ng-container>
                                 </div>
                                 <div class="column is-4 is-flex is-justify-content-flex-end">
@@ -475,7 +475,7 @@
                                 <!-- Imagen -->
                                 <div class="column is-3">
                                     <div class="imagen-publicacion">
-                                        <img [src]="fotosPublicaciones + publicacion.imagen" alt="Imagen">
+                                        <img [src]="publicacion.imagen" alt="Imagen">
                                     </div>
                                 </div>
 
@@ -769,7 +769,7 @@
                                 <div class="column is-2 has-text-centered">
                                     <figure class="image is-96x96"
                                         style="border-radius: 50%; overflow: hidden; margin: 0 auto;">
-                                        <img [src]="fotosPerfiles + perfil.foto" alt="Imagen de perfil">
+                                        <img [src]="perfil.foto" alt="Imagen de perfil">
                                     </figure>
                                 </div>
 
