@@ -610,7 +610,7 @@ export class AdministracionComponent implements OnInit {
       }),
     }).subscribe({
       next: (response) => {
-        this.publicaciones = response[0];
+        this.publicaciones = response.publicacions;
       },
       error: (err) => {
         console.error('❌ Error al mostrar las publicaciones', err);
@@ -994,7 +994,6 @@ export class AdministracionComponent implements OnInit {
       }).subscribe({
         next: (response) => {
           this.premiums = response;
-
         },
         error: (err) => {
           console.error('Error al mostrar los usuairos premium', err);
