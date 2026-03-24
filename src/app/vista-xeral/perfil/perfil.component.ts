@@ -85,6 +85,7 @@ export class PerfilComponent implements OnInit {
     }).subscribe({
       next: (data) => {
         this.usuarioActual = data;
+        //console.log(this.usuarioActual);
         //this.desactivar = this.usuarioActual.stripe_id ? true : false;
       }
     });
@@ -201,7 +202,8 @@ export class PerfilComponent implements OnInit {
 
   portalUrl() {
     let data = {
-      id: this.usuarioActual.id,
+      plan_id: this.plan.id,
+      user_id: this.usuarioActual.id,
       rol: this.usuarioActual.rol,
       stripe_id: this.usuarioActual?.stripe_id
     };
@@ -213,6 +215,7 @@ export class PerfilComponent implements OnInit {
       })
     }).subscribe({
       next: (data) => {
+        //console.log(data)
         window.location.href = data.url;
       }
 
@@ -283,7 +286,8 @@ export class PerfilComponent implements OnInit {
 
   accesoPremium() {
     let data = {
-      id: this.usuarioActual.id,
+      plan_id: this.plan.id,
+      user_id: this.usuarioActual.id,
       tipo_pago: this.planCRUD.get('tipo_pago')?.value
     };
 
