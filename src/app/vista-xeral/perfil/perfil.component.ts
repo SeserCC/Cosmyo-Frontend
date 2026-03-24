@@ -101,6 +101,8 @@ export class PerfilComponent implements OnInit {
         next: (response) => {
           this.plan = response.plan;
           this.premium = response.premium;
+          //console.log(this.premium)
+
         },
         error: (err) => {
           console.error('Error al mostrar el plan', err);
@@ -142,7 +144,7 @@ export class PerfilComponent implements OnInit {
     this.cambiarUsuario = false;// Activamos el modo edición
     this.cambiar = false;// Activamos el modo edición
     this.cambiarPlan = true; // Activamos el modo edición
-    console.log(this.plan);
+    //console.log(this.plan);
     /* Eliminaste la variable planSeleccionar aqui */
     (this.plan);
     this.planCRUD.patchValue({
@@ -225,9 +227,7 @@ export class PerfilComponent implements OnInit {
 
     if (this.plan) {
       // Actualizamos
-      this.plan.plan = this.planCRUD.get('plan')?.value;
       this.plan.tipo_pago = this.planCRUD.get('tipo_pago')?.value;
-      this.plan.metodo_pago = this.planCRUD.get('metodo_pago')?.value;
 
       // Llamamos al servicio para modificar
       this.servizo.modificarPlan(this.plan.user_id, this.plan, {
@@ -246,7 +246,6 @@ export class PerfilComponent implements OnInit {
         },
         error: (erro) => {
           console.error("Error en el modificar del plan", erro);
-
         }
       });
     }
