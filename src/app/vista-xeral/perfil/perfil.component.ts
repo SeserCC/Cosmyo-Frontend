@@ -41,8 +41,6 @@ export class PerfilComponent implements OnInit {
 
     this.planCRUD = new FormGroup({
       tipo_pago: new FormControl('Ninguno'),
-      metodo_pago: new FormControl({ value: 'Ninguno', disabled: true }),
-      plan: new FormControl({ value: '', disabled: true }),
     });
 
     this.userCRUD = new FormGroup({
@@ -144,10 +142,11 @@ export class PerfilComponent implements OnInit {
     this.cambiarUsuario = false;// Activamos el modo edición
     this.cambiar = false;// Activamos el modo edición
     this.cambiarPlan = true; // Activamos el modo edición
+    console.log(this.plan);
     /* Eliminaste la variable planSeleccionar aqui */
     (this.plan);
     this.planCRUD.patchValue({
-      plan: this.plan.anuncio ? "gratuito" : "premium",
+
       tipo_pago: this.plan.tipo_pago,
       metodo_pago: this.plan.metodo_pago,
     });
