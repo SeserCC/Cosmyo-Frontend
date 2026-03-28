@@ -1,26 +1,20 @@
 <div class="contenido">
-    <!-- Contenedor de la cabecera -->
 
-
-    <!-- Contenedor principal para los datos -->
     <div class="datos">
 
-        <!-- Barra de navegación (breadcrumb) -->
         <div id="mapa_navegacion">
             <a [routerLink]="['/']">
-                <!-- Icono de casa -->
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6" width="16px">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                </svg> Inicio
+                <i class="bi bi-house"></i>
             </a>
             /
             <strong id="publicacion">Administracion</strong>
         </div>
 
-        <div class="container mt-5 p-5 has-background-dark has-text-light"
-            style="border-radius: 10px; background: linear-gradient(145deg, #0b0c28, #1a1b3d);">
+        <a [routerLink]="['/']" class="flecha-derecha">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+
+        <div class="container mt-5 p-5 has-background-dark has-text-light">
 
             <!-- Submenú de categorías -->
             <div class="tabs is-toggle is-toggle-rounded is-centered mb-5">
@@ -353,8 +347,8 @@
                             <div class="columns is-vcentered">
                                 <div class="column is-8 has-text-light">
                                     {{ comentario.texto }} - {{comentario.fecha_hora | date:'yyyy-MM-dd'}} <ng-container
-                                        *ngIf="comentario.foto"> - <img [src]="comentario.foto"
-                                            alt="Foto del usuario" width="100px"></ng-container>
+                                        *ngIf="comentario.foto"> - <img id="comentarioImagen" [src]="comentario.foto"
+                                            alt="Foto del usuario"></ng-container>
                                 </div>
                                 <div class="column is-4 is-flex is-justify-content-flex-end">
                                     <button class="button is-small is-warning mr-2"
@@ -827,7 +821,7 @@
                         </div>
                         <p *ngIf="formularioCRUDPremium.get('insignia')?.touched && formularioCRUDPremium.get('insignia')?.invalid"
                             class="help is-danger">
-                            Debes seleccionar una isignia
+                            Debes seleccionar una insignia
                         </p>
                     </div>
 

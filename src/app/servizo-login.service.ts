@@ -327,7 +327,7 @@ export class ServizoLoginService {
   mostrarPremiums(options?: { headers?: HttpHeaders }) {
     return this.cliente.get<any>(this.apiBackend + '/premium/', options);
   }
-
+  
   modificarPremium(id: number, body: any, options?: { headers?: HttpHeaders }) {
     return this.cliente.put<any>(this.apiBackend + '/premium/' + id, body, options);
   }

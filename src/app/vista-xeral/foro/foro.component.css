@@ -16,42 +16,23 @@ a {
     /* Elimina el subrayado de los enlaces */
 }
 
-/* Estilo para el icono de usuario */
-.fa-solid.fa-user {
-    margin-right: 15px;
-    /* Añade margen a la derecha */
-    font-size: 25px;
-    /* Tamaño grande para el icono */
-}
-
-/* Estilo para el mapa de navegación */
 #mapa_navegacion {
-    font-family: Arial, Helvetica, sans-serif;
-    /* Fuente sans-serif */
-    font-size: 15px;
-    /* Tamaño de fuente */
-    margin: 10px 10px;
-    /* Márgenes */
-    height: 20px;
-    /* Altura */
-    padding: 8px;
-    /* Relleno */
-    margin: 0px;
-    /* Elimina márgenes */
-}
-
-/* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
-#mapa_navegacion>a:hover {
-    opacity: 0.6;
-    /* Reduce la opacidad al pasar el ratón */
-}
-
-/* Estilo para el bloque de búsqueda */
-#buscar_temas {
     display: flex;
-    /* Usa flexbox para organizar los elementos */
-    justify-content: start;
-    /* Alinea los elementos al principio */
+    align-items: center;
+    gap: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    padding: 8px 10px;
+}
+
+/* Hover del icono */
+#mapa_navegacion a:hover {
+    opacity: 0.6;
+}
+
+/* Separador */
+.separador {
+    opacity: 0.6;
 }
 
 /* Estilo para el bloque del foro */
@@ -64,19 +45,53 @@ a {
     /* Bordes redondeados */
 }
 
-/* Estilo general para los bloques de datos */
+/* Contenedor principal */
 .datos {
+    position: relative;
     background-color: #1d1d1d;
-    /* Fondo gris oscuro */
     margin: 100px 70px 70px;
-    /* Márgenes alrededor del bloque */
     box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
-    /* Sombra azul */
     padding: 5px;
-    /* Relleno */
+    padding-bottom: 60px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
 }
 
-/* Estilo para los divs dentro de .datos */
+.flecha-derecha {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform 0.2s ease;
+}
+
+.flecha-derecha i {
+    font-size: 2rem;
+}
+
+/* Hover suave */
+.flecha-derecha:hover {
+    transform: scale(1.1);
+}
+
+
+/* Botón abajo derecha */
+.btn-nuevo-tema {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: auto;
+    padding: 8px 14px;
+    z-index: 10;
+}
+
 .datos>div {
     border-bottom-style: solid;
     /* Borde inferior sólido */
@@ -84,7 +99,7 @@ a {
     /* Borde superior sólido */
     border-width: 1px;
     /* Grosor del borde */
-    border-color: blue;
+    border-color: rgb(175, 175, 175);
     /* Color del borde azul */
     background-color: #3b3b3b;
     /* Fondo gris más claro */
@@ -92,7 +107,6 @@ a {
     /* Márgenes */
 }
 
-/* Estilo para los párrafos dentro de .datos */
 .datos p {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     /* Fuente serif */
@@ -102,11 +116,9 @@ a {
     /* Relleno a la izquierda */
 }
 
-/* Estilo para el primer div dentro de .datos */
 .datos>div:first-child {
     display: flex;
     /* Usa flexbox */
-    justify-content: space-between;
     /* Espacia los elementos entre los extremos */
     border: none;
     /* Elimina los bordes */
@@ -118,10 +130,37 @@ a {
     /* Márgen inferior */
 }
 
-/* Estilo para los enlaces dentro de los divs de datos al pasar el ratón */
-.datos>div>p>strong>a:hover {
-    color: #006eff;
-    /* Cambia el color a azul claro */
+
+.foros {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    position: relative;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+#foro_fecha {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.9rem;
+    color: #868585;
+}
+
+form {
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Estilo para el mensaje que indica que no hay foros disponibles */
@@ -144,74 +183,143 @@ a {
     /* Sombra azul clara que aporta profundidad sutil */
 }
 
-/* Estilo para los botones */
 button {
     border: none;
-    /* Sin borde */
-    background-color: #1d1d1d;
-    /* Fondo oscuro */
-    font-size: 13px;
-    /* Tamaño de la fuente */
-    color: #ffffff;
-    /* Texto blanco */
-    border-radius: 4px;
-    /* Bordes redondeados */
-    width: 120px;
-    /* Ancho */
-    height: 30px;
-    /* Alto */
     background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
-    /* Fondo degradado azul */
+    color: #ffffff;
+    font-size: 13px;
+    width: 120px;
+    height: 30px;
     margin-left: 10px;
-    /* Márgen izquierdo */
     cursor: pointer;
-    /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    /* Sombra oscura */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-/* Estilo de hover para los botones */
 button:hover {
-    background: linear-gradient(45deg, #022c63, #12479b, #2d65b4);
-    /* Fondo más oscuro al pasar el ratón */
+    filter: brightness(0.85);
+    transform: translateY(20px) scale(1.6);
 }
 
-/* Estilo para el pie de página */
-.pie_pagina {
-    display: grid;
-    /* Usa grid para distribuir los elementos */
-    width: 20%;
-    /* Ancho del 20% */
-    margin-left: 20px;
-    /* Márgen izquierdo */
-    grid-template-columns: 160px 160px;
-    /* Define las columnas */
-    grid-template-rows: 30px 30px;
-    /* Define las filas */
+
+@media (max-width: 1024px) {
+
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    .datos p {
+        font-size: 18px;
+    }
+
+    .btn-nuevo-tema {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .flecha-derecha i {
+        font-size: 1.8rem;
+    }
+
+    .pie_pagina {
+        width: 40%;
+    }
 }
 
-/* Estilo para los párrafos dentro de .pie_pagina */
-.pie_pagina>p {
-    margin-top: 5px;
-    /* Márgen superior */
+@media (max-width: 768px) {
+
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    /* Foros más compactos */
+    .datos>div {
+        margin: 8px 5px;
+        padding: 10px;
+    }
+
+    .datos p {
+        font-size: 16px;
+        padding-left: 10px;
+    }
+
+    #foros {
+        border: none;
+    }
+
+    #foro_fecha {
+        position: static;
+        display: block;
+        margin-top: 8px;
+        text-align: right;
+        font-size: 0.8rem;
+    }
+
+    .btn-nuevo-tema {
+        width: auto;
+        position: static;
+        margin: 15px auto 0 auto;
+        /* 👈 centra horizontalmente */
+        display: block;
+        /* asegura que respete el margin */
+    }
+
+    /* Navegación */
+    #mapa_navegacion {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+
+    /* Pie de página en columna */
+    .pie_pagina {
+        width: 100%;
+        grid-template-columns: 1fr;
+        margin-left: 10px;
+    }
 }
 
-/* Estilo para el pie de página */
-footer {
-    background-color: #2c3e50;
-    /* Fondo gris oscuro */
-}
+@media (max-width: 480px) {
 
-/* Estilo para el logo */
-#logo {
-    margin-left: 10px;
-    /* Márgen izquierdo */
-}
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
 
-/* Estilo para el logo de contacto */
-#logo_contacto {
-    margin-left: 15px;
-    /* Márgen izquierdo */
-    margin-top: 5px;
-    /* Márgen superior */
+    .datos p {
+        font-size: 15px;
+    }
+
+    .datos>div {
+        margin: 10px 20px;
+    }
+
+    #foro_fecha {
+        position: static;
+        display: block;
+        margin-top: 8px;
+        text-align: right;
+        font-size: 13px;
+    }
+
+    button {
+        width: 100%;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    .flecha-derecha i {
+        font-size: 1.5rem;
+        margin: 15px;
+    }
+
+    #foro {
+        font-size: 13px;
+        padding: 4px;
+    }
 }

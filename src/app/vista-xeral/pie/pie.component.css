@@ -1,6 +1,6 @@
 /* Estilo general del pie de página */
 .pie_pagina {
-    background-color: #222;
+    background-color: #333333;
     /* Fondo oscuro */
     color: #ffffff;
     /* Texto blanco para buen contraste */
@@ -8,6 +8,10 @@
     /* Centra el contenido */
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     /* Tipografía legible */
+}
+
+h3{
+    font-weight: 900;
 }
 
 /* Contenedor principal del contenido del pie de página */
@@ -28,7 +32,7 @@
 
 /* Títulos de las secciones del pie */
 .seccion h3 {
-    border-bottom: 2px solid #ffcc00;
+    border-bottom: 2px solid #0f58c5;
     /* Línea inferior decorativa */
     padding-bottom: 5px;
     /* Espaciado inferior */
@@ -53,9 +57,13 @@
     /* Ocupa el 20% del ancho */
 }
 
+.descripcion p {
+    color: #bbb;
+}
+
 /* Estilo base de los enlaces */
 .seccion a {
-    color: #ffcc00;
+    color: #ffffff;
     /* Color amarillo para destacar */
     text-decoration: none;
     /* Quita subrayado por defecto */
@@ -75,7 +83,7 @@
     width: 0;
     /* Inicialmente sin ancho */
     height: 2px;
-    background-color: #ffcc00;
+    background-color: #0f58c5;
     transition: width 0.3s ease-in-out;
     /* Animación suave */
 }
@@ -103,13 +111,6 @@
     text-decoration: none;
 }
 
-/* Estilo específico del ícono SVG */
-.redes-sociales .icono svg {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
-    /* Usa el color del texto para el ícono */
-}
 
 /* Estilo de la franja inferior con derechos de autor */
 .copy {
@@ -123,4 +124,49 @@
     /* Gris claro para el texto */
     border-top: 1px solid #444;
     /* Línea superior sutil */
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablets */
+@media (max-width: 992px) {
+    .contenedor {
+        justify-content: space-between;
+    }
+
+    .seccion {
+        width: 45%; /* 2 columnas */
+        margin-bottom: 20px;
+    }
+
+    .descripcion {
+        width: 100%; /* ocupa toda la fila */
+    }
+}
+
+/* Móviles */
+@media (max-width: 576px) {
+
+    .contenedor {
+        flex-direction: column; /* todo en columna */
+        align-items: center;
+        text-align: center;
+    }
+
+    .seccion {
+        width: 100%; /* ocupa todo el ancho */
+        max-width: 400px; /* evita que se vea demasiado ancho */
+    }
+
+    .descripcion {
+        width: 100%;
+    }
+
+    .seccion ul {
+        justify-items: center; /* centra enlaces */
+    }
+
+    .redes-sociales {
+        justify-content: center;
+    }
 }

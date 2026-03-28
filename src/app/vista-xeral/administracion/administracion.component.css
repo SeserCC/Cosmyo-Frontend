@@ -23,6 +23,7 @@ a {
 
 /* Estilo para el contenedor de datos */
 .datos {
+    position: relative;
     padding: 10px;
     /* Relleno de 5px */
     background-color: #1d1d1d;
@@ -32,6 +33,47 @@ a {
     /* Márgenes alrededor del contenedor */
     box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
     /* Sombra azul alrededor del contenedor */
+}
+
+.columns {
+    background-color: #424242;
+    margin: 30px 0;
+    border-radius: 10px;
+}
+
+#comentarioImagen {
+    margin-top: 10px;
+    width: 70%;
+}
+
+.box.has-background-black-ter {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.flecha-derecha {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.flecha-derecha i {
+    font-size: 1.5rem;
+}
+
+/* Hover suave */
+.flecha-derecha:hover {
+    transform: scale(1.1);
+}
+
+.container {
+    border-radius: 10px;
+    background: linear-gradient(145deg, #0b0c28, #1a1b3d);
 }
 
 #publicacion {
@@ -48,4 +90,97 @@ a {
     color: #ff6b6b;
     font-size: 0.85rem;
     margin-top: 4px;
+}
+
+
+@media (max-width: 1024px) {
+
+    .datos {
+        margin: auto;
+        width: auto;
+        box-shadow: none;
+    }
+
+    .columns {
+        background-color: #5e5e5e;
+        margin: 30px 0;
+        border-radius: 10px;
+    }
+
+    .container {
+        background: none;
+    }
+
+    .has-background-dark {
+        background-color: transparent !important;
+    }
+
+    .box.has-background-black-ter {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .datos {
+        margin: auto;
+        padding: 15px;
+        box-shadow: none;
+    }
+
+    #publicacion {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .erro {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .datos {
+        margin: auto;
+        padding: 12px;
+        box-shadow: none;
+    }
+
+    .columns {
+        background-color: #5e5e5e;
+        margin: 30px 0;
+        border-radius: 10px;
+    }
+
+    #comentarioImagen {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .container {
+        background: none;
+    }
+
+    .has-background-dark {
+        background-color: transparent !important;
+    }
+
+    .box.has-background-black-ter {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    #publicacion {
+        font-size: 13px;
+        padding: 5px;
+    }
+
+    .erro {
+        font-size: 0.75rem;
+    }
 }
