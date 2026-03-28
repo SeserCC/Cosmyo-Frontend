@@ -5,19 +5,19 @@
         <!-- Mapa de navegación para indicar la ubicación actual al usuario -->
         <div id="mapa_navegacion">
             <a [routerLink]="['/']">
-                <i class="fa-solid fa-house"></i> Inicio
+                <i class="bi bi-house"></i>
             </a>
             /
             <a [routerLink]="['/foto']">Galeria</a>
             /
-            <strong id="subir_archivos">Subir archivos</strong>
-            <!-- Enlace para regresar a la página anterior -->
-            <div class="contenedor-flecha">
-                <a [routerLink]="['/publicaciones']">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </a>
-            </div>
+            <strong id="subir_archivos">Nueva publicacion</strong>
+
         </div>
+
+        <a [routerLink]="['/foto']" class="flecha-derecha">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+
         <form [formGroup]="formularioPublicacion" (ngSubmit)="engadirPublicacion()">
             <!-- Campo para ingresar el título del archivo -->
             <div class="titulo_info">

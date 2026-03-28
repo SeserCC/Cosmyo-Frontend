@@ -1,10 +1,5 @@
 .contenido {
     background-color: #7b7b7b;
-    /* Color de fondo gris */
-    color: #ffffff;
-    /* Color de texto blanco */
-
-    /* Elimina los márgenes por defecto */
     padding: 0;
     margin: 0;
     min-height: 100vh;
@@ -51,6 +46,7 @@ a {
 
 /* Estilo para los datos generales */
 .datos {
+    position: relative;
     background-color: #1d1d1d;
     /* Fondo gris oscuro */
     margin: 70px 70px 70px;
@@ -59,6 +55,34 @@ a {
     /* Sombra con color azul */
     padding: 5px;
     /* Relleno */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+}
+
+.flecha-derecha {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.flecha-derecha i {
+    font-size: 2rem;
+}
+
+/* Hover suave */
+.flecha-derecha:hover {
+    transform: scale(1.1);
 }
 
 /* Estilo para la información del calendario */
@@ -69,6 +93,10 @@ a {
     /* Posiciona los puntos de la lista dentro del contenedor */
     margin-bottom: 60px;
     /* Márgen inferior */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.5s;
 }
 
 /* Caja principal con fondo degradado azul oscuro, borde y sombra luminosa */
@@ -76,9 +104,6 @@ a {
     background: linear-gradient(135deg, #0b1a3d, #122c5c);
     /* Degradado diagonal azul oscuro */
     border: 1px solid #2a4d8f;
-    /* Borde azul */
-    box-shadow: 0 0 20px 4px rgba(30, 80, 150, 0.7);
-    /* Sombra azul luminosa alrededor */
     padding: 2rem;
     /* Espacio interno */
     border-radius: 8px;
@@ -89,8 +114,6 @@ a {
 
 /* Título principal dentro de astro-box con sombra y color claro azulado */
 .astro-box h1.title {
-    text-shadow: 0 0 8px #6ea0ff;
-    /* Sombra luminosa azul alrededor del texto */
     color: #c1d9ff;
     /* Color texto azul muy claro */
     font-weight: 700;
@@ -101,7 +124,7 @@ a {
 .evento-item {
     background-color: #153563;
     /* Fondo azul oscuro */
-    color: #d0dff9;
+    color: #fde6e6;
     /* Texto azul claro */
     border-left: 4px solid #4a7ed1;
     /* Borde vertical izquierdo más claro */
@@ -117,25 +140,12 @@ a {
     /* Bordes ligeramente redondeados */
     box-shadow: 0 1px 3px rgba(20, 50, 90, 0.5);
     /* Sombra sutil para dar profundidad */
-
     display: flex;
-    /* Layout flexible */
-    align-items: center;
     /* Centrar verticalmente */
     justify-content: flex-start;
     /* Alinear al inicio horizontalmente */
     gap: 1rem;
     /* Espacio entre elementos hijos (nombre y fecha) */
-}
-
-/* Efecto hover para cambiar fondo y color del borde lateral */
-.evento-item:hover {
-    background-color: #1f497d;
-    /* Fondo azul más claro */
-    border-left-color: #9abff9;
-    /* Borde lateral azul muy claro */
-    cursor: pointer;
-    /* Cursor de mano para indicar clicable */
 }
 
 /* Texto en negrita para el nombre dentro de evento, sin reducción ni salto de línea */
@@ -150,7 +160,7 @@ a {
 
 /* Estilo para la fecha dentro del evento: gris claro, tamaño pequeño, sin división en líneas */
 .evento-item span.has-text-grey-light {
-    color: #a0b9d8 !important;
+    color: #858585 !important;
     /* Color gris claro con prioridad */
     flex-shrink: 0;
     /* No se reduce */
@@ -164,7 +174,7 @@ a {
 
 /* Clase general para texto gris claro */
 .has-text-grey-light {
-    color: #a0b9d8 !important;
+    color: #afc1d8 !important;
     /* Gris claro con prioridad */
 }
 
@@ -188,11 +198,85 @@ a {
     /* Sombra azul muy suave */
 }
 
+@media (max-width: 768px) {
 
-/* Estilo para el calendario de noviembre */
-#calendario_noviembre {
-    margin: 50px 0 40px 0;
-    /* Márgenes */
-    border-radius: 15px;
-    /* Bordes redondeados */
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    .astro-box {
+        padding: 1.5rem;
+    }
+
+    .astro-box h1.title {
+        font-size: 1.5rem;
+    }
+
+    #mapa_navegacion {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    .flecha-derecha {
+        margin: 10px;
+    }
+
+    .astro-box {
+        padding: 1rem;
+    }
+
+    .astro-box h1.title {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    section{
+        padding: 48px 0px;
+    }
+
+    .astro-box{
+        background: none;
+        border: none;
+    }
+
+    .box{
+        background: transparent;
+        box-shadow: none;
+        border: none;
+    }
+
+    .evento-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .evento-item strong,
+    .evento-item span {
+        white-space: normal;
+    }
+
+    a.flecha-derecha {
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    #mapa_navegacion {
+        font-size: 15px;
+        margin: 0;
+    }
+
+    .mensaje-eventos-vacio {
+        font-size: 1rem;
+        padding: 1rem;
+    }
 }

@@ -21,9 +21,11 @@
             <h2 class="title is-4 has-text-white">✨ ¡Pago realizado con éxito! ✨</h2>
             <p class="has-text-light">
                 Tu suscripción premium ha sido activada correctamente.
-                Gracias por apoyarnos :)
+                Gracias por apoyarnos <i class="bi bi-rocket-takeoff"></i>
             </p>
         </div>
+
+        <button [routerLink]="['/perfil', usuarioActual?.id]">Regresar al perfil</button>
 
     </div>
 </div>

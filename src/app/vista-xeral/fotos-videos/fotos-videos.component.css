@@ -24,7 +24,8 @@ a {
     font-family: Arial, Helvetica, sans-serif;
     /* Fuente sans-serif */
     font-size: 15px;
-    margin-bottom: 15px;
+    margin-top: 10px;
+
 }
 
 /* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
@@ -44,15 +45,48 @@ a {
 
 /* Estilo para el bloque de datos */
 .datos {
+    position: relative;
     background-color: #1d1d1d;
-    /* Fondo gris oscuro */
     margin: 70px 90px 70px;
-    /* Márgenes alrededor del bloque */
     padding: 10px;
-    /* Relleno */
     box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
-    /* Sombra azul */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
 }
+
+.flecha-derecha {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.flecha-derecha i {
+    font-size: 2rem;
+}
+
+/* Hover suave */
+.flecha-derecha:hover {
+    transform: scale(1.1);
+}
+
+form {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 /* Contenedor principal de cada publicación con padding y ancho máximo centrado */
 .publicacion-box {
@@ -64,6 +98,10 @@ a {
     /* Centra horizontalmente el contenedor */
     border-radius: 8px;
     /* Bordes redondeados para un aspecto suave */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    animation-delay: 0.5s;
 }
 
 /* Contenedor de la imagen dentro de la publicación */
@@ -146,4 +184,99 @@ a {
 .columns.is-multiline {
     list-style: none;
     /* Elimina el estilo de lista predeterminado */
+}
+
+
+@media (max-width: 1024px) {
+
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    .publicacion-box {
+        max-width: 600px;
+        padding: 1.2rem;
+    }
+
+    #mapa_navegacion {
+        font-size: 14px;
+    }
+
+    .flecha-derecha i {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    /* Publicación más compacta */
+    .publicacion-box {
+        max-width: 100%;
+        padding: 1rem;
+    }
+
+    /* Imagen sigue cuadrada pero más adaptable */
+    .imagen-publicacion {
+        border-radius: 6px;
+    }
+
+    /* Texto más legible */
+    .descripcion {
+        font-size: 14px;
+    }
+
+    .autor-fecha {
+        font-size: 13px;
+    }
+
+    /* Navegación más pequeña */
+    #mapa_navegacion {
+        font-size: 13px;
+    }
+
+    /* Flecha más pequeña */
+    .flecha-derecha i {
+        font-size: 1.5rem;
+    }
+
+    .mensaje-galeria-vacia {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    .publicacion-box {
+        padding: 0.8rem;
+    }
+
+    #mapa_navegacion {
+        font-size: 15px;
+        margin: 0;
+    }
+
+    .descripcion {
+        font-size: 13px;
+    }
+
+    .autor-fecha {
+        font-size: 12px;
+    }
+
+    .mensaje-galeria-vacia {
+        font-size: 0.9rem;
+        padding: 0.8rem;
+    }
 }

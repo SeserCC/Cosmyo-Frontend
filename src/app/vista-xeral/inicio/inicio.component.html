@@ -1,93 +1,54 @@
 <div class="contenido">
 
-    <!-- Contenido principal -->
-    <div id="contenido">
-        <!-- Título y descripción principal -->
-        <div class="titulo_texto">
-            <h1>Bienvenidos a Astronexus</h1>
-            <p>
-                Conéctate al mundo de la <strong><span style="color: #4848ff;">astro</span></strong>nomía mediante las
-                <strong><span style="color: #4848ff;">astro</span></strong>fotografías
-            </p>
+    <!-- Título y descripción principal -->
+    <div class="titulo_texto">
+        <h1>Bienvenidos a Astronexus</h1>
+        <p>
+            Conéctate al mundo de la astronomía mediante las
+            astrofotografías
+        </p>
+    </div>
+
+    <!-- Opciones de acceso o registro -->
+    <div *ngIf="!usuarioActual" class="cuentas">
+
+        <a id="registrarse" [routerLink]="['/registro']">Soy nuevo</a>
+    </div>
+
+    <!-- Sección de imágenes y enlaces -->
+    <div class="imagenes_titulo">
+        <!-- Comunidad de usuarios -->
+        <div class="comunidad_usuarios">
+            <a [routerLink]="['/foro']">
+                <p id="comunidad_p">Comunidad formada por usuarios</p>
+                <img id="nebulosa"
+                    src="https://res.cloudinary.com/astronexus-cloud/image/upload/v1773364982/nebulosa_aguila_wffkfs.jpg"
+                    alt="Nebulosa del águila">
+            </a>
         </div>
 
-        <!-- Opciones de acceso o registro -->
-        <div *ngIf="!usuarioActual" class="cuentas">
-            <!-- Botón para iniciar sesión -->
-
-            <a class="acceder" [routerLink]="['/login']">Acceder</a>
-
-            <p>o</p>
-            <!-- Enlace para registrarse -->
-            <a id="registrarse" [routerLink]="['/registro']">Soy nuevo</a>
-        </div>
-
-        <!-- Sección de imágenes y enlaces -->
-        <div class="imagenes_titulo">
-            <!-- Comunidad de usuarios -->
-            <div class="comunidad_usuarios">
-                <a [routerLink]="['/foro']">
-                    <p style="margin-bottom: 20px;" id="comunidad_p">Comunidad formada por usuarios</p>
-                    <img id="nebulosa"
-                        src="https://res.cloudinary.com/astronexus-cloud/image/upload/v1773364982/nebulosa_aguila_wffkfs.jpg"
-                        alt="Nebulosa del águila" width="320px">
-                </a>
-            </div>
-
-            <!-- Enlace a fotos y videos -->
-            <div class="contenedor_fotos_videos">
-                <a [routerLink]="['/foto']">
-                    <p style="margin-bottom: 20px;" id="fotos_videos_p">Ver fotos y videos</p>
-                    <img id="iglesia" [src]="urlCloud + 'v1773360310/zfvu7qzqdamrnzpadkml.jpg'" alt="Iglesia y espacio"
-                        width="370px">
-                </a>
-            </div>
-        </div>
-
-        <!-- Información adicional -->
-        <div class="informacion">
-            <!-- Calendario astronómico -->
-            <div class="calendario">
-                <a id="calendario_enlace" [routerLink]="['/calendario']">
-                    <p>Nuestro calendario astronómico</p>
-                    <img [src]="urlCloud +'v1773364980/calendario_sokce4.webp'" alt="Calendario" width="700px">
-                </a>
-            </div>
-
-            <!-- Planes de pago -->
-            <ng-container *ngIf="!usuarioActual">
-                <div class="planes_pago">
-                    <!-- Plan Premium -->
-                    <a id="plan_pago" [routerLink]="['/tipoPlan']">
-                        <div class="premium">
-                            <p>Plan premium</p>
-                            <div class="premium_lista">
-                                <ul>
-                                    <li>Todo lo mencionado en el plan lite</li>
-                                    <li>Descargas ilimitadas de las publicaciones</li>
-                                    <li>Mayor capacidad de almacenamiento en publicaciones</li>
-                                    <li>Clasificacion por insignias</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Plan Lite -->
-                    <a id="plan_pago" [routerLink]="['/tipoPlan']">
-                        <div class="lite">
-                            <p>Plan Lite</p>
-                            <div class="lite_lista">
-                                <ul>
-                                    <li>Subir publicaciones</li>
-                                    <li>Capacidad máxima de descargas de 10 publicaciones</li>
-                                    <li>Permiso para acceder a los foros y comentar</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </ng-container>
+        <!-- Enlace a fotos y videos -->
+        <div class="contenedor_fotos_videos">
+            <a [routerLink]="['/foto']">
+                <p id="fotos_videos_p">Galería</p>
+                <img id="iglesia"
+                    src="https://res.cloudinary.com/astronexus-cloud/image/upload/v1773362357/foto14_flet4s.jpg"
+                    alt="Iglesia y espacio">
+            </a>
         </div>
     </div>
+
+    <!-- Información adicional -->
+    <div class="informacion">
+        <!-- Calendario astronómico -->
+        <div class="calendario">
+            <h3>Nuestro calendario astronómico</h3>
+            <p>Consulta eventos, fases lunares y fenómenos celestes.</p>
+            <a class="btn-calendario" [routerLink]="['/calendario']">
+                Ver calendario
+            </a>
+        </div>
+    </div>
+
 
 </div>

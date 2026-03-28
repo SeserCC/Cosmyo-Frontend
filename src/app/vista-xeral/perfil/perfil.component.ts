@@ -15,6 +15,7 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 export class PerfilComponent implements OnInit {
   perfil: any;
   plan: any;
+  valor_insignia: any;
   perfilSeleccionar: any;
   planSeleccionar: any;
   perfilCRUD: FormGroup;
@@ -101,8 +102,8 @@ export class PerfilComponent implements OnInit {
         next: (response) => {
           this.plan = response.plan;
           this.premium = response.premium;
-          //console.log(this.premium)
-
+          this.valor_insignia = response.insignia;
+  
         },
         error: (err) => {
           console.error('Error al mostrar el plan', err);
@@ -117,8 +118,7 @@ export class PerfilComponent implements OnInit {
     this.cambiarPlan = false;
     this.cambiarUsuario = false;// Activamos el modo edición
     this.perfilSeleccionar = this.perfil;
-    //(this.perfilSeleccionar) // Guardamos el foro seleccionado
-    // Rellenamos el formulario con los datos del foro
+
     this.perfilCRUD.patchValue({
       telefono: this.perfil.telefono,
       red_social_principal: this.perfil.red_social_principal,

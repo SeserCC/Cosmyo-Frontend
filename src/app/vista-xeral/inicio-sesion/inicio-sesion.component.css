@@ -9,7 +9,7 @@
     /* Elimina los márgenes por defecto */
     height: 100%;
     width: 100%;
-    padding: 0px 0px 10px 0px;
+    padding: 0;
 }
 
 /* Estilo para los enlaces */
@@ -20,76 +20,9 @@ a {
     /* Elimina el subrayado de los enlaces */
 }
 
-/* Estilo para la cabecera */
-.cabecera {
-    display: flex;
-    /* Usa flexbox para distribuir los elementos */
-    align-items: center;
-    /* Centra los elementos verticalmente */
-    background-color: black;
-    /* Fondo negro */
-    height: 80px;
-    /* Altura de la cabecera */
-    font-size: 20px;
-    /* Tamaño de la fuente */
-}
-
-/* Estilo para la sección de secciones (por ejemplo, menús o grupos de contenido) */
-.secciones {
-    display: flex;
-    /* Usa flexbox para organizar los elementos */
-    gap: 10px;
-    /* Espacio de 10px entre los elementos */
-}
-
-/* Estilo para los enlaces dentro de #cabecera_enlaces al pasar el ratón */
-#cabecera_enlaces>a:hover {
-    color: #286bc2;
-    /* Cambia el color del enlace a azul cuando se pasa el ratón */
-}
-
-/* Estilo para el contenedor de inicio de sesión */
-#inicio_sesion {
-    background-color: #032e67;
-    /* Fondo azul oscuro */
-    padding: 5px;
-    /* Relleno de 5px */
-    border-radius: 5px;
-    /* Bordes redondeados */
-}
-
-/* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
-#mapa_navegacion>a:hover {
-    opacity: 0.6;
-    /* Baja la opacidad de los enlaces cuando se pasa el ratón */
-}
-
-/* Alinea el último elemento de la cabecera hacia la derecha */
-.cabecera> :last-child {
-    margin-left: auto;
-    /* Empuja el último elemento hacia la derecha */
-}
-
-/* Estilo para los enlaces dentro de #cabecera_enlaces */
-#cabecera_enlaces {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    /*Tipo de fuente de la cabecera de enlaces*/
-    margin-top: 15px;
-    /* Márgen superior de 15px */
-}
-
-/* Estilo para el icono de usuario (fuente Font Awesome) */
-.fa-solid.fa-user {
-    margin-top: 10px;
-    /* Márgen superior de 10px */
-    margin-right: 15px;
-    /* Márgen derecho de 15px */
-    font-size: 25px;
-    /* Tamaño grande para el icono */
-}
-
 /* Estilo para el contenedor de datos */
 .datos {
+    position: relative;
     max-width: 100%;
     height: auto;
     padding: 10px;
@@ -102,12 +35,51 @@ a {
     /* Sombra azul alrededor del contenedor */
 }
 
-/* Estilo para el icono de flecha (Font Awesome) */
-.fa-solid.fa-arrow-left {
-    margin: 5px 0 0 15px;
-    /* Márgenes alrededor del icono */
-    font-size: 20px;
-    /* Tamaño del icono */
+/* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
+#mapa_navegacion>a:hover {
+    opacity: 0.6;
+    /* Baja la opacidad de los enlaces cuando se pasa el ratón */
+}
+
+.flecha-derecha {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform 0.2s ease;
+}
+
+.flecha-derecha i {
+    font-size: 2rem;
+}
+
+/* Hover suave */
+.flecha-derecha:hover {
+    transform: scale(1.1);
+}
+
+
+/* Estilo para el contenedor de inicio de sesión */
+#inicio_sesion {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno de 5px */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Estilo para el contenedor de usuario y contraseña */
@@ -135,77 +107,83 @@ a {
     /* Márgenes alrededor del título */
 }
 
-/* Estilo para los inputs de tipo texto dentro de .usuario_contrasena */
-.usuario_contrasena input,
-select {
-    height: 28px;
-    /* Altura de 28px para los campos de texto */
-    border-radius: 20px;
-    /* Bordes redondeados */
-    border-style: none;
-    /* Elimina el borde del campo de texto */
-    padding-left: 10px;
-    /* Relleno a la izquierda de 10px */
-    background-color: #e0e0e0;
-    /* Fondo gris claro */
-}
-
-
-
-/* Estilo para el contenedor del captcha */
-#captcha {
-    display: grid;
-    /* Usa grid para organizar los elementos */
-    grid-template-columns: 50%;
-    /* Una sola columna de 130px */
-    grid-template-rows: repeat(2, 1fr);
-    /* Dos filas de igual tamaño */
-    row-gap: 15px;
-    /* Espacio de 15px entre las filas */
-    margin: 10px 50px;
-    /* Márgenes alrededor del contenedor */
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  /* blanco tenue */
+  opacity: 1;
 }
 
 #captcha_info {
     display: flex;
     align-items: center;
-    column-gap: 3px;
-}
+    gap: 10px;
 
-/* Estilo para los botones */
-button {
-    width: 30%;
-    /*Largo del boton*/
-    background: linear-gradient(to bottom, #5957ee, #0911ef);
-    /* Fondo con gradiente azul */
-    color: white;
-    /* Color blanco para el texto */
-    border-radius: 10px;
-    /* Bordes redondeados */
-    height: 35px;
-    /* Altura del botón */
+    background-color: #2a2a2a;
+    padding: 10px 15px;
+    border-radius: 8px;
+
+    width: fit-content;
     cursor: pointer;
-    /* Cambia el cursor a puntero */
-    border: none;
-    /* Elimina el borde del botón */
-    margin-bottom: 15px;
+
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-/* Estilo para iconos o elementos pequeños con tamaño fijo */
-.size-6 {
-    margin-bottom: -2px;
-    /* Ajuste fino para alinear verticalmente */
-    width: 17px;
-    /* Ancho fijo del elemento */
-    height: 17px;
-    /* Altura fija del elemento */
+/* Hover */
+#captcha_info:hover {
+    background-color: #333;
 }
 
+/* Checkbox más grande */
+#captcha_checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
 
-/* Estilo para el botón al pasar el ratón */
+/* Texto */
+#captcha_info label {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Cuando está marcado */
+#captcha_checkbox:checked {
+    accent-color: #0f58c5;
+    /* mantiene tu azul */
+}
+
+button {
+  border: none;
+  /* Fondo oscuro */
+  font-size: 16px;
+  /* Tamaño de la fuente */
+  color: #ffffff;
+  /* Texto blanco */
+  border-radius: 4px;
+  /* Bordes redondeados */
+  width: 150px;
+  /* Ancho */
+  height: 30px;
+  /* Alto */
+  background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
+  /* Fondo degradado azul */
+  cursor: pointer;
+  /* Cambia el cursor al pasar sobre el botón */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  /* Sombra oscura */
+  margin: 20px 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  opacity: 0;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.4s;
+}
+
+/* Estilo de hover para los botones */
 button:hover {
-    background: linear-gradient(to top, #1e1bd6, #4d47c6);
-    /* Cambia el gradiente al pasar el ratón */
+  filter: brightness(0.85);
+  transform: translateY(20px);
 }
 
 /* Estilo para mensajes de error de validación o fallos del formulario */
@@ -220,9 +198,30 @@ button:hover {
     /* Espacio superior respecto al elemento anterior */
 }
 
-/* Estilo general para campos de entrada y selección */
-input,
-select {
-    color: black;
-    /* Forzamos el color del texto a negro para mejor contraste */
+
+@media (max-width: 576px) {
+
+    .datos {
+        margin: 0;
+        box-shadow: none;
+    }
+
+    form{
+        padding: 30px;
+    }
+
+    .usuario_contrasena {
+        max-width: 100%;
+        margin-left: 0;
+    }
+
+    button {
+        width: 100%;
+        margin: 20px 0;
+        color: white;
+    }
+
+    .flecha-derecha i {
+        font-size: 25px;
+    }
 }

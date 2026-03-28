@@ -7,11 +7,7 @@
         <div id="mapa_navegacion">
             <a [routerLink]="['/']">
                 <!-- Icono de casa -->
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                </svg>
+                <i class="bi bi-house"></i>
             </a>
             /
             <a [routerLink]="['/foro']">Foros</a>
@@ -19,12 +15,18 @@
             <strong id="comunidades">Comentarios</strong>
         </div>
 
-        <h1 class="display-6 border-bottom pb-2 mb-2">
-            <i class="fa-solid fa-comments text-primary me-2"></i>
-            {{ foro?.tema }}
-        </h1>
+        <a [routerLink]="['/foro']" class="flecha-derecha">
+            <i class="bi bi-arrow-left"></i>
+        </a>
 
-        <span *ngIf="comentarios?.length !==0" class="badge bg-primary fs-6 mb-3">
+        <div class="tituloForo">
+            <h1 class="display-6 border-bottom pb-2 mb-2 mt-5">
+                <i class="fa-solid fa-comments text-primary me-2"></i>
+                {{ foro?.tema }}
+            </h1>
+        </div>
+
+        <span *ngIf="comentarios?.length !==0" class="comentariosCantidad mb-3">
             {{ comentarios?.length }} comentarios
         </span>
 
@@ -32,32 +34,45 @@
             🗨️ Aún no hay comentarios. ¡Sé el primero en compartir tu opinión o iniciar la conversación!
         </p>
 
-        <ng-container *ngFor="let comentario of comentarios">
+        <div class="comentarios" *ngFor="let comentario of comentarios">
 
-            <div id="usuario1_info">
-                <!-- Información del usuario -->
-                <p><strong>{{comentario.user?.name}}</strong></p>
-                <p>{{comentario?.fecha_hora | date:'dd/MM/yyyy HH:mm'}}</p>
-            </div>
-            <div id="usuario1_texto">
-                <!-- Contenido del mensaje del usuario -->
-                <p>{{comentario.texto}}</p>
+            <div class="comentario_item">
 
-                <ng-container *ngIf="comentario.foto"><img [src]="comentario.foto" alt="Foto del usuario"
-                        width="500px"></ng-container>
-                <ng-container *ngIf="comentario.user_id == usuarioLogueado?.id">
-                    <div class="column is-4 is-flex is-justify-content-flex-end">
-                        <button class="button is-small is-warning mr-2"
-                            (click)="editarComentario(comentario)">Editar</button>
-                        <button class="button is-small is-danger"
-                            (click)="eliminarComentario(comentario.id!)">Eliminar</button>
+                <!-- ICONO 3 PUNTOS -->
+                <div class="menu_opciones" *ngIf="comentario.user_id == usuarioLogueado?.id">
+                    <button class="btn_menu" (click)="toggleMenu(comentario.id!)">
+                        ⋮
+                    </button>
+
+                    <div class="dropdown_menu" *ngIf="menuAbierto === comentario.id">
+                        <button (click)="editarComentario(comentario)">Editar</button>
+                        <button (click)="eliminarComentario(comentario.id!)">Eliminar</button>
                     </div>
+                </div>
 
-                </ng-container>
+                <!-- CONTENIDO ORIGINAL -->
+                <div id="usuario1_info">
+                    <p><strong>{{comentario.user?.name}}</strong></p>
+                    <p id="fecha_hora">{{comentario?.fecha_hora | date:'dd/MM/yyyy HH:mm'}}</p>
+                </div>
+
+                <div id="usuario1_texto">
+                    <p>{{comentario.texto}}</p>
+
+                    <ng-container *ngIf="comentario.foto && comentario.foto.includes('image')">
+                        <img [src]="comentario.foto" id="fotoComentario">
+                    </ng-container>
+
+                    <ng-container *ngIf="comentario.foto && comentario.foto.includes('video')">
+                        <video id="videoComentario" controls>
+                            <source [src]="comentario.foto">
+                        </video>
+                    </ng-container>
+                </div>
 
             </div>
 
-        </ng-container>
+        </div>
 
         <!-- <nav class="pagination is-centered" role="navigation" aria-label="pagination">
              Botón anterior
@@ -83,7 +98,7 @@
             </ul>
         </nav> -->
 
-        <form *ngIf="usuarioLogueado" [formGroup]="formularioCRUDComentario" class="mb-5">
+        <form class="comentarioTexto" *ngIf="usuarioLogueado" [formGroup]="formularioCRUDComentario">
             <!-- Formulario para engadir comentarios -->
             <h2 class="title is-4 has-text-light mb-4">Comentarios</h2>
 
@@ -109,7 +124,7 @@
                 <div class="control">
                     <button *ngIf="!cambiar" (click)="engadirComentario()" [disabled]="formularioCRUDComentario.invalid"
                         class="button is-link">
-                        Engadir comentario
+                        Añadir
                     </button>
                 </div>
                 <div class="control">
@@ -119,22 +134,23 @@
                     </button>
                 </div>
 
-                <div class="control">
-
-                    <label *ngIf="cambiar">Eliminar foto</label>
-                    <input *ngIf="cambiar" formControlName="eliminarImagen" type="checkbox">
-
+                <div class="control eliminar_foto" *ngIf="cambiar">
+                    <label class="checkbox_container">
+                        <input formControlName="eliminarImagen" type="checkbox">
+                        <span class="checkmark"></span>
+                        <span class="texto">Eliminar foto</span>
+                    </label>
                 </div>
+                
                 <div class="control">
                     <button (click)="cancelar(formularioCRUDComentario, fileInputC)" class="button is-warning">
                         Cancelar
                     </button>
                 </div>
             </div>
+            <p id="nota_archivo">Capacidad máxima de fotos: 10 MB</p>
+            <p id="nota_archivo">Capacidad máxima de vídeos: 100 MB</p>
+            <p id="nota_archivo">Los vídeos e imágenes pesadas tardan en subir.</p>
         </form>
-        <!-- <ng-container *ngIf="!usuarioLogueado">
-            <p>Si quieres comentar, inicia sesión</p>
-        </ng-container> -->
-
     </div>
 </div>

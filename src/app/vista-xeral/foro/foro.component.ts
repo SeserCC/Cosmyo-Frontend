@@ -1,14 +1,31 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Foro } from '../../foro';
 import { ServizoLoginService } from '../../servizo-login.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-foro',
   standalone: true,
+  animations: [
+    trigger('slideForm', [
+      state('hidden', style({
+        opacity: 0,
+        transform: 'translateY(20px)',
+        height: '0px',
+        overflow: 'hidden'
+      })),
+      state('visible', style({
+        opacity: 1,
+        transform: 'translateY(0)',
+        height: '*'
+      })),
+      transition('hidden <=> visible', animate('400ms ease')),
+      transition('visible <=> hidden', animate('400ms ease'))
+    ])
+  ],
   imports: [RouterLink, CommonModule, ReactiveFormsModule],
   templateUrl: './foro.component.html',
   styleUrl: './foro.component.css'

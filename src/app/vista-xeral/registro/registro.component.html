@@ -3,28 +3,23 @@
         <!-- Mapa de navegación -->
         <div id="mapa_navegacion" class="mb-3">
             <a [routerLink]="['/']">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125
-                 c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125
-                 1.125-1.125h2.25c.621 0 1.125.504
-                 1.125 1.125V21h4.125c.621 0
-                 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                </svg> Inicio
+                <i class="bi bi-house"></i>
             </a>
-            / <strong id="inicio_sesion">Registro</strong>
+            / <strong id="registro">Registro</strong>
         </div>
+
+        <a [routerLink]="['/']" class="flecha-derecha">
+            <i class="bi bi-arrow-left"></i>
+        </a>
 
         <!-- Formulario -->
         <form [formGroup]="formularioRegistro" (ngSubmit)="registro($event)">
-            <h1 class="text-center text-info mb-4">Registro</h1>
-
-            <!-- <p>{{errorMensaje}} Hola</p> -->
+            <h1 class="text-center">Nueva cuenta</h1>
 
             <!-- Nombre -->
             <div class="mb-3">
                 <label class="form-label text-light"><strong>Nombre</strong></label>
-                <input type="text" class="form-control bg-dark text-light border-info" placeholder="TON_618..."
+                <input type="text" class="form-control bg-dark text-light" placeholder="TON_618..."
                     formControlName="nombre">
                 <div *ngIf="formularioRegistro.get('nombre')?.invalid && formularioRegistro.get('nombre')?.touched"
                     class="mensaje-error">
@@ -38,7 +33,7 @@
             <!-- Email -->
             <div class="mb-3">
                 <label class="form-label text-light"><strong>Email</strong></label>
-                <input type="email" class="form-control bg-dark text-light border-info" placeholder="ejemplo@email.com"
+                <input type="email" class="form-control bg-dark text-light" placeholder="ejemplo@email.com"
                     formControlName="email">
                 <div *ngIf="formularioRegistro.get('email')?.invalid && formularioRegistro.get('email')?.touched"
                     class="mensaje-error">
@@ -49,7 +44,7 @@
             <!-- Contraseña -->
             <div class="mb-3">
                 <label class="form-label text-light"><strong>Contraseña</strong></label>
-                <input type="password" class="form-control bg-dark text-light border-info" placeholder="********"
+                <input type="password" class="form-control bg-dark text-light" placeholder="********"
                     formControlName="contrasinal">
                 <div *ngIf="formularioRegistro.get('contrasinal')?.invalid && formularioRegistro.get('contrasinal')?.touched"
                     class="mensaje-error">
@@ -63,7 +58,7 @@
             <!-- Confirmar contraseña -->
             <div class="mb-3">
                 <label class="form-label text-light"><strong>Confirmar contraseña</strong></label>
-                <input type="password" class="form-control bg-dark text-light border-info"
+                <input type="password" class="form-control bg-dark text-light"
                     placeholder="Repite la contraseña" formControlName="contrasinal_confirmation">
                 <div *ngIf="formularioRegistro.get('contrasinal_confirmation')?.invalid && formularioRegistro.get('contrasinal_confirmation')?.touched"
                     class="mensaje-error">

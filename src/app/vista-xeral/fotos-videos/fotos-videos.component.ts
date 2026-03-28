@@ -108,7 +108,6 @@ export class FotosVideosComponent implements OnInit {
 
       },
       error: (err) => {
-        console.log('Sesion no iniciada');
         this.mensajeSesion = 'Debes iniciar sesión para dar like';
 
       }

@@ -2,7 +2,7 @@
 .contenido {
     background-color: #7b7b7b;
     /* Color de fondo gris */
-    color: #ffffff;
+    color: #e9e9e9;
     /* Color del texto blanco */
     margin: 0px;
     /* Elimina los márgenes por defecto */
@@ -16,80 +16,9 @@ a {
     /* Elimina el subrayado de los enlaces */
 }
 
-/* Efecto al pasar el ratón sobre los enlaces dentro de #cabecera_enlaces */
-#cabecera_enlaces>a:hover {
-    color: #1e67c7;
-    /* Cambia el color de los enlaces a azul claro al pasar el ratón */
-}
-
-/* Estilo para la cabecera */
-.cabecera {
-    position: fixed;
-    /* Fija la cabecera en la parte superior de la página */
-    width: 100%;
-    /* Hace que la cabecera ocupe todo el ancho */
-    margin-top: -100px;
-    /* Ajusta la posición vertical de la cabecera */
-    display: flex;
-    /* Usa flexbox para distribuir los elementos */
-    align-items: center;
-    /* Centra los elementos verticalmente */
-    background-color: black;
-    /* Fondo negro */
-    height: 70px;
-    /* Altura de la cabecera */
-    font-size: 20px;
-    /* Tamaño de la fuente */
-}
-
-/* Estilo para el icono de casa */
-.fa-solid.fa-house {
-    font-size: 14px;
-    /* Tamaño pequeño para el icono */
-}
-
-/* Estilo para las secciones dentro de la cabecera */
-.secciones {
-    display: flex;
-    /* Usa flexbox para distribuir los elementos */
-    gap: 10px;
-    /* Espaciado de 10px entre los elementos */
-}
-
-/* Alinea el último elemento de .cabecera a la derecha */
-.cabecera> :last-child {
-    margin-left: auto;
-    /* Empuja el último elemento hacia la derecha */
-}
-
-/* Estilo para los enlaces dentro de #cabecera_enlaces */
-#cabecera_enlaces {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    /*Tipo de fuente de la cabecera de enlaces*/
-    margin-top: 15px;
-    /* Añade margen superior */
-}
-
-/* Estilo para el icono de usuario */
-.fa-solid.fa-user {
-    font-size: 25px;
-    /* Tamaño del icono */
-    margin-top: 5px;
-    /* Márgen superior */
-    margin-right: 15px;
-    /* Márgen derecho */
-}
-
-/* Estilo para el icono de flecha hacia la izquierda */
-.fa-solid.fa-arrow-left {
-    margin: 10px 0 0 15px;
-    /* Márgenes personalizados */
-    font-size: 20px;
-    /* Tamaño del icono */
-}
-
 /* Estilo para los bloques de datos */
 .datos {
+    position: relative;
     background-color: #1d1d1d;
     /* Fondo gris oscuro */
     margin: 100px;
@@ -98,10 +27,18 @@ a {
     /* Sombra azul */
     padding: 5px;
     /* Relleno */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+
 }
 
-/* Estilo para los divs dentro de .datos */
-
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 /* Estilo para el último div dentro de .datos */
 .datos>div:last-child {
@@ -128,6 +65,43 @@ a {
     /* Reduce la opacidad al pasar el ratón */
 }
 
+.flecha-derecha {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.flecha-derecha i {
+    font-size: 2rem;
+}
+
+/* Hover suave */
+.flecha-derecha:hover {
+    transform: scale(1.1);
+}
+
+.tituloForo {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+
+}
+
+.comentariosCantidad {
+    font-style: italic;
+    font-size: 13px;
+    padding-left: 10px;
+    color: rgb(168, 168, 168);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.5s;
+
+}
+
 /* Estilo para el bloque de comunidades */
 #comunidades {
     background-color: #032e67;
@@ -150,10 +124,11 @@ a {
     /* Tamaño de fuente grande para los primeros párrafos */
 }
 
-.size-6 {
-    margin-bottom: -2px;
-    width: 17px;
-    height: 17px;
+.comentarios {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.5s;
 }
 
 /* Estilo para los contenedores de información de usuario */
@@ -170,11 +145,11 @@ a {
     /* Dirección de los elementos en fila */
     align-items: baseline;
     /* Alinea los elementos en la línea base */
-    border-top-left-radius: 20px;
+    border-top-left-radius: 5px;
     /* Bordes redondeados arriba a la izquierda */
-    border-top-right-radius: 20px;
+    border-top-right-radius: 5px;
     /* Bordes redondeados arriba a la derecha */
-    margin-bottom: 0px;
+    margin-top: 20px;
     /* Elimina margen inferior */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
     /* Sombra oscura */
@@ -183,33 +158,32 @@ a {
 /* Estilo para los bloques de texto de los usuarios */
 #usuario1_texto {
     display: flex;
-    /* Usa flexbox */
     flex-direction: column;
-    /* Dirección de los elementos en columna */
     padding: 10px 20px;
-    /* Relleno interno */
     background-color: #292929;
-    /* Fondo gris oscuro */
-    border-bottom-left-radius: 20px;
-    /* Bordes redondeados abajo a la izquierda */
-    border-bottom-right-radius: 20px;
-    /* Bordes redondeados abajo a la derecha */
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     border-style: none;
-    /* Sin borde */
-    margin-top: 0px;
-    /* Elimina margen superior */
     padding-top: 10px;
-    /* Relleno superior */
     text-align: justify;
-    /* Justifica el texto */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
-    /* Sombra oscura */
 }
 
 /* Estilo para los párrafos dentro de los bloques de texto */
 #usuario1_info p {
     font-size: 11px;
     /* Tamaño pequeño para los párrafos */
+}
+
+#fotoComentario {
+    margin-top: 10px;
+    width: 40%;
+}
+
+#videoComentario {
+    margin-top: 20px;
+    width: 50%;
+    border-radius: 10px;
 }
 
 /* Estilo para el mensaje que indica que no hay comentarios disponibles */
@@ -232,37 +206,316 @@ a {
     /* Sombra azul muy sutil para dar un efecto leve de profundidad */
 }
 
-
-/* Estilo para los botones de usuario */
-#boton_usuario1 {
+button.is-warning,
+button.is-link,
+button.is-success {
     border: none;
-    /* Sin borde */
-    background-color: #1d1d1d;
-    /* Fondo oscuro */
-    font-size: 12px;
-    /* Tamaño pequeño de la fuente */
-    color: #ffffff;
-    /* Texto blanco */
-    border-radius: 4px;
-    /* Bordes redondeados */
-    width: 70px;
-    /* Ancho del botón */
-    height: 25px;
-    /* Alto del botón */
     background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
-    /* Fondo degradado azul */
+    color: #ffffff;
+    font-size: 13px;
+    width: 120px;
+    height: 30px;
+    margin-left: 10px;
     cursor: pointer;
-    /* Cambia el cursor a puntero */
+    border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    /* Sombra */
-    margin-bottom: 10px;
-    /* Márgen inferior */
-    margin-top: 20px;
-    /* Márgen superior */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-/* Efecto de hover para los botones de usuario */
-#boton_usuario1:hover {
-    background: linear-gradient(45deg, #032e67, #104293, #2d68ba);
-    /* Fondo más oscuro al pasar el ratón */
+button.is-warning:hover,
+button.is-link:hover,
+button.is-success:hover {
+    filter: brightness(0.85);
+    transform: translateY(20px) scale(1.6);
+}
+
+.eliminar_foto {
+    margin-top: 10px;
+}
+
+.checkbox_container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+    color: #e0e0e0;
+    font-size: 14px;
+    user-select: none;
+}
+
+/* Oculta el checkbox real */
+.checkbox_container input {
+    display: none;
+}
+
+/* Caja personalizada */
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #888;
+    border-radius: 4px;
+    background-color: transparent;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+.checkbox_container:hover .checkmark {
+    border-color: #1454b9;
+}
+
+/* Cuando está marcado */
+.checkbox_container input:checked+.checkmark {
+    background-color: #1454b9;
+    border-color: #1454b9;
+}
+
+/* Icono check */
+.checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Mostrar check */
+.checkbox_container input:checked+.checkmark::after {
+    display: block;
+}
+
+/* Forma del check */
+.checkbox_container .checkmark::after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid #0d1b2a;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Texto */
+.texto {
+    opacity: 0.9;
+}
+
+.menu_opciones {
+    position: absolute;
+    right: 10px;
+}
+
+.btn_menu {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ccc;
+    width: 30px;
+}
+
+.btn_menu:hover {
+    color: white;
+}
+
+.dropdown_menu {
+    position: absolute;
+    right: 0;
+    top: 25px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+    z-index: 100;
+}
+
+.dropdown_menu button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 8px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown_menu button:hover {
+    background: #333;
+}
+
+.dropdown_menu button:active {
+    transform: scale(0.89);
+}
+
+.comentarioTexto {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.comentario_item {
+    padding: 0 10px;
+}
+
+#nota_archivo {
+    font-style: italic;
+    font-size: 13px;
+    color: gray;
+}
+
+@media (max-width: 1024px) {
+
+    .datos {
+        margin: 60px 40px;
+    }
+
+    #mapa_navegacion {
+        font-size: 14px;
+    }
+
+    #usuario1_info {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        padding-top: 10px;
+        padding-left: 15px;
+        column-gap: 8px;
+    }
+
+    #usuario1_texto {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding: 10px 15px;
+    }
+
+    #fotoComentario {
+        width: 60%;
+    }
+
+    .flecha-derecha i {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .datos {
+        margin: 30px 15px;
+        padding: 10px;
+    }
+
+    /* Navegación más compacta */
+    #mapa_navegacion {
+        font-size: 13px;
+        height: auto;
+        margin: 5px;
+    }
+
+    /* Usuario en columna */
+    #usuario1_info {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 10px;
+        gap: 5px;
+    }
+
+    #usuario1_info>p:first-child {
+        font-size: 16px;
+    }
+
+    /* Texto más cómodo */
+    #usuario1_texto {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* Imagen más grande en móvil */
+    #fotoComentario {
+        width: 100%;
+    }
+
+    #videoComentario {
+        width: 100%;
+    }
+
+    /* Botón más usable */
+    #boton_usuario1 {
+        width: 100%;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    /* Flecha más pequeña */
+    .flecha-derecha i {
+        font-size: 1.5rem;
+    }
+
+    .comentarioTexto {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    #mapa_navegacion {
+        font-size: 12px;
+    }
+
+    #usuario1_info {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        padding-left: 5px;
+    }
+
+    #usuario1_info p {
+        font-size: 10px;
+    }
+
+    #fecha_hora {
+        margin-bottom: 10px;
+    }
+
+    #usuario1_texto {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        font-size: 13px;
+    }
+
+    #boton_usuario1 {
+        height: 35px;
+    }
+
+
+    .eliminar_foto {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .checkbox_container {
+        width: auto;
+        font-size: 13px;
+        padding: 5px 8px;
+    }
+
+    .button.is-success {
+        margin-left: 0;
+    }
+
+    .button.is-warning {
+        margin-left: 13px;
+    }
+
+    .mensaje-comentarios-vacio {
+        font-size: 0.95rem;
+        padding: 0.8rem;
+    }
 }

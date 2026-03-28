@@ -1021,7 +1021,7 @@ export class AdministracionComponent implements OnInit {
 
       (this.premiumSeleccionar);
       // Llamamos al servicio para modificar
-      this.servizo.modificarPremium(this.premiumSeleccionar.user_id, this.premiumSeleccionar, {
+      this.servizo.modificarPremium(this.premiumSeleccionar.plan_id, this.premiumSeleccionar, {
         headers: new HttpHeaders({
           'Authorization': `Bearer ${this.servizo.token}`,
           'Accept': 'application/json',
@@ -1083,7 +1083,7 @@ export class AdministracionComponent implements OnInit {
       this.gratuitoSeleccionar.tamano_maximo_archivo = this.formularioCRUDGratuito.get('tamano_maximo_archivo')?.value;
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarGratuito(this.gratuitoSeleccionar.user_id, this.gratuitoSeleccionar, {
+      this.servizo.modificarGratuito(this.gratuitoSeleccionar.plan_id, this.gratuitoSeleccionar, {
         headers: new HttpHeaders({
           'Authorization': `Bearer ${this.servizo.token}`,
           'Accept': 'application/json',
