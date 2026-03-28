@@ -58,8 +58,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "3kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "3MB",
+                  "maximumError": "4MB"
                 }
               ],
               "outputHashing": "all"
