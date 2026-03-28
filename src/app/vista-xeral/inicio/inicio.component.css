@@ -5,38 +5,39 @@ a {
     /* Elimina el subrayado de los enlaces */
 }
 
-body{
- font-family: "Roboto";
+body {
+    font-family: "Roboto";
 }
 
-/* Estilo general para el cuerpo de la página */
 .contenido {
-    background-image: url('/media/img/nebulosa_background.jpg');
-    /* Imagen de fondo de la nebulosa */
-    background-size: cover;
-    /* Hace que la imagen de fondo cubra todo el área visible */
-    background-attachment: fixed;
-    /* Hace que el fondo se quede fijo al desplazarse */
-    background-blend-mode: overlay;
-    /* Superpone la imagen de fondo con el color */
-    background-color: rgba(0, 0, 0, 0.6);
-    /* Oscurece la imagen de fondo para no robar protagonismo */
-    color: #ffffff;
-    /* Color del texto blanco */
-    margin: 0px;
-    /* Elimina márgenes por defecto */
+    background: linear-gradient(135deg, #020617, #0a1f44, #033a82);
+    color: white;
+    min-height: 100vh;
+}
+
+.titulo_texto {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: aparecerSubiendo 1.3s ease forwards;
+}
+
+
+
+@keyframes aparecerSubiendo {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Estilo para el título dentro de .titulo_texto */
 .titulo_texto>h1 {
+    padding-top: 80px;
+    margin-bottom: 50px;
     text-align: center;
-    /* Centra el texto */
-    font-size: 50px;
+    font-weight: 600;
+    font-size: 42px;
     /* Tamaño de fuente grande */
-    text-decoration: underline;
-    /* Subraya el título */
-
-    /* Fuente sans-serif */
 }
 
 /* Estilo para las cuentas, centrado */
@@ -49,204 +50,171 @@ body{
     /* Centra el texto */
     align-items: center;
     /* Centra los elementos */
+    opacity: 0;
+    transform: translateY(30px);
+    animation: aparecerSubiendo 1.3s ease forwards;
 }
 
-/* Estilo para los botones */
-.acceder {
-    font-size: 25px;
-    /* Tamaño de fuente */
-    background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
-    /* Fondo con gradiente */
-    border-radius: 10px;
-    /* Bordes redondeados */
+
+/* Estilo para el enlace de registro */
+#registrarse {
+    padding: 10px;
     cursor: pointer;
-    /* Aparece como puntero al pasar el ratón */
-    padding: 15px;
+    display: inline-block;
+    border-radius: 10px;
+    border: 1px solid white;
+    transition: transform 0.3s ease,
+        background-color 0.3s ease,
+        color 0.3s ease;
 }
 
-/* Estilo al pasar el ratón sobre el botón */
-.acceder:hover {
-    background: linear-gradient(45deg, #022c63, #12479b, #2d65b4);
-    /* Cambia el gradiente del botón */
+#registrarse:hover {
+    background-color: white;
+    color: black;
 }
 
 /* Estilo para los párrafos dentro de .titulo_texto */
 .titulo_texto>p {
     text-align: center;
     /* Centra el texto */
-    font-size: 30px;
+    font-size: 25px;
     /* Tamaño de fuente */
-    /* Fuente sans-serif */
+
 }
 
-/* Estilo para el enlace de registro */
-#registrarse {
-    padding: 10px;
-    /* Relleno alrededor del enlace */
+#comunidad_p,
+#fotos_videos_p {
+    margin-bottom: 20px;
+    font-size: 25px;
 }
 
-/* Estilo para los enlaces */
-a {
-    color: white;
-    /* Color de los enlaces blanco */
-    text-decoration: none;
-    /* Elimina el subrayado de los enlaces */
+.imagenes_titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    margin-top: 120px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: aparecerSubiendo 1.3s ease forwards;
+    animation-delay: 0.7s;
 }
 
-/* Estilo para los párrafos dentro de #calendario_enlace */
-#calendario_enlace p {
-    font-size: 30px;
-    /* Tamaño de fuente grande */
+.comunidad_usuarios,
+.contenedor_fotos_videos {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 1;
+    max-width: 400px;
 }
 
-/* Estilo para los enlaces dentro de #cabecera_enlaces al pasar el ratón */
-#cabecera_enlaces>a:hover {
-    color: #286bc2;
-    /* Cambia el color a azul al pasar el ratón */
-}
-
-/* Estilo para la sección de información */
-.informacion {
-    background-color: black;
-    /* Fondo negro */
-    height: 1350px;
-    /* Altura grande para la sección */
-}
-
-/* Estilo para el contenedor de calendario */
-#calendario_enlace {
-    margin-top: 200px;
-    /* Márgen superior */
+.comunidad_usuarios:hover,
+.contenedor_fotos_videos:hover {
+    transform: scale(1.05);
 }
 
 /* Estilo para las imágenes con bordes redondeados y sombra */
 #iglesia,
 #nebulosa {
+    width: 90%;
+    height: auto;
     border-radius: 15px;
-    /* Bordes redondeados */
-    box-shadow: 0 4px 15px rgb(13, 69, 159, 0.7);
-    /* Sombra azul */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Estilo para el título de las imágenes */
-.imagenes_titulo {
-    grid-template-columns: repeat(2, 1fr);
-    /* Define 2 columnas */
-    grid-template-rows: 1fr;
-    /* 1 fila */
-    grid-column-gap: 400px;
-    /* Espaciado grande entre las columnas */
-    margin-top: 120px;
-    /* Márgen superior */
-    display: flex;
-    /* Usa flexbox */
-    text-align: center;
-    /* Centra el texto */
-    justify-content: center;
-    /* Centra los elementos */
-    font-size: 30px;
-    /* Tamaño de fuente */
+#iglesia:hover,
+#nebulosa:hover {
+    box-shadow: 0 4px 15px rgb(255, 255, 255);
+
 }
 
 /* Estilo para el calendario */
 .calendario {
-    display: flex;
-    /* Usa flexbox */
     text-align: center;
-    /* Centra el texto */
-    flex-direction: column;
-    /* Organiza los elementos en columnas */
-    margin-bottom: 170px;
-    /* Márgen inferior */
     margin-top: 200px;
-    /* Márgen superior */
+    padding-bottom: 150px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: aparecerSubiendo 1.3s ease forwards;
+    animation-delay: 1.5s;
 }
 
-/* Estilo para los planes de pago */
-.planes_pago {
-    display: flex;
-    /* Usa flexbox */
-    flex-direction: row;
-    /* Organiza los elementos en fila */
-    column-gap: 170px;
-    /* Espaciado entre las columnas */
-    text-align: center;
-    /* Centra el texto */
-    justify-content: center;
-    /* Centra los elementos */
-    margin: 0 30px 0 30px;
-    /* Márgenes izquierdo y derecho */
-    border-radius: 50px;
-    /* Bordes redondeados */
-    background-color: rgb(47, 46, 46);
-    /* Fondo gris oscuro */
+.calendario h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
 }
 
-/* Estilo para el plan Premium */
-.premium {
-    margin-bottom: 120px;
-    /* Márgen inferior */
-    color: gold;
-    /* Color dorado para el texto */
+.calendario p {
+    color: #ccc;
+    margin-bottom: 20px;
 }
 
-/* Estilo para el plan Lite */
-.lite {
-    margin-bottom: 120px;
-    /* Márgen inferior */
-
-    /* Fuente serif */
-}
-
-/* Estilo para los párrafos dentro de los planes de pago */
-.lite>p,
-.premium>p {
-    font-size: 50px;
-    /* Tamaño de fuente grande */
-}
-
-/* Estilo para las listas dentro de los planes de pago */
-.premium_lista,
-.lite_lista {
-    background: linear-gradient(45deg, #033a82, #1454b9, #367bdc);
-    /* Gradiente de fondo */
-    border-style: solid;
-    /* Bordes sólidos */
-    border-radius: 25px;
-    /* Bordes redondeados */
-    padding-right: 15px;
-    /* Relleno derecho */
-    font-size: 17px;
-    /* Tamaño de fuente pequeño */
-}
-
-/* Estilo para la lista Premium */
-.premium_lista {
-    background: linear-gradient(45deg, #6b2828, #a84242, #d33c3c);
-    /* Gradiente rojo para el plan premium */
-}
-
-/* Estilo para los contenedores de comunidad y fotos/videos */
-#comunidad_p,
-#fotos_videos_p {
-    background: linear-gradient(45deg, #033a82, #0d459f, #2363bc);
-    /* Gradiente azul */
+.btn-calendario {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
     border-radius: 10px;
-    /* Bordes redondeados */
-    padding: 7px;
-    /* Relleno */
+    border: 1px solid white;
+    transition: transform 0.3s ease,
+        background-color 0.3s ease,
+        color 0.3s ease;
+
 }
 
-/* Estilo para la sección de usuarios de comunidad */
-.comunidad_usuarios {
-    margin-left: 40px;
-    /* Márgen izquierdo */
+.btn-calendario:hover {
+    background-color: white;
+    color: black;
 }
 
-/* Estilo para los contenedores de fotos y videos */
-.contenedor_fotos_videos {
-    justify-content: center;
-    /* Centra los elementos */
-    margin-left: 60px;
-    /* Márgen izquierdo */
+@media (max-width: 768px) {
+
+    /* Títulos */
+    .titulo_texto>h1 {
+        font-size: 25px;
+    }
+
+    .titulo_texto>p {
+        font-size: 16px;
+        padding: 0 15px;
+    }
+
+    /* Botones */
+    .cuentas {
+        font-size: 18px;
+    }
+
+    .acceder {
+        font-size: 18px;
+        padding: 10px 15px;
+    }
+
+    /* IMÁGENES PRINCIPALES */
+    .imagenes_titulo {
+        flex-direction: column;
+        gap: 40px;
+        margin-top: 60px;
+    }
+
+    .comunidad_usuarios,
+    .contenedor_fotos_videos {
+        margin: 10px;
+
+    }
+
+    #comunidad_p,
+    #fotos_videos_p {
+        font-size: 20px;
+    }
+
+    /* Imágenes adaptables */
+    #iglesia,
+    #nebulosa {
+        width: 70%;
+        height: auto;
+    }
+
+    /* INFORMACIÓN */
+
+
+
 }

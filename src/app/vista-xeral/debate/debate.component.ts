@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Comentario } from '../../comentario';
 import { ServizoLoginService } from '../../servizo-login.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -39,6 +39,8 @@ export class DebateComponent {
 
   archivoSelect: File | null;
 
+  menuAbierto: number | null = null;
+
   // Usuario actualmente autenticado o seleccionado
   usuarioSeleccionar: any;
 
@@ -51,11 +53,15 @@ export class DebateComponent {
   faltaArchivo: boolean = false;
 
   // Constructor del componente, se inyecta el servicio y se inicializa el formulario
-  constructor(private servizo: ServizoLoginService, private router: ActivatedRoute) {
+  constructor(private servizo: ServizoLoginService, private router: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) {
     this.formularioCRUDComentario = new FormGroup({
       texto: new FormControl('', [Validators.required]), // Campo obligatorio para el texto del comentario
       eliminarImagen: new FormControl(false) // Campo para eliminar la imagen
     });
+  }
+
+  toggleMenu(id: number) {
+    this.menuAbierto = this.menuAbierto === id ? null : id;
   }
 
   archivoSeleccionado(event: any): void {
@@ -241,9 +247,9 @@ export class DebateComponent {
 
   // Método que se ejecuta al iniciar el componente
   ngOnInit(): void {
-
-    this.mostrarComentariosForos();
-
+    if (isPlatformBrowser(this.platformId)) {
+      this.mostrarComentariosForos();
+    }
   }
 
 }

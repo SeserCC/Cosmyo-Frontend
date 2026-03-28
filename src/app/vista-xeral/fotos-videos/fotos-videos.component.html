@@ -4,13 +4,18 @@
         <!-- Mapa de navegación -->
         <div id="mapa_navegacion">
             <a [routerLink]="['/']">
-                <i class="fa-solid fa-house"></i> Inicio
+                <i class="bi bi-house"></i>
             </a>
             /
             <strong id="fotos_videos">Imágenes y vídeos</strong>
         </div>
+
+        <a [routerLink]="['/']" class="flecha-derecha">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+
         <form [formGroup]="buscadorForm">
-            <div class="field has-addons is-fullwidth">
+            <div class="field has-addons is-fullwidth mb-5 mt-5">
 
                 <div class="control is-expanded">
                     <input type="text" id="busqueda" class="input" formControlName="titulo"
