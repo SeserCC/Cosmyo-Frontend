@@ -10,7 +10,7 @@
                 <i class="bi bi-house"></i>
             </a>
             /
-            <strong id="calendario">Calendario</strong>
+            <span id="calendario">Calendario</span>
         </div>
 
         <a [routerLink]="['/']" class="flecha-derecha">
@@ -33,7 +33,7 @@
 
                         <li *ngFor="let evento of eventos" class="evento-item">
                             <span class="is-pulled-right">{{ evento.fecha }}</span>
-                            <strong>{{ evento.evento }}</strong>
+                           <span id="evento_descripcion">{{ evento.evento }}</span> 
                         </li>
                     </ul>
                 </div>

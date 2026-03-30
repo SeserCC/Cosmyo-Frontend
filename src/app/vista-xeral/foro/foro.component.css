@@ -17,6 +17,7 @@ a {
 }
 
 #mapa_navegacion {
+    color: white;
     display: flex;
     align-items: center;
     gap: 6px;

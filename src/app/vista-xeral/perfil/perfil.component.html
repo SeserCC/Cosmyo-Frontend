@@ -76,10 +76,10 @@
                     <!-- Datos -->
                     <div class="column is-6">
                         <div class="content">
-                            <p class="is-size-6">
-                                <strong>Biografía</strong>
+                            <p class="is-size-6 biografia">
+                                Biografía
                             </p>
-                            <p *ngIf="perfil?.biografia; else sinBio">{{ perfil.biografia }}</p>
+                            <p id="info_bio" *ngIf="perfil?.biografia; else sinBio">{{ perfil.biografia }}</p>
                             <ng-template #sinBio>
                                 <p class="has-text-grey">Este usuario aún no ha puesto una biografía.</p>
                             </ng-template>
@@ -89,7 +89,8 @@
                             <div class="columns is-mobile">
                                 <div class="column is-half">
                                     <p class="is-size-7 has-text-grey">Teléfono</p>
-                                    <p><a *ngIf="perfil?.telefono" [href]="'tel:'+perfil.telefono">{{
+                                    <p><a id="telefono_red_social" *ngIf="perfil?.telefono"
+                                            [href]="'tel:'+perfil.telefono">{{
                                             perfil.telefono
                                             }}</a><span *ngIf="!perfil?.telefono" class="has-text-grey">No
                                             disponible</span></p>
@@ -98,7 +99,8 @@
                                 <div class="column is-half">
                                     <p class="is-size-7 has-text-grey">Red social</p>
                                     <p *ngIf="perfil?.red_social_principal; else sinRed">
-                                        <a [href]="perfil.red_social_principal" target="_blank" rel="noopener">
+                                        <a id="telefono_red_social" [href]="perfil.red_social_principal" target="_blank"
+                                            rel="noopener">
                                             {{ perfil.red_social_principal}}
                                         </a>
                                     </p>
@@ -111,11 +113,11 @@
                             <div class="columns is-mobile">
                                 <div class="column is-half">
                                     <p class="is-size-7 has-text-grey">Usuario en la red</p>
-                                    <p>{{ perfil?.usuario_red_social || '—' }}</p>
+                                    <p id="nombre_user_red_pais">{{ perfil?.usuario_red_social || '—' }}</p>
                                 </div>
                                 <div class="column is-half">
                                     <p class="is-size-7 has-text-grey">País</p>
-                                    <p>{{ perfil?.pais || '—' }}</p>
+                                    <p id="nombre_user_red_pais">{{ perfil?.pais || '—' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +127,7 @@
                     <div class="column is-3">
                         <p class="is-size-7 has-text-grey">Estado</p>
                         <div>
-                            <span class="tag" style="font-weight:600; padding: 0.5rem 0.75rem;">
+                            <span class="tag estado" style="font-weight:600; padding: 0.5rem 0.75rem;">
                                 {{ perfil?.estado | titlecase }}
                             </span>
                         </div>
@@ -243,6 +245,9 @@
                                     <p *ngIf="planCRUD.get('tipo_pago')?.touched && planCRUD.get('tipo_pago')?.invalid"
                                         class="help is-danger">
                                         Debes seleccionar un tipo de pago
+                                    </p>
+                                    <p class="text-white-50 small fst-italic mt-2 mb-0" style="font-size: 0.8rem;">
+                                        Esto es un entorno de prueba. No se cobrarán las tarifas indicadas.
                                     </p>
                                 </div>
                             </div>

@@ -15,10 +15,23 @@ a {
     /* Elimina el subrayado de los enlaces */
 }
 
+#mapa_navegacion {
+    color: white;
+}
+
 /* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
 #mapa_navegacion>a:hover {
     opacity: 0.6;
     /* Baja la opacidad de los enlaces cuando se pasa el ratón */
+}
+
+li a {
+    border: 0.25px solid #353a46;
+}
+
+li a:hover {
+    background-color: #1F2229;
+    border: 0.25px solid #4a505f;
 }
 
 /* Estilo para el contenedor de datos */
@@ -71,6 +84,21 @@ a {
     transform: scale(1.1);
 }
 
+input,
+select,
+textarea {
+    border: 0.25px solid #363a55;
+}
+
+input::placeholder {
+    color: #5C5F65;
+}
+
+#info {
+    font-weight: 700;
+    color: white;
+}
+
 .container {
     border-radius: 10px;
     background: linear-gradient(145deg, #0b0c28, #1a1b3d);
@@ -85,7 +113,10 @@ a {
     /* Bordes redondeados */
 }
 
-/* Errores */
+.tag.is-warning {
+    margin-left: 10px;
+}
+
 .erro {
     color: #ff6b6b;
     font-size: 0.85rem;

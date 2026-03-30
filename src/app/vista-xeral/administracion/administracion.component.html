@@ -7,7 +7,7 @@
                 <i class="bi bi-house"></i>
             </a>
             /
-            <strong id="publicacion">Administracion</strong>
+            <span id="publicacion">Administracion</span>
         </div>
 
         <a [routerLink]="['/']" class="flecha-derecha">
@@ -119,7 +119,7 @@
                     <div *ngIf="!cambiar" class="field">
                         <div class="control">
                             <input class="input has-background-black-ter has-text-light" type="password"
-                                placeholder="Contraseña del usuario" formControlName="contrasinal">
+                                placeholder="Nueva contraseña del usuario" formControlName="contrasinal">
                         </div>
                         <p *ngIf="formularioCRUD.get('contrasinal')?.touched && formularioCRUD.get('contrasinal')?.errors?.['required']"
                             class="help is-danger">
@@ -475,9 +475,9 @@
 
                                 <!-- Texto -->
                                 <div class="column is-6 has-text-light">
-                                    <p><strong>Titulo:</strong> {{ publicacion.titulo }}</p>
-                                    <p><strong>Descripcion:</strong> {{ publicacion.descripcion }}</p>
-                                    <p><strong>Fecha: </strong> {{ publicacion.fecha_alta | date:'yyyy-MM-dd' }}
+                                    <p><span id="info">Titulo:</span> {{ publicacion.titulo }}</p>
+                                    <p><span id="info">Descripcion:</span> {{ publicacion.descripcion }}</p>
+                                    <p><span id="info">Fecha: </span> {{ publicacion.fecha_alta | date:'yyyy-MM-dd' }}
                                         <ng-container *ngIf="publicacionSeleccionar?.id == publicacion.id"> <span
                                                 *ngIf="edicion">Editado</span></ng-container>
                                     </p>
@@ -773,15 +773,15 @@
                                         {{ perfil.user.name }}
                                     </h3>
                                     <p class="is-size-6 has-text-grey-light" style="margin-bottom: 0.5rem;">
-                                        <strong>Teléfono:</strong> {{ perfil.telefono || '—' }} <br>
-                                        <strong>Red social:</strong> {{ perfil.red_social_principal || 'No vinculada' }}
+                                        <span id="info">Teléfono:</span> {{ perfil.telefono || '—' }} <br>
+                                        <span id="info">Red social:</span> {{ perfil.red_social_principal || 'No vinculada' }}
                                         <br>
-                                        <strong>Usuario:</strong> {{ perfil.usuario_red_social || '—' }} <br>
-                                        <strong>Estado:</strong>
+                                        <span id="info">Usuario:</span> {{ perfil.usuario_red_social || '—' }} <br>
+                                        <span id="info">Estado:</span>
                                         <span class="tag is-warning is-light" style="font-weight:600;">
                                             {{ perfil.estado | titlecase }}
                                         </span><br>
-                                        <strong>Registro:</strong> {{ perfil.fecha_registro | date:'yyyy-MM-dd' }}
+                                        <span id="info">Registro:</span> {{ perfil.fecha_registro | date:'yyyy-MM-dd' }}
                                     </p>
                                     <p class="is-size-7" style="color: #cfcfcf; font-style: italic;">
                                         "{{ perfil.biografia || 'Sin biografía aún.' }}"
@@ -938,10 +938,10 @@
                         <li *ngFor="let gratuito of gratuitos" class="mb-3">
                             <div class="columns is-vcentered">
                                 <div class="column is-8 has-text-light">
-                                    {{gratuito.plans.user.name}} - <strong>Cantidad maxima de descargas:</strong>
-                                    {{gratuito.cantidad_maxima_descargas}} - <strong>Limite de
-                                        publicacion:</strong> {{gratuito.limite_publicacion}} - <strong>Tamaño maximo de
-                                        archivo:</strong>
+                                    {{gratuito.plans.user.name}} - <span id="info">Cantidad maxima de descargas:</span>
+                                    {{gratuito.cantidad_maxima_descargas}} - <span id="info">Limite de
+                                        publicacion:</span> {{gratuito.limite_publicacion}} - <span id="info">Tamaño maximo de
+                                        archivo:</span>
                                     {{gratuito.tamano_maximo_archivo}}
                                 </div>
 

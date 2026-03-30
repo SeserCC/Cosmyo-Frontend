@@ -7,7 +7,7 @@
                 <i class="bi bi-house"></i>
             </a>
             /
-            <strong id="inicio_sesion">Inicio sesión</strong>
+            <span id="inicio_sesion">Inicio sesión</span>
         </div>
 
         <a [routerLink]="['/']" class="flecha-derecha">
@@ -24,9 +24,10 @@
             <!-- Campo de usuario -->
             <label id="lusuario">
                 <i class="fa-solid fa-user-astronaut"></i>
-                <strong> Usuario:</strong>
+                Correo electrónico:
             </label>
-            <input id="usuario" class="form-control bg-dark text-light" type="text" placeholder="TON_618..." formControlName="usuario">
+            <input id="usuario" class="form-control bg-dark text-light" type="text" placeholder="ton_618@example.com"
+                formControlName="usuario">
             <p *ngIf="formularioLogin.get('usuario')?.invalid && formularioLogin.get('usuario')?.touched"
                 class="mensaje-error">
                 <span *ngIf="formularioLogin.get('usuario')?.hasError('required')">El usuario es obligatorio.</span>
@@ -37,9 +38,9 @@
             <!-- Campo de contraseña -->
             <label for="contrasena" id="lcontrasena">
                 <i class="bi bi-lock-fill"></i>
-                <strong> Contraseña:</strong>
+                Contraseña:
             </label>
-            <input id="contrasena" class="form-control bg-dark text-light" type="password" placeholder="Contraseña..."
+            <input id="contrasena" class="form-control bg-dark text-light" type="password" placeholder="Contraseña"
                 formControlName="contrasinal">
             <p *ngIf="formularioLogin.get('contrasinal')?.invalid && formularioLogin.get('contrasinal')?.touched"
                 class="mensaje-error">

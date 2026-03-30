@@ -16,22 +16,23 @@ a {
 
 /* Estilo para el mapa de navegación */
 #mapa_navegacion {
+    color: #ffffff;
     font-family: Arial, Helvetica, sans-serif;
     /* Fuente para el texto */
     font-size: 15px;
     /* Tamaño de fuente */
-    margin: 10px 10px;
-    /* Márgenes */
-    height: 20px;
-    /* Altura */
-    padding: 10px;
-    /* Relleno */
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 /* Efecto al pasar el ratón sobre los enlaces dentro de #mapa_navegacion */
 #mapa_navegacion>a:hover {
     opacity: 0.6;
     /* Reduce la opacidad al pasar el ratón */
+}
+
+.is-pulled-right{
+    color: white;
 }
 
 /* Estilo para el calendario */
@@ -42,6 +43,10 @@ a {
     /* Relleno */
     border-radius: 5px;
     /* Bordes redondeados */
+}
+
+#evento_descripcion {
+    font-weight: 600;
 }
 
 /* Estilo para los datos generales */
@@ -239,16 +244,16 @@ a {
         text-align: center;
     }
 
-    section{
+    section {
         padding: 48px 0px;
     }
 
-    .astro-box{
+    .astro-box {
         background: none;
         border: none;
     }
 
-    .box{
+    .box {
         background: transparent;
         box-shadow: none;
         border: none;
@@ -271,8 +276,9 @@ a {
     }
 
     #mapa_navegacion {
+        margin-top: 5px;
+        margin-left: 5px;
         font-size: 15px;
-        margin: 0;
     }
 
     .mensaje-eventos-vacio {

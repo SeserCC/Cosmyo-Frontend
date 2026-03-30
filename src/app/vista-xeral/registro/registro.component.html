@@ -5,7 +5,7 @@
             <a [routerLink]="['/']">
                 <i class="bi bi-house"></i>
             </a>
-            / <strong id="registro">Registro</strong>
+            / <span id="registro">Registro</span>
         </div>
 
         <a [routerLink]="['/']" class="flecha-derecha">
@@ -18,7 +18,7 @@
 
             <!-- Nombre -->
             <div class="mb-3">
-                <label class="form-label text-light"><strong>Nombre</strong></label>
+                <label class="form-label text-light">Nombre</label>
                 <input type="text" class="form-control bg-dark text-light" placeholder="TON_618..."
                     formControlName="nombre">
                 <div *ngIf="formularioRegistro.get('nombre')?.invalid && formularioRegistro.get('nombre')?.touched"
@@ -32,7 +32,7 @@
 
             <!-- Email -->
             <div class="mb-3">
-                <label class="form-label text-light"><strong>Email</strong></label>
+                <label class="form-label text-light">Email</label>
                 <input type="email" class="form-control bg-dark text-light" placeholder="ejemplo@email.com"
                     formControlName="email">
                 <div *ngIf="formularioRegistro.get('email')?.invalid && formularioRegistro.get('email')?.touched"
@@ -43,7 +43,7 @@
 
             <!-- Contraseña -->
             <div class="mb-3">
-                <label class="form-label text-light"><strong>Contraseña</strong></label>
+                <label class="form-label text-light">Contraseña</label>
                 <input type="password" class="form-control bg-dark text-light" placeholder="********"
                     formControlName="contrasinal">
                 <div *ngIf="formularioRegistro.get('contrasinal')?.invalid && formularioRegistro.get('contrasinal')?.touched"
@@ -57,7 +57,7 @@
 
             <!-- Confirmar contraseña -->
             <div class="mb-3">
-                <label class="form-label text-light"><strong>Confirmar contraseña</strong></label>
+                <label class="form-label text-light">Confirmar contraseña</label>
                 <input type="password" class="form-control bg-dark text-light"
                     placeholder="Repite la contraseña" formControlName="contrasinal_confirmation">
                 <div *ngIf="formularioRegistro.get('contrasinal_confirmation')?.invalid && formularioRegistro.get('contrasinal_confirmation')?.touched"

@@ -124,7 +124,7 @@ export class AdministracionComponent implements OnInit {
     this.formularioCRUDPublicacion.patchValue({
       imagen: this.archivoSelect
     });
-    /* ("imagen guardado en form"); */
+
     this.faltaArchivo = false;
   }
 
@@ -151,6 +151,7 @@ export class AdministracionComponent implements OnInit {
       metodo_pago: '',
       tipo_pago: '',
       descargas: 0,
+      estado: '',
       foro_id: '',
       insignia: ''
     });   // Reiniciamos el formulario
@@ -815,7 +816,6 @@ export class AdministracionComponent implements OnInit {
   editarPlan(plan: any) {
     this.errorMensaje = "";
     this.error = false;
-    /* this.cambiar = true; // Activamos el modo edición */
     this.planSeleccionar = plan; // Guardamos el evento seleccionado
     (this.planSeleccionar);
     // Rellenamos el formulario con los datos del evento
@@ -848,14 +848,11 @@ export class AdministracionComponent implements OnInit {
   }
 
   accesoPremium() {
-    //(this.usuarioActual)
     let data = {
       rol: this.usuarioLogueado.rol,
       id: this.planSeleccionar.user_id,
       tipo_pago: this.formularioCRUDPlan.get('tipo_pago')?.value
     };
-
-    //(data);
 
     this.servizo.accesoPremium(data, {
       headers: new HttpHeaders({
@@ -1090,12 +1087,11 @@ export class AdministracionComponent implements OnInit {
         })
       }).subscribe({
         next: () => {
-          /* (this.planSeleccionar); */
-          this.formularioCRUDGratuito.reset(/*  */); // Limpiamos el formulario
+
+          this.formularioCRUDGratuito.reset(); // Limpiamos el formulario
         },
         error: (erro) => {
           console.error("Error en el modificar gratuito", erro);
-          /* (this.eventoSeleccionar) */
 
         }
       });
