@@ -65,6 +65,23 @@ a {
     /* Reduce la opacidad al pasar el ratón */
 }
 
+#nombre_usuario {
+    font-weight: 700;
+}
+
+form {
+    color: white;
+}
+
+input,
+textarea {
+    border-color: gray;
+}
+
+textarea::placeholder {
+    color: gray;
+}
+
 .flecha-derecha {
     position: absolute;
     top: 5px;

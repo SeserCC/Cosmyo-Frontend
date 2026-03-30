@@ -1,39 +1,28 @@
-
 #mapa_navegacion {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
-    margin: 10px;
-    height: 20px;
-    padding: 8px;
-    display: flex;
-    align-items: center;
+    padding: 8px 10px;
 }
 
-#mapa_navegacion>a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+a{
     color: white;
+    text-decoration: none;
 }
 
 #mapa_navegacion>a:hover {
     opacity: 0.6;
 }
 
-/* Icono SVG de casa */
-.icon-home {
-    width: 18px;
-    height: 18px;
-    margin-right: 5px;
-    stroke: white;
-}
 
 /* Estilo para el bloque de pago */
 #pago {
     background-color: #032e67;
     padding: 5px 8px;
     border-radius: 5px;
-    margin-left: 5px;
 }
 
 /* Estilo general para los bloques de datos */
@@ -44,6 +33,7 @@
     padding: 10px;
     border-radius: 8px;
 }
+
 /* Estilo astronómico */
 .astro-box {
     margin-top: 20px;

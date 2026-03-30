@@ -25,7 +25,6 @@ a {
     /* Fuente sans-serif */
     font-size: 15px;
     margin-top: 10px;
-
 }
 
 /* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
@@ -87,6 +86,26 @@ form {
     }
 }
 
+.input {
+    background-color: rgb(34, 34, 34);
+    border-color: gray;
+}
+
+.input::placeholder {
+    color: gray;
+}
+
+.button {
+    background-color: #032e67;
+    color: white;
+    border: solid 0.5px gray;
+    transition: transform 0.2s ease;
+
+}
+
+.button:hover {
+    transform: scale(1.1);
+}
 
 /* Contenedor principal de cada publicación con padding y ancho máximo centrado */
 .publicacion-box {
@@ -95,10 +114,12 @@ form {
     max-width: 700px;
     /* Ancho máximo para limitar el tamaño en pantallas grandes */
     margin: auto;
+    color: rgb(150, 150, 150);
     /* Centra horizontalmente el contenedor */
     border-radius: 8px;
     /* Bordes redondeados para un aspecto suave */
     opacity: 0;
+    box-shadow: 0 4px 12px rgba(175, 175, 175, 0.4);
     transform: translateY(20px);
     animation: fadeInUp 0.6s ease forwards;
     animation-delay: 0.5s;
@@ -164,6 +185,10 @@ form {
     /* Centra el texto */
 }
 
+h3 {
+    color: white;
+}
+
 /* Estilo para la descripción del contenido */
 .descripcion {
     margin-top: 0.5rem;
@@ -176,8 +201,13 @@ form {
 
 /* Estilo para mostrar información de autor y fecha */
 .autor-fecha {
-    color: #888fa8;
+    color: white;
+    font-weight: 500;
     /* Color gris medio para información secundaria */
+}
+
+#info {
+    color: #888fa8;
 }
 
 /* Estilo para columnas con múltiples filas */

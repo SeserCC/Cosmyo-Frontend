@@ -7,7 +7,7 @@
                 <i class="bi bi-house"></i>
             </a>
             /
-            <strong id="fotos_videos">Imágenes y vídeos</strong>
+            <span id="fotos_videos">Imágenes y vídeos</span>
         </div>
 
         <a [routerLink]="['/']" class="flecha-derecha">
@@ -18,12 +18,10 @@
             <div class="field has-addons is-fullwidth mb-5 mt-5">
 
                 <div class="control is-expanded">
-                    <input type="text" id="busqueda" class="input" formControlName="titulo"
-                        placeholder="Buscar publicaciones...">
+                    <input type="text" class="input" formControlName="titulo" placeholder="Buscar publicaciones...">
                 </div>
                 <div class="control">
-                    <button class="button" (click)="filtrarPublicaciones(buscadorForm.get('titulo')?.value)"
-                        style="background-color: #032e67; color: white;">
+                    <button class="button" (click)="filtrarPublicaciones(buscadorForm.get('titulo')?.value)">
                         Buscar
                     </button>
                 </div>
@@ -55,8 +53,8 @@
                         <h3 class="title is-4">{{ publicacion.titulo }}</h3>
                         <p class="descripcion subtitle is-6">{{ publicacion.descripcion }}</p>
                         <p class="autor-fecha is-size-9">
-                            <strong>Autor:</strong> {{ publicacion.users.name }} &nbsp;|&nbsp;
-                            <strong>Fecha:</strong> {{ publicacion.fecha_alta }}
+                            <span id="info">Autor:</span> {{ publicacion.users.name }} &nbsp;|&nbsp;
+                            <span id="info">Fecha:</span> {{ publicacion.fecha_alta }}
                         </p>
                     </div>
                     <ng-container *ngIf="usuarioActual">
