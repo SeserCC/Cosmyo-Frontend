@@ -12,7 +12,7 @@
             /
             <a [routerLink]="['/foro']">Foros</a>
             /
-            <strong id="comunidades">Comentarios</strong>
+            <span id="comunidades">Comentarios</span>
         </div>
 
         <a [routerLink]="['/foro']" class="flecha-derecha">
@@ -52,7 +52,7 @@
 
                 <!-- CONTENIDO ORIGINAL -->
                 <div id="usuario1_info">
-                    <p><strong>{{comentario.user?.name}}</strong></p>
+                    <p id="nombre_usuario">{{comentario.user?.name}}</p>
                     <p id="fecha_hora">{{comentario?.fecha_hora | date:'dd/MM/yyyy HH:mm'}}</p>
                 </div>
 
@@ -104,7 +104,7 @@
 
             <div class="field">
                 <div class="control">
-                    <textarea class="textarea has-background-black-ter has-text-light" placeholder="Comentario"
+                    <textarea class="textarea has-background-black-ter has-text-light" placeholder="Para realizar esta foto..."
                         formControlName="texto"></textarea>
                 </div>
                 <p *ngIf="formularioCRUDComentario.get('texto')?.touched && formularioCRUDComentario.get('texto')?.invalid"

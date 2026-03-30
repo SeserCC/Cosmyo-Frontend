@@ -5,7 +5,7 @@
                 <i class="bi bi-house"></i>
             </a>
             /
-            <strong id="publicaciones">Tus publicaciones</strong>
+            <span id="publicaciones">Tus publicaciones</span>
         </div>
 
         <a [routerLink]="['/']" class="flecha-derecha">
@@ -119,10 +119,10 @@
                         </div>
 
                         <div class="column is-6 has-text-light info-div">
-                            <p><strong class="info">Título:</strong> {{ publicacion.titulo }}</p>
-                            <p><strong class="info">Descripción:</strong> {{ publicacion.descripcion }}</p>
+                            <p><span class="info">Título:</span> {{ publicacion.titulo }}</p>
+                            <p> <span class="info">Descripción:</span> {{ publicacion.descripcion }}</p>
                             <p>
-                                <strong class="info">Fecha:</strong>
+                                <span class="info">Fecha:</span>
                                 {{ publicacion.fecha_alta | date:'yyyy-MM-dd'}}
                             </p>
                         </div>

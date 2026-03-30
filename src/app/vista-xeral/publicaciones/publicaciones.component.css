@@ -79,11 +79,13 @@ a {
 
 /* Estilo para el tipo de plan */
 #publicaciones {
+    color: white;
     background-color: #032e67;
     /* Fondo azul oscuro */
     padding: 5px;
     /* Relleno de 5px */
     border-radius: 5px;
+    font-weight: 700;
     /* Bordes redondeados */
 }
 
@@ -124,6 +126,10 @@ a {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.8s ease forwards;
+}
+
+.info {
+    font-weight: 600;
 }
 
 label {

@@ -9,6 +9,10 @@ a {
   text-decoration: none;
 }
 
+#mapa_navegacion {
+  color: white;
+}
+
 #mapa_navegacion>a:hover {
   opacity: 0.6;
 }
@@ -29,7 +33,7 @@ form h1 {
   margin: 30px 0;
 }
 
-form{
+form {
   padding: 10px;
 }
 
@@ -43,6 +47,10 @@ form{
   transition: transform 0.3s ease, filter 0.3s ease;
   transform: translateY(20px);
   animation: fadeInUp 1s ease forwards;
+}
+
+.form-label.text-light {
+  font-weight: 600;
 }
 
 .form-control::placeholder {

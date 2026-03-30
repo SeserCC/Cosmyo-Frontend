@@ -30,6 +30,7 @@ a {
 
 /* Estilo para el mapa de navegación */
 #mapa_navegacion {
+    color: white;
     font-family: Arial, Helvetica, sans-serif;
     /* Fuente sans-serif */
     font-size: 15px;
@@ -45,6 +46,7 @@ a {
 }
 
 #subir_archivos {
+    font-weight: 700;
     background-color: #032e67;
     /* Fondo azul oscuro */
     padding: 5px;
@@ -116,6 +118,7 @@ a {
 #texto_titulo,
 #texto_descripcion,
 #texto_zona_geografica {
+    color: #ABB1BF;
     font-size: 20px;
     /* Tamaño grande de fuente para destacar el texto */
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
