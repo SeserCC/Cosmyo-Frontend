@@ -69,6 +69,9 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
           if (err.status == 401) {
             this.errorMensaje = err.error.error;
             this.formularioLogin.reset()
+          } else if (err.status == '503') {
+            this.errorMensaje = "Estamos en mantenimiento, prueba más tarde";
+
           } else {
             this.errorMensaje = "Error inesperado del servidor";
             console.error("El servidor no responde correctemante", err);
