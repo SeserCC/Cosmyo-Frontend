@@ -332,6 +332,10 @@ export class ServizoLoginService {
     return this.cliente.put<any>(this.apiBackend + '/premium/' + id, body, options);
   }
 
+  mostrarEstado(options?: { headers?: HttpHeaders }) {
+    return this.cliente.get<any>(this.apiBackend + '/estado/', options);
+  }
+
   /*
   subscribirseComentario$(): Observable<Comentario[]> {
     return this.comentarios$.asObservable();
