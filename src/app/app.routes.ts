@@ -13,19 +13,22 @@ import { RegistroComponent } from './vista-xeral/registro/registro.component';
 import { authGuard } from './auth.guard';
 import { PerfilComponent } from './vista-xeral/perfil/perfil.component';
 import { ExitoPagoComponent } from './vista-xeral/exitoPago/exitoPago.component';
+import { MantenimientoComponent } from './vista-xeral/mantenimiento/mantenimiento.component';
+import { mantenimientoGuard } from './mantenimiento.guard';
 
 export const routes: Routes = [
-    { path: "", component: InicioComponent },
-    { path: "calendario", component: CalendarioComponent },
-    { path: "foto", component: FotosVideosComponent },
-    { path: "debate/:foro_id", component: DebateComponent },
-    { path: "foro", component: ForoComponent },
-    { path: "publicaciones/:user_id", component: PublicacionesComponent },
-    { path: "tipoPlan", component: TipoPlanComponent },
-    { path: "perfil/:user_id", component: PerfilComponent },
+    { path: "", component: InicioComponent, canActivate: [mantenimientoGuard] },
+    { path: "mantenimiento", component: MantenimientoComponent },
+    { path: "calendario", component: CalendarioComponent, canActivate: [mantenimientoGuard] },
+    { path: "foto", component: FotosVideosComponent, canActivate: [mantenimientoGuard] },
+    { path: "debate/:foro_id", component: DebateComponent, canActivate: [mantenimientoGuard] },
+    { path: "foro", component: ForoComponent, canActivate: [mantenimientoGuard] },
+    { path: "publicaciones/:user_id", component: PublicacionesComponent, canActivate: [mantenimientoGuard] },
+    { path: "tipoPlan", component: TipoPlanComponent, canActivate: [mantenimientoGuard] },
+    { path: "perfil/:user_id", component: PerfilComponent, canActivate: [mantenimientoGuard] },
     { path: "subirArchivo", component: SubirArchivoComponent, canActivate: [authGuard] },
-    { path: "registro", component: RegistroComponent },
+    { path: "registro", component: RegistroComponent, canActivate: [mantenimientoGuard] },
     { path: "exito", component: ExitoPagoComponent, canActivate: [authGuard] },
-    { path: "administracion", component: AdministracionComponent }, //Ruta protegida
-    { path: "login", component: InicioSesionComponent },
+    { path: "administracion", component: AdministracionComponent, canActivate: [mantenimientoGuard] },
+    { path: "login", component: InicioSesionComponent},
 ];
