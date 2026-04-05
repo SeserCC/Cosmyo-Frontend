@@ -15,7 +15,6 @@ export const authGuard: CanActivateFn = (route, state) => {
     }
   }
 
-  router.navigate(['/portada']); // Si no hay sesión, redirige
-  return false;
+  return router.createUrlTree(['/']); // Si no hay sesión, redirige
 
 };
