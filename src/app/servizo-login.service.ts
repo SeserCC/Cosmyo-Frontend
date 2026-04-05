@@ -317,7 +317,7 @@ export class ServizoLoginService {
   }
 
   mostrarGratuitos(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/gratuito/', options);
+    return this.cliente.get<any>(this.apiBackend + '/gratuito', options);
   }
 
   modificarGratuito(id: number, body: any, options?: { headers?: HttpHeaders }) {
@@ -325,7 +325,7 @@ export class ServizoLoginService {
   }
 
   mostrarPremiums(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/premium/', options);
+    return this.cliente.get<any>(this.apiBackend + '/premium', options);
   }
   
   modificarPremium(id: number, body: any, options?: { headers?: HttpHeaders }) {
@@ -333,7 +333,7 @@ export class ServizoLoginService {
   }
 
   mostrarEstado(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/estado/', options);
+    return this.cliente.get<any>(this.apiBackend + '/estado', options);
   }
 
   /*

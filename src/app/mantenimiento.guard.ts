@@ -10,8 +10,7 @@ export const mantenimientoGuard: CanActivateFn = (route, state) => {
   return servicio.mostrarEstado().pipe(
     map(res => res.maintenance
       ? router.createUrlTree(['/mantenimiento'])
-      : true
-    )
+      : true)
   );
 
 };
