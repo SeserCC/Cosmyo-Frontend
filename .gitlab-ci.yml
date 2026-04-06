@@ -16,6 +16,7 @@ astronexus-build:
     - rm -rf dist/
   script:
     - npm run build --configuration=production
+    - mv dist/astronexus/browser/index.csr.html dist/astronexus/browser/index.html
   artifacts:
     paths:
       - dist/
