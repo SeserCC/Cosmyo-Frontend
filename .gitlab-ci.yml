@@ -1,9 +1,12 @@
+image: node:20
+
 stages:
   - build
+  - deploy
 
 astronexus-build:
   stage: build
-  image: node:20
+  
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
@@ -11,4 +14,20 @@ astronexus-build:
   before_script:
     - npm ci
   script:
-    - npm run build --configuration=development
+    - npm run build --configuration=production
+  artifacts:
+    paths:
+      - dist/
+
+astronexus-deploy:
+  stage: deploy
+  script:
+    - apt-get update -y
+    - apt-get install -y openssh-client
+    - eval $(ssh-agent -s)
+    - ssh-add "$SSH_PRIVATE_KEY"
+    - mkdir -p ~/.ssh
+    - ssh-keyscan -H 130.110.235.77 >> ~/.ssh/known_hosts
+    - rsync -avz dist/astronexus/browser/ ubuntu@130.110.235.77:/var/www/frontend/
+  only:
+    - main
