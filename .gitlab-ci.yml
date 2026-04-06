@@ -23,13 +23,12 @@ astronexus-deploy:
   stage: deploy
   script:
     - apt-get update -y
-    - apt-get install -y openssh-client
+    - apt-get install -y openssh-client rsync
     - eval $(ssh-agent -s)
     - chmod 600 "$SSH_PRIVATE_KEY"
-    - cat "$SSH_PRIVATE_KEY" | ssh-add -
+    - ssh-add "$SSH_PRIVATE_KEY"
     - mkdir -p ~/.ssh
     - ssh-keyscan -H 130.110.235.77 >> ~/.ssh/known_hosts
-    - ssh -v ubuntu@130.110.235.77 "echo OK"
     - rsync -avz dist/astronexus/browser/ ubuntu@130.110.235.77:/var/www/frontend/
   only:
     - main
