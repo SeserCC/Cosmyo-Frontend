@@ -15,7 +15,7 @@ import { timeout } from 'rxjs';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'Astronexus';
+  title = 'Cosmyo';
 
   constructor(private servizo: ServizoLoginService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {
 

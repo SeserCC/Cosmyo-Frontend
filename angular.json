@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "astronexus": {
+    "cosmyo": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/astronexus",
+            "outputPath": "dist/cosmyo",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -75,7 +75,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/astronexus/server",
+            "outputPath": "dist/cosmyo/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json"
           },
@@ -94,10 +94,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "astronexus:build:production"
+              "buildTarget": "cosmyo:build:production"
             },
             "development": {
-              "buildTarget": "astronexus:build:development"
+              "buildTarget": "cosmyo:build:development"
             }
           },
           "defaultConfiguration": "development"

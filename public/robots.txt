@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://astronexus-yvcx.onrender.com/sitemap.xml
+Sitemap: https://cosmyo.com/sitemap.xml
