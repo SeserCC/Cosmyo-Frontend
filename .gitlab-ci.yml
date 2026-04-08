@@ -4,7 +4,7 @@ stages:
   - build
   - deploy
 
-astronexus-build:
+cosmyo-build:
   stage: build
   
   cache:
@@ -19,7 +19,7 @@ astronexus-build:
     paths:
       - dist/
 
-astronexus-deploy:
+cosmyo-deploy:
   stage: deploy
   script:
     - apt-get update -y
@@ -29,6 +29,6 @@ astronexus-deploy:
     - ssh-add "$SSH_PRIVATE_KEY"
     - mkdir -p ~/.ssh
     - ssh-keyscan -H 130.110.235.77 >> ~/.ssh/known_hosts
-    - rsync -avz dist/astronexus/browser/ ubuntu@130.110.235.77:/var/www/frontend/
+    - rsync -avz --delete dist/cosmyo/browser/ ubuntu@130.110.235.77:/var/www/frontend/
   only:
     - main
