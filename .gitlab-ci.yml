@@ -15,6 +15,7 @@ cosmyo-build:
     - npm ci
   script:
     - npm run build --configuration=production
+    - mv dist/cosmyo/browser/index.csr.html dist/cosmyo/browser/index.html
   artifacts:
     paths:
       - dist/
@@ -23,12 +24,12 @@ cosmyo-deploy:
   stage: deploy
   script:
     - apt-get update -y
-    - apt-get install -y openssh-client
+    - apt-get install -y openssh-client rsync
     - eval $(ssh-agent -s)
     - chmod 600 "$SSH_PRIVATE_KEY"
     - ssh-add "$SSH_PRIVATE_KEY"
     - mkdir -p ~/.ssh
     - ssh-keyscan -H 130.110.235.77 >> ~/.ssh/known_hosts
-    - rsync -avz --delete dist/cosmyo/browser/ ubuntu@130.110.235.77:/var/www/frontend/
+    - rsync -avz --delete dist/cosmyo/browser/ deploy@130.110.235.77:/var/www/frontend/
   only:
     - main
