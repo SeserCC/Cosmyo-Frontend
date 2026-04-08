@@ -5,6 +5,7 @@ import { VistaXeralComponent } from "./vista-xeral/vista-xeral.component";
 import { ServizoLoginService } from './servizo-login.service';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -21,13 +22,13 @@ export class AppComponent implements OnInit {
   }
 
   estado() {
+    let urlActual = window.location.href;
     this.servizo.mostrarEstado({
       headers: new HttpHeaders({
         'Accept': 'application/json',
       }),
-    }).subscribe({
+    }).pipe(timeout(1500)).subscribe({
       next: (response) => {
-        let urlActual = window.location.href;
 
         if (response.maintenance) {
           this.router.navigate(['/mantenimiento']);
@@ -36,17 +37,20 @@ export class AppComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error al reenviar a mantenimiento', err);
+        console.error('Error al consultar el estado, redirigiendo a mantenimiento', err);
+        if (!urlActual.includes('/mantenimiento')) {
+          this.router.navigate(['/mantenimiento']);
 
+        }
       }
     })
   }
 
   ngOnInit(): void {
-    if(isPlatformBrowser(this.platformId)){
+    if (isPlatformBrowser(this.platformId)) {
       this.estado();
     }
-    
+
   }
 
 }
