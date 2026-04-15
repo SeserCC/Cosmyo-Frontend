@@ -55,8 +55,8 @@
                 {{ faltaArchivo ? 'Archivo seleccionado' : 'Seleccionar archivo' }}
 
                 <p *ngIf="!faltaArchivo">
-                    Formatos que aceptamos: JPG - JPEG - PNG - GIF - TIF - TIFF - MOV - MPG - MPEG - MP4 - AVI - WMV -
-                    WEBM
+                    Formatos que aceptamos: JPG - JPEG - PNG - GIF - TIFF - AVIF - WMV -
+                    WEBP
                 </p>
 
                 <p *ngIf="faltaArchivo" class="nombre_archivo">
@@ -65,13 +65,15 @@
             </label>
 
             <input id="seleccionar_archivo" type="file" (change)="cargarArchivo($event)">
-            <div *ngIf="formularioPublicacion.get('archivo')?.touched && formularioPublicacion.get('archivo')?.invalid"
-                class="erro">
-                Debes subir una imagen
-            </div>
 
+            <p class="erro" *ngIf="mensajeError?.errors.imagen">{{mensajeError.message}}</p>
+            
+            <p *ngIf="!mensajeError" class="text-white-50 small fst-italic mb-1" style="font-size: 0.8rem;">
+                Peso máximo permitido: 10 MB
+            </p>
             <!-- Botón para enviar el formulario -->
-            <button id="enlace_subir_archivo" type="submit">
+            <button id="enlace_subir_archivo" type="submit"
+                [disabled]="formularioPublicacion.invalid || !archivoSelect">
                 Subir
                 <i class="fa-solid fa-upload"></i>
             </button>

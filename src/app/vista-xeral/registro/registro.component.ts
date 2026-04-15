@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, input, Input, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormGroup, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 import { ServizoLoginService } from '../../servizo-login.service';
@@ -17,16 +17,34 @@ export class RegistroComponent {
 
   formularioRegistro: FormGroup;
   usuarios: any[];
-  errorMensaje: string = "";
+  errorMensaje: any;
+  mostrarContrasinal: string = 'password';
+  mostrarConfirmacion: string = 'password';
 
   constructor(private servizo: ServizoLoginService, private router: Router) {
     this.formularioRegistro = new FormGroup({
       nombre: new FormControl('', [Validators.required]), // Control para el nombre de usuario
       contrasinal: new FormControl('', [Validators.required, Validators.minLength(8)]), // Control para el nombre de usuario
       contrasinal_confirmation: new FormControl('', [Validators.required]), // Control para el nombre de usuario
-      email: new FormControl('', [Validators.required, Validators.email]), // Control para la contraseña
+      email: new FormControl('', [Validators.required]), // Control para la contraseña
       captcha: new FormControl(false, [Validators.requiredTrue]), // Control para la contraseña
     });
+  }
+
+  mostrar() {
+    this.mostrarContrasinal = 'text';
+  }
+
+  mostrarConf() {
+    this.mostrarConfirmacion = 'text';
+  }
+
+  ocultar() {
+    this.mostrarContrasinal = 'password';
+  }
+
+  ocultarConf() {
+    this.mostrarConfirmacion = 'password';
   }
 
   registro(evento: Event) {
@@ -55,15 +73,20 @@ export class RegistroComponent {
       }),
     }).subscribe({
       next: () => {
-        this.router.navigate(['/']);
-
+        this.router.navigate(['/'], {
+          state: { mensaje: 'Usuario creado correctamente, sesión iniciada' }
+        });
       },
       error: (erro) => {
-        console.error('Error en el registro', erro);
-        if (erro.status == 409) {
-          this.errorMensaje = erro.error.error;
+        //console.error('Error en el registro', erro);
+
+        if (erro.status == 422) {
+          this.errorMensaje = erro.error;
+        } else {
+          this.errorMensaje = 'Error inesperado del servidor';
         }
 
+        this.formularioRegistro.reset();
       }
     });
 

@@ -249,6 +249,12 @@ button.is-success:hover {
     transform: translateY(20px) scale(1.6);
 }
 
+button.is-link:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    filter: brightness(1) !important;
+}
+
 .eliminar_foto {
     margin-top: 10px;
 }
@@ -379,6 +385,12 @@ button.is-success:hover {
     font-style: italic;
     font-size: 13px;
     color: gray;
+}
+
+.mensaje-error {
+    margin-top: 10px;
+    color: red;
+    font-size: 15px;
 }
 
 @media (max-width: 1024px) {

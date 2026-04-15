@@ -28,6 +28,8 @@ export class SubirArchivoComponent {
   // Archivo seleccionado por el usuario para subir la imagen
   archivoSelect: File | null = null;
 
+  mensajeError: any;
+
   // Constructor donde se inicializa el formulario con validaciones y se inyectan servicios
   constructor(private servizo: ServizoLoginService, private router: Router) {
     this.formularioPublicacion = new FormGroup({
@@ -78,7 +80,11 @@ export class SubirArchivoComponent {
         this.router.navigate(['/foto'])
       },
       error: (erro) => {
-        console.error(erro);
+        //console.error('Error al subir la publicacion', erro);
+        //console.error(erro.error);
+        if (erro.status == 422) {
+          this.mensajeError = erro.error
+        }
       }
     });
   }

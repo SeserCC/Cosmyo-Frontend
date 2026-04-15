@@ -58,7 +58,7 @@ export class ServizoLoginService {
             this.usuarioActual$.next(usuario);
           },
           error: (err) => {
-            console.error('Error al recuperar el usuario:', err);
+            //console.error('Error al recuperar el usuario:', err);
           }
 
         })
@@ -72,8 +72,10 @@ export class ServizoLoginService {
       this.cliente.post<any>(this.apiBackend + '/registroAPI', body, options).subscribe({
         next: (response) => {
           this.token = response.accessToken;
+          this.usuarioActual = response.user;
           this.tokens$.next(this.token);
 
+          this.usuarioActual$.next(this.usuarioActual);
           localStorage.setItem("token", this.token);
 
           observable.next(response);
@@ -92,7 +94,7 @@ export class ServizoLoginService {
         next: (response) => {
 
           localStorage.removeItem('token');
-          // this.tokens$.next(this.token);
+          this.usuarioActual$.next(null);
 
           observable.next(response);
           observable.complete();
@@ -211,7 +213,7 @@ export class ServizoLoginService {
   engadirPublicacion(body: any, options?: { headers?: HttpHeaders }) {
     return this.cliente.post<any>(this.apiBackend + '/publicacion', body, options);
   }
-  
+
   // Modificamos os valores indicando ao servidor
   modificarPublicacion(id: number, body: any, options?: { headers?: HttpHeaders }) {
     return this.cliente.post<any>(this.apiBackend + '/publicacion/' + id, body, options);
@@ -315,7 +317,7 @@ export class ServizoLoginService {
   mostrarPremiums(options?: { headers?: HttpHeaders }) {
     return this.cliente.get<any>(this.apiBackend + '/premium', options);
   }
-  
+
   modificarPremium(id: number, body: any, options?: { headers?: HttpHeaders }) {
     return this.cliente.put<any>(this.apiBackend + '/premium/' + id, body, options);
   }

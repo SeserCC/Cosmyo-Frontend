@@ -25,13 +25,24 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
   // Variable para controlar estados
   cambiar: boolean = false;
 
+  mostrarContrasinal: string = 'password';
+
+
   // Constructor donde se inicializa el formulario con validaciones y se inyectan servicios necesarios
   constructor(private servizo: ServizoLoginService, private router: Router) {
     this.formularioLogin = new FormGroup({
-      usuario: new FormControl('', [Validators.required]),       // Campo obligatorio para el nombre de usuario
+      usuario: new FormControl('', [Validators.required, Validators.email]),       // Campo obligatorio para el nombre de usuario
       contrasinal: new FormControl('', [Validators.required]),    // Campo obligatorio para la contraseña
       captcha: new FormControl(false, [Validators.requiredTrue])  // Checkbox de captcha obligatorio (debe estar marcado)
     });
+  }
+
+  mostrar() {
+    this.mostrarContrasinal = 'text';
+  }
+
+  ocultar() {
+    this.mostrarContrasinal = 'password';
   }
 
   // Método que se ejecuta al enviar el formulario para iniciar sesión
@@ -55,7 +66,6 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
 
       }).subscribe({
         next: (response) => {
-          //REVISAR ya que me permite acceder a administracion siendo user
           if (response.user.rol == "admin") {
             this.router.navigate(['/administracion']);
           } else {
@@ -65,16 +75,17 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
 
         error: (err) => {
 
-          console.error('❌ Error login', err);
+          //console.error('❌ Error login', err);
           if (err.status == 401) {
             this.errorMensaje = err.error.error;
             this.formularioLogin.reset()
+          } else if (err.status == '422') {
+            this.errorMensaje = "Correo inválido, ej: ton618@example.com"
           } else if (err.status == '503') {
             this.errorMensaje = "Estamos en mantenimiento, prueba más tarde";
-
           } else {
             this.errorMensaje = "Error inesperado del servidor";
-            console.error("El servidor no responde correctemante", err);
+            //console.error("El servidor no responde correctemante", err);
           }
 
         }

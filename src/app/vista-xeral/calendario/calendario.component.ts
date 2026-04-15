@@ -43,7 +43,7 @@ export class CalendarioComponent implements OnInit {
         this.eventos = response;
       },
       error: (err) => {
-        console.error('❌ Error al mostrar los eventos', err);
+        //console.error('❌ Error al mostrar los eventos', err);
         //Mensaje de error
       }
     })
