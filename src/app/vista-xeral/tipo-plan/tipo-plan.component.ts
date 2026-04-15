@@ -31,7 +31,7 @@ export class TipoPlanComponent implements OnInit {
 
         },
         error: (err) => {
-          console.error('Error al mostrar el plan', err);
+          //console.error('Error al mostrar el plan', err);
         }
       })
     }

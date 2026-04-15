@@ -11,7 +11,7 @@
         <a [routerLink]="['/']" class="flecha-derecha">
             <i class="bi bi-arrow-left"></i>
         </a>
-
+        <p *ngIf="errorMensaje?.errors.email" class="mensaje-error"> {{errorMensaje.message}} </p>
         <!-- Formulario -->
         <form [formGroup]="formularioRegistro" (ngSubmit)="registro($event)">
             <h1 class="text-center">Nueva cuenta</h1>
@@ -33,19 +33,32 @@
             <!-- Email -->
             <div class="mb-3">
                 <label class="form-label text-light">Email</label>
-                <input type="email" class="form-control bg-dark text-light" placeholder="ejemplo@email.com"
+                <p class="text-white-50 small fst-italic mb-1" style="font-size: 0.8rem;">
+                    El email puede ser ficticio, ej: cosmyo&#64;example.com
+                </p>
+                <input type="text" class="form-control bg-dark text-light" placeholder="ejemplo@email.com"
                     formControlName="email">
                 <div *ngIf="formularioRegistro.get('email')?.invalid && formularioRegistro.get('email')?.touched"
                     class="mensaje-error">
                     <span *ngIf="formularioRegistro.get('email')?.hasError('required')">El email es obligatorio.</span>
+                    <span *ngIf="formularioRegistro.get('email')?.hasError('email')">
+                        El email no tiene el formato correcto.</span>
                 </div>
             </div>
 
             <!-- Contraseña -->
             <div class="mb-3">
                 <label class="form-label text-light">Contraseña</label>
-                <input type="password" class="form-control bg-dark text-light" placeholder="********"
-                    formControlName="contrasinal">
+                <div class="input-container">
+                    <input [type]="mostrarContrasinal" class="form-control bg-dark text-light" placeholder="********"
+                        formControlName="contrasinal">
+
+                    <button type="button" class="toggle-password"
+                        (click)="mostrarContrasinal === 'password' ? mostrar() : ocultar()">
+                        <i class="bi" [ngClass]="mostrarContrasinal === 'password' ? 'bi-eye' : 'bi-eye-slash'"></i>
+                    </button>
+                </div>
+
                 <div *ngIf="formularioRegistro.get('contrasinal')?.invalid && formularioRegistro.get('contrasinal')?.touched"
                     class="mensaje-error">
                     <span *ngIf="formularioRegistro.get('contrasinal')?.hasError('required')">La contraseña es
@@ -58,14 +71,25 @@
             <!-- Confirmar contraseña -->
             <div class="mb-3">
                 <label class="form-label text-light">Confirmar contraseña</label>
-                <input type="password" class="form-control bg-dark text-light"
-                    placeholder="Repite la contraseña" formControlName="contrasinal_confirmation">
+                <div class="input-container">
+                    <input [type]="mostrarConfirmacion" class="form-control bg-dark text-light"
+                        placeholder="Repite la contraseña" formControlName="contrasinal_confirmation">
+                    <button type="button" class="toggle-password"
+                        (click)="mostrarConfirmacion === 'password' ? mostrarConf() : ocultarConf()">
+                        <i class="bi" [ngClass]="mostrarConfirmacion === 'password' ? 'bi-eye' : 'bi-eye-slash'"></i>
+                    </button>
+                </div>
                 <div *ngIf="formularioRegistro.get('contrasinal_confirmation')?.invalid && formularioRegistro.get('contrasinal_confirmation')?.touched"
                     class="mensaje-error">
                     <span *ngIf="formularioRegistro.get('contrasinal_confirmation')?.hasError('required')">Debes repetir
                         la
                         contraseña.</span>
                 </div>
+                <span class="mensaje-error"
+                    *ngIf="(formularioRegistro.get('contrasinal')?.value && formularioRegistro.get('contrasinal_confirmation')?.value) && formularioRegistro.get('contrasinal')?.value !== formularioRegistro.get('contrasinal_confirmation')?.value">
+                    Las contraseñas no coinciden
+                </span>
+
             </div>
 
             <!-- Captcha -->

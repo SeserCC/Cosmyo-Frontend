@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error al consultar el estado, redirigiendo a mantenimiento', err);
+        //console.error('Error al consultar el estado, redirigiendo a mantenimiento', err);
         if (!urlActual.includes('/mantenimiento')) {
           this.router.navigate(['/mantenimiento']);
 

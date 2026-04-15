@@ -211,7 +211,7 @@ export class AdministracionComponent implements OnInit {
         });
       },
       error: (erro) => {
-        console.error(erro);
+        //console.error('Error al añadir un nuevo usuario:', erro);
       }
     });
 
@@ -292,7 +292,7 @@ export class AdministracionComponent implements OnInit {
         error: (erro) => {
           this.cambiar = true;
 
-          console.error("Error en el modificar", erro, this.usuarioSeleccionar) // Mostramos error en consola si ocurre
+          //console.error("Error al modificar al usuario", erro, this.usuarioSeleccionar) // Mostramos error en consola si ocurre
 
           if (erro.status == 403) {
             this.errorMensaje = erro.error.error;
@@ -327,7 +327,7 @@ export class AdministracionComponent implements OnInit {
 
       },
       error: (err) => {
-        console.error('❌ Error al mostrar los usuarios', err);
+        // console.error('❌ Error al mostrar los usuarios', err);
         //Mensaje de error
 
       }
@@ -346,7 +346,9 @@ export class AdministracionComponent implements OnInit {
         // Eliminamos el usuario del array local
         this.usuarios = this.usuarios.filter(usuario => usuario.id !== id);
       },
-      error: (erro) => console.error(erro)
+      error: (erro) => {
+        //console.error('Error al eliminar al usuario', erro)
+      }
     });
   }
 
@@ -363,7 +365,7 @@ export class AdministracionComponent implements OnInit {
         this.foros = response;
       },
       error: (err) => {
-        console.error('❌ Error al mostrar los foros', err);
+        //console.error('❌ Error al mostrar los foros', err);
         //Mensaje de error
 
       }
@@ -389,7 +391,7 @@ export class AdministracionComponent implements OnInit {
         this.formularioCRUDForo.reset();
       },
       error: (erro) => {
-        console.error(erro);
+        //console.error('Error al añadir un foro:', erro);
       }
     });
   }
@@ -422,7 +424,9 @@ export class AdministracionComponent implements OnInit {
         next: () => {
           this.formularioCRUDForo.reset(); // Limpiamos el formulario
         },
-        error: (erro) => console.error("Error en el modificar del foro", erro)
+        error: (erro) => {
+          //console.error("Error en el modificar del foro", erro)
+        }
       });
     }
   }
@@ -439,7 +443,10 @@ export class AdministracionComponent implements OnInit {
         // Eliminamos el foro del array local
         this.foros = this.foros.filter(foro => foro.id !== id);
       },
-      error: (erro) => console.error(erro)
+      error: (erro) => {
+        //console.error('Error al eliminar el foro', erro)
+
+      }
     });
   }
 
@@ -463,7 +470,7 @@ export class AdministracionComponent implements OnInit {
 
       },
       error: (err) => {
-        console.error('❌ Error al mostrar los comentarios', err);
+        //console.error('❌ Error al mostrar los comentarios', err);
         //Mensaje de error
       }
     })
@@ -495,7 +502,7 @@ export class AdministracionComponent implements OnInit {
         this.archivoSelect = null;
       },
       error: (erro) => {
-        console.error(erro);
+        //console.error('Error al añadir un comentario', erro);
       }
     });
   }
@@ -545,7 +552,7 @@ export class AdministracionComponent implements OnInit {
           }); // Limpiamos el formulario
         },
         error: (erro) => {
-          console.error("Error al modificar del comentario", erro)
+          //console.error("Error al modificar del comentario", erro)
         }
 
       });
@@ -565,7 +572,9 @@ export class AdministracionComponent implements OnInit {
         // Eliminamos el foro del array local
         this.comentarios = this.comentarios.filter(comentario => comentario.id !== id);
       },
-      error: (erro) => console.error(erro)
+      error: (erro) => {
+        //console.error('Error al eliminar el comentario:', erro)
+      }
     });
   }
 
@@ -597,7 +606,7 @@ export class AdministracionComponent implements OnInit {
         this.formularioCRUDPublicacion.reset();
       },
       error: (erro) => {
-        console.error(erro);
+        //console.error('Error al añadir una publicacion: ',erro);
       }
     });
   }

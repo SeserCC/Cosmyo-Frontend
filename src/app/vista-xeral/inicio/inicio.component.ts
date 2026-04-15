@@ -16,15 +16,21 @@ export class InicioComponent implements OnInit {
 
   urlCloud = 'https://res.cloudinary.com/astronexus-cloud/image/upload/';
   usuarioActual: any;
+  mensaje = '';
   constructor(public servizo: ServizoLoginService, @Inject(PLATFORM_ID) private platformId: Object) {
 
   }
 
   ngOnInit(): void {
+
     if (isPlatformBrowser(this.platformId)) {
       this.servizo.usuarioActual$.subscribe((usuario) => {
         this.usuarioActual = usuario;
       });
+
+      this.mensaje = history.state.mensaje;
+
+      history.replaceState({}, document.title);
     }
 
   }

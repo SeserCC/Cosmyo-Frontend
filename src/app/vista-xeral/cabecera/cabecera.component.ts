@@ -34,8 +34,7 @@ export class CabeceraComponent implements OnInit {
     }).subscribe({
       next: () => {
 
-        this.usuarioActual = null
-        this.servizo.usuarioActual$.next(null);
+        //this.usuarioActual = null
         // Redirige a la portada de la aplicación
         this.router.navigate(['/']);
       }

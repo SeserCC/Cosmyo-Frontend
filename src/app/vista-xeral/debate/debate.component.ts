@@ -23,6 +23,8 @@ export class DebateComponent {
 
   esconderCheckbox = false;
 
+  mensajeError: any;
+
   usuarioLogueado: any;
 
   paginas: number[] = [];
@@ -93,7 +95,10 @@ export class DebateComponent {
         this.archivoSelect = null;
       },
       error: (erro) => {
-        console.error(erro);
+        //console.error('Error al añadir un comentario ', erro);
+        if (erro.status == 422) {
+          this.mensajeError = erro.error;
+        }
       }
     });
   }
@@ -158,7 +163,7 @@ export class DebateComponent {
           this.formularioCRUDComentario.reset(); // Limpiamos el formulario
         },
         error: (erro) => {
-          console.error("Error al modificar del comentario", erro)
+          //console.error("Error al modificar del comentario", erro)
         }
 
       });
@@ -177,7 +182,10 @@ export class DebateComponent {
         // Eliminamos el foro del array local
         this.comentarios = this.comentarios.filter(comentario => comentario.id !== id);
       },
-      error: (erro) => console.error(erro)
+      error: (erro) => {
+        //console.error(erro)
+
+      }
     });
   }
 
@@ -201,7 +209,7 @@ export class DebateComponent {
 
       },
       error: (err) => {
-        console.error('❌ Error al mostrar los comentarios', err);
+        //console.error('❌ Error al mostrar los comentarios', err);
         //Mensaje de error
       }
     })
@@ -211,7 +219,6 @@ export class DebateComponent {
 
     this.servizo.mostrarComentariosForos(Number(this.router.snapshot.paramMap.get('foro_id')), {
       headers: new HttpHeaders({
-        /* 'Authorization': `Bearer ${this.servizo.token}`, */
         'Accept': 'application/json',
       }),
     }).subscribe({
@@ -219,15 +226,6 @@ export class DebateComponent {
         this.comentarios = response.comentarios.data;
         this.foro = response.foro;
 
-        //Da error porque no se detecta sesion, pero igual funciona
-        this.servizo.usuarioLogueado({
-          headers: new HttpHeaders({
-            'Authorization': `Bearer ${this.servizo.token}`,
-            'Accept': 'application/json',
-          })
-        }).subscribe(usuario => {
-          this.usuarioLogueado = usuario;
-        })
         /* (this.comentarios); */
         /* this.paginaActual = response.current_page;
         this.paginasTotales = response.last_page; */
@@ -239,8 +237,7 @@ export class DebateComponent {
 
       },
       error: (err) => {
-        console.error('❌ Error al mostrar los comentarios', err);
-        //Mensaje de error
+        //console.error('❌ Error al mostrar los comentarios', err);
       }
     })
   }
@@ -249,6 +246,9 @@ export class DebateComponent {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.mostrarComentariosForos();
+      this.servizo.usuarioActual$.subscribe((usuario) => {
+        this.usuarioLogueado = usuario;
+      });
     }
   }
 

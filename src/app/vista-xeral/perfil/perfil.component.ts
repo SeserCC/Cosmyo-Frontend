@@ -67,7 +67,7 @@ export class PerfilComponent implements OnInit {
 
         },
         error: (err) => {
-          console.error('Error al mostrar el perfil', err);
+          //console.error('Error al mostrar el perfil', err);
           /* Te falta añadir un reenvio a la pagina 404 indicando que no existe el usuario */
         }
       })
@@ -106,7 +106,7 @@ export class PerfilComponent implements OnInit {
   
         },
         error: (err) => {
-          console.error('Error al mostrar el plan', err);
+          //console.error('Error al mostrar el plan', err);
         }
       })
     }
@@ -192,7 +192,7 @@ export class PerfilComponent implements OnInit {
           this.perfilSeleccionar.foto = response.foto;
         },
         error: (erro) => {
-          console.error("Error al modificar del comentario", erro)
+          //console.error("Error al modificar del comentario", erro)
         }
 
       });
@@ -245,7 +245,7 @@ export class PerfilComponent implements OnInit {
           }); // Limpiamos el formulario
         },
         error: (erro) => {
-          console.error("Error en el modificar del plan", erro);
+          //console.error("Error en el modificar del plan", erro);
         }
       });
     }
@@ -275,7 +275,7 @@ export class PerfilComponent implements OnInit {
           this.userCRUD.reset(); // Limpiamos el formulario
         },
         error: (erro) => {
-          console.error("Error en el modificar del usuario", erro);
+          //console.error("Error en el modificar del usuario", erro);
 
         }
       });
