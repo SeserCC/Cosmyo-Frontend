@@ -1,5 +1,10 @@
 <div class="contenido">
-
+    <ng-container *ngIf="mensaje">
+        <div class="success-message">
+            <span class="icon">✔</span>
+            <p>{{ mensaje }}</p>
+        </div>
+    </ng-container>
     <!-- Título y descripción principal -->
     <div class="titulo_texto">
         <h1>Bienvenidos a Cosmyo</h1>

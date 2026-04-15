@@ -1,5 +1,6 @@
 <div class="contenido">
     <!-- Contenedor principal -->
+
     <div class="datos">
         <!-- Mapa de navegación -->
         <div id="mapa_navegacion">
@@ -26,13 +27,15 @@
                 <i class="fa-solid fa-user-astronaut"></i>
                 Correo electrónico:
             </label>
-            <input id="usuario" class="form-control bg-dark text-light" type="text" placeholder="ton_618@example.com"
+            <input id="usuario" class="form-control bg-dark text-light" type="email" placeholder="ton_618@example.com"
                 formControlName="usuario">
             <p *ngIf="formularioLogin.get('usuario')?.invalid && formularioLogin.get('usuario')?.touched"
                 class="mensaje-error">
-                <span *ngIf="formularioLogin.get('usuario')?.hasError('required')">El usuario es obligatorio.</span>
+                <span *ngIf="formularioLogin.get('usuario')?.hasError('required')">El correo es obligatorio.</span>
                 <span *ngIf="formularioLogin.get('usuario')?.hasError('pattern')">Solo letras y números
                     permitidos.</span>
+                <span *ngIf="formularioLogin.get('usuario')?.hasError('email')">El correo no tiene el formato
+                    correcto.</span>
             </p>
 
             <!-- Campo de contraseña -->
@@ -40,13 +43,18 @@
                 <i class="bi bi-lock-fill"></i>
                 Contraseña:
             </label>
-            <input id="contrasena" class="form-control bg-dark text-light" type="password" placeholder="Contraseña"
-                formControlName="contrasinal">
+            <div class="input-container">
+                <input id="contrasena" class="form-control bg-dark text-light" [type]="mostrarContrasinal"
+                    placeholder="Contraseña" formControlName="contrasinal">
+                <button type="button" class="toggle-password"
+                    (click)="mostrarContrasinal === 'password' ? mostrar() : ocultar()">
+                    <i class="bi" [ngClass]="mostrarContrasinal === 'password' ? 'bi-eye' : 'bi-eye-slash'"></i>
+                </button>
+            </div>
             <p *ngIf="formularioLogin.get('contrasinal')?.invalid && formularioLogin.get('contrasinal')?.touched"
                 class="mensaje-error">
                 <span *ngIf="formularioLogin.get('contrasinal')?.hasError('required')">La contraseña es
                     obligatoria.</span>
-                <span *ngIf="formularioLogin.get('contrasinal')?.hasError('minlength')">Mínimo 4 caracteres.</span>
             </p>
 
             <!-- Campo del captcha -->
@@ -60,7 +68,7 @@
             </p>
 
             <!-- Botón de enviar -->
-            <button type="submit" id="continuar">
+            <button type="submit" [disabled]="formularioLogin.invalid" id="iniciar_sesion">
                 Iniciar sesión
             </button>
         </form>

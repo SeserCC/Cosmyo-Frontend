@@ -112,7 +112,7 @@ export class PublicacionesComponent implements OnInit {
           this.edicion = true;
         },
         error: (erro) => {
-          console.error("Error al modificar de la publicacion", erro)
+          //console.error("Error al modificar de la publicacion", erro)
         }
 
       });
@@ -152,7 +152,7 @@ export class PublicacionesComponent implements OnInit {
 
       },
       error: (err) => {
-        console.error('Error al mostrar las publicaciones', err);
+        //console.error('Error al mostrar las publicaciones', err);
       }
     })
   }
@@ -169,7 +169,10 @@ export class PublicacionesComponent implements OnInit {
         // Eliminamos el foro del array local
         this.publicaciones = this.publicaciones.filter(publicacion => publicacion.id !== id);
       },
-      error: (erro) => console.error(erro)
+      error: (erro) => {
+        //console.error(erro)
+
+      }
     });
   }
 

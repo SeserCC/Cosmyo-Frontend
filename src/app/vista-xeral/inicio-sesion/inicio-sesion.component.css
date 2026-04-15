@@ -113,6 +113,26 @@ a {
     opacity: 1;
 }
 
+.input-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+
+  background: transparent;
+  border: none;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.toggle-password:hover {
+  color: #fff;
+}
+
 .title {
     color: white;
 }
@@ -161,7 +181,7 @@ a {
     /* mantiene tu azul */
 }
 
-button {
+#iniciar_sesion {
     border: none;
     /* Fondo oscuro */
     font-size: 16px;
@@ -190,9 +210,15 @@ button {
 }
 
 /* Estilo de hover para los botones */
-button:hover {
+#iniciar_sesion:hover {
     filter: brightness(0.85);
     transform: translateY(20px);
+}
+
+#iniciar_sesion:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  filter: brightness(1) !important;
 }
 
 /* Estilo para mensajes de error de validación o fallos del formulario */

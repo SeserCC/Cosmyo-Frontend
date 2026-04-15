@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ServizoLoginService } from '../../servizo-login.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -34,25 +34,39 @@ export class ForoComponent implements OnInit {
   // Array donde se almacenan todos los foros
   foros: any[];
 
+  usuarioActual: any;
+
   // Formulario reactivo para añadir o editar un foro
   formularioCRUDForo: FormGroup;
 
   // Bandera que indica si se debe mostrar el formulario o si estamos en modo edición
   cambiar: boolean = false;
 
+  animacion: boolean = false;
+
   // Foro actualmente seleccionado para editar
   foroSeleccionar: any;
 
+  menuAbierto: number | null = null;
+
+  mensajeError: any;
+
   // Constructor del componente, se inyecta el servicio y se inicializa el formulario
-  constructor(private servizo: ServizoLoginService) {
+  constructor(private servizo: ServizoLoginService, @Inject(PLATFORM_ID) private platformId: Object) {
     this.formularioCRUDForo = new FormGroup({
-      tema: new FormControl('', [Validators.required]) // Campo obligatorio para el tema del foro
+      tema: new FormControl('', [Validators.required, Validators.minLength(4)]) // Campo obligatorio para el tema del foro
     });
+  }
+
+  toggleMenu(id: number) {
+    this.menuAbierto = this.menuAbierto === id ? null : id;
   }
 
   // Método para mostrar el formulario de creación/edición
   mostrarFormulario() {
-    this.cambiar = true;
+    this.animacion = true;
+    this.cambiar = false;
+    this.formularioCRUDForo.reset();
   }
 
   // Método para añadir un nuevo foro llamando al servicio
@@ -71,16 +85,22 @@ export class ForoComponent implements OnInit {
         //Añadimos el tema mediante suscripcion
         this.foros.push(foro);
         this.formularioCRUDForo.reset();
+        this.animacion = false;
       },
       error: (erro) => {
-        console.error(erro);
+        //console.error('No se pudo crear el foro', erro);
+        if (erro.status == 422) {
+          this.mensajeError = erro.error;
+        }
+
       }
     });
   }
 
   // Método para editar un foro
   editarForo(foro: any) {
-    this.cambiar = true; // Activamos el modo edición
+    this.animacion = true; 
+    this.cambiar = true;
     this.foroSeleccionar = foro; // Guardamos el foro seleccionado
     // Rellenamos el formulario con los datos del foro
     this.formularioCRUDForo.patchValue({
@@ -90,8 +110,7 @@ export class ForoComponent implements OnInit {
 
   // Método para guardar la modificación de un foro
   modificarForo() {
-    this.cambiar = false;
-
+  
     if (this.foroSeleccionar) {
       // Actualizamos el tema del foro
       this.foroSeleccionar.tema = this.formularioCRUDForo.get('tema')?.value;
@@ -105,16 +124,21 @@ export class ForoComponent implements OnInit {
       }).subscribe({
         next: () => {
           this.formularioCRUDForo.reset(); // Limpiamos el formulario
+          this.cambiar = false;
+          this.animacion = false;
         },
-        error: (erro) => console.error("Error en el modificar del foro", erro)
+        error: (erro) => {
+          //console.error("Error en el modificar del foro", erro)
+
+        }
       });
     }
   }
 
-  // Método para cancelar la edición y limpiar el formulario
   cancelar(formulario: FormGroup) {
-    this.cambiar = false;     // Sale del modo edición
-    formulario.reset();       // Limpia el formulario
+    this.animacion = false;
+    this.mensajeError = '';
+    formulario.reset();
   }
 
   mostrarForos() {
@@ -129,8 +153,7 @@ export class ForoComponent implements OnInit {
         this.foros = response;
       },
       error: (err) => {
-        console.error('❌ Error al mostrar los foros', err);
-        //Mensaje de error
+        //console.error('❌ Error al mostrar los foros', err);
 
       }
     })
@@ -138,20 +161,34 @@ export class ForoComponent implements OnInit {
 
   // Método para eliminar un foro por su ID
   eliminarForo(id: number) {
-    this.servizo.eliminarForo(id).subscribe({
+    this.servizo.eliminarForo(id, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.servizo.token}`,
+        'Accept': 'application/json',
+      })
+    }).subscribe({
       next: () => {
         // Filtra y elimina el foro del array local
         this.foros = this.foros.filter(foro => foro.id !== id);
       },
-      error: (erro) => console.error(erro)
+      error: (erro) => {
+        console.error('Error al eliminar el foro', erro)
+
+      }
     });
   }
 
   // Método que se ejecuta al iniciar el componente
   ngOnInit(): void {
     // Se suscribe al observable que notifica cambios en la lista de foros
-
+    if (isPlatformBrowser(this.platformId)) {
+      this.servizo.usuarioActual$.subscribe((usuario) => {
+        this.usuarioActual = usuario;
+      });
+    }
     this.mostrarForos();
+
+
 
   }
 

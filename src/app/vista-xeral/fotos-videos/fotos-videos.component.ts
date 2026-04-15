@@ -65,7 +65,7 @@ export class FotosVideosComponent implements OnInit {
         this.colorLike = response.userActualLike;
       },
       error: (err) => {
-        console.error('❌ Error al mostrar las publicaciones', err);
+        //console.error('❌ Error al mostrar las publicaciones', err);
         //Mensaje de error
       }
     })
@@ -101,7 +101,7 @@ export class FotosVideosComponent implements OnInit {
 
           },
           error: (err) => {
-            console.error("Error en el like de la publicacion", err);
+            //console.error("Error en el like de la publicacion", err);
 
           }
         })
@@ -128,7 +128,7 @@ export class FotosVideosComponent implements OnInit {
 
       },
       error: (err) => {
-        console.error('❌ Error al mostrar los usuarios', err);
+        //console.error('❌ Error al mostrar los usuarios', err);
         //Mensaje de error
 
       }
