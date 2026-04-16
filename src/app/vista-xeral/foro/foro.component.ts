@@ -172,7 +172,7 @@ export class ForoComponent implements OnInit {
         this.foros = this.foros.filter(foro => foro.id !== id);
       },
       error: (erro) => {
-        console.error('Error al eliminar el foro', erro)
+        //console.error('Error al eliminar el foro', erro)
 
       }
     });

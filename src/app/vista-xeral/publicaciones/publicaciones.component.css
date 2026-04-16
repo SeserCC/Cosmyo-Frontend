@@ -225,6 +225,12 @@ form .button,
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
+.boton-modificar:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    filter: brightness(1) !important;
+}
+
 form .button:hover,
 .eliminar:hover,
 .editar:hover {

@@ -33,6 +33,8 @@ export class PublicacionesComponent implements OnInit {
 
   usuarioActual: any;
 
+  mensajeError: any;
+
   // Archivo seleccionado para subir o modificar la publicación
   archivoSelect: File | null = null;
 
@@ -74,15 +76,13 @@ export class PublicacionesComponent implements OnInit {
 
   // Método para cancelar la edición o creación, reseteando el formulario y la UI
   cancelar(formulario: FormGroup) {
-    this.cambiar = false;     // Cambiamos el estado para ocultar el formulario o indicar cancelación
+    this.cambiar = false;
+    this.mensajeError = null;     // Cambiamos el estado para ocultar el formulario o indicar cancelación
     formulario.reset();       // Reseteamos el formulario a valores iniciales
   }
 
   // Método para modificar una publicación existente
   modificarPublicacion() {
-    this.cambiar = false;
-
-
     const modificarPublicacion = new FormData();
 
     if (this.publicacionSeleccionar) {
@@ -112,7 +112,10 @@ export class PublicacionesComponent implements OnInit {
           this.edicion = true;
         },
         error: (erro) => {
-          //console.error("Error al modificar de la publicacion", erro)
+          //console.error("Error al modificar la publicacion", erro)
+          if(erro.status == 422){
+            this.mensajeError = erro.error;
+          }
         }
 
       });
@@ -130,7 +133,7 @@ export class PublicacionesComponent implements OnInit {
       zona_geografica: publicacion.zona_geografica == "undefined" ? '' : publicacion.zona_geografica,
     });
 
-    this.archivoSelect = null; // Limpiamos cualquier archivo seleccionado previo
+    this.archivoSelect = null;
 
 
   }

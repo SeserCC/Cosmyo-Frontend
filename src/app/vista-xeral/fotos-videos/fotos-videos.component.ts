@@ -23,6 +23,7 @@ export class FotosVideosComponent implements OnInit {
   likes: number[] = [];
   colorLike: boolean[] = [];
   mensajeSesion = '';
+  mensajeError: any;
 
   // Array con todos los usuarios disponibles (probablemente para asociar autores a imágenes)
   usuarios: any[];
@@ -45,7 +46,14 @@ export class FotosVideosComponent implements OnInit {
       next: (response) => {
 
         this.publicaciones = response.publicacions;
+        this.mensajeError = null;
 
+      },
+      error: (erro) => {
+        //console.error('Error en el filtro de publicaciones', erro);
+        if (erro.status == 404) {
+          this.mensajeError = erro.error;
+        }
       }
     })
   }

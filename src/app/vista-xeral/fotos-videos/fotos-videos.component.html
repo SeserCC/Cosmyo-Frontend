@@ -15,7 +15,7 @@
         </a>
 
         <form [formGroup]="buscadorForm">
-            <div class="field has-addons is-fullwidth mb-5 mt-5">
+            <div class="field has-addons is-fullwidth mb-4 mt-4">
 
                 <div class="control is-expanded">
                     <input type="text" class="input" formControlName="titulo" placeholder="Buscar publicaciones...">
@@ -25,8 +25,9 @@
                         Buscar
                     </button>
                 </div>
-
             </div>
+            <p class="help is-danger mb-3" *ngIf="mensajeError">{{mensajeError.message}}</p>
+
         </form>
 
         <!-- Galería de imágenes -->
