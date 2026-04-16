@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ServizoLoginService } from '../../servizo-login.service';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -24,14 +24,18 @@ export class PerfilComponent implements OnInit {
   desactivar: boolean;
   cambiar: boolean;
   premium: boolean;
+  mensajeError: any;
   cambiarPlan: boolean;
   cambiarUsuario: boolean;
   perfilFoto = "http://localhost:8000/img/perfiles/";
   archivoSelect: File | null;
+  mostrarActual: string = 'password';
+  mostrarContrasinal: string = 'password';
+  mostrarConfirmacion: string = 'password';
 
   usuarioActual: any;
 
-  constructor(private servizo: ServizoLoginService, private router: ActivatedRoute) {
+  constructor(private servizo: ServizoLoginService, private router: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) {
     this.perfilCRUD = new FormGroup({
       telefono: new FormControl('', [Validators.minLength(9)]),
       red_social_principal: new FormControl(''),
@@ -41,17 +45,75 @@ export class PerfilComponent implements OnInit {
     });
 
     this.planCRUD = new FormGroup({
-      tipo_pago: new FormControl('Ninguno'),
+      tipo_pago: new FormControl(''),
     });
 
     this.userCRUD = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
-      contrasena: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.email]),
-      contrasena_actual: new FormControl('', [Validators.required]),
-      contrasena_confirmacion: new FormControl('', [Validators.required]),
+      changePassword: new FormControl(false),
+      contrasena: new FormControl(''),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      contrasena_actual: new FormControl(''),
+      contrasena_confirmacion: new FormControl(''),
     });
 
+  }
+
+  mostrarPasswActual() {
+    this.mostrarActual = 'text';
+  }
+
+  mostrarPassw() {
+    this.mostrarContrasinal = 'text';
+  }
+
+  mostrarConf() {
+    this.mostrarConfirmacion = 'text';
+  }
+
+  ocultarPasswActual() {
+    this.mostrarActual = 'password';
+  }
+
+  ocultarPassw() {
+    this.mostrarContrasinal = 'password';
+  }
+
+  ocultarConf() {
+    this.mostrarConfirmacion = 'password';
+  }
+
+
+  changePassw() {
+    if (this.userCRUD.get('changePassword')?.value) {
+      this.userCRUD.get('contrasena')?.setValidators([
+        Validators.required,
+        Validators.minLength(8),
+      ]);
+      this.userCRUD.get('contrasena_actual')?.setValidators([
+        Validators.required,
+        Validators.minLength(8),
+      ]);
+      this.userCRUD.get('contrasena_confirmacion')?.setValidators([
+        Validators.required,
+      ]);
+      this.userCRUD.get("contrasena")?.updateValueAndValidity();
+      this.userCRUD.get("contrasena_actual")?.updateValueAndValidity();
+      this.userCRUD.get("contrasena_confirmacion")?.updateValueAndValidity();
+
+    } else {
+      this.userCRUD.get('contrasena')?.clearValidators();
+      this.userCRUD.get('contrasena_actual')?.clearValidators();
+      this.userCRUD.get('contrasena_confirmacion')?.clearValidators();
+      this.userCRUD.get("contrasena")?.updateValueAndValidity();
+      this.userCRUD.get("contrasena_actual")?.updateValueAndValidity();
+      this.userCRUD.get("contrasena_confirmacion")?.updateValueAndValidity();
+      this.userCRUD.reset({
+        nombre: this.userCRUD.get('nombre')?.value,
+        email: this.userCRUD.get('email')?.value,
+      });
+      this.mensajeError = null;
+    }
   }
 
   mostrarPerfil() {
@@ -75,7 +137,7 @@ export class PerfilComponent implements OnInit {
 
   }
 
-  usuarioLogueado() {
+  /* usuarioLogueado() {
     this.servizo.usuarioLogueado({
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
@@ -89,7 +151,7 @@ export class PerfilComponent implements OnInit {
       }
     });
 
-  }
+  } */
 
   mostrarPlan() {
     {
@@ -103,7 +165,6 @@ export class PerfilComponent implements OnInit {
           this.plan = response.plan;
           this.premium = response.premium;
           this.valor_insignia = response.insignia;
-  
         },
         error: (err) => {
           //console.error('Error al mostrar el plan', err);
@@ -145,13 +206,12 @@ export class PerfilComponent implements OnInit {
     this.cambiar = false;// Activamos el modo edición
     this.cambiarPlan = true; // Activamos el modo edición
     //console.log(this.plan);
-    /* Eliminaste la variable planSeleccionar aqui */
-    (this.plan);
     this.planCRUD.patchValue({
 
-      tipo_pago: this.plan.tipo_pago,
-      metodo_pago: this.plan.metodo_pago,
+      tipo_pago: this.plan.tipo_pago ?? '',
+      metodo_pago: this.plan.metodo_pago ?? '',
     });
+
     this.usuarioActual.stripe_id ? this.planCRUD.get('tipo_pago')?.disable() : this.planCRUD.get('tipo_pago')?.enable();
 
   }
@@ -192,7 +252,10 @@ export class PerfilComponent implements OnInit {
           this.perfilSeleccionar.foto = response.foto;
         },
         error: (erro) => {
-          //console.error("Error al modificar del comentario", erro)
+          //console.error("Error al modificar los datos personales", erro)
+          if (erro.status == 422) {
+            this.mensajeError = erro.error;
+          }
         }
 
       });
@@ -257,11 +320,19 @@ export class PerfilComponent implements OnInit {
     if (this.usuarioActual) {
       // Actualizamos
       this.usuarioActual.name = this.userCRUD.get('nombre')?.value;
-      this.usuarioActual.current_password = this.userCRUD.get('contrasena_actual')?.value;
-      this.usuarioActual.new_password = this.userCRUD.get('contrasena')?.value;
-      this.usuarioActual.new_password_confirmation = this.userCRUD.get('contrasena_confirmacion')?.value;
+      if (this.userCRUD.get('changePassword')?.value) {
+        this.usuarioActual.current_password = this.userCRUD.get('contrasena_actual')?.value;
+        this.usuarioActual.new_password = this.userCRUD.get('contrasena')?.value;
+        this.usuarioActual.new_password_confirmation = this.userCRUD.get('contrasena_confirmacion')?.value;
+      }
+
       this.usuarioActual.email = this.userCRUD.get('email')?.value;
-      this.usuarioActual.rol = 'user';
+      if (this.usuarioActual.rol == 'admin') {
+        this.usuarioActual.rol = 'admin';
+      } else {
+        this.usuarioActual.rol = 'user';
+
+      }
 
       // Llamamos al servicio para modificar
       this.servizo.modificarUsuario(this.usuarioActual.id, this.usuarioActual, {
@@ -275,8 +346,10 @@ export class PerfilComponent implements OnInit {
           this.userCRUD.reset(); // Limpiamos el formulario
         },
         error: (erro) => {
-          //console.error("Error en el modificar del usuario", erro);
-
+          //console.error("Error al modificar el usuario", erro);
+          if (erro.status == 403) {
+            this.mensajeError = erro.error;
+          }
         }
       });
     }
@@ -318,10 +391,13 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.servizo.token) {
+    if (isPlatformBrowser(this.platformId)) {
       this.mostrarPerfil();
       this.mostrarPlan();
-      this.usuarioLogueado();
+      this.servizo.usuarioActual$.subscribe((usuario) => {
+        this.usuarioActual = usuario;
+      });
     }
+
   }
 }

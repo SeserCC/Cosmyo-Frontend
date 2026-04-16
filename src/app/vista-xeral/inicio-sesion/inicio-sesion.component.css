@@ -250,13 +250,8 @@ a {
         margin-left: 0;
     }
 
-    button {
-        width: 100%;
-        margin: 20px 0;
-        color: white;
-    }
-
     .flecha-derecha i {
         font-size: 25px;
     }
+    
 }
