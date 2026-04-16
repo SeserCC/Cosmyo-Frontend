@@ -7,7 +7,7 @@
             <div class="columns is-vcentered">
                 <div class="column is-9">
                     <h1 class="title is-2" style="color: #ffd166;">
-                        {{ perfil?.user.name || 'Usuario' }}
+                        {{ usuarioActual?.name || 'Usuario' }}
                     </h1>
                     <h2 class="subtitle is-5" style="color: #e9c46a;">
                         {{valor_insignia}} · {{ perfil?.pais || 'Desconocido' }}
@@ -134,7 +134,7 @@
 
                     </div>
                 </div> <!-- end columns -->
-                <p class="text-white-50 small fst-italic mt-2 mb-0" style="font-size: 0.8rem;">
+                <p class="text-white-50 small fst-italic mt-0 mb-0" style="font-size: 0.8rem;">
                     Gestiona los detalles de tu suscripción desde la sección de edición de plan.
                 </p>
             </div> <!-- end card-content -->
@@ -143,8 +143,11 @@
             <div *ngIf="cambiar" class="card mt-5" style="background-color: #0b132b; color: #fff;">
                 <div class="card-content">
                     <h2 class="title is-4" style="color: #ffd166;">Editar perfil</h2>
-                    <p class="subtitle is-6 has-text-grey-light mb-4">
+                    <p class="subtitle is-6 has-text-grey-light mb-3">
                         Actualiza tu información personal
+                    </p>
+                    <p class="small mt-0 mb-0" style="font-size: 0.8rem;">
+                        Obligatorio *
                     </p>
 
                     <form [formGroup]="perfilCRUD" (ngSubmit)="modificarPerfil()" class="content">
@@ -153,9 +156,18 @@
                             <div class="column is-half">
                                 <div class="field">
                                     <label class="label has-text-warning-light">Teléfono</label>
+                                    <p class="text-white-50 small fst-italic mt-2 mb-0" style="font-size: 0.8rem;">
+                                        Por el momento, no es necesario un teléfono real
+                                    </p>
                                     <div class="control">
                                         <input class="input" type="text" formControlName="telefono"
                                             placeholder="Introduce tu número de teléfono">
+                                    </div>
+                                    <div
+                                        *ngIf="perfilCRUD.get('telefono')?.touched && perfilCRUD.get('telefono')?.invalid">
+                                        <p class="help is-danger"
+                                            *ngIf="perfilCRUD.get('telefono')?.hasError('minlength')">
+                                            Minimo de 9 dígitos requerido</p>
                                     </div>
                                 </div>
 
@@ -171,7 +183,7 @@
                                     <label class="label has-text-warning-light">Nombre de usuario en otra red</label>
                                     <div class="control">
                                         <input class="input" type="text" formControlName="usuario_red_social"
-                                            placeholder="@astrofan123">
+                                            placeholder="@cosmyofan">
                                     </div>
                                 </div>
                             </div>
@@ -179,18 +191,31 @@
                             <!-- Columna derecha -->
                             <div class="column is-half">
                                 <div class="field">
-                                    <label class="label has-text-warning-light">País</label>
+                                    <label class="label has-text-warning-light">País *</label>
                                     <div class="control">
                                         <input class="input" type="text" formControlName="pais"
                                             placeholder="Ej: España">
                                     </div>
+
+                                    <div *ngIf="perfilCRUD.get('pais')?.touched && perfilCRUD.get('pais')?.invalid">
+                                        <p class="help is-danger" *ngIf="perfilCRUD.get('pais')?.hasError('required')">
+                                            Indique su pais</p>
+                                    </div>
+
                                 </div>
 
                                 <div class="field">
-                                    <label class="label has-text-warning-light">Biografía</label>
+                                    <label class="label has-text-warning-light">Biografía *</label>
                                     <div class="control">
                                         <textarea class="textarea" formControlName="biografia"
                                             placeholder="Cuéntanos algo sobre ti..."></textarea>
+
+                                        <div
+                                            *ngIf="perfilCRUD.get('biografia')?.touched && perfilCRUD.get('biografia')?.invalid">
+                                            <p class="help is-danger"
+                                                *ngIf="perfilCRUD.get('biografia')?.hasError('required')">
+                                                Este campo es obligatorio</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -198,11 +223,12 @@
 
                         <!-- Imagen de perfil -->
                         <div class="field mt-4">
-                            <label class="label has-text-warning-light">Foto de perfil</label>
+                            <label class="label has-text-warning-light">Foto de perfil *</label>
                             <div class="control">
                                 <input class="input" type="file" (change)="archivoSeleccionado($event)"
                                     accept="image/*">
                             </div>
+                            <p class="help is-danger" *ngIf="mensajeError">{{mensajeError.message}}</p>
                         </div>
 
                         <!-- Botones -->
@@ -211,7 +237,8 @@
                                 <button type="button" class="button is-light" (click)="cancelar()">Cancelar</button>
                             </p>
                             <p class="control">
-                                <button type="submit" class="button is-warning" [disabled]="perfilCRUD.invalid">Guardar
+                                <button type="submit" class="button is-warning"
+                                    [disabled]="perfilCRUD.invalid || !archivoSelect">Guardar
                                     cambios</button>
                             </p>
                         </div>
@@ -238,18 +265,33 @@
                                         <select formControlName="tipo_pago"
                                             class="has-background-black-ter has-text-light">
                                             <option value="" selected>Selecciona tipo de pago</option>
-                                            <option value="mensual">Mensual (4,90€)</option>
-                                            <option value="anual">Anual (49,99€)</option>
+                                            <option value="mensual">Mensual (3,50€)</option>
+                                            <option value="anual">Anual (24€)</option>
                                         </select>
                                     </div>
+
                                     <p *ngIf="planCRUD.get('tipo_pago')?.touched && planCRUD.get('tipo_pago')?.invalid"
                                         class="help is-danger">
                                         Debes seleccionar un tipo de pago
                                     </p>
                                     <p class="text-white-50 small fst-italic mt-2 mb-0" style="font-size: 0.8rem;">
                                         Esto es un entorno de prueba. No se cobrarán las tarifas indicadas.
-                                        Para actualizar el plan, accede a Stripe "Actualizar suscripción", la entidad encargada de gestionar las suscripciones.
                                     </p>
+                                    <div class="text-white-50 small fst-italic mt-2 mb-0" style="font-size: 0.8rem;"
+                                        *ngIf="usuarioActual?.stripe_id">
+                                        <hr>
+                                        <p>
+                                            Para
+                                            actualizar el plan, accede mediante "Actualizar suscripción" a Stripe, la
+                                            entidad
+                                            encargada de gestionar las suscripciones.
+                                        </p>
+                                        <p>En el entorno de pruebas las suscripciones al plan PREMIUM duran hasta un
+                                            máximo de 90 días. Puedes renovarlo nuevamente en Stripe tras cumplir el
+                                            plazo.
+                                        </p>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -272,7 +314,7 @@
                             <ng-container *ngIf="!usuarioActual.stripe_id">
                                 <p class="control">
                                     <button type="button" (click)="accesoPremium()" class="button is-warning"
-                                        [disabled]="planCRUD.get('tipo_pago')?.value == null">
+                                        [disabled]="planCRUD.get('tipo_pago')?.value == ''">
                                         Actualizar a plan premium
                                     </button>
                                 </p>
@@ -288,7 +330,11 @@
                     <!-- Título -->
                     <h2 class="title is-4" style="color: #ffd166;">Editar usuario</h2>
                     <p class="subtitle is-6 has-text-grey-light mb-4">
-                        Actualiza tu nombre y contraseña
+                        Actualiza tus datos de usuario
+                    </p>
+
+                    <p class="small mt-0 mb-0" style="font-size: 0.8rem;">
+                        Obligatorio *
                     </p>
 
                     <form [formGroup]="userCRUD" class="content">
@@ -296,56 +342,118 @@
                             <!-- Columna izquierda -->
                             <div class="column is-half">
                                 <div class="field">
-                                    <label class="label has-text-warning-light">Nombre de usuario</label>
+                                    <label class="label has-text-warning-light">Nombre de usuario *</label>
                                     <div class="control">
                                         <input class="input" type="text" formControlName="nombre"
                                             placeholder="Nombre de usuario">
                                     </div>
+                                    <div *ngIf="userCRUD.get('nombre')?.touched && userCRUD.get('nombre')?.invalid">
+                                        <p class="help is-danger" *ngIf="userCRUD.get('nombre')?.hasError('required')">
+                                            El nombre de usuario es obligatorio</p>
+                                    </div>
                                 </div>
                                 <div class="field">
-                                    <label class="label has-text-warning-light">Email de usuario</label>
+                                    <label class="label has-text-warning-light">Email *</label>
+                                    <p class="text-white-50 small fst-italic mb-1" style="font-size: 0.8rem;">
+                                        El email puede ser ficticio, ej: cosmyo&#64;example.com
+                                    </p>
                                     <div class="control">
                                         <input class="input" type="text" formControlName="email"
                                             placeholder="Email de usuario">
                                     </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label has-text-warning-light">Contraseña Actual</label>
-                                    <div class="control">
-                                        <input class="input" type="password" formControlName="contrasena_actual"
-                                            placeholder="Contraseña actual">
+                                    <div *ngIf="userCRUD.get('email')?.touched && userCRUD.get('email')?.invalid">
+                                        <p class="help is-danger" *ngIf="userCRUD.get('email')?.hasError('required')">
+                                            El email es obligatorio</p>
                                     </div>
-                                    <p *ngIf="userCRUD.get('contrasena_actual')?.touched && userCRUD.get('contrasena_actual')?.invalid"
-                                        class="help is-danger">
-                                        Debes introducir la contraseña actual
-                                    </p>
+                                </div>
+                                <div class="contenedor-switch">
+                                    <label class="texto-switch">Cambiar contraseña</label>
+
+                                    <label class="switch">
+                                        <input type="checkbox" (change)="changePassw()"
+                                            formControlName="changePassword">
+                                        <span class="slider"></span>
+                                    </label>
                                 </div>
 
                             </div>
 
                             <!-- Columna derecha -->
-                            <div class="column is-half">
+                            <div *ngIf="userCRUD.get('changePassword')?.value" class="column is-half">
 
                                 <div class="field">
-                                    <label class="label has-text-warning-light">Contraseña</label>
-                                    <div class="control">
-                                        <input class="input" type="password" formControlName="contrasena"
-                                            placeholder="Contraseña">
+                                    <label class="label has-text-warning-light">Contraseña Actual *</label>
+                                    <div class="control input-container">
+                                        <input class="input" [type]="mostrarActual" formControlName="contrasena_actual"
+                                            placeholder="Contraseña actual">
+                                        <button type="button" class="toggle-password"
+                                            (click)="mostrarActual === 'password' ? mostrarPasswActual() : ocultarPasswActual()">
+                                            <i class="bi"
+                                                [ngClass]="mostrarActual === 'password' ? 'bi-eye' : 'bi-eye-slash'"></i>
+                                        </button>
                                     </div>
-                                    <p *ngIf="userCRUD.get('contrasena')?.touched && userCRUD.get('contrasena')?.invalid"
-                                        class="help is-danger">
-                                        Debes repetir la contraseña
-                                    </p>
+                                    <div
+                                        *ngIf="userCRUD.get('contrasena_actual')?.touched && userCRUD.get('contrasena_actual')?.invalid">
+                                        <p *ngIf="userCRUD.get('contrasena_actual')?.hasError('required')"
+                                            class="help is-danger">
+                                            Debes introducir la contraseña actual
+                                        </p>
+                                        <p *ngIf="userCRUD.get('contrasena_actual')?.hasError('minlength')"
+                                            class="help is-danger">
+                                            Tiene que ser un mínimo de 8 carácteres
+                                        </p>
+                                    </div>
+
+                                    <p class="help is-danger" *ngIf="mensajeError">{{mensajeError?.error}}</p>
+                                </div>
+
+                                <div class="field">
+                                    <label class="label has-text-warning-light">Nueva Contraseña *</label>
+                                    <div class="control input-container">
+                                        <input class="input" [type]="mostrarContrasinal" formControlName="contrasena"
+                                            placeholder="Nueva contraseña">
+
+                                        <button type="button" class="toggle-password"
+                                            (click)="mostrarContrasinal === 'password' ? mostrarPassw() : ocultarPassw()">
+                                            <i class="bi"
+                                                [ngClass]="mostrarContrasinal === 'password' ? 'bi-eye' : 'bi-eye-slash'"></i>
+                                        </button>
+                                    </div>
+                                    <div
+                                        *ngIf="userCRUD.get('contrasena')?.touched && userCRUD.get('contrasena')?.invalid">
+                                        <p *ngIf="userCRUD.get('contrasena')?.hasError('required')"
+                                            class="help is-danger">
+                                            Introduce la nueva contraseña
+                                        </p>
+                                        <p *ngIf="userCRUD.get('contrasena')?.hasError('minlength')"
+                                            class="help is-danger">
+                                            Minimo 8 carácteres
+                                        </p>
+                                    </div>
+
                                 </div>
                                 <div class="field">
-                                    <label class="label has-text-warning-light">Contraseña confirmacion</label>
-                                    <div class="control">
-                                        <input class="input" type="password" formControlName="contrasena_confirmacion"
+                                    <label class="label has-text-warning-light">Contraseña confirmacion *</label>
+                                    <div class="control input-container">
+                                        <input class="input" [type]="mostrarConfirmacion"
+                                            formControlName="contrasena_confirmacion"
                                             placeholder="Repite la contraseña">
+                                        <button type="button" class="toggle-password"
+                                            (click)="mostrarConfirmacion === 'password' ? mostrarConf() : ocultarConf()">
+                                            <i class="bi"
+                                                [ngClass]="mostrarConfirmacion === 'password' ? 'bi-eye' : 'bi-eye-slash'"></i>
+                                        </button>
                                     </div>
-                                    <p *ngIf="userCRUD.get('contrasena_confirmacion')?.touched && userCRUD.get('contrasena_confirmacion')?.invalid"
+                                    <div
+                                        *ngIf="userCRUD.get('contrasena_confirmacion')?.touched && userCRUD.get('contrasena_confirmacion')?.invalid">
+                                        <p *ngIf="userCRUD.get('contrasena_confirmacion')?.hasError('required')"
+                                            class="help is-danger">
+                                            Debes repetir la nueva contraseña
+                                        </p>
+                                    </div>
+                                    <p *ngIf="(userCRUD.get('contrasena')?.value && userCRUD.get('contrasena_confirmacion')?.value) && userCRUD.get('contrasena')?.value !== userCRUD.get('contrasena_confirmacion')?.value"
                                         class="help is-danger">
-                                        Debes repetir la contraseña
+                                        Las contraseñas no coinciden
                                     </p>
                                 </div>
                             </div>

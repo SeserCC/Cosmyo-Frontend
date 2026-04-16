@@ -25,6 +25,52 @@
     color: #AAB0BD;
 }
 
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    background: #ccc;
+    border-radius: 24px;
+    width: 100%;
+    height: 100%;
+    transition: 0.3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.contenedor-switch {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+input:checked+.slider {
+    background: #204dad;
+}
+
+input:checked+.slider::before {
+    transform: translateX(26px);
+}
+
 hr {
     background-color: #575c66;
 }
@@ -36,6 +82,37 @@ hr {
 .estado {
     color: #404654;
     background-color: white;
+}
+
+button:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    filter: brightness(1) !important;
+}
+
+select:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.input-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+
+    background: transparent;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.toggle-password:hover {
+    color: #fff;
 }
 
 @keyframes fadeInUp {
