@@ -74,60 +74,45 @@ export class FotosVideosComponent implements OnInit {
       },
       error: (err) => {
         //console.error('❌ Error al mostrar las publicaciones', err);
-        //Mensaje de error
       }
     })
   }
 
   darLike(publicacion_id: number) {
-    this.servizo.usuarioLogueado({
+    if (!this.usuarioActual) {
+      this.mensajeSesion = 'Primero debes iniciar sesión';
+      return;
+    }
+    const estado = this.colorLike[publicacion_id];
+
+    const likePublicacion = {
+      user_id: this.usuarioActual.id,
+      publicacion_id: publicacion_id,
+      like: !estado,
+      _method: "PUT",
+    }
+    this.servizo.darLike(publicacion_id, likePublicacion, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
         'Accept': 'application/json',
       }),
     }).subscribe({
-      next: (usuario) => {
-        this.usuarioActual = usuario;
-
-        const estado = this.colorLike[publicacion_id];
-
-        const likePublicacion = {
-          user_id: this.usuarioActual.id,
-          publicacion_id: publicacion_id,
-          like: !estado,
-          _method: "PUT",
-        }
-        this.servizo.darLike(publicacion_id, likePublicacion, {
-          headers: new HttpHeaders({
-            'Authorization': `Bearer ${this.servizo.token}`,
-            'Accept': 'application/json',
-          }),
-        }).subscribe({
-          next: (response) => {
-            this.colorLike[publicacion_id] = response.like;
-            this.likes[publicacion_id] = response.likes;
-
-          },
-          error: (err) => {
-            //console.error("Error en el like de la publicacion", err);
-
-          }
-        })
+      next: (response) => {
+        this.colorLike[publicacion_id] = response.like;
+        this.likes[publicacion_id] = response.likes;
 
       },
       error: (err) => {
-        this.mensajeSesion = 'Debes iniciar sesión para dar like';
+        //console.error("Error en el like de la publicacion", err);
 
       }
     })
-
 
   }
 
   mostrarUsuarios() {
     this.servizo.mostrarUsuarios({
       headers: new HttpHeaders({
-        /* 'Authorization': `Bearer ${this.servizo.token}`, */
         'Accept': 'application/json',
       }),
     }).subscribe({
@@ -137,7 +122,6 @@ export class FotosVideosComponent implements OnInit {
       },
       error: (err) => {
         //console.error('❌ Error al mostrar los usuarios', err);
-        //Mensaje de error
 
       }
     })
@@ -148,6 +132,9 @@ export class FotosVideosComponent implements OnInit {
     if (isPlatformBrowser(this.platform_id)) {
       this.mostrarPublicaciones();
       this.mostrarUsuarios();
+      this.servizo.usuarioActual$.subscribe((usuario) => {
+        this.usuarioActual = usuario;
+      });
     }
 
   }
