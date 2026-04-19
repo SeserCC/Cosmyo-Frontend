@@ -38,7 +38,7 @@
 
             <div class="comentario_item">
 
-                <!-- ICONO 3 PUNTOS -->
+
                 <ng-container *ngIf="usuarioLogueado">
                     <div class="menu_opciones" *ngIf="comentario.user_id == usuarioLogueado?.id">
                         <button class="btn_menu" (click)="toggleMenu(comentario.id!)">
@@ -51,9 +51,9 @@
                         </div>
                     </div>
                 </ng-container>
-                <!-- CONTENIDO ORIGINAL -->
+
                 <div id="usuario1_info">
-                    <p id="nombre_usuario">{{comentario.user?.name}}</p>
+                    <a [routerLink]="['/perfil', comentario.user_id]" id="nombre_usuario">{{comentario.user?.name}}</a>
                     <p id="fecha_hora">{{comentario?.fecha_hora | date:'dd/MM/yyyy HH:mm'}}</p>
                 </div>
 

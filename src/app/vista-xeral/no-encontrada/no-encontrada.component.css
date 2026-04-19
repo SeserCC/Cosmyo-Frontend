@@ -1,0 +1,54 @@
+.space-container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background: radial-gradient(ellipse at bottom, #0b132b 0%, #000000 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.content {
+    position: relative;
+    text-align: center;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.content h1 {
+    font-size: 100px;
+    margin: 0;
+    color: #38bdf8;
+}
+
+.content h2 {
+    color: white;
+    margin: 10px 0;
+    font-size: 28px;
+}
+
+.content p {
+    margin: 20px 0;
+    font-size: 16px;
+    color: #cbd5f5;
+    line-height: 1.5;
+}
+
+/* 🚀 Botón */
+.content button {
+    background: #38bdf8;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: #0b132b;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.content button:hover {
+    background: #0ea5e9;
+}

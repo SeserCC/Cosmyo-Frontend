@@ -159,6 +159,8 @@ export class ServizoLoginService {
 
   // Elimina no servidor o usuario cuxo id coindice co parámetro
   eliminarUsuario(id: number, options?: { headers?: HttpHeaders }) {
+    this.usuarioActual$.next(null);
+    localStorage.clear();
     return this.cliente.delete<any>(this.apiBackend + '/users/' + id, options);
   }
 
@@ -254,11 +256,7 @@ export class ServizoLoginService {
   eliminarEvento(id: number, options?: { headers?: HttpHeaders }) {
     return this.cliente.delete<any>(this.apiBackend + '/evento_calendarios/' + id, options);
   }
-
-  middlewareAdmin(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/admin/dashboard', options);
-  }
-
+  
   mostrarPlanes(options?: { headers?: HttpHeaders }) {
     return this.cliente.get<any>(this.apiBackend + '/plan', options);
   }
@@ -324,6 +322,10 @@ export class ServizoLoginService {
 
   mostrarEstado(options?: { headers?: HttpHeaders }) {
     return this.cliente.get<any>(this.apiBackend + '/estado', options);
+  }
+
+  middlewareAdmin(options?: { headers?: HttpHeaders }) {
+    return this.cliente.get<any>(this.apiBackend + '/admin/dashboard', options);
   }
 
   /*

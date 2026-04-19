@@ -54,7 +54,8 @@
                         <h3 class="title is-4">{{ publicacion.titulo }}</h3>
                         <p class="descripcion subtitle is-6">{{ publicacion.descripcion }}</p>
                         <p class="autor-fecha is-size-9">
-                            <span id="info">Autor:</span> {{ publicacion.users.name }} &nbsp;|&nbsp;
+                            <span id="info">Autor:</span> <a [routerLink]="['/perfil', publicacion.users.id]"> {{
+                                publicacion.users.name }}</a> &nbsp;|&nbsp;
                             <span id="info">Fecha:</span> {{ publicacion.fecha_alta }}
                         </p>
                     </div>
