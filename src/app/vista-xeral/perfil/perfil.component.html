@@ -7,14 +7,16 @@
             <div class="columns is-vcentered">
                 <div class="column is-9">
                     <h1 class="title is-2" style="color: #ffd166;">
-                        {{ usuarioActual?.name || 'Usuario' }}
+                        {{ perfil?.user.name || 'Usuario' }}
                     </h1>
                     <h2 class="subtitle is-5" style="color: #e9c46a;">
-                        {{valor_insignia}} · {{ perfil?.pais || 'Desconocido' }}
+                        <span *ngIf="valor_insignia !== ''">{{valor_insignia}} · </span> {{ perfil?.pais ||
+                        'Desconocido' }}
                     </h2>
                 </div>
                 <div class="column is-3 has-text-right">
-                    <div class="buttons is-flex is-flex-direction-column is-align-items-flex-end">
+                    <div *ngIf="usuarioActual?.id == perfil?.user.id"
+                        class="buttons is-flex is-flex-direction-column is-align-items-flex-end">
                         <button class="button is-warning is-light mb-2" (click)="editar()">
                             <span class="icon"><i class="fas fa-edit"></i></span>
                             <span>Editar perfil</span>
@@ -134,7 +136,8 @@
 
                     </div>
                 </div> <!-- end columns -->
-                <p class="text-white-50 small fst-italic mt-0 mb-0" style="font-size: 0.8rem;">
+                <p *ngIf="usuarioActual?.id == perfil?.user.id" class="text-white-50 small fst-italic mt-0 mb-0"
+                    style="font-size: 0.8rem;">
                     Gestiona los detalles de tu suscripción desde la sección de edición de plan.
                 </p>
             </div> <!-- end card-content -->
@@ -375,6 +378,12 @@
                                         <span class="slider"></span>
                                     </label>
                                 </div>
+                                <hr>
+                                <h2 class="title is-4" style="color: #ffd166;">Eliminación de cuenta</h2>
+
+                                <button (click)="eliminarUsuario(usuarioActual?.id)" type="button" class="btn-eliminar">
+                                    Eliminar cuenta
+                                </button>
 
                             </div>
 

@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Imagen } from '../../imagen';
 import { ServizoLoginService } from '../../servizo-login.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Usuario } from '../../usuario';
 import { HttpHeaders } from '@angular/common/http';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-publicaciones',
@@ -48,23 +49,12 @@ export class PublicacionesComponent implements OnInit {
   formularioCRUDImagen: FormGroup;
 
   // Constructor donde se inicializa el formulario con sus controles y validaciones
-  constructor(private servizo: ServizoLoginService, private router: ActivatedRoute) {
+  constructor(private servizo: ServizoLoginService, private router: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) {
     this.formularioCRUDImagen = new FormGroup({
       titulo: new FormControl('', [Validators.required]),      // Campo obligatorio para el título
       descripcion: new FormControl('', [Validators.required]),  // Campo obligatorio para la descripción
       zona_geografica: new FormControl('', [Validators.required])
     });
-  }
-
-  usuarioLogueado() {
-    this.servizo.usuarioLogueado({
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe(usuario => {
-      this.usuarioActual = usuario;
-    })
   }
 
   // Método que se ejecuta cuando se selecciona un archivo desde el input file
@@ -113,7 +103,7 @@ export class PublicacionesComponent implements OnInit {
         },
         error: (erro) => {
           //console.error("Error al modificar la publicacion", erro)
-          if(erro.status == 422){
+          if (erro.status == 422) {
             this.mensajeError = erro.error;
           }
         }
@@ -138,28 +128,7 @@ export class PublicacionesComponent implements OnInit {
 
   }
 
-  mostrarPublicaciones() {
-    this.user_id = Number(this.router.snapshot.paramMap.get('user_id'));
-    this.servizo.publicacionesUsuario(this.user_id, {
-      headers: new HttpHeaders({
-        /* 'Authorization': `Bearer ${this.servizo.token}`, */
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
-      next: (response) => {
-        this.publicaciones = response;
-
-        this.publicaciones.forEach((pub) => {
-          this.usuarioPublicacionName = pub.users.name
-        })
-
-      },
-      error: (err) => {
-        //console.error('Error al mostrar las publicaciones', err);
-      }
-    })
-  }
-
+  
   // Método para eliminar una publicación por su ID
   eliminarPublicacion(id: number) {
     this.servizo.eliminarPublicacion(id, {
@@ -181,10 +150,23 @@ export class PublicacionesComponent implements OnInit {
 
   // Método que se ejecuta al iniciar el componente
   ngOnInit(): void {
-    this.mostrarPublicaciones();
-    if (this.servizo.token) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.servizo.usuarioActual$.subscribe((usuario) => {
+        this.usuarioActual = usuario;
+      });
 
-      this.usuarioLogueado();
+      this.router.params.pipe(
+        switchMap(params => {
+          return this.servizo.publicacionesUsuario(params['user_id']);
+        })
+      ).subscribe(publicaciones => {
+        this.user_id = Number(this.router.snapshot.paramMap.get('user_id'));
+        this.publicaciones = publicaciones;
+        this.publicaciones.forEach((pub) => {
+          this.usuarioPublicacionName = pub.users.name
+        })
+      })
+
     }
   }
 

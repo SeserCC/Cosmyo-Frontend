@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
 import { Usuario } from '../../usuario';
 import { ServizoLoginService } from '../../servizo-login.service';
 import { CommonModule } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-cabecera',
@@ -14,11 +15,13 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class CabeceraComponent implements OnInit {
 
+  perfil: any;
+
   //Variable para almacenar el usuario actual
   usuarioActual: any;
 
   // Constructor del componente, donde se inyectan el servicio de login y el router
-  constructor(public servizo: ServizoLoginService, private router: Router) {
+  constructor(public servizo: ServizoLoginService, private router: Router, private routerActivate: ActivatedRoute) {
     // No es necesario realizar acciones aquí en este caso
   }
 
@@ -34,7 +37,6 @@ export class CabeceraComponent implements OnInit {
     }).subscribe({
       next: () => {
 
-        //this.usuarioActual = null
         // Redirige a la portada de la aplicación
         this.router.navigate(['/']);
       }

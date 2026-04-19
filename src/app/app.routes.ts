@@ -15,6 +15,9 @@ import { PerfilComponent } from './vista-xeral/perfil/perfil.component';
 import { ExitoPagoComponent } from './vista-xeral/exitoPago/exitoPago.component';
 import { MantenimientoComponent } from './vista-xeral/mantenimiento/mantenimiento.component';
 import { mantenimientoGuard } from './mantenimiento.guard';
+import { adminGuard } from './admin.guard';
+import { AccesoProhibidoComponent } from './vista-xeral/acceso-prohibido/acceso-prohibido.component';
+import { NoEncontradaComponent } from './vista-xeral/no-encontrada/no-encontrada.component';
 
 export const routes: Routes = [
     { path: "", component: InicioComponent, canActivate: [mantenimientoGuard] },
@@ -29,6 +32,8 @@ export const routes: Routes = [
     { path: "subirArchivo", component: SubirArchivoComponent, canActivate: [authGuard] },
     { path: "registro", component: RegistroComponent, canActivate: [mantenimientoGuard] },
     { path: "exito", component: ExitoPagoComponent, canActivate: [authGuard] },
-    { path: "administracion", component: AdministracionComponent, canActivate: [mantenimientoGuard] },
-    { path: "login", component: InicioSesionComponent},
+    { path: "administracion", component: AdministracionComponent, canActivate: [adminGuard] },
+    { path: "login", component: InicioSesionComponent },
+    { path: "prohibido", component: AccesoProhibidoComponent },
+    { path: "**", component: NoEncontradaComponent },
 ];

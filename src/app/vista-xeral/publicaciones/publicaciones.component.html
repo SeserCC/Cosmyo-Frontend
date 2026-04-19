@@ -11,156 +11,170 @@
         <a [routerLink]="['/']" class="flecha-derecha">
             <i class="bi bi-arrow-left"></i>
         </a>
+        <ng-container *ngIf="usuarioActual as user; else loading">
 
-        <ng-container *ngIf="usuarioActual?.id == user_id">
-            <h1 class="has-text-centered has-text-light">
-                Tus Publicaciones
-            </h1>
-        </ng-container>
+            <ng-container *ngIf="user.id == user_id; else otro">
+                <h1 class="has-text-centered has-text-light">
+                    Tus Publicaciones
+                </h1>
+            </ng-container>
 
-        <ng-container *ngIf="usuarioActual?.id != user_id">
-            <h1 class="has-text-centered has-text-light">
-                Publicaciones de {{usuarioPublicacionName}}
-            </h1>
-        </ng-container>
+            <ng-template #otro>
+                <h1 class="has-text-centered has-text-light">
+                    Publicaciones de {{usuarioPublicacionName}}
+                </h1>
+            </ng-template>
 
-        <div class="publicaciones_mias">
+            <div class="publicaciones_mias">
 
-            <form *ngIf="cambiar" [formGroup]="formularioCRUDImagen" class="publicacion_editar">
+                <form *ngIf="cambiar" [formGroup]="formularioCRUDImagen" class="publicacion_editar">
 
-                <!-- Archivo -->
-                <div class="field">
-                    <label>
-                        Imagen
-                    </label>
-                    <div class="control">
-                        <input class="input is-dark" type="file" (change)="archivoSeleccionado($event)" />
-                    </div>
-                    <p *ngIf="faltaArchivo" class="help is-danger">Falta el archivo</p>
-                    <p class="help is-danger" *ngIf="mensajeError?.errors.imagen[0]">{{mensajeError.errors.imagen[0]}}</p>
-                    <p class="help is-danger" *ngIf="mensajeError?.errors.imagen[1] && !mensajeError?.errors.imagen[0]">{{mensajeError.errors.imagen[1]}}</p>
-                </div>
-                <p *ngIf="!mensajeError" class="text-white-50 small fst-italic mt-2 mb-0" style="font-size: 0.8rem;">
-                    Peso máximo permitido: 10MB
-                </p>
-
-                <!-- Título -->
-                <div class="field">
-                    <label>
-                        Título
-                    </label>
-                    <div class="control">
-                        <input class="input is-dark" type="text" placeholder="Título de la publicación"
-                            formControlName="titulo" />
-                    </div>
-                    <p *ngIf="formularioCRUDImagen.get('titulo')?.touched && formularioCRUDImagen.get('titulo')?.invalid"
-                        class="help is-danger">
-                        Debes indicar el título
-                    </p>
-                </div>
-
-                <!-- Zona geográfica -->
-                <div class="field">
-                    <label>
-                        Zona geográfica
-                    </label>
-                    <div class="control">
-                        <input class="input has-background-black-ter has-text-light" type="text"
-                            placeholder="Zona geográfica" formControlName="zona_geografica">
-                    </div>
-                    <p *ngIf="formularioCRUDImagen.get('zona_geografica')?.touched && formularioCRUDImagen.get('zona_geografica')?.invalid"
-                        class="help is-danger">
-                        Debes indicar la zona geográfica
-                    </p>
-                </div>
-
-                <!-- Descripción -->
-                <div class="field">
-                    <label>
-                        Descripción
-                    </label>
-                    <div class="control">
-                        <textarea class="textarea is-dark" placeholder="Descripción"
-                            formControlName="descripcion"></textarea>
-                    </div>
-                    <p *ngIf="formularioCRUDImagen.get('descripcion')?.touched && formularioCRUDImagen.get('descripcion')?.invalid"
-                        class="help is-danger">
-                        Debes indicar una descripción
-                    </p>
-                </div>
-
-                <!-- Botones -->
-                <div class="field is-grouped mt-4 is-justify-content-center">
-                    <div class="control">
-                        <button *ngIf="cambiar" type="button" class="button is-info boton-modificar"
-                            [disabled]="formularioCRUDImagen.invalid || !archivoSelect" (click)="modificarPublicacion()">
-                            Modificar
-                        </button>
-                    </div>
-
-                    <div class="control">
-                        <button *ngIf="cambiar" type="button" class="button is-warning"
-                            (click)="cancelar(formularioCRUDImagen)">
-                            Cancelar
-                        </button>
-                    </div>
-                </div>
-
-            </form>
-
-            <ul>
-                <p *ngIf="publicaciones?.length === 0" class="has-text-centered has-text-grey-light is-italic">
-                    Aún no has compartido ninguna publicación.
-                </p>
-
-                <li *ngFor="let publicacion of publicaciones" class="mb-5 p-3 item-publicacion">
-
-                    <div class="columns is-vcentered is-mobile">
-
-                        <div class="column is-3">
-                            <figure class="image is-square">
-                                <img [src]="publicacion.imagen" class="img-publicacion" />
-                            </figure>
+                    <!-- Archivo -->
+                    <div class="field">
+                        <label>
+                            Imagen
+                        </label>
+                        <div class="control">
+                            <input class="input is-dark" type="file" (change)="archivoSeleccionado($event)" />
                         </div>
+                        <p *ngIf="faltaArchivo" class="help is-danger">Falta el archivo</p>
+                        <p class="help is-danger" *ngIf="mensajeError?.errors.imagen[0]">
+                            {{mensajeError.errors.imagen[0]}}</p>
+                        <p class="help is-danger"
+                            *ngIf="mensajeError?.errors.imagen[1] && !mensajeError?.errors.imagen[0]">
+                            {{mensajeError.errors.imagen[1]}}</p>
+                    </div>
+                    <p *ngIf="!mensajeError" class="text-white-50 small fst-italic mt-2 mb-0"
+                        style="font-size: 0.8rem;">
+                        Peso máximo permitido: 10MB
+                    </p>
 
-                        <div class="column is-6 has-text-light info-div">
-                            <p><span class="info">Título:</span> {{ publicacion.titulo }}</p>
-                            <p> <span class="info">Descripción:</span> {{ publicacion.descripcion }}</p>
-                            <p>
-                                <span class="info">Fecha:</span>
-                                {{ publicacion.fecha_alta | date:'yyyy-MM-dd'}}
-                            </p>
+                    <!-- Título -->
+                    <div class="field">
+                        <label>
+                            Título
+                        </label>
+                        <div class="control">
+                            <input class="input is-dark" type="text" placeholder="Título de la publicación"
+                                formControlName="titulo" />
                         </div>
+                        <p *ngIf="formularioCRUDImagen.get('titulo')?.touched && formularioCRUDImagen.get('titulo')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el título
+                        </p>
+                    </div>
 
-                        <div *ngIf="usuarioActual && usuarioActual.id == user_id"
-                            class="column is-3 is-flex is-align-items-center is-justify-content-flex-end">
+                    <!-- Zona geográfica -->
+                    <div class="field">
+                        <label>
+                            Zona geográfica
+                        </label>
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" type="text"
+                                placeholder="Zona geográfica" formControlName="zona_geografica">
+                        </div>
+                        <p *ngIf="formularioCRUDImagen.get('zona_geografica')?.touched && formularioCRUDImagen.get('zona_geografica')?.invalid"
+                            class="help is-danger">
+                            Debes indicar la zona geográfica
+                        </p>
+                    </div>
 
-                            <button (click)="editarPublicacion(publicacion)" class="editar">
-                                <i class="fa-solid fa-pen-to-square"></i>
+                    <!-- Descripción -->
+                    <div class="field">
+                        <label>
+                            Descripción
+                        </label>
+                        <div class="control">
+                            <textarea class="textarea is-dark" placeholder="Descripción"
+                                formControlName="descripcion"></textarea>
+                        </div>
+                        <p *ngIf="formularioCRUDImagen.get('descripcion')?.touched && formularioCRUDImagen.get('descripcion')?.invalid"
+                            class="help is-danger">
+                            Debes indicar una descripción
+                        </p>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="field is-grouped mt-4 is-justify-content-center">
+                        <div class="control">
+                            <button *ngIf="cambiar" type="button" class="button is-info boton-modificar"
+                                [disabled]="formularioCRUDImagen.invalid || !archivoSelect"
+                                (click)="modificarPublicacion()">
+                                Modificar
                             </button>
-
-                            <button (click)="eliminarPublicacion(publicacion.id!)" class="eliminar">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-
                         </div>
 
+                        <div class="control">
+                            <button *ngIf="cambiar" type="button" class="button is-warning"
+                                (click)="cancelar(formularioCRUDImagen)">
+                                Cancelar
+                            </button>
+                        </div>
                     </div>
-                </li>
-            </ul>
+
+                </form>
+
+                <ul>
+                    <p *ngIf="publicaciones?.length === 0" class="has-text-centered has-text-grey-light is-italic">
+                        Aún no has compartido ninguna publicación.
+                    </p>
+
+                    <li *ngFor="let publicacion of publicaciones" class="mb-5 p-3 item-publicacion">
+
+                        <div class="columns is-vcentered is-mobile">
+
+                            <div class="column is-3">
+                                <figure class="image is-square">
+                                    <img [src]="publicacion.imagen" class="img-publicacion" />
+                                </figure>
+                            </div>
+
+                            <div class="column is-6 has-text-light info-div">
+                                <p><span class="info">Título:</span> {{ publicacion.titulo }}</p>
+                                <p> <span class="info">Descripción:</span> {{ publicacion.descripcion }}</p>
+                                <p>
+                                    <span class="info">Fecha:</span>
+                                    {{ publicacion.fecha_alta | date:'yyyy-MM-dd'}}
+                                </p>
+                            </div>
+
+                            <div *ngIf="usuarioActual && usuarioActual.id == user_id"
+                                class="column is-3 is-flex is-align-items-center is-justify-content-flex-end">
+
+                                <button (click)="editarPublicacion(publicacion)" class="editar">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+
+                                <button (click)="eliminarPublicacion(publicacion.id!)" class="eliminar">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>
 
 
-            <div *ngIf="usuarioActual && usuarioActual.id == user_id" class="has-text-centered mt-5">
+                <div *ngIf="usuarioActual && usuarioActual?.id == user_id" class="has-text-centered mt-5">
 
-                <a [routerLink]="['/subirArchivo']">
-                    <button class="button is-link boton-subir">
-                        <i class="fa-solid fa-upload"></i> Subir archivo
-                    </button>
-                </a>
+                    <a [routerLink]="['/subirArchivo']">
+                        <button class="button is-link boton-subir">
+                            <i class="fa-solid fa-upload"></i> Subir archivo
+                        </button>
+                    </a>
+
+                </div>
 
             </div>
-
-        </div>
+        </ng-container>
+        <ng-template #loading>
+            <div class="loading-container">
+                <div class="loader"></div>
+                <p class="has-text-light mt-4">Cargando...</p>
+            </div>
+        </ng-template>
     </div>
+
 
 </div>
