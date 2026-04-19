@@ -11,9 +11,9 @@
         <a [routerLink]="['/']" class="flecha-derecha">
             <i class="bi bi-arrow-left"></i>
         </a>
-        <ng-container *ngIf="usuarioActual as user; else loading">
+        <ng-template #content>
 
-            <ng-container *ngIf="user.id == user_id; else otro">
+            <ng-container *ngIf="usuarioActual?.id == user_id; else otro">
                 <h1 class="has-text-centered has-text-light">
                     Tus Publicaciones
                 </h1>
@@ -167,13 +167,13 @@
                 </div>
 
             </div>
-        </ng-container>
-        <ng-template #loading>
+        </ng-template>
+        <ng-container *ngIf="carga; else content">
             <div class="loading-container">
                 <div class="loader"></div>
                 <p class="has-text-light mt-4">Cargando...</p>
             </div>
-        </ng-template>
+        </ng-container>
     </div>
 
 
