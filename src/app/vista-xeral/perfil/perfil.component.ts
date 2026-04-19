@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ServizoLoginService } from '../../servizo-login.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-perfil',
@@ -18,6 +19,7 @@ export class PerfilComponent implements OnInit {
   valor_insignia: any;
   perfilSeleccionar: any;
   planSeleccionar: any;
+  usuarios: any[];
   perfilCRUD: FormGroup;
   userCRUD: FormGroup;
   planCRUD: FormGroup;
@@ -35,7 +37,7 @@ export class PerfilComponent implements OnInit {
 
   usuarioActual: any;
 
-  constructor(private servizo: ServizoLoginService, private router: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(private servizo: ServizoLoginService, private router: ActivatedRoute, private routerR: Router, @Inject(PLATFORM_ID) private platformId: Object) {
     this.perfilCRUD = new FormGroup({
       telefono: new FormControl('', [Validators.minLength(9)]),
       red_social_principal: new FormControl(''),
@@ -116,42 +118,27 @@ export class PerfilComponent implements OnInit {
     }
   }
 
-  mostrarPerfil() {
-    {
-      this.servizo.mostrarPerfil(Number(this.router.snapshot.paramMap.get('user_id')), {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        }),
-      }).subscribe({
-        next: (response) => {
-          this.perfil = response;
-
-        },
-        error: (err) => {
-          //console.error('Error al mostrar el perfil', err);
-          /* Te falta añadir un reenvio a la pagina 404 indicando que no existe el usuario */
-        }
-      })
-    }
-
-  }
-
-  /* usuarioLogueado() {
-    this.servizo.usuarioLogueado({
+  eliminarUsuario(id: number) {
+    this.servizo.eliminarUsuario(id, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
         'Accept': 'application/json',
       }),
     }).subscribe({
-      next: (data) => {
-        this.usuarioActual = data;
-        //console.log(this.usuarioActual);
-        //this.desactivar = this.usuarioActual.stripe_id ? true : false;
+      next: (response) => {
+        /* this.usuarios = this.usuarios.filter(usuario => usuario.id !== id); */
+        this.usuarioActual = null;
+        this.routerR.navigate(['/'], {
+          state: { mensaje: 'Usuario eliminado con exito' }
+        })
+      },
+      error: (erro) => {
+        if (erro.status == 404) {
+          this.mensajeError = erro.error;
+        }
       }
-    });
-
-  } */
+    })
+  }
 
   mostrarPlan() {
     {
@@ -392,11 +379,20 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.mostrarPerfil();
-      this.mostrarPlan();
       this.servizo.usuarioActual$.subscribe((usuario) => {
         this.usuarioActual = usuario;
       });
+
+      this.router.params.pipe(
+        switchMap(params => {
+          return this.servizo.mostrarPerfil(params['user_id']);
+        })
+      ).subscribe(perfil => {
+        this.perfil = perfil;
+      })
+
+      this.mostrarPlan();
+
     }
 
   }

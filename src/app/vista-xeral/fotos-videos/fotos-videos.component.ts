@@ -134,6 +134,7 @@ export class FotosVideosComponent implements OnInit {
       this.mostrarUsuarios();
       this.servizo.usuarioActual$.subscribe((usuario) => {
         this.usuarioActual = usuario;
+        //console.log(this.usuarioActual);
       });
     }
 
