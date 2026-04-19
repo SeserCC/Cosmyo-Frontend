@@ -141,10 +141,6 @@ label {
 .boton-subir {
     background: linear-gradient(90deg, #1a237e, #0d47a1);
     border: none;
-    /* opacity: 0;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    transform: translateY(20px);
-    animation: fadeInUp 1s ease forwards; */
 }
 
 .loading-container {

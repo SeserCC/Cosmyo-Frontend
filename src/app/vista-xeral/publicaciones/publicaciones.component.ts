@@ -27,6 +27,8 @@ export class PublicacionesComponent implements OnInit {
   // Usuario actualmente seleccionado o autenticado
   usuarioSeleccionar: any;
 
+  carga: boolean = true;
+
   usuarioPublicacionName: any;
 
   // Indica si estamos en modo edición
@@ -128,7 +130,7 @@ export class PublicacionesComponent implements OnInit {
 
   }
 
-  
+
   // Método para eliminar una publicación por su ID
   eliminarPublicacion(id: number) {
     this.servizo.eliminarPublicacion(id, {
@@ -162,6 +164,8 @@ export class PublicacionesComponent implements OnInit {
       ).subscribe(publicaciones => {
         this.user_id = Number(this.router.snapshot.paramMap.get('user_id'));
         this.publicaciones = publicaciones;
+        this.carga = false;
+
         this.publicaciones.forEach((pub) => {
           this.usuarioPublicacionName = pub.users.name
         })

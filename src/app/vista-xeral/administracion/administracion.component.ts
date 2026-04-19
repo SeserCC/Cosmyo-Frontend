@@ -57,6 +57,7 @@ export class AdministracionComponent implements OnInit {
   paginaActual: number;
   paginasTotales: number;
   categoriaSeleccionada: string = "usuarios";
+  carga: boolean = true;
 
   //Validamos
   constructor(private servizo: ServizoLoginService, private formularioPublicacion: FormBuilder, private router: Router, private url: ActivatedRoute, @Inject(PLATFORM_ID) private platform_id: Object) {
@@ -1116,8 +1117,7 @@ export class AdministracionComponent implements OnInit {
           'Accept': 'application/json',
         }),
       }).subscribe({
-        next: (response) => {
-          /* ("Eres admin", response); */
+        next: () => {
         },
         error: (err) => {
           if (err.status === 403 || err.status === 401) {
@@ -1128,6 +1128,8 @@ export class AdministracionComponent implements OnInit {
 
       this.servizo.usuarioActual$.subscribe((usuario) => {
         this.usuarioLogueado = usuario;
+        this.carga = false;
+
       });
 
 

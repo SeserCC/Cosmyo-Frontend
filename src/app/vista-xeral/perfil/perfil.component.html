@@ -1,4 +1,35 @@
-<!-- perfil-usuario.component.html -->
+<ng-container *ngIf="mostrarMensajeConfirmacion">
+
+    <!-- 🔲 Overlay (fondo oscuro) -->
+    <div class="modal-overlay">
+
+        <!-- 🧾 Caja del modal -->
+        <div class="modal-box">
+
+            <h2>¿Eliminar cuenta?</h2>
+
+            <p>
+                Esta acción es irreversible.
+                Se eliminarán todos tus datos permanentemente.
+            </p>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" (click)="cancelarEliminacion()">
+                    Cancelar
+                </button>
+
+                <button class="btn-delete" (click)="eliminarUsuario(perfil?.user_id)">
+                    ELIMINAR
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-container>
+
+<!-- MEJORAR DISEÑO CONFIRMACIÓN DE ELIMINACIÓN DE CUENTA -->
 <section class="section">
     <div class="container">
         <!-- Cabecera con imagen temática -->
@@ -381,11 +412,13 @@
                                 <hr>
                                 <h2 class="title is-4" style="color: #ffd166;">Eliminación de cuenta</h2>
 
-                                <button (click)="eliminarUsuario(usuarioActual?.id)" type="button" class="btn-eliminar">
+                                <button (click)="mensajeEliminacionCuenta()" type="button" class="btn-eliminar">
                                     Eliminar cuenta
                                 </button>
 
                             </div>
+
+
 
                             <!-- Columna derecha -->
                             <div *ngIf="userCRUD.get('changePassword')?.value" class="column is-half">

@@ -20,6 +20,7 @@ export class PerfilComponent implements OnInit {
   perfilSeleccionar: any;
   planSeleccionar: any;
   usuarios: any[];
+  mostrarMensajeConfirmacion: boolean = false;
   perfilCRUD: FormGroup;
   userCRUD: FormGroup;
   planCRUD: FormGroup;
@@ -118,6 +119,14 @@ export class PerfilComponent implements OnInit {
     }
   }
 
+  mensajeEliminacionCuenta() {
+    this.mostrarMensajeConfirmacion = true;
+  }
+
+  cancelarEliminacion() {
+    this.mostrarMensajeConfirmacion = false;
+  }
+
   eliminarUsuario(id: number) {
     this.servizo.eliminarUsuario(id, {
       headers: new HttpHeaders({
@@ -126,7 +135,6 @@ export class PerfilComponent implements OnInit {
       }),
     }).subscribe({
       next: (response) => {
-        /* this.usuarios = this.usuarios.filter(usuario => usuario.id !== id); */
         this.usuarioActual = null;
         this.routerR.navigate(['/'], {
           state: { mensaje: 'Usuario eliminado con exito' }
