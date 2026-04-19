@@ -39,7 +39,7 @@ export class ServizoLoginService {
     // this.comentarios$ = new BehaviorSubject(this.comentarios); // Inicializa el BehaviorSubject con la lista de comentarios
     //this.imagenes$ = new BehaviorSubject(this.imagenes); // Inicializa el BehaviorSubject con la lista de imagenes
     //this.eventos$ = new BehaviorSubject(this.eventos); // Inicializa el BehaviorSubject con la lista de imagenes
-    this.usuarioActual$ = new BehaviorSubject(this.usuarioActual);
+    this.usuarioActual$ = new BehaviorSubject(this.usuarioActual || null);
     this.tokens$ = new BehaviorSubject(this.token);
 
     // Verifica si el código se ejecuta en el navegador antes de acceder a localStorage
@@ -58,12 +58,17 @@ export class ServizoLoginService {
             this.usuarioActual$.next(usuario);
           },
           error: (err) => {
+            this.usuarioActual$.next(false);
             //console.error('Error al recuperar el usuario:', err);
           }
 
         })
+      } else {
+        this.usuarioActual$.next(false);
       }
       this.tokens$.next(this.token);
+
+
     }
   }
 
@@ -131,8 +136,6 @@ export class ServizoLoginService {
 
           })
 
-          observable.next(response);
-          observable.complete();
         },
         error: (err) => {
           observable.error(err);
@@ -256,7 +259,7 @@ export class ServizoLoginService {
   eliminarEvento(id: number, options?: { headers?: HttpHeaders }) {
     return this.cliente.delete<any>(this.apiBackend + '/evento_calendarios/' + id, options);
   }
-  
+
   mostrarPlanes(options?: { headers?: HttpHeaders }) {
     return this.cliente.get<any>(this.apiBackend + '/plan', options);
   }
