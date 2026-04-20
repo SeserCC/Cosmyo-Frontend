@@ -16,20 +16,30 @@ import { timeout } from 'rxjs';
 })
 export class VistaXeralComponent implements OnInit {
   carga: boolean = true;
+  usuarioActual: any;
 
-  constructor(private route: Router) {
+  constructor(private servizo: ServizoLoginService, private route: Router) {
 
   }
 
   ngOnInit(): void {
-    this.route.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.carga = true;
-      }
+    this.servizo.usuarioActual$.subscribe((usuario) => {
+      this.usuarioActual = usuario;
+    });
 
-      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-        setTimeout(() => this.carga = false, 300)
-      }
-    })
+    if (this.usuarioActual?.rol == 'admin') {
+      this.route.events.subscribe(event => {
+        if (event instanceof NavigationStart) {
+          this.carga = true;
+        }
+
+        if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+          setTimeout(() => this.carga = false, 300)
+        }
+      })
+    } else {
+      this.carga = false;
+    }
+
   }
 }
