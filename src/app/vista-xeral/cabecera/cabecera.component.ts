@@ -20,7 +20,7 @@ export class CabeceraComponent implements OnInit {
   //Variable para almacenar el usuario actual
   usuarioActual: any;
 
-  sesionCargada = false;
+  carga = true;
 
   // Constructor del componente, donde se inyectan el servicio de login y el router
   constructor(public servizo: ServizoLoginService, private router: Router, private routerActivate: ActivatedRoute) {
@@ -51,7 +51,7 @@ export class CabeceraComponent implements OnInit {
 
     this.servizo.usuarioActual$.subscribe((usuario) => {
       this.usuarioActual = usuario;
-      this.sesionCargada = true;
+      this.carga = false;
     });
   }
 
