@@ -47,12 +47,7 @@ export class ServizoLoginService {
       const token = localStorage.getItem('token');
       this.token = token ? token : '';
       if (this.token != '') {
-        this.usuarioLogueado({
-          headers: new HttpHeaders({
-            'Authorization': `Bearer ${this.token}`,
-            'Accept': 'application/json',
-          })
-        }).subscribe({
+        this.usuarioLogueado().subscribe({
           next: (usuario) => {
             this.usuarioActual = usuario;
             this.usuarioActual$.next(usuario);
@@ -121,12 +116,7 @@ export class ServizoLoginService {
 
           localStorage.setItem("token", this.token);
 
-          this.usuarioLogueado({
-            headers: new HttpHeaders({
-              'Authorization': `Bearer ${this.token}`,
-              'Accept': 'application/json',
-            })
-          }).subscribe({
+          this.usuarioLogueado().subscribe({
             next: (usuario) => {
               this.usuarioActual = usuario;
               this.usuarioActual$.next(usuario);
@@ -145,8 +135,14 @@ export class ServizoLoginService {
 
   }
 
-  usuarioLogueado(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get(this.apiBackend + "/user", options);
+  usuarioLogueado() {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.cliente.get(this.apiBackend + "/user", { headers });
   }
 
   engadirUsuario(body: any, options?: { headers?: HttpHeaders }) {
