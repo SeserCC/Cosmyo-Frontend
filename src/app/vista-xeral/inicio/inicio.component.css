@@ -42,6 +42,17 @@ body {
   font-weight: bold;
 }
 
+
+.global-loading {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #0A1D40;
+    color: white;
+}
+
 @keyframes aparecerSubiendo {
     to {
         opacity: 1;
