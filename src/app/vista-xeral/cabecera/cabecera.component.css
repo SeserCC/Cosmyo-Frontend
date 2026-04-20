@@ -28,6 +28,10 @@
     font-size: 0.9rem;
 }
 
+.bi-person{
+    font-size: 25px;
+}
+
 /* Items */
 .dropdown-item {
     color: #ddd;
@@ -53,4 +57,18 @@
 
 .logout-btn:hover {
     background-color: rgba(255, 0, 0, 0.1);
+}
+
+.global-loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.loader {
+    width: 20px;
+    height: 20px;
+    border-top-color: #9b9b9b;
 }
