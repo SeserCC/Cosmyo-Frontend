@@ -49,9 +49,15 @@ export class CabeceraComponent implements OnInit {
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
 
-    this.servizo.usuarioActual$.subscribe((usuario) => {
-      this.usuarioActual = usuario;
-      this.carga = false;
+    this.servizo.usuarioLogueado().subscribe({
+      next: (usuario) => {
+        this.usuarioActual = usuario;
+        this.carga = false;
+      },
+      error: () => {
+        this.usuarioActual = null;
+        this.carga = false;
+      }
     });
   }
 

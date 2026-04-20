@@ -26,10 +26,20 @@ export class InicioComponent implements OnInit {
   ngOnInit(): void {
 
     if (isPlatformBrowser(this.platformId)) {
-      this.servizo.usuarioActual$.subscribe((usuario) => {
+      this.servizo.usuarioLogueado().subscribe({
+        next: (usuario) => {
+          this.usuarioActual = usuario;
+          this.carga = false;
+        },
+        error: () => {
+          this.usuarioActual = null;
+          this.carga = false;
+        }
+      });
+      /* this.servizo.usuarioActual$.subscribe((usuario) => {
         this.usuarioActual = usuario;
         this.carga = false;
-      });
+      }); */
 
       this.mensaje = history.state.mensaje;
 
