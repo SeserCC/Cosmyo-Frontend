@@ -23,23 +23,19 @@ export class VistaXeralComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.servizo.usuarioActual$.subscribe((usuario) => {
-      this.usuarioActual = usuario;
-    });
 
-    if (this.usuarioActual?.rol == 'admin') {
-      this.route.events.subscribe(event => {
-        if (event instanceof NavigationStart) {
-          this.carga = true;
-        }
 
-        if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-          setTimeout(() => this.carga = false, 300)
-        }
-      })
-    } else {
-      this.carga = false;
-    }
+
+    this.route.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.carga = true;
+      }
+
+      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+        setTimeout(() => this.carga = false, 300)
+      }
+    })
+
 
   }
 }
