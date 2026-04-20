@@ -14,6 +14,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 export class TipoPlanComponent implements OnInit {
   usuarioActual: any;
   premium: boolean = true;
+  carga: boolean = true;
   constructor(public servizo: ServizoLoginService, private router: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) {
 
   }
@@ -28,7 +29,7 @@ export class TipoPlanComponent implements OnInit {
       }).subscribe({
         next: (response) => {
           this.premium = response.premium;
-
+          this.carga = false;
         },
         error: (err) => {
           //console.error('Error al mostrar el plan', err);
