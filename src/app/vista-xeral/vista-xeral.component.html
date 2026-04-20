@@ -1,6 +1,12 @@
 <app-cabecera></app-cabecera>
-<main>
-    <router-outlet></router-outlet>
+
+<div *ngIf="carga" class="global-loading">
+    <div class="loader"></div>
+    <p>Cargando...</p>
+</div>
+
+<main *ngIf="!carga">
+    <router-outlet ></router-outlet>
 </main>
 
 <app-pie></app-pie>

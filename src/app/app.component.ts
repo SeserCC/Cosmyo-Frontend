@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
       headers: new HttpHeaders({
         'Accept': 'application/json',
       }),
-    }).pipe(timeout(1500)).subscribe({
+    }).pipe().subscribe({
       next: (response) => {
 
         if (response.maintenance) {
