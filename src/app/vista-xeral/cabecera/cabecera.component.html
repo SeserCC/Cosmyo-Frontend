@@ -50,7 +50,7 @@
 
                     <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
 
-                        <ng-container>
+                        <ng-container *ngIf="usuarioActual">
 
                             <!-- Cabecera -->
                             <li>
@@ -99,7 +99,7 @@
 
                         </ng-container>
 
-                        <ng-container>
+                        <ng-container *ngIf="!usuarioActual && !sesionCargada">
                             <li>
                                 <a class="dropdown-item" [routerLink]="['/login']">
                                     Iniciar sesión
