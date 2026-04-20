@@ -60,30 +60,38 @@
             ideas!
         </p>
 
-        <div class="foros" *ngFor="let foro of foros">
-            <ng-container class="animacion">
-                <ng-container *ngIf="usuarioActual">
-                    <div class="menu_opciones" *ngIf="foro.user_id == usuarioActual?.id">
-                        <button class="btn_menu" (click)="toggleMenu(foro.id!)">
-                            ⋮
-                        </button>
+        <ng-template #content>
+            <div class="foros" *ngFor="let foro of foros">
+                <ng-container class="animacion">
+                    <ng-container *ngIf="usuarioActual">
+                        <div class="menu_opciones" *ngIf="foro.user_id == usuarioActual?.id">
+                            <button class="btn_menu" (click)="toggleMenu(foro.id!)">
+                                ⋮
+                            </button>
 
-                        <div class="dropdown_menu" *ngIf="menuAbierto === foro.id">
-                            <button (click)="editarForo(foro)">Editar</button>
-                            <button (click)="eliminarForo(foro.id!)">Eliminar</button>
+                            <div class="dropdown_menu" *ngIf="menuAbierto === foro.id">
+                                <button (click)="editarForo(foro)">Editar</button>
+                                <button (click)="eliminarForo(foro.id!)">Eliminar</button>
+                            </div>
                         </div>
-                    </div>
+                    </ng-container>
+
+                    <a [routerLink]="['/debate', foro.id]">{{foro.tema}}</a>
+
+                    <span id="foro_fecha">
+                        {{ foro.fecha_creacion | date : 'dd/MM/yyyy'}}
+                    </span>
                 </ng-container>
-
-                <a [routerLink]="['/debate', foro.id]">{{foro.tema}}</a>
-
-                <span id="foro_fecha">
-                    {{ foro.fecha_creacion | date : 'dd/MM/yyyy'}}
-                </span>
-            </ng-container>
-        </div>
+            </div>
+        </ng-template>
         <p class="mensaje-error" style="margin-left: 15px;"></p>
         <button class="btn-nuevo-tema" (click)="mostrarFormulario()">+ Nuevo Tema</button>
 
+        <ng-container *ngIf="carga; else content">
+            <div class="loading-container">
+                <div class="loader"></div>
+                <p class="has-text-light mt-4">Cargando...</p>
+            </div>
+        </ng-container>
     </div>
 </div>
