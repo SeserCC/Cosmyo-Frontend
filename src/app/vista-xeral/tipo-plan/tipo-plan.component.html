@@ -14,62 +14,70 @@
             <i class="bi bi-arrow-left"></i>
         </a>
 
-        <!-- Título principal -->
-        <h1>Planes</h1>
-
         <!-- Contenedor de los planes de pago -->
-        <div class="planes_pago">
-            <!-- Plan Premium -->
-            <div class="premium" [ngClass]="{
+        <ng-template #content>
+            <!-- Título principal -->
+            <h1>Planes</h1>
+            <div class="planes_pago">
+                <!-- Plan Premium -->
+                <div class="premium" [ngClass]="{
                 'plan-activo': usuarioActual && premium}">
-                <!-- Título del plan -->
-                <p *ngIf="!usuarioActual" id="nota_premium">Para acceder al plan premium primero debes registrarte*</p>
-                <span *ngIf="premium && usuarioActual" class="badge">PLAN ACTUAL</span>
+                    <!-- Título del plan -->
+                    <p *ngIf="!usuarioActual" id="nota_premium">Para acceder al plan premium primero debes registrarte*
+                    </p>
+                    <span *ngIf="premium && usuarioActual" class="badge">PLAN ACTUAL</span>
 
-                <p style="font-size: 50px; margin-bottom: 15px;">Plan premium</p>
+                    <p style="font-size: 50px; margin-bottom: 15px;">Plan premium</p>
 
-                <!-- Precio del plan -->
-                <p id="pago">3.5€ <span id="pago_mes"> /mes</span> o 2€ <span id="pago_mes">
-                        /mes</span><span id="pago_anio"> (24€/año)</span> </p>
-                <!-- Lista de características -->
-                <div class="ventajas_lista">
-                    <ul>
-                        <li><i class="bi bi-check"></i> Sin anuncios</li>
-                        <li><i class="bi bi-check"></i> Publicaciones ilimitadas</li>
-                        <li><i class="bi bi-check"></i> Clasificacion por insignias</li>
-                    </ul>
-                </div>
+                    <!-- Precio del plan -->
+                    <p id="pago">3.5€ <span id="pago_mes"> /mes</span> o 2€ <span id="pago_mes">
+                            /mes</span><span id="pago_anio"> (24€/año)</span> </p>
+                    <!-- Lista de características -->
+                    <div class="ventajas_lista">
+                        <ul>
+                            <li><i class="bi bi-check"></i> Sin anuncios</li>
+                            <li><i class="bi bi-check"></i> Publicaciones ilimitadas</li>
+                            <li><i class="bi bi-check"></i> Clasificacion por insignias</li>
+                        </ul>
+                    </div>
 
-                <button *ngIf="usuarioActual && !premium" id="boton_premium"
-                    [routerLink]="['/perfil', usuarioActual?.id]">
-                    Acceder
-                </button>
-            </div>
-
-            <!-- Plan Lite -->
-            <div class="lite" [ngClass]="{
-                'plan-activo': usuarioActual && !premium}">
-                <!-- Título del plan -->
-                <span *ngIf="!premium && usuarioActual" class="badge">PLAN ACTUAL</span>
-                <p style="font-size: 50px; margin-bottom: 15px;">Plan Lite</p>
-
-                <!-- Precio del plan -->
-                <p id="pago">0€</p>
-
-                <!-- Lista de características -->
-                <div class="ventajas_lista">
-                    <ul>
-                        <li><i class="bi bi-check"></i> Maximo de 10 publicaciones</li>
-                        <li><i class="bi bi-check"></i> Calendario propio</li>
-                        <li><i class="bi bi-x"></i> Clasificacion </li>
-
-                    </ul>
-                </div>
-                <ng-container *ngIf="!usuarioActual">
-                    <button id="boton_lite" [routerLink]="['/registro']">Acceder
+                    <button *ngIf="usuarioActual && !premium" id="boton_premium"
+                        [routerLink]="['/perfil', usuarioActual?.id]">
+                        Acceder
                     </button>
-                </ng-container>
+                </div>
+
+                <!-- Plan Lite -->
+                <div class="lite" [ngClass]="{
+                'plan-activo': usuarioActual && !premium}">
+                    <!-- Título del plan -->
+                    <span *ngIf="!premium && usuarioActual" class="badge">PLAN ACTUAL</span>
+                    <p style="font-size: 50px; margin-bottom: 15px;">Plan Lite</p>
+
+                    <!-- Precio del plan -->
+                    <p id="pago">0€</p>
+
+                    <!-- Lista de características -->
+                    <div class="ventajas_lista">
+                        <ul>
+                            <li><i class="bi bi-check"></i> Maximo de 10 publicaciones</li>
+                            <li><i class="bi bi-check"></i> Calendario propio</li>
+                            <li><i class="bi bi-x"></i> Clasificacion </li>
+
+                        </ul>
+                    </div>
+                    <ng-container *ngIf="!usuarioActual">
+                        <button id="boton_lite" [routerLink]="['/registro']">Acceder
+                        </button>
+                    </ng-container>
+                </div>
             </div>
-        </div>
+        </ng-template>
+        <ng-container *ngIf="carga; else content">
+            <div class="loading-container">
+                <div class="loader"></div>
+                <p class="has-text-light mt-4">Cargando...</p>
+            </div>
+        </ng-container>
     </div>
 </div>
