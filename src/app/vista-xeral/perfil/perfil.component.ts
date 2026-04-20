@@ -34,6 +34,7 @@ export class PerfilComponent implements OnInit {
   archivoSelect: File | null;
   mostrarActual: string = 'password';
   mostrarContrasinal: string = 'password';
+  carga: boolean = true;
   mostrarConfirmacion: string = 'password';
 
   usuarioActual: any;
@@ -397,6 +398,8 @@ export class PerfilComponent implements OnInit {
         })
       ).subscribe(perfil => {
         this.perfil = perfil;
+        this.carga = false;
+
       })
 
       this.mostrarPlan();

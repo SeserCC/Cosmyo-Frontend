@@ -16,8 +16,8 @@ import { error } from 'node:console';
 export class FotosVideosComponent implements OnInit {
   // Array que almacenará todas las publicaciones de imágenes
   publicaciones: any[];
-  fotosPublicaciones = "http://localhost:8000/img/publicaciones/";
   buscadorForm: FormGroup;
+  carga: boolean = true;
   usuarioActual: any;
   like: boolean = false;
   likes: number[] = [];
@@ -71,6 +71,7 @@ export class FotosVideosComponent implements OnInit {
         this.likes = response.likes;
         this.usuarioActual = response.user;
         this.colorLike = response.userActualLike;
+        this.carga = false;
       },
       error: (err) => {
         //console.error('❌ Error al mostrar las publicaciones', err);

@@ -28,7 +28,7 @@ export class VistaXeralComponent implements OnInit {
       }
 
       if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-        setTimeout(() => this.carga = false, 100)
+        setTimeout(() => this.carga = false, 300)
       }
     })
   }

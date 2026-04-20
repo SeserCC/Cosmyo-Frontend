@@ -37,44 +37,53 @@
                     ✨ Aún no hay publicaciones disponibles. ¡Vuelve pronto para explorar increíbles capturas del cosmos!
                 </p>
             </div>
+            <ng-template #content>
+                <li *ngFor="let publicacion of publicaciones" class="column is-12">
 
-            <li *ngFor="let publicacion of publicaciones" class="column is-12">
+                    <div class="box has-background-black-ter publicacion-box">
+                        <!-- Imagen grande arriba -->
+                        <a [routerLink]="['/publicaciones', publicacion.user_id]">
+                            <div class="imagen-publicacion">
+                                <img [src]="publicacion.imagen" alt="Imagen">
+                            </div>
+                        </a>
 
-                <div class="box has-background-black-ter publicacion-box">
-                    <!-- Imagen grande arriba -->
-                    <a [routerLink]="['/publicaciones', publicacion.user_id]">
-                        <div class="imagen-publicacion">
-                            <img [src]="publicacion.imagen" alt="Imagen">
+
+                        <!-- Texto debajo, centrado y bien espaciado -->
+                        <div class="contenido-publicacion has-text-light">
+                            <h3 class="title is-4">{{ publicacion.titulo }}</h3>
+                            <p class="descripcion subtitle is-6">{{ publicacion.descripcion }}</p>
+                            <p class="autor-fecha is-size-9">
+                                <span id="info">Autor:</span> <a [routerLink]="['/perfil', publicacion.users.id]"> {{
+                                    publicacion.users.name }}</a> &nbsp;|&nbsp;
+                                <span id="info">Fecha:</span> {{ publicacion.fecha_alta }}
+                            </p>
                         </div>
-                    </a>
+                        <ng-container *ngIf="usuarioActual">
+                            <button (click)="darLike(publicacion.id)"><i class="fa fa-heart"
+                                    [style.color]="colorLike[publicacion.id] ? 'red' : 'gray'"></i>{{likes[publicacion.id]}}</button>
+                        </ng-container>
+                        <ng-container *ngIf="!usuarioActual"><button (click)="darLike(publicacion.id)"><i
+                                    class="fa fa-heart gray"></i></button>
+                        </ng-container>
+                        <ng-container *ngIf="mensajeSesion !== ''">
+                            <p>{{mensajeSesion}}</p>
+                        </ng-container>
 
-
-                    <!-- Texto debajo, centrado y bien espaciado -->
-                    <div class="contenido-publicacion has-text-light">
-                        <h3 class="title is-4">{{ publicacion.titulo }}</h3>
-                        <p class="descripcion subtitle is-6">{{ publicacion.descripcion }}</p>
-                        <p class="autor-fecha is-size-9">
-                            <span id="info">Autor:</span> <a [routerLink]="['/perfil', publicacion.users.id]"> {{
-                                publicacion.users.name }}</a> &nbsp;|&nbsp;
-                            <span id="info">Fecha:</span> {{ publicacion.fecha_alta }}
-                        </p>
                     </div>
-                    <ng-container *ngIf="usuarioActual">
-                        <button (click)="darLike(publicacion.id)"><i class="fa fa-heart"
-                                [style.color]="colorLike[publicacion.id] ? 'red' : 'gray'"></i>{{likes[publicacion.id]}}</button>
-                    </ng-container>
-                    <ng-container *ngIf="!usuarioActual"><button (click)="darLike(publicacion.id)"><i
-                                class="fa fa-heart gray"></i></button>
-                    </ng-container>
-                    <ng-container *ngIf="mensajeSesion !== ''">
-                        <p>{{mensajeSesion}}</p>
-                    </ng-container>
-
-                </div>
 
 
-            </li>
+                </li>
+            </ng-template>
+
         </div>
+
+        <ng-container *ngIf="carga; else content">
+            <div class="loading-container">
+                <div class="loader"></div>
+                <p class="has-text-light mt-4">Cargando...</p>
+            </div>
+        </ng-container>
 
     </div>
 
