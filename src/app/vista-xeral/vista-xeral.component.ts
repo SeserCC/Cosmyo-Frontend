@@ -29,7 +29,7 @@ export class VistaXeralComponent implements OnInit {
     })
 
     this.route.events.subscribe(event => {
-      if (event instanceof NavigationStart && !this.usuarioActual) {
+      if (event instanceof NavigationStart) {
         this.carga = true;
       }
 

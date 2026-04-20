@@ -1,59 +1,67 @@
 <div class="contenido">
-    <ng-container *ngIf="mensaje">
-        <div class="success-message">
-            <span class="icon">✔</span>
-            <p>{{ mensaje }}</p>
+    <ng-container *ngIf="!sesionCargada">
+        <div class="global-loading">
+            <div class="loader"></div>
+            <p>Cargando sesión...</p>
         </div>
     </ng-container>
-    <!-- Título y descripción principal -->
-    <div class="titulo_texto">
-        <h1>Bienvenidos a Cosmyo</h1>
-        <p>
-            Conéctate al mundo de la astronomía mediante las
-            astrofotografías
-        </p>
-    </div>
 
-    <!-- Opciones de acceso o registro -->
-    <div *ngIf="!usuarioActual" class="cuentas">
-
-        <a id="registrarse" [routerLink]="['/registro']">Soy nuevo</a>
-    </div>
-
-    <!-- Sección de imágenes y enlaces -->
-    <div class="imagenes_titulo">
-        <!-- Comunidad de usuarios -->
-        <div class="comunidad_usuarios">
-            <a [routerLink]="['/foro']">
-                <p id="comunidad_p">Comunidad formada por usuarios</p>
-                <img id="nebulosa"
-                    src="https://res.cloudinary.com/astronexus-cloud/image/upload/v1773364982/nebulosa_aguila_wffkfs.jpg"
-                    alt="Nebulosa del águila">
-            </a>
+    <ng-container *ngIf="sesionCargada">
+        <ng-container *ngIf="mensaje">
+            <div class="success-message">
+                <span class="icon">✔</span>
+                <p>{{ mensaje }}</p>
+            </div>
+        </ng-container>
+        <!-- Título y descripción principal -->
+        <div class="titulo_texto">
+            <h1>Bienvenidos a Cosmyo</h1>
+            <p>
+                Conéctate al mundo de la astronomía mediante las
+                astrofotografías
+            </p>
         </div>
 
-        <!-- Enlace a fotos y videos -->
-        <div class="contenedor_fotos_videos">
-            <a [routerLink]="['/foto']">
-                <p id="fotos_videos_p">Galería</p>
-                <img id="iglesia"
-                    src="https://res.cloudinary.com/astronexus-cloud/image/upload/v1773362357/foto14_flet4s.jpg"
-                    alt="Iglesia y espacio">
-            </a>
-        </div>
-    </div>
+        <!-- Opciones de acceso o registro -->
+        <div *ngIf="!usuarioActual" class="cuentas">
 
-    <!-- Información adicional -->
-    <div class="informacion">
-        <!-- Calendario astronómico -->
-        <div class="calendario">
-            <h3>Nuestro calendario astronómico</h3>
-            <p>Consulta eventos, fases lunares y fenómenos celestes.</p>
-            <a class="btn-calendario" [routerLink]="['/calendario']">
-                Ver calendario
-            </a>
+            <a id="registrarse" [routerLink]="['/registro']">Soy nuevo</a>
         </div>
-    </div>
 
+        <!-- Sección de imágenes y enlaces -->
+        <div class="imagenes_titulo">
+            <!-- Comunidad de usuarios -->
+            <div class="comunidad_usuarios">
+                <a [routerLink]="['/foro']">
+                    <p id="comunidad_p">Comunidad formada por usuarios</p>
+                    <img id="nebulosa"
+                        src="https://res.cloudinary.com/astronexus-cloud/image/upload/v1773364982/nebulosa_aguila_wffkfs.jpg"
+                        alt="Nebulosa del águila">
+                </a>
+            </div>
+
+            <!-- Enlace a fotos y videos -->
+            <div class="contenedor_fotos_videos">
+                <a [routerLink]="['/foto']">
+                    <p id="fotos_videos_p">Galería</p>
+                    <img id="iglesia"
+                        src="https://res.cloudinary.com/astronexus-cloud/image/upload/v1773362357/foto14_flet4s.jpg"
+                        alt="Iglesia y espacio">
+                </a>
+            </div>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="informacion">
+            <!-- Calendario astronómico -->
+            <div class="calendario">
+                <h3>Nuestro calendario astronómico</h3>
+                <p>Consulta eventos, fases lunares y fenómenos celestes.</p>
+                <a class="btn-calendario" [routerLink]="['/calendario']">
+                    Ver calendario
+                </a>
+            </div>
+        </div>
+    </ng-container>
 
 </div>
