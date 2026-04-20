@@ -18,6 +18,7 @@ export class InicioComponent implements OnInit {
   usuarioActual: any;
   sesionCargada = false;
   mensaje = '';
+
   constructor(public servizo: ServizoLoginService, @Inject(PLATFORM_ID) private platformId: Object) {
 
   }
