@@ -1,12 +1,12 @@
 <div class="contenido">
-    <ng-container *ngIf="!sesionCargada">
+    <ng-container *ngIf="carga; else content">
         <div class="global-loading">
             <div class="loader"></div>
-            <p>Cargando sesión...</p>
+            <p>Comprobando sesión...</p>
         </div>
     </ng-container>
 
-    <ng-container *ngIf="sesionCargada">
+    <ng-template #content>
         <ng-container *ngIf="mensaje">
             <div class="success-message">
                 <span class="icon">✔</span>
@@ -63,6 +63,6 @@
                 </a>
             </div>
         </div>
-    </ng-container>
+    </ng-template>
 
 </div>

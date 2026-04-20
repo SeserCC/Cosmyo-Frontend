@@ -34,13 +34,13 @@
                 </li>
             </ul>
 
-            <ng-container *ngIf="!sesionCargada">
+            <ng-container *ngIf="carga; else content">
                 <div class="global-loading">
                     <div class="loader"></div>
                 </div>
             </ng-container>
 
-            <ng-container *ngIf="sesionCargada && usuarioActual">
+            <ng-template #content>
                 <ul class="nav-item ms-auto">
                     <a class="nav-link dropdown-toggle d-flex align-items-center" role="button"
                         data-bs-toggle="dropdown">
@@ -99,7 +99,7 @@
 
                         </ng-container>
 
-                        <ng-container *ngIf="!usuarioActual && !sesionCargada">
+                        <ng-container *ngIf="!usuarioActual && !carga">
                             <li>
                                 <a class="dropdown-item" [routerLink]="['/login']">
                                     Iniciar sesión
@@ -114,7 +114,7 @@
 
                     </ul>
                 </ul>
-            </ng-container>
+            </ng-template>
 
         </div>
     </div>
