@@ -8,3 +8,13 @@ main {
     flex-grow: 1;
     background-color: #7b7b7b;
 }
+
+.global-loading {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #0A1D40;
+    color: white;
+}
