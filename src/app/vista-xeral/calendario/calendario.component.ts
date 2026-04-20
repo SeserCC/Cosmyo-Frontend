@@ -19,6 +19,8 @@ export class CalendarioComponent implements OnInit {
   // Array para almacenar los eventos que han sido filtrados (debería tener un tipo más específico)
   eventosFiltrados: [];
 
+  carga: boolean = true;
+
   // Array con los nombres de los meses, usado para mostrar el mes actual en texto
   meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -41,6 +43,7 @@ export class CalendarioComponent implements OnInit {
     }).subscribe({
       next: (response) => {
         this.eventos = response;
+        this.carga = false;
       },
       error: (err) => {
         //console.error('❌ Error al mostrar los eventos', err);

@@ -18,26 +18,34 @@
         </a>
 
         <!-- Contenedor del calendario y su información -->
-        <div class="calendario_info">
-            <!-- Lista de eventos del mes -->
-            <section class="section has-text-white">
-                <div class="box astro-box">
-                    <h1 class="title has-text-centered has-text-white">{{ nombreMesActual }}</h1>
-                    <ul>
-                        <p *ngIf="eventos?.length === 0"
-                            class="mensaje-eventos-vacio has-text-grey-light">
-                            Aún no se han subido los eventos astronómicos. Esta sección se actualizará próximamente
-                            con
-                            fenómenos celestes destacados.
-                        </p>
+        <ng-template #content>
+            <div class="calendario_info">
+                <!-- Lista de eventos del mes -->
+                <section class="section has-text-white">
+                    <div class="box astro-box">
+                        <h1 class="title has-text-centered has-text-white">{{ nombreMesActual }}</h1>
+                        <ul>
+                            <p *ngIf="eventos?.length === 0" class="mensaje-eventos-vacio has-text-grey-light">
+                                Aún no se han subido los eventos astronómicos. Esta sección se actualizará próximamente
+                                con
+                                fenómenos celestes destacados.
+                            </p>
 
-                        <li *ngFor="let evento of eventos" class="evento-item">
-                            <span class="is-pulled-right">{{ evento.fecha }}</span>
-                           <span id="evento_descripcion">{{ evento.evento }}</span> 
-                        </li>
-                    </ul>
-                </div>
-            </section>
-        </div>
+                            <li *ngFor="let evento of eventos" class="evento-item">
+                                <span class="is-pulled-right">{{ evento.fecha }}</span>
+                                <span id="evento_descripcion">{{ evento.evento }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </ng-template>
+        <ng-container *ngIf="carga; else content">
+            <div class="loading-container">
+                <div class="loader"></div>
+                <p class="has-text-light mt-4">Cargando...</p>
+            </div>
+        </ng-container>
+
     </div>
 </div>

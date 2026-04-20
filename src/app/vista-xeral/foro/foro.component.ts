@@ -44,6 +44,8 @@ export class ForoComponent implements OnInit {
 
   animacion: boolean = false;
 
+  carga: boolean = true;
+
   // Foro actualmente seleccionado para editar
   foroSeleccionar: any;
 
@@ -99,7 +101,7 @@ export class ForoComponent implements OnInit {
 
   // Método para editar un foro
   editarForo(foro: any) {
-    this.animacion = true; 
+    this.animacion = true;
     this.cambiar = true;
     this.foroSeleccionar = foro; // Guardamos el foro seleccionado
     // Rellenamos el formulario con los datos del foro
@@ -110,7 +112,7 @@ export class ForoComponent implements OnInit {
 
   // Método para guardar la modificación de un foro
   modificarForo() {
-  
+
     if (this.foroSeleccionar) {
       // Actualizamos el tema del foro
       this.foroSeleccionar.tema = this.formularioCRUDForo.get('tema')?.value;
@@ -151,6 +153,7 @@ export class ForoComponent implements OnInit {
     }).subscribe({
       next: (response) => {
         this.foros = response;
+        this.carga = false;
       },
       error: (err) => {
         //console.error('❌ Error al mostrar los foros', err);
@@ -185,8 +188,9 @@ export class ForoComponent implements OnInit {
       this.servizo.usuarioActual$.subscribe((usuario) => {
         this.usuarioActual = usuario;
       });
+      this.mostrarForos();
     }
-    this.mostrarForos();
+
 
 
 

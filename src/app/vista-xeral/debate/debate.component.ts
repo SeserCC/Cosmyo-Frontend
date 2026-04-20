@@ -27,6 +27,8 @@ export class DebateComponent {
 
   usuarioLogueado: any;
 
+  carga: boolean = true;
+
   paginas: number[] = [];
 
   paginaActual: number;
@@ -225,6 +227,7 @@ export class DebateComponent {
       next: (response) => {
         this.comentarios = response.comentarios.data;
         this.foro = response.foro;
+        this.carga = false;
 
         /* (this.comentarios); */
         /* this.paginaActual = response.current_page;
