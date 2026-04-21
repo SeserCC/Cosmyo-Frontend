@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Usuario } from './usuario';
 import { Imagen } from './imagen';
-import { BehaviorSubject, find, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, delay, find, Observable, of, tap } from 'rxjs';
 import { Foro } from './foro';
 import { Comentario } from './comentario';
 import { Evento } from './evento';
@@ -39,30 +39,13 @@ export class ServizoLoginService {
     // this.comentarios$ = new BehaviorSubject(this.comentarios); // Inicializa el BehaviorSubject con la lista de comentarios
     //this.imagenes$ = new BehaviorSubject(this.imagenes); // Inicializa el BehaviorSubject con la lista de imagenes
     //this.eventos$ = new BehaviorSubject(this.eventos); // Inicializa el BehaviorSubject con la lista de imagenes
-    this.usuarioActual$ = new BehaviorSubject(this.usuarioActual || null);
+    this.usuarioActual$ = new BehaviorSubject<any | undefined>(undefined);
     this.tokens$ = new BehaviorSubject(this.token);
 
     // Verifica si el código se ejecuta en el navegador antes de acceder a localStorage
     if (isPlatformBrowser(this.plataformId)) {
-      const token = localStorage.getItem('token');
-      this.token = token ? token : '';
-      if (this.token != '') {
-        this.usuarioLogueado().subscribe({
-          next: (usuario) => {
-            this.usuarioActual = usuario;
-            this.usuarioActual$.next(usuario);
-          },
-          error: (err) => {
-            this.usuarioActual$.next(false);
-            //console.error('Error al recuperar el usuario:', err);
-          }
-
-        })
-      } else {
-        this.usuarioActual$.next(false);
-      }
+      this.token = localStorage.getItem('token') ?? '';
       this.tokens$.next(this.token);
-
 
     }
   }
@@ -116,7 +99,12 @@ export class ServizoLoginService {
 
           localStorage.setItem("token", this.token);
 
-          this.usuarioLogueado().subscribe({
+          this.usuarioLogueado({
+            headers: new HttpHeaders({
+              'Authorization': `Bearer ${this.token}`,
+              'Accept': 'application/json',
+            })
+          }).subscribe({
             next: (usuario) => {
               this.usuarioActual = usuario;
               this.usuarioActual$.next(usuario);
@@ -135,14 +123,26 @@ export class ServizoLoginService {
 
   }
 
-  usuarioLogueado() {
-    const token = localStorage.getItem('token');
+  cargarSesion() {
+    let token = localStorage.getItem('token');
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
+    return this.usuarioLogueado({
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+      })
+    }).pipe(
+      tap(user => { this.usuarioActual$.next(user) }),
+      catchError(() => {
+        this.usuarioActual$.next(null);
+        return of(null);
+      })
+    )
 
-    return this.cliente.get(this.apiBackend + "/user", { headers });
+  }
+
+  usuarioLogueado(options?: { headers?: HttpHeaders }) {
+    return this.cliente.get(this.apiBackend + "/user", options);
   }
 
   engadirUsuario(body: any, options?: { headers?: HttpHeaders }) {

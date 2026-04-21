@@ -10,7 +10,7 @@ main {
 }
 
 .global-loading {
-    min-height: 100vh;
+    min-height: 120vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
