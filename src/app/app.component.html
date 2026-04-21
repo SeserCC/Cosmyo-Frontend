@@ -1,8 +1,8 @@
-<ng-container *ngIf="!appLista">
+<ng-container *ngIf="(usuarioActual$ | async) == undefined">
     <div id="global-loading">
         <div class="loader"></div>
         <p>Cargando...</p>
     </div>
 </ng-container>
 
-<ng-container *ngIf="appLista"><app-vista-xeral></app-vista-xeral></ng-container>
+<ng-container *ngIf="usuarioActual$ | async"><app-vista-xeral></app-vista-xeral></ng-container>
