@@ -16,7 +16,6 @@ export class InicioComponent implements OnInit {
 
   urlCloud = 'https://res.cloudinary.com/astronexus-cloud/image/upload/';
   usuarioActual: any;
-  carga = true;
   mensaje = '';
 
   constructor(public servizo: ServizoLoginService, @Inject(PLATFORM_ID) private platformId: Object) {
@@ -29,7 +28,6 @@ export class InicioComponent implements OnInit {
 
       this.servizo.usuarioActual$.subscribe((usuario) => {
         this.usuarioActual = usuario;
-        this.carga = false;
       });
 
       this.mensaje = history.state.mensaje;
