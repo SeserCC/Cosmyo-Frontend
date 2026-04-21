@@ -24,7 +24,7 @@ export class VistaXeralComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.events.subscribe(event => {
+    /* this.route.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.carga = true;
       }
@@ -32,7 +32,7 @@ export class VistaXeralComponent implements OnInit {
       if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
         setTimeout(() => this.carga = false, 300)
       }
-    })
+    }) */
 
 
   }
