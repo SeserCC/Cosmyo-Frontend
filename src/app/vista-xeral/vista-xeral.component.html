@@ -1,7 +1,18 @@
 <app-cabecera></app-cabecera>
 
-<main>
-    <router-outlet ></router-outlet>
+<ng-container *ngIf="carga">
+    <div class="global-loading">
+        <div class="space-loader">
+            <div class="planet"></div>
+            <div class="orbit">
+                <div class="satellite"></div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<main *ngIf="!carga">
+    <router-outlet></router-outlet>
 </main>
 
 <app-pie></app-pie>
