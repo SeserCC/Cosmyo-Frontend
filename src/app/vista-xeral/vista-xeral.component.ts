@@ -24,10 +24,6 @@ export class VistaXeralComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.servizo.usuarioActual$.subscribe((usuario) => {
-      this.usuarioActual = usuario;
-    })
-
     this.route.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.carga = true;
