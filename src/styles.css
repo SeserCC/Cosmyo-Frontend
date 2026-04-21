@@ -9,12 +9,73 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-#boot-screen {
-    min-height: 120 vh;
+
+#boot-screen,
+.global-loading {
+    min-height: 100vh;
     position: fixed;
     inset: 0;
-    background: #0b0b0b;
+    background: radial-gradient(circle at center, #0b1f4d, #050d26);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: white;
+    z-index: 100;
+}
+
+/* Contenedor */
+.space-loader {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+/* Planeta central */
+.planet {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #4fc3f7, #1976d2);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px rgba(79, 195, 247, 0.6);
+}
+
+/* Órbita */
+.orbit {
+    width: 100px;
+    height: 100px;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    animation: rotate 2s linear infinite;
+}
+
+/* Satélite */
+.satellite {
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/* Animación */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
