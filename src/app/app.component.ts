@@ -17,6 +17,7 @@ import { timeout } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'Cosmyo';
   usuarioActual: any;
+  appLista = false;
 
   constructor(private servizo: ServizoLoginService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {
 
@@ -48,7 +49,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     if (isPlatformBrowser(this.platformId)) {
+      this.servizo.cargarSesion().subscribe({
+        next: () => {
+          this.appLista = true;
+        }
+      })
       this.estado();
 
     }

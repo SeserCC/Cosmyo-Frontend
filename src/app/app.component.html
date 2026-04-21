@@ -1,1 +1,8 @@
-<app-vista-xeral></app-vista-xeral>
+<ng-container *ngIf="!appLista">
+    <div id="global-loading">
+        <div class="loader"></div>
+        <p>Cargando...</p>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="appLista"><app-vista-xeral></app-vista-xeral></ng-container>
