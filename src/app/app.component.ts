@@ -50,7 +50,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     if (isPlatformBrowser(this.platformId)) {
-
+      this.servizo.sesionCargada$.pipe().subscribe(() => {
+        document.getElementById('boot-screen')?.remove();
+      })
       this.estado();
 
     }
