@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Usuario } from './usuario';
 import { Imagen } from './imagen';
-import { BehaviorSubject, catchError, delay, find, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, delay, finalize, find, Observable, of, tap } from 'rxjs';
 import { Foro } from './foro';
 import { Comentario } from './comentario';
 import { Evento } from './evento';
@@ -32,6 +32,7 @@ export class ServizoLoginService {
   usuarioActual: any; // Usuario actualmente logeado
   tokens$: BehaviorSubject<string>;
   usuarioActual$: BehaviorSubject<any>; // Usuario actualmente logeado
+  sesionCargada$: BehaviorSubject<any>; // Comprobacion de la sesion
 
   constructor(private cliente: HttpClient, @Inject(PLATFORM_ID) private plataformId: Object, private router: Router) {
     //this.usuarios$ = new BehaviorSubject(this.usuarios); // Inicializa el BehaviorSubject con la lista de usuarios
@@ -39,7 +40,8 @@ export class ServizoLoginService {
     // this.comentarios$ = new BehaviorSubject(this.comentarios); // Inicializa el BehaviorSubject con la lista de comentarios
     //this.imagenes$ = new BehaviorSubject(this.imagenes); // Inicializa el BehaviorSubject con la lista de imagenes
     //this.eventos$ = new BehaviorSubject(this.eventos); // Inicializa el BehaviorSubject con la lista de imagenes
-    this.usuarioActual$ = new BehaviorSubject<any | undefined>(undefined);
+    this.usuarioActual$ = new BehaviorSubject(this.usuarioActual);
+    this.sesionCargada$ = new BehaviorSubject<boolean>(false);
     this.tokens$ = new BehaviorSubject(this.token);
 
     // Verifica si el código se ejecuta en el navegador antes de acceder a localStorage
@@ -136,6 +138,9 @@ export class ServizoLoginService {
       catchError(() => {
         this.usuarioActual$.next(null);
         return of(null);
+      }),
+      finalize(() => {
+        this.sesionCargada$.next(true);
       })
     )
 
