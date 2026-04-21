@@ -1,0 +1,9 @@
+#global-loading {
+    min-height: 120vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #0A1D40;
+    color: white;
+}

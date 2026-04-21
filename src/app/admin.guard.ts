@@ -7,17 +7,7 @@ import { HttpHeaders } from '@angular/common/http';
 export const adminGuard: CanActivateFn = (route, state) => {
   let servicio = inject(ServizoLoginService)
   let router = inject(Router);
-  
-  return servicio.middlewareAdmin({
-    headers: new HttpHeaders({
-      'Authorization': `Bearer ${servicio.token}`,
-      'Accept': 'application/json',
-    }),
-  }).pipe(
-    map(() => true),
-    catchError(erro => {
-      return of(router.createUrlTree(['/prohibido']));
-    })
-  );
+
+  return servicio.usuarioActual?.rol == 'admim' ? true : router.createUrlTree(['/prohibido'])
 
 };
