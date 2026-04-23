@@ -37,19 +37,26 @@
 
                 <div class="field is-grouped is-grouped-multiline">
                     <div class="control">
-                        <button *ngIf="!cambiar" (click)="engadirForo()" [disabled]="formularioCRUDForo.invalid"
-                            class="button is-link">
-                            Añadir foro
-                        </button>
-                        <button *ngIf="cambiar" (click)="modificarForo()" [disabled]="formularioCRUDForo.invalid"
-                            class="button is-link">
-                            Modifcar foro
-                        </button>
+                        <div *ngIf="loading" class="loader"></div>
+                        <ng-container *ngIf="!loading">
+                            <button *ngIf="!cambiar" (click)="engadirForo()" [disabled]="formularioCRUDForo.invalid"
+                                class="button is-link">
+                                Añadir foro
+                            </button>
+                            <button *ngIf="cambiar" (click)="modificarForo()" [disabled]="formularioCRUDForo.invalid"
+                                class="button is-link">
+                                Modifcar foro
+                            </button>
+                        </ng-container>
+
+
                     </div>
                     <div class="control">
-                        <button (click)="cancelar(formularioCRUDForo)" class="button is-warning">
-                            Cancelar
-                        </button>
+                        <ng-container *ngIf="!loading">
+                            <button (click)="cancelar(formularioCRUDForo)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </ng-container>
                     </div>
                 </div>
             </form>
@@ -61,27 +68,30 @@
         </p>
 
         <ng-template #content>
-            <div class="foros" *ngFor="let foro of foros">
-                <ng-container class="animacion">
-                    <ng-container *ngIf="usuarioActual">
-                        <div class="menu_opciones" *ngIf="foro.user_id == usuarioActual?.id">
-                            <button class="btn_menu" (click)="toggleMenu(foro.id!)">
-                                ⋮
-                            </button>
+            <div *ngFor="let foro of foros">
+                <div *ngIf="loadingEliminar == foro?.id" class="loader"></div>
+                <div class="foros">
 
-                            <div class="dropdown_menu" *ngIf="menuAbierto === foro.id">
-                                <button (click)="editarForo(foro)">Editar</button>
-                                <button (click)="eliminarForo(foro.id!)">Eliminar</button>
+                    <ng-container *ngIf="loadingEliminar != foro?.id">
+                        <ng-container *ngIf="usuarioActual">
+                            <div class="menu_opciones" *ngIf="foro.user_id == usuarioActual?.id">
+                                <button class="btn_menu" (click)="toggleMenu(foro.id!)">
+                                    ⋮
+                                </button>
+
+                                <div class="dropdown_menu" *ngIf="menuAbierto === foro.id">
+                                    <button (click)="editarForo(foro)">Editar</button>
+                                    <button (click)="eliminarForo(foro.id!)">Eliminar</button>
+                                </div>
                             </div>
-                        </div>
+                        </ng-container>
                     </ng-container>
-
                     <a [routerLink]="['/debate', foro.id]">{{foro.tema}}</a>
 
                     <span id="foro_fecha">
                         {{ foro.fecha_creacion | date : 'dd/MM/yyyy'}}
                     </span>
-                </ng-container>
+                </div>
             </div>
         </ng-template>
         <p class="mensaje-error" style="margin-left: 15px;"></p>
@@ -89,7 +99,7 @@
 
         <ng-container *ngIf="carga; else content">
             <div class="loading-container">
-                <div class="loader"></div>
+                <div class="loader loader-big"></div>
                 <p class="has-text-light mt-4">Cargando...</p>
             </div>
         </ng-container>

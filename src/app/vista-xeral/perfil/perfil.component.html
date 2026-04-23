@@ -37,8 +37,9 @@
                 style="background: linear-gradient(rgba(2,6,23,0.75), rgba(2,6,23,0.75)), url('media/img/nebulosa_aguila.jpg') center/cover no-repeat; color: #fff;">
                 <div class="columns is-vcentered">
                     <div class="column is-9">
+
                         <h1 class="title is-2" style="color: #ffd166;">
-                            {{ perfil?.user.name || 'Usuario' }}
+                            {{usuarioActual?.id == perfil?.user.id ? usuarioActual?.name : perfil?.user.name }}
                         </h1>
                         <h2 class="subtitle is-5" style="color: #e9c46a;">
                             <span *ngIf="valor_insignia !== ''">{{valor_insignia}} · </span> {{ perfil?.pais ||
@@ -259,8 +260,9 @@
                             </div>
 
                             <!-- Imagen de perfil -->
+
                             <div class="field mt-4">
-                                <label class="label has-text-warning-light">Foto de perfil *</label>
+                                <label class="label has-text-warning-light">Foto de perfil</label>
                                 <div class="control">
                                     <input class="input" type="file" (change)="archivoSeleccionado($event)"
                                         accept="image/*">
@@ -275,7 +277,7 @@
                                 </p>
                                 <p class="control">
                                     <button type="submit" class="button is-warning"
-                                        [disabled]="perfilCRUD.invalid || !archivoSelect">Guardar
+                                        [disabled]="perfilCRUD.invalid">Guardar
                                         cambios</button>
                                 </p>
                             </div>
@@ -535,3 +537,12 @@
     </ng-container>
 
 </section>
+
+<div *ngIf="loading" id="boot-screen">
+    <div class="space-loader">
+        <div class="planet"></div>
+        <div class="orbit">
+            <div class="satellite"></div>
+        </div>
+    </div>
+</div>

@@ -31,9 +31,6 @@ export class PublicacionesComponent implements OnInit {
 
   usuarioPublicacionName: any;
 
-  // Indica si estamos en modo edición
-  edicion: boolean = false;
-
   usuarioActual: any;
 
   mensajeError: any;
@@ -49,6 +46,9 @@ export class PublicacionesComponent implements OnInit {
 
   // Formulario reactivo para crear o editar una imagen/publicación
   formularioCRUDImagen: FormGroup;
+
+  loading = false;
+
 
   // Constructor donde se inicializa el formulario con sus controles y validaciones
   constructor(private servizo: ServizoLoginService, private router: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) {
@@ -73,8 +73,24 @@ export class PublicacionesComponent implements OnInit {
     formulario.reset();       // Reseteamos el formulario a valores iniciales
   }
 
+  // Método para iniciar la edición de una publicación
+  editarPublicacion(publicacion: any) {
+    this.cambiar = true;     // Cambiamos estado para mostrar el formulario o la UI de edición         
+    this.publicacionSeleccionar = publicacion;  // Guardamos la publicación a editar
+    // Rellenamos el formulario con los valores actuales de la publicación
+    this.formularioCRUDImagen.patchValue({
+      titulo: publicacion.titulo,
+      descripcion: publicacion.descripcion,
+      zona_geografica: publicacion.zona_geografica == "undefined" ? '' : publicacion.zona_geografica,
+    });
+
+    this.archivoSelect = null;
+  }
+
   // Método para modificar una publicación existente
   modificarPublicacion() {
+    this.loading = true;
+    this.carga = true;
     const modificarPublicacion = new FormData();
 
     if (this.publicacionSeleccionar) {
@@ -100,11 +116,15 @@ export class PublicacionesComponent implements OnInit {
           this.publicacionSeleccionar.descripcion = this.formularioCRUDImagen.get('descripcion')?.value;
           this.publicacionSeleccionar.zona_geografica = this.formularioCRUDImagen.get('zona_geografica')?.value;
           this.publicacionSeleccionar.imagen = response.imagen;
-          this.formularioCRUDImagen.reset(); // Limpiamos el formulario
-          this.edicion = true;
+          this.formularioCRUDImagen.reset();
+          this.cambiar = false;
+          this.loading = false;
+          this.carga = false;
         },
         error: (erro) => {
           //console.error("Error al modificar la publicacion", erro)
+          this.loading = false;
+          this.carga = false;
           if (erro.status == 422) {
             this.mensajeError = erro.error;
           }
@@ -114,25 +134,11 @@ export class PublicacionesComponent implements OnInit {
     }
   }
 
-  // Método para iniciar la edición de una publicación
-  editarPublicacion(publicacion: any) {
-    this.cambiar = true;     // Cambiamos estado para mostrar el formulario o la UI de edición         
-    this.publicacionSeleccionar = publicacion;  // Guardamos la publicación a editar
-    // Rellenamos el formulario con los valores actuales de la publicación
-    this.formularioCRUDImagen.patchValue({
-      titulo: publicacion.titulo,
-      descripcion: publicacion.descripcion,
-      zona_geografica: publicacion.zona_geografica == "undefined" ? '' : publicacion.zona_geografica,
-    });
-
-    this.archivoSelect = null;
-
-
-  }
 
 
   // Método para eliminar una publicación por su ID
   eliminarPublicacion(id: number) {
+    this.carga = true;
     this.servizo.eliminarPublicacion(id, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
@@ -142,8 +148,11 @@ export class PublicacionesComponent implements OnInit {
       next: () => {
         // Eliminamos el foro del array local
         this.publicaciones = this.publicaciones.filter(publicacion => publicacion.id !== id);
+        this.carga = false;
+
       },
       error: (erro) => {
+        this.carga = false;
         //console.error(erro)
 
       }

@@ -96,20 +96,24 @@
 
                     <!-- Botones -->
                     <div class="field is-grouped mt-4 is-justify-content-center">
-                        <div class="control">
-                            <button *ngIf="cambiar" type="button" class="button is-info boton-modificar"
-                                [disabled]="formularioCRUDImagen.invalid || !archivoSelect"
-                                (click)="modificarPublicacion()">
-                                Modificar
-                            </button>
-                        </div>
+                        <div *ngIf="loading" class="loader"></div>
 
-                        <div class="control">
-                            <button *ngIf="cambiar" type="button" class="button is-warning"
-                                (click)="cancelar(formularioCRUDImagen)">
-                                Cancelar
-                            </button>
-                        </div>
+                        <ng-container *ngIf="!loading">
+                            <div class="control">
+                                <button *ngIf="cambiar" type="button" class="button is-info boton-modificar"
+                                    [disabled]="formularioCRUDImagen.invalid || !archivoSelect"
+                                    (click)="modificarPublicacion()">
+                                    Modificar
+                                </button>
+                            </div>
+
+                            <div class="control">
+                                <button *ngIf="cambiar" type="button" class="button is-warning"
+                                    (click)="cancelar(formularioCRUDImagen)">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </ng-container>
                     </div>
 
                 </form>
@@ -170,7 +174,7 @@
         </ng-template>
         <ng-container *ngIf="carga; else content">
             <div class="loading-container">
-                <div class="loader"></div>
+                <div class="loader loader-big"></div>
                 <p class="has-text-light mt-4">Cargando...</p>
             </div>
         </ng-container>

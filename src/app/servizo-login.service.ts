@@ -33,6 +33,7 @@ export class ServizoLoginService {
   tokens$: BehaviorSubject<string>;
   usuarioActual$: BehaviorSubject<any>; // Usuario actualmente logeado
   sesionCargada$: BehaviorSubject<any>; // Comprobacion de la sesion
+  cargando$: BehaviorSubject<boolean>; // Comprobacion de la sesion
 
   constructor(private cliente: HttpClient, @Inject(PLATFORM_ID) private plataformId: Object, private router: Router) {
     //this.usuarios$ = new BehaviorSubject(this.usuarios); // Inicializa el BehaviorSubject con la lista de usuarios
@@ -42,6 +43,7 @@ export class ServizoLoginService {
     //this.eventos$ = new BehaviorSubject(this.eventos); // Inicializa el BehaviorSubject con la lista de imagenes
     this.usuarioActual$ = new BehaviorSubject(this.usuarioActual);
     this.sesionCargada$ = new BehaviorSubject<boolean>(false);
+    this.cargando$ = new BehaviorSubject<boolean>(false);
     this.tokens$ = new BehaviorSubject(this.token);
 
     // Verifica si el código se ejecuta en el navegador antes de acceder a localStorage
@@ -86,7 +88,8 @@ export class ServizoLoginService {
         },
         error: (err) => {
           observable.error(err);
-        }
+        },
+
       })
     })
   }

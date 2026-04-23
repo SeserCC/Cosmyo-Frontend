@@ -27,6 +27,8 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
 
   mostrarContrasinal: string = 'password';
 
+  abriendoSesionCarga = false;
+
 
   // Constructor donde se inicializa el formulario con validaciones y se inyectan servicios necesarios
   constructor(private servizo: ServizoLoginService, private router: Router) {
@@ -47,6 +49,7 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
 
   // Método que se ejecuta al enviar el formulario para iniciar sesión
   iniciarSesion(evento: Event) {
+    this.abriendoSesionCarga = true;
     evento.preventDefault();  // Evita que el formulario se envíe de forma tradicional y recargue la página
 
     // Validamos que el formulario esté completo y correcto
@@ -66,6 +69,7 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
 
       }).subscribe({
         next: (response) => {
+          this.abriendoSesionCarga = false;
           if (response.user.rol == "admin") {
             this.router.navigate(['/administracion']);
           } else {
@@ -74,6 +78,7 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
         },
 
         error: (err) => {
+          this.abriendoSesionCarga = false;
 
           //console.error('❌ Error login', err);
           if (err.status == 401) {

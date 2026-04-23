@@ -53,6 +53,10 @@ export class ForoComponent implements OnInit {
 
   mensajeError: any;
 
+  loading = false;
+
+  loadingEliminar: number | null = null;
+
   // Constructor del componente, se inyecta el servicio y se inicializa el formulario
   constructor(private servizo: ServizoLoginService, @Inject(PLATFORM_ID) private platformId: Object) {
     this.formularioCRUDForo = new FormGroup({
@@ -73,6 +77,7 @@ export class ForoComponent implements OnInit {
 
   // Método para añadir un nuevo foro llamando al servicio
   engadirForo() {
+    this.loading = true;
     const nuevoForo = {
       tema: this.formularioCRUDForo.value.tema,
     }
@@ -88,8 +93,10 @@ export class ForoComponent implements OnInit {
         this.foros.push(foro);
         this.formularioCRUDForo.reset();
         this.animacion = false;
+        this.loading = false;
       },
       error: (erro) => {
+        this.loading = false;
         //console.error('No se pudo crear el foro', erro);
         if (erro.status == 422) {
           this.mensajeError = erro.error;
@@ -112,6 +119,7 @@ export class ForoComponent implements OnInit {
 
   // Método para guardar la modificación de un foro
   modificarForo() {
+    this.loading = true;
 
     if (this.foroSeleccionar) {
       // Actualizamos el tema del foro
@@ -128,8 +136,12 @@ export class ForoComponent implements OnInit {
           this.formularioCRUDForo.reset(); // Limpiamos el formulario
           this.cambiar = false;
           this.animacion = false;
+          this.loading = false;
+
         },
         error: (erro) => {
+          this.loading = false;
+
           //console.error("Error en el modificar del foro", erro)
 
         }
@@ -164,6 +176,7 @@ export class ForoComponent implements OnInit {
 
   // Método para eliminar un foro por su ID
   eliminarForo(id: number) {
+    this.loadingEliminar = id;
     this.servizo.eliminarForo(id, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
@@ -173,8 +186,10 @@ export class ForoComponent implements OnInit {
       next: () => {
         // Filtra y elimina el foro del array local
         this.foros = this.foros.filter(foro => foro.id !== id);
+        this.loadingEliminar = null;
       },
       error: (erro) => {
+        this.loadingEliminar = null;
         //console.error('Error al eliminar el foro', erro)
 
       }

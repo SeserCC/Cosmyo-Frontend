@@ -67,16 +67,21 @@
             <input id="seleccionar_archivo" type="file" (change)="cargarArchivo($event)">
 
             <p class="erro" *ngIf="mensajeError?.errors.imagen">{{mensajeError.message}}</p>
-            
+
             <p *ngIf="!mensajeError" class="text-white-50 small fst-italic mb-1" style="font-size: 0.8rem;">
                 Peso máximo permitido: 10 MB
             </p>
             <!-- Botón para enviar el formulario -->
-            <button id="enlace_subir_archivo" type="submit"
-                [disabled]="formularioPublicacion.invalid || !archivoSelect">
-                Subir
-                <i class="fa-solid fa-upload"></i>
-            </button>
+
+            <div *ngIf="loading" class="loader"></div>
+            <ng-container *ngIf="!loading">
+                <button id="enlace_subir_archivo" type="submit"
+                    [disabled]="formularioPublicacion.invalid || !archivoSelect">
+                    Subir
+                    <i class="fa-solid fa-upload"></i>
+                </button>
+            </ng-container>
+
         </form>
     </div>
 
