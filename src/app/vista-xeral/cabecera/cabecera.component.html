@@ -34,13 +34,7 @@
                 </li>
             </ul>
 
-            <ng-container *ngIf="carga; else content">
-                <div class="global-loading">
-                    <div class="loader"></div>
-                </div>
-            </ng-container>
-
-            <ng-template #content>
+            <ng-container>
                 <ul class="nav-item ms-auto">
                     <a class="nav-link dropdown-toggle d-flex align-items-center" role="button"
                         data-bs-toggle="dropdown">
@@ -99,7 +93,7 @@
 
                         </ng-container>
 
-                        <ng-container *ngIf="!usuarioActual && !carga">
+                        <ng-container *ngIf="!usuarioActual">
                             <li>
                                 <a class="dropdown-item" [routerLink]="['/login']">
                                     Iniciar sesión
@@ -114,7 +108,7 @@
 
                     </ul>
                 </ul>
-            </ng-template>
+            </ng-container>
 
         </div>
     </div>
@@ -125,5 +119,15 @@
         <span style="font-weight:600; color:#444;">Proyecto de demostración</span> ·
         Esta plataforma forma parte de un proyecto personal de desarrollo web creado con fines educativos.
         <span style="font-weight:600; color:#444;">Pronto traeré nuevas actualizaciones.</span><br>
+    </div>
+</div>
+
+
+<div *ngIf="cerrandoSesionCarga" id="boot-screen">
+    <div class="space-loader">
+        <div class="planet"></div>
+        <div class="orbit">
+            <div class="satellite"></div>
+        </div>
     </div>
 </div>

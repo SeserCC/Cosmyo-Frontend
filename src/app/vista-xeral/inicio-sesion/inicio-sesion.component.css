@@ -114,23 +114,23 @@ a {
 }
 
 .input-container {
-  position: relative;
+    position: relative;
 }
 
 .toggle-password {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
 
-  background: transparent;
-  border: none;
-  color: #ccc;
-  cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
 }
 
 .toggle-password:hover {
-  color: #fff;
+    color: #fff;
 }
 
 .title {
@@ -181,7 +181,7 @@ a {
     /* mantiene tu azul */
 }
 
-#iniciar_sesion {
+.iniciar_sesion {
     border: none;
     /* Fondo oscuro */
     font-size: 16px;
@@ -210,15 +210,32 @@ a {
 }
 
 /* Estilo de hover para los botones */
-#iniciar_sesion:hover {
+.iniciar_sesion:hover {
     filter: brightness(0.85);
     transform: translateY(20px);
 }
 
-#iniciar_sesion:disabled {
-  opacity: 0.5 !important;
-  cursor: not-allowed !important;
-  filter: brightness(1) !important;
+.iniciar_sesion:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    filter: brightness(1) !important;
+}
+
+/* 🔄 Spinner */
+.loader {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #38bdf8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Estilo para mensajes de error de validación o fallos del formulario */
@@ -253,5 +270,5 @@ a {
     .flecha-derecha i {
         font-size: 25px;
     }
-    
+
 }

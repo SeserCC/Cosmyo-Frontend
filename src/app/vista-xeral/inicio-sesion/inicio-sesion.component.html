@@ -67,10 +67,15 @@
                 Tienes que marcar el captcha
             </p>
 
+
+            <div *ngIf="abriendoSesionCarga" class="loader"></div>
             <!-- Botón de enviar -->
-            <button type="submit" [disabled]="formularioLogin.invalid" id="iniciar_sesion">
-                Iniciar sesión
-            </button>
+            <ng-container *ngIf="!abriendoSesionCarga">
+                <button class="iniciar_sesion" type="submit" [disabled]="formularioLogin.invalid">
+                    Iniciar Sesión
+                </button>
+            </ng-container>
+
         </form>
 
     </div>

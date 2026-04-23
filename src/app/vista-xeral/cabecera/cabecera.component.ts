@@ -20,17 +20,17 @@ export class CabeceraComponent implements OnInit {
   //Variable para almacenar el usuario actual
   usuarioActual: any;
 
-  carga = true;
+  cerrandoSesionCarga = false;
 
   // Constructor del componente, donde se inyectan el servicio de login y el router
   constructor(public servizo: ServizoLoginService, private router: Router, private routerActivate: ActivatedRoute) {
-    // No es necesario realizar acciones aquí en este caso
+
   }
 
   // Método para cerrar sesión
   cerrarSesion() {
     // Elimina el usuario guardado en localStorage
-
+    this.cerrandoSesionCarga = true;
     this.servizo.cerrarSesion(this.usuarioActual, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
@@ -38,20 +38,19 @@ export class CabeceraComponent implements OnInit {
       }),
     }).subscribe({
       next: () => {
-
         // Redirige a la portada de la aplicación
+        this.cerrandoSesionCarga = false;
         this.router.navigate(['/']);
-      }
+      },
+      error: () => (this.cerrandoSesionCarga = false)
     })
 
   }
 
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
-
     this.servizo.usuarioActual$.subscribe((usuario) => {
       this.usuarioActual = usuario;
-      this.carga = false;
     });
 
   }

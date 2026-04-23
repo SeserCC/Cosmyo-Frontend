@@ -38,21 +38,21 @@
             <div class="comentarios" *ngFor="let comentario of comentarios">
 
                 <div class="comentario_item">
+                    <div *ngIf="loadingEliminar == comentario?.id" class="loader"></div>
+                    <ng-container *ngIf="loadingEliminar != comentario?.id">
+                        <ng-container *ngIf="usuarioLogueado">
+                            <div class="menu_opciones" *ngIf="comentario.user_id == usuarioLogueado?.id">
+                                <button class="btn_menu" (click)="toggleMenu(comentario.id!)">
+                                    ⋮
+                                </button>
 
-
-                    <ng-container *ngIf="usuarioLogueado">
-                        <div class="menu_opciones" *ngIf="comentario.user_id == usuarioLogueado?.id">
-                            <button class="btn_menu" (click)="toggleMenu(comentario.id!)">
-                                ⋮
-                            </button>
-
-                            <div class="dropdown_menu" *ngIf="menuAbierto === comentario.id">
-                                <button (click)="editarComentario(comentario)">Editar</button>
-                                <button (click)="eliminarComentario(comentario.id!)">Eliminar</button>
+                                <div class="dropdown_menu" *ngIf="menuAbierto == comentario.id">
+                                    <button (click)="editarComentario(comentario)">Editar</button>
+                                    <button (click)="eliminarComentario(comentario.id!)">Eliminar</button>
+                                </div>
                             </div>
-                        </div>
+                        </ng-container>
                     </ng-container>
-
                     <div id="usuario1_info">
                         <a [routerLink]="['/perfil', comentario.user_id]"
                             id="nombre_usuario">{{comentario.user?.name}}</a>
@@ -123,35 +123,39 @@
                     </div>
                     <p class="mensaje-error" *ngIf="mensajeError">{{mensajeError.message}}</p>
                 </div>
+                <div *ngIf="loading" class="loader"></div>
 
-                <div class="field is-grouped is-grouped-multiline">
-                    <div class="control">
-                        <button *ngIf="!cambiar" (click)="engadirComentario()"
-                            [disabled]="formularioCRUDComentario.invalid" class="button is-link">
-                            Añadir
-                        </button>
-                    </div>
-                    <div class="control">
-                        <button *ngIf="cambiar" (click)="modificarComentario()"
-                            [disabled]="formularioCRUDComentario.invalid" class="button is-success">
-                            Modificar
-                        </button>
-                    </div>
+                <ng-container *ngIf="!loading">
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
 
-                    <div class="control eliminar_foto" *ngIf="cambiar">
-                        <label class="checkbox_container">
-                            <input formControlName="eliminarImagen" type="checkbox">
-                            <span class="checkmark"></span>
-                            <span class="texto">Eliminar foto</span>
-                        </label>
-                    </div>
+                            <button *ngIf="!cambiar" (click)="engadirComentario(fileInputC)"
+                                [disabled]="formularioCRUDComentario.invalid" class="button is-link">
+                                Añadir
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button *ngIf="cambiar" (click)="modificarComentario(fileInputC)"
+                                [disabled]="formularioCRUDComentario.invalid" class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
 
-                    <div class="control">
-                        <button (click)="cancelar(formularioCRUDComentario, fileInputC)" class="button is-warning">
-                            Cancelar
-                        </button>
+                        <div class="control eliminar_foto" *ngIf="cambiar">
+                            <label class="checkbox_container">
+                                <input formControlName="eliminarImagen" type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="texto">Eliminar foto</span>
+                            </label>
+                        </div>
+
+                        <div class="control">
+                            <button (click)="cancelar(formularioCRUDComentario, fileInputC)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </ng-container>
                 <p id="nota_archivo">Capacidad máxima de fotos: 10 MB</p>
                 <p id="nota_archivo">Capacidad máxima de vídeos: 100 MB</p>
                 <p id="nota_archivo">Los vídeos e imágenes pesadas tardan en subir.</p>
@@ -160,7 +164,7 @@
 
         <ng-container *ngIf="carga; else content">
             <div class="loading-container">
-                <div class="loader"></div>
+                <div class="loader loader--centered"></div>
                 <p class="has-text-light mt-4">Cargando...</p>
             </div>
         </ng-container>
