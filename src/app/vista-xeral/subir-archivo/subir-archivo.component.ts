@@ -30,6 +30,8 @@ export class SubirArchivoComponent {
 
   mensajeError: any;
 
+  loading = false;
+
   // Constructor donde se inicializa el formulario con validaciones y se inyectan servicios
   constructor(private servizo: ServizoLoginService, private router: Router) {
     this.formularioPublicacion = new FormGroup({
@@ -55,7 +57,7 @@ export class SubirArchivoComponent {
 
   // Función para añadir una nueva publicación llamando al servicio correspondiente
   engadirPublicacion(): void {
-
+    this.loading = true;
     const nuevaPublicacion = new FormData();
     nuevaPublicacion.append('titulo', this.formularioPublicacion.get('titulo')?.value);
     nuevaPublicacion.append('descripcion', this.formularioPublicacion.get('descripcion')?.value);
@@ -76,12 +78,15 @@ export class SubirArchivoComponent {
         this.publicaciones.push(publicacion);
         /* (this.archivoSelect) */
         this.formularioPublicacion.reset();
+
+        this.loading = false;
         /*  this.archivoSelect = null; */
         this.router.navigate(['/foto'])
       },
       error: (erro) => {
         //console.error('Error al subir la publicacion', erro);
         //console.error(erro.error);
+        this.loading = false;
         if (erro.status == 422) {
           this.mensajeError = erro.error
         }

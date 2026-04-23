@@ -104,9 +104,13 @@
 
             <!-- Botón -->
             <div class="text-end">
-                <button type="submit"
-                    [disabled]="formularioRegistro.invalid || formularioRegistro.get('contrasinal')?.value !== formularioRegistro.get('contrasinal_confirmation')?.value"
-                    class="astro-btn">Registrarme</button>
+                <div *ngIf="loading" class="loader"></div>
+                <ng-container *ngIf="!loading">
+                    <button type="submit"
+                        [disabled]="formularioRegistro.invalid || formularioRegistro.get('contrasinal')?.value !== formularioRegistro.get('contrasinal_confirmation')?.value"
+                        class="astro-btn">Registrarme</button>
+                </ng-container>
+
             </div>
         </form>
     </div>

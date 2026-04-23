@@ -23,6 +23,7 @@ export class FotosVideosComponent implements OnInit {
   likes: number[] = [];
   colorLike: boolean[] = [];
   mensajeSesion = '';
+  loading = false;
   mensajeError: any;
 
   // Array con todos los usuarios disponibles (probablemente para asociar autores a imágenes)
@@ -37,6 +38,8 @@ export class FotosVideosComponent implements OnInit {
 
 
   filtrarPublicaciones(publicacion: string) {
+    this.carga = true;
+
     this.servizo.buscadorPublicaciones(publicacion, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
@@ -47,9 +50,11 @@ export class FotosVideosComponent implements OnInit {
 
         this.publicaciones = response.publicacions;
         this.mensajeError = null;
-
+        this.carga = false;
       },
       error: (erro) => {
+        this.carga = false;
+
         //console.error('Error en el filtro de publicaciones', erro);
         if (erro.status == 404) {
           this.mensajeError = erro.error;

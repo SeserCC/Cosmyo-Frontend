@@ -20,6 +20,7 @@ export class RegistroComponent {
   errorMensaje: any;
   mostrarContrasinal: string = 'password';
   mostrarConfirmacion: string = 'password';
+  loading = false;
 
   constructor(private servizo: ServizoLoginService, private router: Router) {
     this.formularioRegistro = new FormGroup({
@@ -48,6 +49,8 @@ export class RegistroComponent {
   }
 
   registro(evento: Event) {
+    this.loading = true;
+
     // Evita que se recargue la página al enviar el formulario
     evento.preventDefault();
 
@@ -79,7 +82,7 @@ export class RegistroComponent {
       },
       error: (erro) => {
         //console.error('Error en el registro', erro);
-
+        this.loading = false;
         if (erro.status == 422) {
           this.errorMensaje = erro.error;
         } else {

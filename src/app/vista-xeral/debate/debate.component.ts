@@ -56,6 +56,10 @@ export class DebateComponent {
 
   faltaArchivo: boolean = false;
 
+  loading = false;
+
+  loadingEliminar: number | null = null;
+
   // Constructor del componente, se inyecta el servicio y se inicializa el formulario
   constructor(private servizo: ServizoLoginService, private router: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) {
     this.formularioCRUDComentario = new FormGroup({
@@ -74,8 +78,8 @@ export class DebateComponent {
   }
 
   // Método para añadir un nuevo comentario
-  engadirComentario() {
-
+  engadirComentario(fileInput?: HTMLInputElement) {
+    this.loading = true;
     const nuevoComentario = new FormData();
     nuevoComentario.append('texto', this.formularioCRUDComentario.get('texto')?.value);
     nuevoComentario.append('foro_id', String(this.router.snapshot.paramMap.get('foro_id')));
@@ -95,9 +99,14 @@ export class DebateComponent {
         this.comentarios.push(comentario);
         this.formularioCRUDComentario.reset();
         this.archivoSelect = null;
+        if (fileInput) {
+          fileInput.value = '';
+        }
+        this.loading = false;
       },
       error: (erro) => {
         //console.error('Error al añadir un comentario ', erro);
+        this.loading = false;
         if (erro.status == 422) {
           this.mensajeError = erro.error;
         }
@@ -129,8 +138,9 @@ export class DebateComponent {
   }
 
   // Método para guardar los cambios del comentario editado
-  modificarComentario() {
+  modificarComentario(fileInput?: HTMLInputElement) {
     this.cambiar = false;
+    this.loading = true;
 
     const modificarComentario = new FormData();
 
@@ -163,9 +173,17 @@ export class DebateComponent {
             this.comentarioSeleccionar.foto = response.foto;
           }
           this.formularioCRUDComentario.reset(); // Limpiamos el formulario
+          this.loading = false;
+          this.archivoSelect = null;
+          if (fileInput) {
+            fileInput.value = '';
+          }
+
         },
         error: (erro) => {
           //console.error("Error al modificar del comentario", erro)
+          this.loading = false;
+
         }
 
       });
@@ -174,6 +192,8 @@ export class DebateComponent {
 
   // Método para eliminar un comentario por su ID
   eliminarComentario(id: number) {
+    this.loadingEliminar = id;
+
     this.servizo.eliminarComentario(id, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.servizo.token}`,
@@ -183,8 +203,11 @@ export class DebateComponent {
       next: () => {
         // Eliminamos el foro del array local
         this.comentarios = this.comentarios.filter(comentario => comentario.id !== id);
+        this.loadingEliminar = null;
+
       },
       error: (erro) => {
+        this.loadingEliminar = null;
         //console.error(erro)
 
       }

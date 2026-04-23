@@ -35,7 +35,6 @@ a {
 
 .loading-container {
     height: 60vh;
-    /* o 100vh si quieres pantalla completa */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,12 +44,15 @@ a {
 
 /* 🔄 Spinner */
 .loader {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     border: 4px solid rgba(255, 255, 255, 0.2);
     border-top-color: #38bdf8;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 @keyframes spin {
@@ -193,10 +195,12 @@ textarea::placeholder {
     border-top-right-radius: 5px;
     /* Bordes redondeados arriba a la derecha */
     margin-top: 20px;
+    padding: 10px;
     /* Elimina margen inferior */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
-    /* Sombra oscura */
 }
+
+
 
 /* Estilo para los bloques de texto de los usuarios */
 #usuario1_texto {
@@ -378,7 +382,7 @@ button.is-link:disabled {
     display: flex;
     flex-direction: column;
     min-width: 120px;
-    z-index: 100;
+
 }
 
 .dropdown_menu button {
@@ -388,6 +392,7 @@ button.is-link:disabled {
     padding: 8px;
     text-align: left;
     cursor: pointer;
+
 }
 
 .dropdown_menu button:hover {

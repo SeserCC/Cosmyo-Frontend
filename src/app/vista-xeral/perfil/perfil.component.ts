@@ -36,6 +36,7 @@ export class PerfilComponent implements OnInit {
   mostrarContrasinal: string = 'password';
   carga: boolean = true;
   mostrarConfirmacion: string = 'password';
+  loading = false;
 
   usuarioActual: any;
 
@@ -45,7 +46,7 @@ export class PerfilComponent implements OnInit {
       red_social_principal: new FormControl(''),
       usuario_red_social: new FormControl(''),
       pais: new FormControl('', [Validators.required]),
-      biografia: new FormControl('', [Validators.required])
+      biografia: new FormControl('', [Validators.required]),
     });
 
     this.planCRUD = new FormGroup({
@@ -213,7 +214,7 @@ export class PerfilComponent implements OnInit {
   }
 
   modificarPerfil() {
-
+    this.carga = true;
     const modificarPerfil = new FormData();
 
     if (this.perfilSeleccionar) {
@@ -241,14 +242,15 @@ export class PerfilComponent implements OnInit {
           this.cambiar = false;
           this.archivoSelect = null;
           this.perfilSeleccionar.telefono = this.perfilCRUD.get('telefono')?.value;
-          this.perfilSeleccionar.red_social_principal = this.perfilCRUD.get('red_social_principal')?.value;
-          this.perfilSeleccionar.usuario_red_social = this.perfilCRUD.get('usuario_red_social')?.value;
+          this.perfilSeleccionar.red_social_principal = this.perfilCRUD.get('red_social_principal')?.value ?? '';
+          this.perfilSeleccionar.usuario_red_social = this.perfilCRUD.get('usuario_red_social')?.value ?? '';
           this.perfilSeleccionar.pais = this.perfilCRUD.get('pais')?.value;
           this.perfilSeleccionar.biografia = this.perfilCRUD.get('biografia')?.value;
           this.perfilSeleccionar.foto = response.foto;
+          this.carga = false;
         },
         error: (erro) => {
-          //console.error("Error al modificar los datos personales", erro)
+          this.carga = false;
           if (erro.status == 422) {
             this.mensajeError = erro.error;
           }
@@ -261,6 +263,8 @@ export class PerfilComponent implements OnInit {
 
 
   portalUrl() {
+    this.loading = true;
+
     let data = {
       plan_id: this.plan.id,
       user_id: this.usuarioActual.id,
@@ -277,12 +281,19 @@ export class PerfilComponent implements OnInit {
       next: (data) => {
         //console.log(data)
         window.location.href = data.url;
+
+
+      },
+      error: () => {
+        this.loading = false;
+
       }
 
     })
   }
 
   modificarPlan(): void {
+    this.carga = true;
 
     if (this.plan) {
       // Actualizamos
@@ -296,6 +307,7 @@ export class PerfilComponent implements OnInit {
         })
       }).subscribe({
         next: () => {
+          this.carga = false;
           this.portalUrl();
           this.cambiarPlan = false;
           this.planCRUD.reset({
@@ -304,6 +316,7 @@ export class PerfilComponent implements OnInit {
           }); // Limpiamos el formulario
         },
         error: (erro) => {
+          this.carga = false;
           //console.error("Error en el modificar del plan", erro);
         }
       });
@@ -312,6 +325,7 @@ export class PerfilComponent implements OnInit {
 
 
   modificarUsuario(): void {
+    this.carga = true;
 
     if (this.usuarioActual) {
       // Actualizamos
@@ -340,8 +354,11 @@ export class PerfilComponent implements OnInit {
         next: () => {
           this.cambiarUsuario = false;
           this.userCRUD.reset(); // Limpiamos el formulario
+          this.carga = false;
+
         },
         error: (erro) => {
+          this.carga = false;
           //console.error("Error al modificar el usuario", erro);
           if (erro.status == 403) {
             this.mensajeError = erro.error;
@@ -352,6 +369,7 @@ export class PerfilComponent implements OnInit {
   }
 
   accesoPremium() {
+    this.loading = true;
     let data = {
       plan_id: this.plan.id,
       user_id: this.usuarioActual.id,
@@ -366,6 +384,9 @@ export class PerfilComponent implements OnInit {
     }).subscribe({
       next: (data) => {
         window.location.href = data.url;
+      },
+      error: () => {
+        this.loading = false;
 
       }
     })
