@@ -335,6 +335,10 @@ export class ServizoLoginService {
     return this.cliente.get<any>(this.apiBackend + '/admin/dashboard', options);
   }
 
+  mesActual(options?: { headers?: HttpHeaders }) {
+    return this.cliente.get<any>(this.apiBackend + '/mesActual', options);
+  }
+
   /*
   subscribirseComentario$(): Observable<Comentario[]> {
     return this.comentarios$.asObservable();
