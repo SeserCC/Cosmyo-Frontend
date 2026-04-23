@@ -30,8 +30,11 @@ export class TipoPlanComponent implements OnInit {
         next: (response) => {
           this.premium = response.premium;
           this.carga = false;
+
         },
         error: (err) => {
+          this.carga = false;
+
           //console.error('Error al mostrar el plan', err);
         }
       })
@@ -46,6 +49,9 @@ export class TipoPlanComponent implements OnInit {
 
         if (this.usuarioActual) {
           this.esPremium();
+        } else {
+          this.carga = false;
+
         }
       });
 
