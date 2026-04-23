@@ -1,0 +1,37 @@
+.privacy-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.privacy-container section {
+    margin-bottom: 30px;
+    padding: 15px 0;
+    border-bottom: 1px solid #1e293b;
+}
+
+.privacy-container h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #7dd3fc;
+}
+
+.privacy-container p {
+    font-size: 0.95rem;
+    color: #cbd5f5;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .privacy-container {
+        padding: 15px;
+    }
+
+    .privacy-container h2 {
+        font-size: 1.1rem;
+    }
+
+    .privacy-container p {
+        font-size: 0.9rem;
+    }
+}
