@@ -1,3 +1,84 @@
+a {
+    color: white;
+    /* Color de los enlaces en blanco */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+#mapa_navegacion {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    padding: 8px 10px;
+}
+
+/* Hover del icono */
+#mapa_navegacion a:hover {
+    opacity: 0.6;
+}
+
+/* Separador */
+.separador {
+    opacity: 0.6;
+}
+
+/* Estilo para el bloque del foro */
+#politica {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Contenedor principal */
+.datos {
+    position: relative;
+    background-color: #1d1d1d;
+    margin: 100px 70px 70px;
+    box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
+    padding: 5px;
+    padding-bottom: 60px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.flecha-derecha {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform 0.2s ease;
+}
+
+.flecha-derecha i {
+    font-size: 2rem;
+}
+
+/* Hover suave */
+.flecha-derecha:hover {
+    transform: scale(1.1);
+}
+
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
 .privacy-container {
     max-width: 900px;
     margin: 0 auto;
@@ -10,16 +91,44 @@
     border-bottom: 1px solid #1e293b;
 }
 
+.privacy-container h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #e0f2fe;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
 .privacy-container h2 {
     font-size: 1.3rem;
+    margin-top: 10px;
     margin-bottom: 10px;
     color: #7dd3fc;
+}
+
+.privacy-container h3 {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    color: #38bdf8;
 }
 
 .privacy-container p {
     font-size: 0.95rem;
     color: #cbd5f5;
     line-height: 1.6;
+}
+
+.privacy-container ul {
+    margin: 10px 0 15px 20px;
+    padding: 0;
+    list-style-type: disc;
+}
+
+.privacy-container li {
+    font-size: 0.95rem;
+    color: #cbd5f5;
+    line-height: 1.6;
+    margin-bottom: 6px;
 }
 
 @media (max-width: 768px) {

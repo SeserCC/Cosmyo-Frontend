@@ -36,6 +36,6 @@ export const routes: Routes = [
     { path: "administracion", component: AdministracionComponent, canActivate: [adminGuard] },
     { path: "login", component: InicioSesionComponent },
     { path: "prohibido", component: AccesoProhibidoComponent },
-    { path: "politicaPrivacidad", component: PoliticaPrivacidadComponent, canActivate: [adminGuard] },
+    { path: "politicaPrivacidad", component: PoliticaPrivacidadComponent },
     { path: "**", component: NoEncontradaComponent },
 ];
