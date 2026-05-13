@@ -15,9 +15,12 @@
         <!-- Formulario -->
         <form [formGroup]="formularioRegistro" (ngSubmit)="registro($event)">
             <h1 class="text-center">Nueva cuenta</h1>
-
+            <button type="button" class="google-btn" (click)="loginGoogle()">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" />
+                <span>Continuar con Google</span>
+            </button>
             <!-- Nombre -->
-            <div class="mb-3">
+            <div class="mb-3 mt-3">
                 <label class="form-label text-light">Nombre</label>
                 <input type="text" class="form-control bg-dark text-light" placeholder="TON_618..."
                     formControlName="nombre">
@@ -33,9 +36,6 @@
             <!-- Email -->
             <div class="mb-3">
                 <label class="form-label text-light">Email</label>
-                <p class="text-white-50 small fst-italic mb-1" style="font-size: 0.8rem;">
-                    El email puede ser ficticio, ej: cosmyo&#64;example.com
-                </p>
                 <input type="text" class="form-control bg-dark text-light" placeholder="ejemplo@email.com"
                     formControlName="email">
                 <div *ngIf="formularioRegistro.get('email')?.invalid && formularioRegistro.get('email')?.touched"
@@ -112,6 +112,7 @@
                 </ng-container>
 
             </div>
+
         </form>
     </div>
 </div>

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { switchMap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-perfil',
@@ -129,14 +129,9 @@ export class PerfilComponent implements OnInit {
     this.mostrarMensajeConfirmacion = false;
   }
 
-  eliminarUsuario(id: number) {
-    this.servizo.eliminarUsuario(id, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
-      next: (response) => {
+  eliminarUsuario() {
+    this.servizo.eliminarUsuarioActual().subscribe({
+      next: () => {
         this.usuarioActual = null;
         this.routerR.navigate(['/'], {
           state: { mensaje: 'Usuario eliminado con exito' }
@@ -152,12 +147,7 @@ export class PerfilComponent implements OnInit {
 
   mostrarPlan() {
     {
-      this.servizo.mostrarPlan(Number(this.router.snapshot.paramMap.get('user_id')), {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        }),
-      }).subscribe({
+      this.servizo.mostrarPlan(Number(this.router.snapshot.paramMap.get('user_id'))).subscribe({
         next: (response) => {
           this.plan = response.plan;
           this.premium = response.premium;
@@ -232,12 +222,7 @@ export class PerfilComponent implements OnInit {
       modificarPerfil.append('_method', 'PUT');
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarPerfil(this.perfilSeleccionar.user_id, modificarPerfil, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarPerfil(this.perfilSeleccionar.user_id, modificarPerfil).subscribe({
         next: (response) => {
           this.cambiar = false;
           this.archivoSelect = null;
@@ -272,12 +257,7 @@ export class PerfilComponent implements OnInit {
       stripe_id: this.usuarioActual?.stripe_id
     };
 
-    this.servizo.portalUrl(data, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.portalUrl(data).subscribe({
       next: (data) => {
         //console.log(data)
         window.location.href = data.url;
@@ -300,12 +280,7 @@ export class PerfilComponent implements OnInit {
       this.plan.tipo_pago = this.planCRUD.get('tipo_pago')?.value;
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarPlan(this.plan.user_id, this.plan, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarPlan(this.plan.user_id, this.plan).subscribe({
         next: () => {
           this.carga = false;
           this.portalUrl();
@@ -345,12 +320,7 @@ export class PerfilComponent implements OnInit {
       }
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarUsuario(this.usuarioActual.id, this.usuarioActual, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarUsuario(this.usuarioActual.id, this.usuarioActual).subscribe({
         next: () => {
           this.cambiarUsuario = false;
           this.userCRUD.reset(); // Limpiamos el formulario
@@ -376,12 +346,7 @@ export class PerfilComponent implements OnInit {
       tipo_pago: this.planCRUD.get('tipo_pago')?.value
     };
 
-    this.servizo.accesoPremium(data, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.accesoPremium(data).subscribe({
       next: (data) => {
         window.location.href = data.url;
       },
@@ -409,8 +374,8 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.servizo.usuarioActual$.subscribe((usuario) => {
-        this.usuarioActual = usuario;
+      this.servizo.usuarioActual$.subscribe((data) => {
+        this.usuarioActual = data;
       });
 
       this.router.params.pipe(

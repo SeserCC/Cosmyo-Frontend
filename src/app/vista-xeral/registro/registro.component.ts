@@ -5,6 +5,7 @@ import { ServizoLoginService } from '../../servizo-login.service';
 import { CommonModule } from '@angular/common';
 import { Usuario } from '../../usuario';
 import { HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-registro',
@@ -21,6 +22,7 @@ export class RegistroComponent {
   mostrarContrasinal: string = 'password';
   mostrarConfirmacion: string = 'password';
   loading = false;
+  apiBackend: string = environment.apiBackend;
 
   constructor(private servizo: ServizoLoginService, private router: Router) {
     this.formularioRegistro = new FormGroup({
@@ -48,6 +50,10 @@ export class RegistroComponent {
     this.mostrarConfirmacion = 'password';
   }
 
+  loginGoogle() {
+    window.location.href = this.apiBackend + '/auth/google'
+  }
+
   registro(evento: Event) {
     this.loading = true;
 
@@ -70,11 +76,7 @@ export class RegistroComponent {
     }
 
     // Se llama al servicio para añadir el nuevo usuario con rol 'usuario'
-    this.servizo.registro(nuevoUsuario, {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.registro(nuevoUsuario).subscribe({
       next: () => {
         this.router.navigate(['/'], {
           state: { mensaje: 'Usuario creado correctamente, sesión iniciada' }

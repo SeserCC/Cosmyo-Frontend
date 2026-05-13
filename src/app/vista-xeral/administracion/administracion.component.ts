@@ -196,12 +196,7 @@ export class AdministracionComponent implements OnInit {
       plan: this.formularioCRUD.value.plan,
     }
 
-    this.servizo.engadirUsuario(nuevoUsuario, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.engadirUsuario(nuevoUsuario).subscribe({
       next: (usuario) => {
         //Añadimos el usuario mediante suscripcion
         this.usuarios.push(usuario);
@@ -276,12 +271,7 @@ export class AdministracionComponent implements OnInit {
       this.usuarioSeleccionar.email = this.formularioCRUD.get('email')?.value;
 
       // Enviamos la actualización al servicio
-      this.servizo.modificarUsuario(this.usuarioSeleccionar.id, this.usuarioSeleccionar, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarUsuario(this.usuarioSeleccionar.id, this.usuarioSeleccionar).subscribe({
         next: () => {
           this.admin = false;
 
@@ -317,12 +307,7 @@ export class AdministracionComponent implements OnInit {
   }
 
   mostrarUsuarios() {
-    this.servizo.mostrarUsuarios({
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarUsuarios().subscribe({
       next: (response) => {
         this.usuarios = response;
 
@@ -337,12 +322,7 @@ export class AdministracionComponent implements OnInit {
 
   // Método para eliminar un usuario por su ID
   eliminarUsuario(id: number) {
-    this.servizo.eliminarUsuario(id, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.eliminarUsuario(id).subscribe({
       next: () => {
         // Eliminamos el usuario del array local
         this.usuarios = this.usuarios.filter(usuario => usuario.id !== id);
@@ -355,13 +335,7 @@ export class AdministracionComponent implements OnInit {
 
   mostrarForos() {
 
-    this.servizo.mostrarForos({
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarForos().subscribe({
       next: (response) => {
         this.foros = response;
       },
@@ -379,13 +353,7 @@ export class AdministracionComponent implements OnInit {
       tema: this.formularioCRUDForo.value.tema,
     }
 
-    this.servizo.engadirForo(nuevoForo, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.engadirForo(nuevoForo).subscribe({
       next: (foro) => {
         //Añadimos el tema mediante suscripcion
         this.foros.push(foro);
@@ -416,12 +384,7 @@ export class AdministracionComponent implements OnInit {
       this.foroSeleccionar.tema = this.formularioCRUDForo.get('tema')?.value;
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarForo(this.foroSeleccionar.id, this.foroSeleccionar, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarForo(this.foroSeleccionar.id, this.foroSeleccionar).subscribe({
         next: () => {
           this.formularioCRUDForo.reset(); // Limpiamos el formulario
         },
@@ -434,12 +397,7 @@ export class AdministracionComponent implements OnInit {
 
   // Método para eliminar un foro por su ID
   eliminarForo(id: number) {
-    this.servizo.eliminarForo(id, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.eliminarForo(id).subscribe({
       next: () => {
         // Eliminamos el foro del array local
         this.foros = this.foros.filter(foro => foro.id !== id);
@@ -453,12 +411,7 @@ export class AdministracionComponent implements OnInit {
 
   mostrarComentarios(page: number) {
 
-    this.servizo.mostrarComentarios(page, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarComentarios(page).subscribe({
       next: (response) => {
         this.comentarios = response.data;
         this.paginaActual = response.current_page;
@@ -488,12 +441,7 @@ export class AdministracionComponent implements OnInit {
       nuevoComentario.append('foto', this.archivoSelect);
     }
 
-    this.servizo.engadirComentario(nuevoComentario, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.engadirComentario(nuevoComentario).subscribe({
       next: (comentario) => {
         //Añadimos el tema mediante suscripcion
         this.comentarios.push(comentario);
@@ -536,12 +484,7 @@ export class AdministracionComponent implements OnInit {
       modificarComentario.append('_method', 'PUT');
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarComentario(this.comentarioSeleccionar.id, modificarComentario, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarComentario(this.comentarioSeleccionar.id, modificarComentario).subscribe({
         next: (respuesta) => {
           this.comentarioSeleccionar.foro_id = this.formularioCRUDComentario.get('foro_id')?.value;
           this.comentarioSeleccionar.texto = this.formularioCRUDComentario.get('texto')?.value;
@@ -562,13 +505,7 @@ export class AdministracionComponent implements OnInit {
 
   // Método para eliminar un comentario por su ID
   eliminarComentario(id: number) {
-    this.servizo.eliminarComentario(id, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.eliminarComentario(id).subscribe({
       next: () => {
         // Eliminamos el foro del array local
         this.comentarios = this.comentarios.filter(comentario => comentario.id !== id);
@@ -595,12 +532,7 @@ export class AdministracionComponent implements OnInit {
       return;
     }
 
-    this.servizo.engadirPublicacion(nuevoPublicacion, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.engadirPublicacion(nuevoPublicacion).subscribe({
       next: (publicacion) => {
         //Añadimos el tema mediante suscripcion
         this.publicaciones.push(publicacion);
@@ -614,12 +546,7 @@ export class AdministracionComponent implements OnInit {
 
   mostrarPublicaciones() {
 
-    this.servizo.mostrarPublicaciones({
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarPublicaciones().subscribe({
       next: (response) => {
         this.publicaciones = response.publicacions;
       },
@@ -662,12 +589,7 @@ export class AdministracionComponent implements OnInit {
       modificarPublicacion.append('_method', 'PUT');
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarPublicacion(this.publicacionSeleccionar.id, modificarPublicacion, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarPublicacion(this.publicacionSeleccionar.id, modificarPublicacion).subscribe({
         next: (response) => {
           this.publicacionSeleccionar.titulo = this.formularioCRUDPublicacion.get('titulo')?.value;
           this.publicacionSeleccionar.descripcion = this.formularioCRUDPublicacion.get('descripcion')?.value;
@@ -685,12 +607,7 @@ export class AdministracionComponent implements OnInit {
 
   // Método para eliminar una publicación
   eliminarPublicacion(id: number) {
-    this.servizo.eliminarPublicacion(id, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.eliminarPublicacion(id).subscribe({
       next: () => {
         // Eliminamos el foro del array local
         this.publicaciones = this.publicaciones.filter(publicacion => publicacion.id !== id);
@@ -721,12 +638,7 @@ export class AdministracionComponent implements OnInit {
       fecha: this.formularioCRUDEvento.value.fecha,
     }
 
-    this.servizo.engadirEvento(nuevoEvento, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.engadirEvento(nuevoEvento).subscribe({
       next: (evento) => {
         //Añadimos el tema mediante suscripcion
         this.eventos.push(evento);
@@ -744,12 +656,7 @@ export class AdministracionComponent implements OnInit {
 
   mostrarEventos() {
 
-    this.servizo.mostrarEventos({
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarEventos().subscribe({
       next: (response) => {
         this.eventos = response;
       },
@@ -770,12 +677,7 @@ export class AdministracionComponent implements OnInit {
       this.eventoSeleccionar.fecha = this.formularioCRUDEvento.get('fecha')?.value;
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarEvento(this.eventoSeleccionar.id, this.eventoSeleccionar, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarEvento(this.eventoSeleccionar.id, this.eventoSeleccionar).subscribe({
         next: () => {
           this.formularioCRUDEvento.reset(); // Limpiamos el formulario
         },
@@ -790,12 +692,7 @@ export class AdministracionComponent implements OnInit {
 
   // Método para eliminar un evento
   eliminarEvento(id: number) {
-    this.servizo.eliminarEvento(id, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.eliminarEvento(id).subscribe({
       next: () => {
         // Eliminamos el foro del array local
         this.eventos = this.eventos.filter(evento => evento.id !== id);
@@ -806,12 +703,7 @@ export class AdministracionComponent implements OnInit {
 
   mostrarPlanes() {
 
-    this.servizo.mostrarPlanes({
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarPlanes().subscribe({
       next: (response) => {
         this.planes = response;
       },
@@ -844,12 +736,7 @@ export class AdministracionComponent implements OnInit {
 
     (data);
 
-    this.servizo.portalUrl(data, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.portalUrl(data).subscribe({
       next: (data) => {
         window.location.href = data.url;
       }
@@ -864,12 +751,7 @@ export class AdministracionComponent implements OnInit {
       tipo_pago: this.formularioCRUDPlan.get('tipo_pago')?.value
     };
 
-    this.servizo.accesoPremium(data, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.accesoPremium(data).subscribe({
       next: (data) => {
         window.location.href = data.url;
 
@@ -887,12 +769,7 @@ export class AdministracionComponent implements OnInit {
       this.planSeleccionar.metodo_pago = this.formularioCRUDPlan.get('metodo_pago')?.value;
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarPlanes(this.planSeleccionar.user_id, this.planSeleccionar, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarPlanes(this.planSeleccionar.user_id, this.planSeleccionar).subscribe({
         next: () => {
           this.portalUrl();
           (this.planSeleccionar);
@@ -912,12 +789,7 @@ export class AdministracionComponent implements OnInit {
 
   mostrarPerfil() {
     {
-      this.servizo.mostrarPerfiles({
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        }),
-      }).subscribe({
+      this.servizo.mostrarPerfiles().subscribe({
         next: (response) => {
           this.perfiles = response;
 
@@ -965,12 +837,7 @@ export class AdministracionComponent implements OnInit {
       modificarPerfil.append('_method', 'PUT');
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarPerfil(this.perfilSeleccionar.user_id, modificarPerfil, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarPerfil(this.perfilSeleccionar.user_id, modificarPerfil).subscribe({
         next: (response) => {
           this.cambiar = false;
           this.archivoSelect = null;
@@ -993,12 +860,7 @@ export class AdministracionComponent implements OnInit {
 
   mostrarPremiums() {
     {
-      this.servizo.mostrarPremiums({
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        }),
-      }).subscribe({
+      this.servizo.mostrarPremiums().subscribe({
         next: (response) => {
           this.premiums = response;
         },
@@ -1028,12 +890,7 @@ export class AdministracionComponent implements OnInit {
 
       (this.premiumSeleccionar);
       // Llamamos al servicio para modificar
-      this.servizo.modificarPremium(this.premiumSeleccionar.plan_id, this.premiumSeleccionar, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarPremium(this.premiumSeleccionar.plan_id, this.premiumSeleccionar).subscribe({
         next: () => {
           /* (this.planSeleccionar); */
           this.formularioCRUDPremium.reset({
@@ -1051,12 +908,7 @@ export class AdministracionComponent implements OnInit {
 
   mostrarGratuitos() {
     {
-      this.servizo.mostrarGratuitos({
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        }),
-      }).subscribe({
+      this.servizo.mostrarGratuitos().subscribe({
         next: (response) => {
           this.gratuitos = response;
 
@@ -1090,12 +942,7 @@ export class AdministracionComponent implements OnInit {
       this.gratuitoSeleccionar.tamano_maximo_archivo = this.formularioCRUDGratuito.get('tamano_maximo_archivo')?.value;
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarGratuito(this.gratuitoSeleccionar.plan_id, this.gratuitoSeleccionar, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarGratuito(this.gratuitoSeleccionar.plan_id, this.gratuitoSeleccionar).subscribe({
         next: () => {
 
           this.formularioCRUDGratuito.reset(); // Limpiamos el formulario
@@ -1111,12 +958,7 @@ export class AdministracionComponent implements OnInit {
   // Método ejecutado al iniciar el componente, carga todos los datos desde el servicio
   ngOnInit(): void {
     if (isPlatformBrowser(this.platform_id)) {
-      this.servizo.middlewareAdmin({
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        }),
-      }).subscribe({
+      this.servizo.middlewareAdmin().subscribe({
         next: () => {
         },
         error: (err) => {

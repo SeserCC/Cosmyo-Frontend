@@ -105,12 +105,7 @@ export class PublicacionesComponent implements OnInit {
       modificarPublicacion.append('_method', 'PUT');
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarPublicacion(this.publicacionSeleccionar.id, modificarPublicacion, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarPublicacion(this.publicacionSeleccionar.id, modificarPublicacion).subscribe({
         next: (response) => {
           this.publicacionSeleccionar.titulo = this.formularioCRUDImagen.get('titulo')?.value;
           this.publicacionSeleccionar.descripcion = this.formularioCRUDImagen.get('descripcion')?.value;
@@ -139,12 +134,7 @@ export class PublicacionesComponent implements OnInit {
   // Método para eliminar una publicación por su ID
   eliminarPublicacion(id: number) {
     this.carga = true;
-    this.servizo.eliminarPublicacion(id, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.eliminarPublicacion(id).subscribe({
       next: () => {
         // Eliminamos el foro del array local
         this.publicaciones = this.publicaciones.filter(publicacion => publicacion.id !== id);

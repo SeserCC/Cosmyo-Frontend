@@ -67,12 +67,7 @@ export class SubirArchivoComponent {
       nuevaPublicacion.append('imagen', this.archivoSelect);
     }
 
-    this.servizo.engadirPublicacion(nuevaPublicacion, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.engadirPublicacion(nuevaPublicacion).subscribe({
       next: (publicacion) => {
         //Añadimos el tema mediante suscripcion
         this.publicaciones.push(publicacion);
