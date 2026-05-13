@@ -13,6 +13,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 })
 export class TipoPlanComponent implements OnInit {
   usuarioActual: any;
+  plan: any;
   premium: boolean = true;
   carga: boolean = true;
   constructor(public servizo: ServizoLoginService, private router: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) {
@@ -21,12 +22,7 @@ export class TipoPlanComponent implements OnInit {
 
   esPremium() {
     {
-      this.servizo.mostrarPlan(this.usuarioActual.id, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        }),
-      }).subscribe({
+      this.servizo.mostrarPlan(this.usuarioActual.id).subscribe({
         next: (response) => {
           this.premium = response.premium;
           this.carga = false;
@@ -44,11 +40,13 @@ export class TipoPlanComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.servizo.usuarioActual$.subscribe((usuario) => {
-        this.usuarioActual = usuario;
+      this.servizo.usuarioActual$.subscribe((data) => {
+        //console.log(data);
+        this.usuarioActual = data;
 
         if (this.usuarioActual) {
           this.esPremium();
+          
         } else {
           this.carga = false;
 

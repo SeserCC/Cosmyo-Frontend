@@ -40,12 +40,7 @@ export class FotosVideosComponent implements OnInit {
   filtrarPublicaciones(publicacion: string) {
     this.carga = true;
 
-    this.servizo.buscadorPublicaciones(publicacion, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.buscadorPublicaciones(publicacion).subscribe({
       next: (response) => {
 
         this.publicaciones = response.publicacions;
@@ -64,12 +59,7 @@ export class FotosVideosComponent implements OnInit {
   }
 
   mostrarPublicaciones() {
-    this.servizo.mostrarPublicaciones({
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarPublicaciones().subscribe({
       next: (response) => {
 
         this.publicaciones = response.publicacions;
@@ -97,12 +87,7 @@ export class FotosVideosComponent implements OnInit {
       like: !estado,
       _method: "PUT",
     }
-    this.servizo.darLike(publicacion_id, likePublicacion, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.darLike(publicacion_id, likePublicacion).subscribe({
       next: (response) => {
         this.colorLike[publicacion_id] = response.like;
         this.likes[publicacion_id] = response.likes;
@@ -117,11 +102,7 @@ export class FotosVideosComponent implements OnInit {
   }
 
   mostrarUsuarios() {
-    this.servizo.mostrarUsuarios({
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarUsuarios().subscribe({
       next: (response) => {
         this.usuarios = response;
 

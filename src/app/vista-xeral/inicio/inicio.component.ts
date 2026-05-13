@@ -26,8 +26,9 @@ export class InicioComponent implements OnInit {
 
     if (isPlatformBrowser(this.platformId)) {
 
-      this.servizo.usuarioActual$.subscribe((usuario) => {
-        this.usuarioActual = usuario;
+      this.servizo.usuarioActual$.subscribe((data) => {
+        this.usuarioActual = data;
+        //console.log(data);
       });
 
       this.mensaje = history.state.mensaje;

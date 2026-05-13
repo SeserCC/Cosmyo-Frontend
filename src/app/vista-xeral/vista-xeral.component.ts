@@ -26,7 +26,9 @@ export class VistaXeralComponent implements OnInit {
 
     this.route.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        this.carga = true;
+        setTimeout(() => {
+          this.carga = true;
+        });
       }
 
       if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {

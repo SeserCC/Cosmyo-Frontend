@@ -31,12 +31,7 @@ export class CabeceraComponent implements OnInit {
   cerrarSesion() {
     // Elimina el usuario guardado en localStorage
     this.cerrandoSesionCarga = true;
-    this.servizo.cerrarSesion(this.usuarioActual, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.cerrarSesion(this.usuarioActual).subscribe({
       next: () => {
         // Redirige a la portada de la aplicación
         this.cerrandoSesionCarga = false;
@@ -49,8 +44,9 @@ export class CabeceraComponent implements OnInit {
 
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
-    this.servizo.usuarioActual$.subscribe((usuario) => {
-      this.usuarioActual = usuario;
+    this.servizo.usuarioActual$.subscribe((data) => {
+      //console.log(data);
+      this.usuarioActual = data;
     });
 
   }

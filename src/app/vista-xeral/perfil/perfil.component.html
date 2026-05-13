@@ -18,7 +18,7 @@
                     Cancelar
                 </button>
 
-                <button class="btn-delete" (click)="eliminarUsuario(perfil?.user_id)">
+                <button class="btn-delete" (click)="eliminarUsuario()">
                     ELIMINAR
                 </button>
             </div>
@@ -395,9 +395,7 @@
                                     </div>
                                     <div class="field">
                                         <label class="label has-text-warning-light">Email *</label>
-                                        <p class="text-white-50 small fst-italic mb-1" style="font-size: 0.8rem;">
-                                            El email puede ser ficticio, ej: cosmyo&#64;example.com
-                                        </p>
+                                    
                                         <div class="control">
                                             <input class="input" type="text" formControlName="email"
                                                 placeholder="Email de usuario">

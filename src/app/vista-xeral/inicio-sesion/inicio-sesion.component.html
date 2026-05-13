@@ -15,10 +15,12 @@
             <i class="bi bi-arrow-left"></i>
         </a>
 
+        <h1 class="title is-4 has-text-centered">Iniciar Sesión</h1>
+
         <!-- Contenedor del formulario de inicio de sesión -->
         <form [formGroup]="formularioLogin" class="usuario_contrasena" (ngSubmit)="iniciarSesion($event)">
             <!-- Título del formulario -->
-            <h1 class="title is-4 has-text-centered">Iniciar Sesión</h1>
+
             <p *ngIf="errorMensaje" class="mensaje-error">
                 {{ errorMensaje }}
             </p>
@@ -67,6 +69,10 @@
                 Tienes que marcar el captcha
             </p>
 
+            <button type="button" class="google-btn" (click)="loginGoogle()">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" />
+                <span>Continuar con Google</span>
+            </button>
 
             <div *ngIf="abriendoSesionCarga" class="loader"></div>
             <!-- Botón de enviar -->

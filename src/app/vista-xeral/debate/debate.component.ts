@@ -88,12 +88,7 @@ export class DebateComponent {
       nuevoComentario.append('foto', this.archivoSelect);
     }
 
-    this.servizo.engadirComentario(nuevoComentario, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.engadirComentario(nuevoComentario).subscribe({
       next: (comentario) => {
         //Añadimos el tema mediante suscripcion
         this.comentarios.push(comentario);
@@ -160,12 +155,7 @@ export class DebateComponent {
       modificarComentario.append('_method', 'PUT');
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarComentario(this.comentarioSeleccionar.id, modificarComentario, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarComentario(this.comentarioSeleccionar.id, modificarComentario).subscribe({
         next: (response) => {
           this.comentarioSeleccionar.foro_id = String(this.router.snapshot.paramMap.get('foro_id'));
           this.comentarioSeleccionar.texto = this.formularioCRUDComentario.get('texto')?.value;
@@ -194,12 +184,7 @@ export class DebateComponent {
   eliminarComentario(id: number) {
     this.loadingEliminar = id;
 
-    this.servizo.eliminarComentario(id, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.eliminarComentario(id).subscribe({
       next: () => {
         // Eliminamos el foro del array local
         this.comentarios = this.comentarios.filter(comentario => comentario.id !== id);
@@ -216,12 +201,7 @@ export class DebateComponent {
 
   /* mostrarComentarios(page: number) {
 
-    this.servizo.mostrarComentarios(page, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarComentarios(page).subscribe({
       next: (response) => {
         this.comentarios = response.data;
         this.paginaActual = response.current_page;
@@ -242,11 +222,7 @@ export class DebateComponent {
 
   mostrarComentariosForos() {
 
-    this.servizo.mostrarComentariosForos(Number(this.router.snapshot.paramMap.get('foro_id')), {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarComentariosForos(Number(this.router.snapshot.paramMap.get('foro_id'))).subscribe({
       next: (response) => {
         this.comentarios = response.comentarios.data;
         this.foro = response.foro;
