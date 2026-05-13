@@ -179,8 +179,7 @@ export class ServizoLoginService {
 
   eliminarUsuarioActual() {
     this.usuarioActual$.next(null);
-    localStorage.removeItem('token');
-    return this.cliente.delete<any>(this.apiBackend + '/destroyUser');
+    return this.cliente.delete<any>(this.apiBackend + '/destroyUser').pipe(finalize(() => { localStorage.removeItem('token'); }));
   }
 
   mostrarUsuarios() {
