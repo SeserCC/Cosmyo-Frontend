@@ -35,12 +35,7 @@ export class CalendarioComponent implements OnInit {
 
   mostrarEventos() {
 
-    this.servizo.mesActual({
-      headers: new HttpHeaders({
-        /* 'Authorization': `Bearer ${this.servizo.token}`, */
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mesActual().subscribe({
       next: (response) => {
         this.eventos = response;
         this.carga = false;

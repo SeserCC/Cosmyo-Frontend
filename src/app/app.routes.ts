@@ -19,6 +19,7 @@ import { adminGuard } from './admin.guard';
 import { AccesoProhibidoComponent } from './vista-xeral/acceso-prohibido/acceso-prohibido.component';
 import { NoEncontradaComponent } from './vista-xeral/no-encontrada/no-encontrada.component';
 import { PoliticaPrivacidadComponent } from './vista-xeral/politica-privacidad/politica-privacidad.component';
+import { AuthCallbackComponent } from './vista-xeral/auth-callback/auth-callback.component';
 
 export const routes: Routes = [
     { path: "", component: InicioComponent, canActivate: [mantenimientoGuard] },
@@ -37,5 +38,6 @@ export const routes: Routes = [
     { path: "login", component: InicioSesionComponent },
     { path: "prohibido", component: AccesoProhibidoComponent },
     { path: "politicaPrivacidad", component: PoliticaPrivacidadComponent },
+    { path: "auth-callback", component: AuthCallbackComponent },
     { path: "**", component: NoEncontradaComponent },
 ];

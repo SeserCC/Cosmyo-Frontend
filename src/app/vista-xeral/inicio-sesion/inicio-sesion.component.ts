@@ -5,6 +5,7 @@ import { ServizoLoginService } from '../../servizo-login.service';
 import { CommonModule } from '@angular/common';
 import { Usuario } from '../../usuario';
 import { HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
 
   // Formulario reactivo para la autenticación del usuario
   formularioLogin: FormGroup;
+
+  apiBackend: string = environment.apiBackend;
 
   // Variable para mostrar mensajes de error en el login
   errorMensaje: string = "";
@@ -37,6 +40,10 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
       contrasinal: new FormControl('', [Validators.required]),    // Campo obligatorio para la contraseña
       captcha: new FormControl(false, [Validators.requiredTrue])  // Checkbox de captcha obligatorio (debe estar marcado)
     });
+  }
+
+  loginGoogle() {
+    window.location.href = this.apiBackend + '/auth/google'
   }
 
   mostrar() {
@@ -61,13 +68,7 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
     // Obtenemos los datos del formulario (usuario y contraseña)
     const loginData = { email: this.formularioLogin.value.usuario, password: this.formularioLogin.value.contrasinal };
 
-    this.servizo.login(loginData,
-      {
-        headers: new HttpHeaders({
-          'accept': 'application/json',
-        }),
-
-      }).subscribe({
+    this.servizo.login(loginData).subscribe({
         next: (response) => {
           this.abriendoSesionCarga = false;
           if (response.user.rol == "admin") {

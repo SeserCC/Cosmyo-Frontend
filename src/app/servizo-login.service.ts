@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Usuario } from './usuario';
 import { Imagen } from './imagen';
-import { BehaviorSubject, catchError, delay, finalize, find, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, delay, finalize, find, forkJoin, Observable, of, switchMap, tap } from 'rxjs';
 import { Foro } from './foro';
 import { Comentario } from './comentario';
 import { Evento } from './evento';
@@ -30,8 +30,10 @@ export class ServizoLoginService {
   apiURLcomentario: string = 'https://682f73b7f504aa3c70f41673.mockapi.io/comentarios';
   apiBackend: string = environment.apiBackend;
   usuarioActual: any; // Usuario actualmente logeado
+  planActual: any; // Usuario actualmente logeado
   tokens$: BehaviorSubject<string>;
   usuarioActual$: BehaviorSubject<any>; // Usuario actualmente logeado
+  planActual$: BehaviorSubject<any>; // Usuario actualmente logeado
   sesionCargada$: BehaviorSubject<any>; // Comprobacion de la sesion
   cargando$: BehaviorSubject<boolean>; // Comprobacion de la sesion
 
@@ -42,6 +44,7 @@ export class ServizoLoginService {
     //this.imagenes$ = new BehaviorSubject(this.imagenes); // Inicializa el BehaviorSubject con la lista de imagenes
     //this.eventos$ = new BehaviorSubject(this.eventos); // Inicializa el BehaviorSubject con la lista de imagenes
     this.usuarioActual$ = new BehaviorSubject(this.usuarioActual);
+    /* this.planActual$ = new BehaviorSubject(this.planActual); */
     this.sesionCargada$ = new BehaviorSubject<boolean>(false);
     this.cargando$ = new BehaviorSubject<boolean>(false);
     this.tokens$ = new BehaviorSubject(this.token);
@@ -54,9 +57,9 @@ export class ServizoLoginService {
     }
   }
 
-  registro(body: any, options?: { headers?: HttpHeaders }) {
+  registro(body: any) {
     return new Observable<any>((observable) => {
-      this.cliente.post<any>(this.apiBackend + '/registroAPI', body, options).subscribe({
+      this.cliente.post<any>(this.apiBackend + '/registroAPI', body).subscribe({
         next: (response) => {
           this.token = response.accessToken;
           this.usuarioActual = response.user;
@@ -75,9 +78,9 @@ export class ServizoLoginService {
     })
   }
 
-  cerrarSesion(body: any, options?: { headers?: HttpHeaders }) {
+  cerrarSesion(body: any) {
     return new Observable<any>((observable) => {
-      this.cliente.post<any>(this.apiBackend + '/logoutAPI', body, options).subscribe({
+      this.cliente.post<any>(this.apiBackend + '/logoutAPI', body).subscribe({
         next: (response) => {
 
           localStorage.removeItem('token');
@@ -95,21 +98,18 @@ export class ServizoLoginService {
   }
 
   /* Credenciales */
-  login(body: any, options?: { headers?: HttpHeaders }) {
+  login(body: any) {
     return new Observable<any>((observable) => {
-      this.cliente.post<any>(this.apiBackend + '/loginAPI', body, options).subscribe({
+      this.cliente.post<any>(this.apiBackend + '/loginAPI', body).subscribe({
         next: (response) => {
           this.token = response.accessToken;
           this.tokens$.next(this.token);
+          /* this.planActual = response.plan;
+          this.planActual$.next(response.plan); */
 
           localStorage.setItem("token", this.token);
 
-          this.usuarioLogueado({
-            headers: new HttpHeaders({
-              'Authorization': `Bearer ${this.token}`,
-              'Accept': 'application/json',
-            })
-          }).subscribe({
+          this.usuarioLogueado().subscribe({
             next: (usuario) => {
               this.usuarioActual = usuario;
               this.usuarioActual$.next(usuario);
@@ -128,16 +128,24 @@ export class ServizoLoginService {
 
   }
 
-  cargarSesion() {
-    let token = localStorage.getItem('token');
+  guardarToken(token: string) {
+    this.tokens$.next(token);
+    localStorage.setItem('token', token);
+  }
 
-    return this.usuarioLogueado({
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-      })
-    }).pipe(
-      tap(user => { this.usuarioActual$.next(user) }),
+  cargarSesion() {
+
+    return this.usuarioLogueado().pipe(
+      /* switchMap((user: any) => {
+        return forkJoin({
+          user: of(user),
+          plan: this.mostrarPlan(user?.id),
+
+        })
+      }), */
+      tap(data => {
+        this.usuarioActual$.next(data);
+      }),
       catchError(() => {
         this.usuarioActual$.next(null);
         return of(null);
@@ -149,194 +157,198 @@ export class ServizoLoginService {
 
   }
 
-  usuarioLogueado(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get(this.apiBackend + "/user", options);
+  usuarioLogueado() {
+    return this.cliente.get(this.apiBackend + "/user");
   }
 
-  engadirUsuario(body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.post<any>(this.apiBackend + '/users', body, options);
+  engadirUsuario(body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/users', body);
 
   }
 
   // Modificamos os valores indicando ao servidor
-  modificarUsuario(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.put<any>(this.apiBackend + '/users/' + id, body, options);
+  modificarUsuario(id: number, body: any) {
+    return this.cliente.put<any>(this.apiBackend + '/users/' + id, body);
 
   }
 
   // Elimina no servidor o usuario cuxo id coindice co parámetro
-  eliminarUsuario(id: number, options?: { headers?: HttpHeaders }) {
+  eliminarUsuario(id: number) {
+    return this.cliente.delete<any>(this.apiBackend + '/users/' + id);
+  }
+
+  eliminarUsuarioActual() {
     this.usuarioActual$.next(null);
-    localStorage.clear();
-    return this.cliente.delete<any>(this.apiBackend + '/users/' + id, options);
+    localStorage.removeItem('token');
+    return this.cliente.delete<any>(this.apiBackend + '/destroyUser');
   }
 
-  mostrarUsuarios(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/users', options);
+  mostrarUsuarios() {
+    return this.cliente.get<any>(this.apiBackend + '/users');
   }
 
-  mostrarForos(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/foro', options);
+  mostrarForos() {
+    return this.cliente.get<any>(this.apiBackend + '/foro');
   }
 
   // Engade un novo foro ao servidor a partir do seu tema e fecha
-  engadirForo(body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.post<any>(this.apiBackend + '/foro', body, options);
+  engadirForo(body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/foro', body);
   }
 
   // Modificamos os valores indicando ao servidor
-  modificarForo(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.put<any>(this.apiBackend + '/foro/' + id, body, options);
+  modificarForo(id: number, body: any) {
+    return this.cliente.put<any>(this.apiBackend + '/foro/' + id, body);
   }
 
   // Elimina no servidor o foro cuxo id coindice co parámetro
-  eliminarForo(id: number, options?: { headers?: HttpHeaders }) {
-    return this.cliente.delete<any>(this.apiBackend + '/foro/' + id, options)
+  eliminarForo(id: number) {
+    return this.cliente.delete<any>(this.apiBackend + '/foro/' + id)
   }
 
   // Engade un novo usuario ao servidor a partir do seu nome, rol y contraseña
-  engadirComentario(body: any, options?: { headers?: HttpHeaders }) {
+  engadirComentario(body: any) {
     /* (body); */
-    return this.cliente.post<any>(this.apiBackend + '/comentario', body, options);
+    return this.cliente.post<any>(this.apiBackend + '/comentario', body);
   }
 
-  mostrarComentarios(page: number, options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/comentario?page=' + page, options);
+  mostrarComentarios(page: number) {
+    return this.cliente.get<any>(this.apiBackend + '/comentario?page=' + page);
   }
 
-  mostrarComentariosForos(id: number, options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/foroComentario/' + id, options);
+  mostrarComentariosForos(id: number) {
+    return this.cliente.get<any>(this.apiBackend + '/foroComentario/' + id);
   }
 
   // Modificamos os valores indicando ao servidor
-  modificarComentario(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.post<any>(this.apiBackend + '/comentario/' + id, body, options);
+  modificarComentario(id: number, body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/comentario/' + id, body);
   }
 
   // Elimina no servidor o comentario cuxo id coindice co parámetro
-  eliminarComentario(id: number, options?: { headers?: HttpHeaders }) {
-    return this.cliente.delete<any>(this.apiBackend + '/comentario/' + id, options);
+  eliminarComentario(id: number) {
+    return this.cliente.delete<any>(this.apiBackend + '/comentario/' + id);
   }
 
   /* Crear una nueva publicacion */
-  engadirPublicacion(body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.post<any>(this.apiBackend + '/publicacion', body, options);
+  engadirPublicacion(body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/publicacion', body);
   }
 
   // Modificamos os valores indicando ao servidor
-  modificarPublicacion(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.post<any>(this.apiBackend + '/publicacion/' + id, body, options);
+  modificarPublicacion(id: number, body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/publicacion/' + id, body);
   }
 
-  mostrarPublicaciones(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/publicacion', options);
+  mostrarPublicaciones() {
+    return this.cliente.get<any>(this.apiBackend + '/publicacion');
   }
 
-  publicacionesUsuario(id: number, options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/publicaciones/' + id, options);
+  publicacionesUsuario(id: number) {
+    return this.cliente.get<any>(this.apiBackend + '/publicaciones/' + id);
   }
 
-  buscadorPublicaciones(publicacion: string, options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/buscador?titulo=' + publicacion, options);
+  buscadorPublicaciones(publicacion: string) {
+    return this.cliente.get<any>(this.apiBackend + '/buscador?titulo=' + publicacion);
   }
 
   // Elimina no servidor o comentario cuxo id coindice co parámetro
-  eliminarPublicacion(id: number, options?: { headers?: HttpHeaders }) {
-    return this.cliente.delete<any>(this.apiBackend + '/publicacion/' + id, options);
+  eliminarPublicacion(id: number) {
+    return this.cliente.delete<any>(this.apiBackend + '/publicacion/' + id);
   }
 
   /* Crear una nueva publicacion */
-  engadirEvento(body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.post<any>(this.apiBackend + '/evento_calendarios', body, options);
+  engadirEvento(body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/evento_calendarios', body);
   }
 
-  mostrarEventos(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/evento_calendarios', options);
+  mostrarEventos() {
+    return this.cliente.get<any>(this.apiBackend + '/evento_calendarios');
   }
 
   // Modificamos os valores indicando ao servidor
-  modificarEvento(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.put<any>(this.apiBackend + '/evento_calendarios/' + id, body, options);
+  modificarEvento(id: number, body: any) {
+    return this.cliente.put<any>(this.apiBackend + '/evento_calendarios/' + id, body);
   }
 
   // Elimina no servidor o comentario cuxo id coindice co parámetro
-  eliminarEvento(id: number, options?: { headers?: HttpHeaders }) {
-    return this.cliente.delete<any>(this.apiBackend + '/evento_calendarios/' + id, options);
+  eliminarEvento(id: number) {
+    return this.cliente.delete<any>(this.apiBackend + '/evento_calendarios/' + id);
   }
 
-  mostrarPlanes(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/plan', options);
-  }
-
-  // Modificamos os valores indicando ao servidor
-  modificarPlanes(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.put<any>(this.apiBackend + '/plan/' + id, body, options);
-  }
-
-  mostrarPerfiles(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/perfil', options);
-  }
-
-  mostrarPerfil(id: number, options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/perfil/' + id, options);
-  }
-
-  mostrarPlan(id: number, options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/plan/' + id, options);
+  mostrarPlanes() {
+    return this.cliente.get<any>(this.apiBackend + '/plan');
   }
 
   // Modificamos os valores indicando ao servidor
-  darLike(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.put<any>(this.apiBackend + '/valorar/' + id, body, options);
+  modificarPlanes(id: number, body: any) {
+    return this.cliente.put<any>(this.apiBackend + '/plan/' + id, body);
+  }
+
+  mostrarPerfiles() {
+    return this.cliente.get<any>(this.apiBackend + '/perfil');
+  }
+
+  mostrarPerfil(id: number) {
+    return this.cliente.get<any>(this.apiBackend + '/perfil/' + id);
+  }
+
+  mostrarPlan(id: number) {
+    return this.cliente.get<any>(this.apiBackend + '/plan/' + id);
   }
 
   // Modificamos os valores indicando ao servidor
-  modificarPerfil(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.post<any>(this.apiBackend + '/perfil/' + id, body, options);
+  darLike(id: number, body: any) {
+    return this.cliente.put<any>(this.apiBackend + '/valorar/' + id, body);
   }
 
-  modificarPlan(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.put<any>(this.apiBackend + '/plan/' + id, body, options);
+  // Modificamos os valores indicando ao servidor
+  modificarPerfil(id: number, body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/perfil/' + id, body);
   }
 
-  portalUrl(body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.post<any>(this.apiBackend + '/stripe/portal', body, options);
+  modificarPlan(id: number, body: any) {
+    return this.cliente.put<any>(this.apiBackend + '/plan/' + id, body);
   }
 
-  accesoPremium(body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.post<any>(this.apiBackend + '/crearSubscrpcion', body, options);
+  portalUrl(body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/stripe/portal', body);
   }
 
-  mostrarLikes(publicacion_id: number, options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/publicacionLikes/' + publicacion_id, options);
+  accesoPremium(body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/crearSubscrpcion', body);
   }
 
-  mostrarGratuitos(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/gratuito', options);
+  mostrarLikes(publicacion_id: number) {
+    return this.cliente.get<any>(this.apiBackend + '/publicacionLikes/' + publicacion_id);
   }
 
-  modificarGratuito(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.put<any>(this.apiBackend + '/gratuito/' + id, body, options);
+  mostrarGratuitos() {
+    return this.cliente.get<any>(this.apiBackend + '/gratuito');
   }
 
-  mostrarPremiums(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/premium', options);
+  modificarGratuito(id: number, body: any) {
+    return this.cliente.put<any>(this.apiBackend + '/gratuito/' + id, body);
   }
 
-  modificarPremium(id: number, body: any, options?: { headers?: HttpHeaders }) {
-    return this.cliente.put<any>(this.apiBackend + '/premium/' + id, body, options);
+  mostrarPremiums() {
+    return this.cliente.get<any>(this.apiBackend + '/premium');
   }
 
-  mostrarEstado(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/estado', options);
+  modificarPremium(id: number, body: any) {
+    return this.cliente.put<any>(this.apiBackend + '/premium/' + id, body);
   }
 
-  middlewareAdmin(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/admin/dashboard', options);
+  mostrarEstado() {
+    return this.cliente.get<any>(this.apiBackend + '/estado');
   }
 
-  mesActual(options?: { headers?: HttpHeaders }) {
-    return this.cliente.get<any>(this.apiBackend + '/mesActual', options);
+  middlewareAdmin() {
+    return this.cliente.get<any>(this.apiBackend + '/admin/dashboard');
+  }
+
+  mesActual() {
+    return this.cliente.get<any>(this.apiBackend + '/mesActual');
   }
 
   /*

@@ -82,12 +82,7 @@ export class ForoComponent implements OnInit {
       tema: this.formularioCRUDForo.value.tema,
     }
 
-    this.servizo.engadirForo(nuevoForo, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.engadirForo(nuevoForo).subscribe({
       next: (foro) => {
         //Añadimos el tema mediante suscripcion
         this.foros.push(foro);
@@ -126,12 +121,7 @@ export class ForoComponent implements OnInit {
       this.foroSeleccionar.tema = this.formularioCRUDForo.get('tema')?.value;
 
       // Llamamos al servicio para modificar
-      this.servizo.modificarForo(this.foroSeleccionar.id, this.foroSeleccionar, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.servizo.token}`,
-          'Accept': 'application/json',
-        })
-      }).subscribe({
+      this.servizo.modificarForo(this.foroSeleccionar.id, this.foroSeleccionar).subscribe({
         next: () => {
           this.formularioCRUDForo.reset(); // Limpiamos el formulario
           this.cambiar = false;
@@ -157,12 +147,7 @@ export class ForoComponent implements OnInit {
 
   mostrarForos() {
 
-    this.servizo.mostrarForos({
-      headers: new HttpHeaders({
-        /* 'Authorization': `Bearer ${this.servizo.token}`, */
-        'Accept': 'application/json',
-      }),
-    }).subscribe({
+    this.servizo.mostrarForos().subscribe({
       next: (response) => {
         this.foros = response;
         this.carga = false;
@@ -177,12 +162,7 @@ export class ForoComponent implements OnInit {
   // Método para eliminar un foro por su ID
   eliminarForo(id: number) {
     this.loadingEliminar = id;
-    this.servizo.eliminarForo(id, {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.servizo.token}`,
-        'Accept': 'application/json',
-      })
-    }).subscribe({
+    this.servizo.eliminarForo(id).subscribe({
       next: () => {
         // Filtra y elimina el foro del array local
         this.foros = this.foros.filter(foro => foro.id !== id);

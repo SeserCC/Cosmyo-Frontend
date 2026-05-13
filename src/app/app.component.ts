@@ -24,11 +24,7 @@ export class AppComponent implements OnInit {
 
   estado() {
     let urlActual = window.location.href;
-    this.servizo.mostrarEstado({
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-      }),
-    }).pipe().subscribe({
+    this.servizo.mostrarEstado().pipe().subscribe({
       next: (response) => {
 
         if (response.maintenance) {
