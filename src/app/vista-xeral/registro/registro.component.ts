@@ -85,7 +85,7 @@ export class RegistroComponent {
       error: (erro) => {
         //console.error('Error en el registro', erro);
         this.loading = false;
-        if (erro.status == 422) {
+        if (erro.status == 422 || erro.status == 500) {
           this.errorMensaje = erro.error;
         } else {
           this.errorMensaje = 'Error inesperado del servidor';
