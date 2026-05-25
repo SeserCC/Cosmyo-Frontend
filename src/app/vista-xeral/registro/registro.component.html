@@ -12,6 +12,7 @@
             <i class="bi bi-arrow-left"></i>
         </a>
         <p *ngIf="errorMensaje?.errors.email" class="mensaje-error"> {{errorMensaje.message}} </p>
+        <p *ngIf="errorMensaje" class="mensaje-error"> {{errorMensaje.message}} </p>
         <!-- Formulario -->
         <form [formGroup]="formularioRegistro" (ngSubmit)="registro($event)">
             <h1 class="text-center">Nueva cuenta</h1>
