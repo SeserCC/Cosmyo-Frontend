@@ -132,6 +132,21 @@ a {
 }
 
 @media (max-width: 768px) {
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    /* Navegación más pequeña */
+    #mapa_navegacion {
+        font-size: 13px;
+    }
+
+    /* Flecha más pequeña */
+    .flecha-derecha i {
+        font-size: 1.5rem;
+    }
+
     .privacy-container {
         padding: 15px;
     }
