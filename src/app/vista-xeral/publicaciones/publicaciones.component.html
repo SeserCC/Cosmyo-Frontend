@@ -101,7 +101,7 @@
                         <ng-container *ngIf="!loading">
                             <div class="control">
                                 <button *ngIf="cambiar" type="button" class="button is-info boton-modificar"
-                                    [disabled]="formularioCRUDImagen.invalid || !archivoSelect"
+                                    [disabled]="formularioCRUDImagen.invalid"
                                     (click)="modificarPublicacion()">
                                     Modificar
                                 </button>
