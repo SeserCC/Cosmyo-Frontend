@@ -1,0 +1,275 @@
+.contenido {
+    background-color: #7b7b7b;
+    /* Color de fondo gris */
+    color: #ffffff;
+    /* Color de texto blanco */
+
+    /* Elimina los márgenes por defecto */
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    /* Para que cubra toda la pantalla */
+}
+
+/* Estilo para los enlaces */
+a {
+    color: white;
+    /* Color de los enlaces en blanco */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+}
+
+/* Estilo para el mapa de navegación */
+#mapa_navegacion {
+    font-family: Arial, Helvetica, sans-serif;
+    /* Fuente sans-serif */
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+/* Estilo para los enlaces dentro de #mapa_navegacion al pasar el ratón */
+#mapa_navegacion>a:hover {
+    opacity: 0.6;
+    /* Reduce la opacidad al pasar el ratón */
+}
+
+#creacion_web {
+    background-color: #032e67;
+    /* Fondo azul oscuro */
+    padding: 5px;
+    /* Relleno */
+    border-radius: 5px;
+    /* Bordes redondeados */
+}
+
+/* Estilo para el bloque de datos */
+.datos {
+    position: relative;
+    background-color: #1d1d1d;
+    margin: 70px 90px;
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(24, 98, 235, 0.8);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+}
+
+.flecha-derecha {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.flecha-derecha i {
+    font-size: 2rem;
+}
+
+/* Hover suave */
+.flecha-derecha:hover {
+    transform: scale(1.1);
+}
+
+#desarrollo-web {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    width: 50%;
+}
+
+#desarrollo-web::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0;
+    height: 2px;
+    background-color: #0f58c5;
+    transition: width 0.3s ease-in-out;
+}
+
+#desarrollo-web:hover::after {
+    width: 100%;
+}
+
+.about-container {
+    margin: 15px;
+    max-width: 1100px;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.about-image {
+    background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1200&auto=format&fit=crop') center/cover;
+    min-height: 500px;
+}
+
+.about-content {
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.subtitle {
+    color: #38bdf8;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.about-content h1 {
+    font-size: 42px;
+    line-height: 1.2;
+}
+
+.about-content p {
+    color: #d8dfe7;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+button {
+    width: fit-content;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 10px;
+    background: #38bdf8;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0ea5e9;
+    transform: translateY(-2px);
+}
+
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h3 {
+    color: white;
+}
+
+
+@media (max-width: 1024px) {
+
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    #mapa_navegacion {
+        font-size: 14px;
+    }
+
+    .flecha-derecha i {
+        font-size: 1.8rem;
+    }
+
+    .about-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .about-image {
+        width: 100%;
+        max-width: 800px;
+
+        min-height: 300px;
+
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .about-content {
+        padding: 40px;
+    }
+
+    .about-content h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    /* Navegación más pequeña */
+    #mapa_navegacion {
+        font-size: 13px;
+    }
+
+    /* Flecha más pequeña */
+    .flecha-derecha i {
+        font-size: 1.5rem;
+    }
+
+    .about-container {
+        margin: 0;
+        margin-top: 15px;
+        grid-template-columns: 1fr;
+    }
+
+    .about-image {
+        min-height: 300px;
+    }
+
+    .about-content {
+        padding: 40px;
+    }
+
+    .about-content h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .datos {
+        margin: auto;
+        box-shadow: none;
+    }
+
+    #mapa_navegacion {
+        font-size: 15px;
+        margin: 0;
+    }
+
+    .about-container {
+        grid-template-columns: 1fr;
+    }
+
+    .about-image {
+        min-height: 300px;
+    }
+
+    .about-content {
+        padding: 40px;
+    }
+
+    .about-content h1 {
+        font-size: 32px;
+    }
+
+}

@@ -85,6 +85,7 @@ export class PublicacionesComponent implements OnInit {
     });
 
     this.archivoSelect = null;
+
   }
 
   // Método para modificar una publicación existente
@@ -96,6 +97,8 @@ export class PublicacionesComponent implements OnInit {
     if (this.publicacionSeleccionar) {
 
       if (this.archivoSelect) {
+        console.log(this.archivoSelect);
+
         modificarPublicacion.append('imagen', this.archivoSelect);
       }
 
@@ -107,6 +110,7 @@ export class PublicacionesComponent implements OnInit {
       // Llamamos al servicio para modificar
       this.servizo.modificarPublicacion(this.publicacionSeleccionar.id, modificarPublicacion).subscribe({
         next: (response) => {
+          /* console.log(response) */
           this.publicacionSeleccionar.titulo = this.formularioCRUDImagen.get('titulo')?.value;
           this.publicacionSeleccionar.descripcion = this.formularioCRUDImagen.get('descripcion')?.value;
           this.publicacionSeleccionar.zona_geografica = this.formularioCRUDImagen.get('zona_geografica')?.value;
