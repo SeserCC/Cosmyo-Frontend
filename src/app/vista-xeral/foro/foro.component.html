@@ -86,8 +86,11 @@
                             </div>
                         </ng-container>
                     </ng-container>
-                    <a [routerLink]="['/debate', foro.id]">{{foro.tema}}</a>
 
+                    <a id="enlace-foro" [routerLink]="['/debate', foro.id]">{{foro.tema}}</a>
+
+                    <p *ngIf="foro.user?.name" id="creador-foro">Creado por <a
+                            [routerLink]="['/perfil', foro.user_id]">{{foro.user?.name}}</a> </p>
                     <span id="foro_fecha">
                         {{ foro.fecha_creacion | date : 'dd/MM/yyyy'}}
                     </span>
