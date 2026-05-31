@@ -42,6 +42,6 @@ export const routes: Routes = [
     { path: "politicaPrivacidad", component: PoliticaPrivacidadComponent },
     { path: "auth-callback", component: AuthCallbackComponent },
     { path: "sobre-nosotros", component: CreacionWebComponent },
-    { path: "desarrollo-web", component: TecnologiasEmpleadasComponent, canActivate: [adminGuard] },
+    { path: "desarrollo-web", component: TecnologiasEmpleadasComponent },
     { path: "**", component: NoEncontradaComponent },
 ];
