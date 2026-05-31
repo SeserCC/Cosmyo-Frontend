@@ -79,7 +79,7 @@ a {
     margin-left: 15px;
 }
 
-.loader-big{
+.loader-big {
     width: 50px;
     height: 50px;
 }
@@ -147,10 +147,6 @@ a {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.6s ease forwards;
-}
-
-.foros>a {
-    padding: 10px;
 }
 
 #foro_fecha {
@@ -286,6 +282,17 @@ form {
     color: red;
 }
 
+#enlace-foro {
+    display: inline-block;
+    padding: 10px;
+}
+
+#creador-foro {
+    color: rgb(184, 184, 184);
+    font-style: italic;
+    font-size: 14px;
+    padding: 10px;
+}
 
 @media (max-width: 1024px) {
 

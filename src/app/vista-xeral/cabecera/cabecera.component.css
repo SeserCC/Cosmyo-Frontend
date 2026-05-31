@@ -28,7 +28,7 @@
     font-size: 0.9rem;
 }
 
-.bi-person{
+.bi-person {
     font-size: 25px;
 }
 
@@ -48,6 +48,15 @@
 /* Admin */
 .admin-item {
     color: #ffc107;
+}
+
+#sobre-nosotros {
+    font-weight: 600;
+    color: #444;
+}
+
+#sobre-nosotros:hover {
+    color: #032E67;
 }
 
 /* Logout */
