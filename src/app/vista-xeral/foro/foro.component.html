@@ -86,13 +86,18 @@
                             </div>
                         </ng-container>
                     </ng-container>
-
                     <a id="enlace-foro" [routerLink]="['/debate', foro.id]">{{foro.tema}}</a>
 
                     <p *ngIf="foro.user?.name" id="creador-foro">Creado por <a
-                            [routerLink]="['/perfil', foro.user_id]">{{foro.user?.name}}</a> </p>
-                    <span id="foro_fecha">
-                        {{ foro.fecha_creacion | date : 'dd/MM/yyyy'}}
+                            [routerLink]="['/perfil', foro.user_id]">{{foro.user?.name}}</a> - {{ (foro.created_at ||
+                        foro.fecha_creacion)
+                        |tiempoTranscurrido }}
+                        <ng-container *ngIf="foro.ultimo_comentario">- Último comentario:
+                            {{foro.ultimo_comentario.user.name}}</ng-container>
+                    </p>
+                    <span id="ultimo_comentario_fecha">
+                        {{ foro.ultimo_comentario ? (foro.ultimo_comentario.created_at | tiempoTranscurrido) : ''}}
+
                     </span>
                 </div>
             </div>

@@ -21,6 +21,8 @@ export class DebateComponent {
 
   foro: any
 
+  mostrarMas: number | null;
+
   esconderCheckbox = false;
 
   mensajeError: any;
@@ -70,6 +72,15 @@ export class DebateComponent {
 
   toggleMenu(id: number) {
     this.menuAbierto = this.menuAbierto === id ? null : id;
+  }
+
+  reducirInfo(id: number) {
+    if (this.mostrarMas == id) {
+      this.mostrarMas = null
+    } else {
+      this.mostrarMas = id;
+    }
+
   }
 
   archivoSeleccionado(event: any): void {

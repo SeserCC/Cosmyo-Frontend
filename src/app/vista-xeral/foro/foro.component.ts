@@ -5,6 +5,7 @@ import { ServizoLoginService } from '../../servizo-login.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { TiempoTranscurridoPipe } from '../../tiempo-transcurrido.pipe';
 
 @Component({
   selector: 'app-foro',
@@ -26,7 +27,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
       transition('visible <=> hidden', animate('400ms ease'))
     ])
   ],
-  imports: [RouterLink, CommonModule, ReactiveFormsModule],
+  imports: [RouterLink, CommonModule, ReactiveFormsModule, TiempoTranscurridoPipe],
   templateUrl: './foro.component.html',
   styleUrl: './foro.component.css'
 })

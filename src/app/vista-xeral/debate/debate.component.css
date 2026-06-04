@@ -176,6 +176,14 @@ textarea::placeholder {
     animation-delay: 0.5s;
 }
 
+#ver-mas:hover {
+    color: #2e78da;
+}
+
+.texto-comentario {
+    color: red;
+}
+
 /* Estilo para los contenedores de información de usuario */
 #usuario1_info {
     font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
