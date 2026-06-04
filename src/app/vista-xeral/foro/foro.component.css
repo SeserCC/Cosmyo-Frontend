@@ -149,12 +149,12 @@ a {
     animation: fadeInUp 0.6s ease forwards;
 }
 
-#foro_fecha {
+#ultimo_comentario_fecha {
     position: absolute;
     bottom: 0.5rem;
     right: 0.5rem;
     font-size: 0.9rem;
-    color: #868585;
+    color: #dbdbdb;
 }
 
 form {

@@ -60,17 +60,23 @@
                     </div>
 
                     <div id="usuario1_texto">
-                        <p>{{comentario.texto}}</p>
+                        <p>{{
+                            comentario.texto.length <= 600 ? comentario.texto : ( mostrarMas==comentario.id ?
+                                comentario.texto : (comentario.texto | slice:0:600) + '...' ) }} </p><button
+                                    id="ver-mas" *ngIf="comentario.texto.length >= 600"
+                                    (click)="reducirInfo(comentario.id)">{{mostrarMas ==
+                                    comentario.id ? 'Ver menos'
+                                    : 'Ver más'}}</button>
 
-                        <ng-container *ngIf="comentario.foto && comentario.foto.includes('image')">
-                            <img [src]="comentario.foto" id="fotoComentario">
-                        </ng-container>
+                                <ng-container *ngIf="comentario.foto && comentario.foto.includes('image')">
+                                    <img [src]="comentario.foto" id="fotoComentario">
+                                </ng-container>
 
-                        <ng-container *ngIf="comentario.foto && comentario.foto.includes('video')">
-                            <video id="videoComentario" controls>
-                                <source [src]="comentario.foto">
-                            </video>
-                        </ng-container>
+                                <ng-container *ngIf="comentario.foto && comentario.foto.includes('video')">
+                                    <video id="videoComentario" controls>
+                                        <source [src]="comentario.foto">
+                                    </video>
+                                </ng-container>
                     </div>
 
                 </div>
@@ -108,10 +114,18 @@
                 <div class="field">
                     <div class="control">
                         <textarea class="textarea has-background-black-ter has-text-light"
-                            placeholder="Para realizar esta foto..." formControlName="texto"></textarea>
+                            placeholder="Para realizar esta foto..." formControlName="texto"
+                            maxlength="3500"></textarea>
+                        <ng-container *ngIf="formularioCRUDComentario.get('texto')?.value">
+                            <span
+                                [ngClass]="formularioCRUDComentario.get('texto')?.value?.length >= 2500 ? 'texto-comentario': ''">
+                                {{
+                                formularioCRUDComentario.get('texto')?.value?.length || 0}}/2500</span></ng-container>
+
                     </div>
-                    <p *ngIf="formularioCRUDComentario.get('texto')?.touched && formularioCRUDComentario.get('texto')?.invalid"
-                        class="help is-danger">
+
+                    <p *ngIf="formularioCRUDComentario.get('texto')?.touched &&
+                        formularioCRUDComentario.get('texto')?.invalid" class="help is-danger">
                         Debes indicar un texto
                     </p>
                 </div>
