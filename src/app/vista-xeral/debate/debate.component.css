@@ -176,6 +176,10 @@ textarea::placeholder {
     animation-delay: 0.5s;
 }
 
+#comentario-texto {
+    white-space: pre-line;
+}
+
 #ver-mas:hover {
     color: #2e78da;
 }
@@ -423,7 +427,7 @@ button.is-link:disabled {
 #nota_archivo {
     font-style: italic;
     font-size: 13px;
-    color: gray;
+    color: rgb(177, 177, 177);
 }
 
 .mensaje-error {

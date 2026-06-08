@@ -205,9 +205,28 @@ export class ServizoLoginService {
     return this.cliente.delete<any>(this.apiBackend + '/foro/' + id)
   }
 
+  recibirFirma() {
+    return this.cliente.get<any>(this.apiBackend + '/cloudinary/signature')
+  }
+
+  subirVideo(archivo: File, firma: any) {
+    const datos = new FormData();
+
+    const tipo = archivo.type.startsWith('video/')
+      ? 'video'
+      : 'image';
+
+    datos.append('file', archivo);
+    datos.append('api_key', firma.api_key);
+    datos.append('timestamp', firma.timestamp);
+    datos.append('signature', firma.signature);
+    datos.append('folder', 'comentarios');
+
+    return this.cliente.post(`https://api.cloudinary.com/v1_1/${firma.cloud_name}/${tipo}/upload`, datos);
+  }
+
   // Engade un novo usuario ao servidor a partir do seu nome, rol y contraseña
   engadirComentario(body: any) {
-    /* (body); */
     return this.cliente.post<any>(this.apiBackend + '/comentario', body);
   }
 
@@ -221,7 +240,7 @@ export class ServizoLoginService {
 
   // Modificamos os valores indicando ao servidor
   modificarComentario(id: number, body: any) {
-    return this.cliente.post<any>(this.apiBackend + '/comentario/' + id, body);
+    return this.cliente.put<any>(this.apiBackend + '/comentario/' + id, body);
   }
 
   // Elimina no servidor o comentario cuxo id coindice co parámetro
