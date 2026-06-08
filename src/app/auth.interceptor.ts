@@ -4,6 +4,10 @@ import { inject, PLATFORM_ID } from '@angular/core';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
+  if (req.url.includes('cloudinary.com')) {
+    return next(req);
+  }
+
   const platformId = inject(PLATFORM_ID);
 
   if (isPlatformBrowser(platformId)) {

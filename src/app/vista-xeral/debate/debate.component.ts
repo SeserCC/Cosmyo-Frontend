@@ -5,11 +5,12 @@ import { ServizoLoginService } from '../../servizo-login.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
+import { TiempoTranscurridoPipe } from '../../tiempo-transcurrido.pipe';
 
 @Component({
   selector: 'app-debate',
   standalone: true,
-  imports: [RouterLink, CommonModule, ReactiveFormsModule],
+  imports: [RouterLink, CommonModule, ReactiveFormsModule, TiempoTranscurridoPipe],
   templateUrl: './debate.component.html',
   styleUrl: './debate.component.css'
 })
@@ -17,7 +18,7 @@ export class DebateComponent {
   // Array donde se almacenan todos los comentarios
   comentarios: any[];
 
-  urlImagen = '';
+  urlMultimedia = '';
 
   foro: any
 
@@ -88,37 +89,86 @@ export class DebateComponent {
     this.faltaArchivo = false;
   }
 
-  // Método para añadir un nuevo comentario
   engadirComentario(fileInput?: HTMLInputElement) {
     this.loading = true;
-    const nuevoComentario = new FormData();
-    nuevoComentario.append('texto', this.formularioCRUDComentario.get('texto')?.value);
-    nuevoComentario.append('foro_id', String(this.router.snapshot.paramMap.get('foro_id')));
-
-    if (this.archivoSelect) {
-      nuevoComentario.append('foto', this.archivoSelect);
+    let video = this.archivoSelect;
+    if (video?.type.startsWith('video/')) {
+      let limiteVideo = 100 * 1024 * 1024;
+      if (video.size > limiteVideo) {
+        this.loading = false;
+        this.mensajeError = "El video supera el tamaño máximo permitido: 100 MB";
+        return;
+      }
     }
 
-    this.servizo.engadirComentario(nuevoComentario).subscribe({
-      next: (comentario) => {
-        //Añadimos el tema mediante suscripcion
-        this.comentarios.push(comentario);
-        this.formularioCRUDComentario.reset();
-        this.archivoSelect = null;
-        if (fileInput) {
-          fileInput.value = '';
+    let comentario = {
+      texto: this.formularioCRUDComentario.get('texto')?.value,
+      foro_id: String(this.router.snapshot.paramMap.get('foro_id'))
+    }
+
+    if (video) {
+      this.servizo.recibirFirma().subscribe((firma: any) => {
+
+        this.servizo.subirVideo(video, firma).subscribe({
+          next: (data: any) => {
+            const comentarioMultimedia = {
+              ...comentario,
+              foto: data.secure_url,
+              public_id: data.public_id,
+              bytes: data.bytes,
+              resource_type: data.resource_type,
+            };
+            console.log(comentarioMultimedia);
+
+            this.servizo.engadirComentario(comentarioMultimedia).subscribe({
+              next: (comentario) => {
+                this.comentarios.push(comentario);
+                this.formularioCRUDComentario.reset();
+                if (fileInput) {
+                  fileInput.value = '';
+                }
+                this.loading = false;
+
+              },
+
+              error: (erro) => {
+                //console.error('Error al añadir un comentario ', erro);
+                this.loading = false;
+                if (erro.status == 422) {
+                  this.mensajeError = erro.error.message;
+                }
+              }
+            })
+          },
+          error: (erro) => {
+            console.error(erro);
+            if (erro.status == 400 || erro.status == 413) {
+              this.mensajeError = 'El archivo supera el tamaño máximo permitido.';
+            }
+            this.loading = false;
+          }
+        });
+      })
+    } else {
+      this.servizo.engadirComentario(comentario).subscribe({
+        next: (comentario) => {
+          this.comentarios.push(comentario);
+          this.formularioCRUDComentario.reset();
+          this.loading = false;
+        },
+        error: (erro) => {
+          //console.error('Error al añadir un comentario ', erro);
+          this.loading = false;
+          if (erro.status == 422) {
+            this.mensajeError = erro.error.message;
+          }
         }
-        this.loading = false;
-      },
-      error: (erro) => {
-        //console.error('Error al añadir un comentario ', erro);
-        this.loading = false;
-        if (erro.status == 422) {
-          this.mensajeError = erro.error;
-        }
-      }
-    });
+      })
+    }
+
+
   }
+
 
   // Método para cancelar una edición y limpiar el formulario
   cancelar(formulario: FormGroup, fileInput?: HTMLInputElement) {
@@ -135,9 +185,6 @@ export class DebateComponent {
   editarComentario(comentario: any) {
     this.cambiar = true;                     // Se activa el modo edición
     this.comentarioSeleccionar = comentario; // Se guarda el comentario seleccionado
-    /* if (this.comentarioSeleccionar.foto = null) {
-      this.esconderCheckbox = true;
-    } */
     this.formularioCRUDComentario.patchValue({
       texto: comentario.texto,              // Se carga el texto del comentario en el formulario
     });
@@ -148,46 +195,109 @@ export class DebateComponent {
     this.cambiar = false;
     this.loading = true;
 
-    const modificarComentario = new FormData();
+    this.comentarioSeleccionar.eliminarImagen = this.formularioCRUDComentario.get('eliminarImagen')?.value;
 
     if (this.comentarioSeleccionar) {
 
-      if (this.archivoSelect) {
-        modificarComentario.append('foto', this.archivoSelect);
-      }
-
-      if (this.formularioCRUDComentario.value.eliminarImagen) {
-        modificarComentario.append('eliminarImagen', 'true');
-
-      }
-
-      modificarComentario.append('texto', this.formularioCRUDComentario.get('texto')?.value);
-      modificarComentario.append('foro_id', String(this.router.snapshot.paramMap.get('foro_id')));
-      modificarComentario.append('_method', 'PUT');
-
-      // Llamamos al servicio para modificar
-      this.servizo.modificarComentario(this.comentarioSeleccionar.id, modificarComentario).subscribe({
-        next: (response) => {
-          this.comentarioSeleccionar.foro_id = String(this.router.snapshot.paramMap.get('foro_id'));
-          this.comentarioSeleccionar.texto = this.formularioCRUDComentario.get('texto')?.value;
-          if (response.foto) {
-            this.comentarioSeleccionar.foto = response.foto;
-          }
-          this.formularioCRUDComentario.reset(); // Limpiamos el formulario
+      let video = this.archivoSelect;
+      if (video?.type.startsWith('video/')) {
+        let limiteVideo = 100 * 1024 * 1024;
+        if (video.size > limiteVideo) {
           this.loading = false;
-          this.archivoSelect = null;
-          if (fileInput) {
-            fileInput.value = '';
-          }
-
-        },
-        error: (erro) => {
-          //console.error("Error al modificar del comentario", erro)
-          this.loading = false;
-
+          this.mensajeError = "El video supera el tamaño máximo permitido: 100 MB";
+          return;
         }
+      }
 
-      });
+      this.comentarioSeleccionar.texto = this.formularioCRUDComentario.get('texto')?.value;
+      this.comentarioSeleccionar.foro_id = String(this.router.snapshot.paramMap.get('foro_id'));
+
+      if (video) {
+        this.servizo.recibirFirma().subscribe((firma: any) => {
+
+          this.servizo.subirVideo(video, firma).subscribe({
+            next: (data: any) => {
+              const comentarioMultimedia = {
+                ...this.comentarioSeleccionar,
+                foto: data.secure_url,
+                public_id: data.public_id,
+                bytes: data.bytes,
+                resource_type: data.resource_type,
+              };
+
+              this.servizo.modificarComentario(this.comentarioSeleccionar.id, comentarioMultimedia).subscribe({
+                next: (data) => {
+                  comentarioMultimedia.foro_id = String(this.router.snapshot.paramMap.get('foro_id'));
+                  comentarioMultimedia.texto = this.formularioCRUDComentario.get('texto')?.value;
+                  this.formularioCRUDComentario.get('eliminarImagen')?.setValue(false);
+                  if (data.foto) {
+                    this.comentarioSeleccionar.foto = data.foto;
+                  }
+                  this.formularioCRUDComentario.reset();
+                  if (fileInput) {
+                    fileInput.value = '';
+                  }
+                  this.loading = false;
+                  this.archivoSelect = null;
+                },
+
+                error: (erro) => {
+                  this.formularioCRUDComentario.get('eliminarImagen')?.setValue(false);
+                  //console.error('Error al añadir un comentario ', erro);
+                  this.loading = false;
+                  if (erro.status == 422) {
+                    this.mensajeError = erro.error.message;
+                  }
+                  if (fileInput) {
+                    fileInput.value = '';
+                  }
+                  this.archivoSelect = null;
+                }
+              })
+            },
+            error: (erro) => {
+              this.formularioCRUDComentario.get('eliminarImagen')?.setValue(false);
+              console.error(erro);
+              if (erro.status == 400 || erro.status == 413) {
+                this.mensajeError = 'El archivo supera el tamaño máximo permitido.';
+              }
+              if (fileInput) {
+                fileInput.value = '';
+              }
+              this.archivoSelect = null;
+              this.loading = false;
+            }
+          });
+        })
+      } else {
+        this.servizo.modificarComentario(this.comentarioSeleccionar.id, this.comentarioSeleccionar).subscribe({
+          next: () => {
+            this.formularioCRUDComentario.get('eliminarImagen')?.setValue(false);
+
+            this.comentarioSeleccionar.foto = null;
+
+            if (fileInput) {
+              fileInput.value = '';
+            }
+            this.archivoSelect = null;
+
+            this.formularioCRUDComentario.reset();
+            this.loading = false;
+          },
+          error: (erro) => {
+            this.formularioCRUDComentario.get('eliminarImagen')?.setValue(false);
+            /* console.error('Error al editar el comentario ', erro); */
+            this.loading = false;
+            if (erro.status == 422) {
+              this.mensajeError = erro.error.message;
+            }
+            if (fileInput) {
+              fileInput.value = '';
+            }
+            this.archivoSelect = null;
+          }
+        })
+      }
     }
   }
 
@@ -211,18 +321,18 @@ export class DebateComponent {
   }
 
   /* mostrarComentarios(page: number) {
-
+ 
     this.servizo.mostrarComentarios(page).subscribe({
       next: (response) => {
         this.comentarios = response.data;
         this.paginaActual = response.current_page;
         this.paginasTotales = response.last_page;
-
+ 
         this.paginas = [];
         for (let i = 1; i <= this.paginasTotales; i++) {
           this.paginas.push(i);
         }
-
+ 
       },
       error: (err) => {
         //console.error('❌ Error al mostrar los comentarios', err);
