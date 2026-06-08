@@ -97,8 +97,6 @@ export class PublicacionesComponent implements OnInit {
     if (this.publicacionSeleccionar) {
 
       if (this.archivoSelect) {
-        console.log(this.archivoSelect);
-
         modificarPublicacion.append('imagen', this.archivoSelect);
       }
 

@@ -56,11 +56,11 @@
                     <div id="usuario1_info">
                         <a [routerLink]="['/perfil', comentario.user_id]"
                             id="nombre_usuario">{{comentario.user?.name}}</a>
-                        <p id="fecha_hora">{{comentario?.fecha_hora | date:'dd/MM/yyyy HH:mm'}}</p>
+                        <p id="fecha_hora">{{comentario?.fecha_hora | tiempoTranscurrido}}</p>
                     </div>
 
                     <div id="usuario1_texto">
-                        <p>{{
+                        <p id="comentario-texto">{{
                             comentario.texto.length <= 600 ? comentario.texto : ( mostrarMas==comentario.id ?
                                 comentario.texto : (comentario.texto | slice:0:600) + '...' ) }} </p><button
                                     id="ver-mas" *ngIf="comentario.texto.length >= 600"
@@ -135,7 +135,7 @@
                         <input class="input has-background-black-ter has-text-light"
                             (change)="archivoSeleccionado($event)" #fileInputC type="file">
                     </div>
-                    <p class="mensaje-error" *ngIf="mensajeError">{{mensajeError.message}}</p>
+                    <p class="mensaje-error" *ngIf="mensajeError">{{mensajeError}}</p>
                 </div>
                 <div *ngIf="loading" class="loader"></div>
 
@@ -159,7 +159,7 @@
                             <label class="checkbox_container">
                                 <input formControlName="eliminarImagen" type="checkbox">
                                 <span class="checkmark"></span>
-                                <span class="texto">Eliminar foto</span>
+                                <span class="texto">Eliminar contenido multimedia</span>
                             </label>
                         </div>
 
