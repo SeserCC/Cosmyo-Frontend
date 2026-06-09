@@ -67,26 +67,49 @@ export class SubirArchivoComponent {
       nuevaPublicacion.append('imagen', this.archivoSelect);
     }
 
-    this.servizo.engadirPublicacion(nuevaPublicacion).subscribe({
-      next: (publicacion) => {
-        //Añadimos el tema mediante suscripcion
-        this.publicaciones.push(publicacion);
-        /* (this.archivoSelect) */
-        this.formularioPublicacion.reset();
+    let publicacion = {
+      titulo: this.formularioPublicacion.get('titulo')?.value,
+      descripcion: this.formularioPublicacion.get('titulo')?.value,
+      zona_geografica: this.formularioPublicacion.get('titulo')?.value,
+    }
 
-        this.loading = false;
-        /*  this.archivoSelect = null; */
-        this.router.navigate(['/foto'])
-      },
-      error: (erro) => {
-        //console.error('Error al subir la publicacion', erro);
-        //console.error(erro.error);
-        this.loading = false;
-        if (erro.status == 422) {
-          this.mensajeError = erro.error
+    this.servizo.recibirFirma().subscribe((firma: any) => {
+      this.servizo.subirVideo(this.archivoSelect!, firma).subscribe({
+        next: (data: any) => {
+          const publicacionMultimedia = {
+            ...publicacion,
+            imagen: data.secure_url,
+            public_id: data.public_id,
+            bytes: data.bytes,
+            resource_type: data.resource_type,
+          };
+
+          this.servizo.engadirPublicacion(publicacionMultimedia).subscribe({
+            next: (publicacion) => {
+              this.formularioPublicacion.reset();
+              this.loading = false;
+              this.router.navigate(['/foto'])
+            },
+            error: (erro) => {
+              //console.error('Error al subir la publicacion', erro);
+              //console.error(erro.error);
+              this.loading = false;
+              if (erro.status == 422) {
+                this.mensajeError = erro.error.message
+              }
+            }
+          });
+        }, error: (erro) => {
+          /* console.error(erro); */
+          if (erro.status == 400 || erro.status == 413) {
+            this.mensajeError = 'La imagen supera el tamaño máximo permitido: 10 MB';
+          }
+          this.loading = false;
         }
-      }
-    });
+      })
+    })
+
+
   }
 
 }

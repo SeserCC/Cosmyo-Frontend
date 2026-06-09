@@ -139,7 +139,7 @@ export class PerfilComponent implements OnInit {
       },
       error: (erro) => {
         if (erro.status == 404) {
-          this.mensajeError = erro.error;
+          this.mensajeError = erro.error.message;
         }
       }
     })
@@ -166,6 +166,7 @@ export class PerfilComponent implements OnInit {
     this.cambiarPlan = false;
     this.cambiarUsuario = false;// Activamos el modo edición
     this.perfilSeleccionar = this.perfil;
+    /* console.log(this.perfilSeleccionar); */
 
     this.perfilCRUD.patchValue({
       telefono: this.perfil.telefono,
@@ -205,43 +206,91 @@ export class PerfilComponent implements OnInit {
 
   modificarPerfil() {
     this.carga = true;
-    const modificarPerfil = new FormData();
 
     if (this.perfilSeleccionar) {
 
-      if (this.archivoSelect) {
-        modificarPerfil.append('foto', this.archivoSelect);
-      }
+      let multimedia = this.archivoSelect;
 
-      modificarPerfil.append('telefono', this.perfilCRUD.get('telefono')?.value);
-      modificarPerfil.append('red_social_principal', this.perfilCRUD.get('red_social_principal')?.value);
-      modificarPerfil.append('usuario_red_social', this.perfilCRUD.get('usuario_red_social')?.value);
-      modificarPerfil.append('pais', this.perfilCRUD.get('pais')?.value);
-      modificarPerfil.append('biografia', this.perfilCRUD.get('biografia')?.value);
-      modificarPerfil.append('estado', this.perfil.estado);
-      modificarPerfil.append('_method', 'PUT');
+      this.perfilSeleccionar.telefono = this.perfilCRUD.get('telefono')?.value;
+      this.perfilSeleccionar.red_social_principal = this.perfilCRUD.get('red_social_principal')?.value;
+      this.perfilSeleccionar.usuario_red_social = this.perfilCRUD.get('usuario_red_social')?.value;
+      this.perfilSeleccionar.pais = this.perfilCRUD.get('pais')?.value;
+      this.perfilSeleccionar.biografia = this.perfilCRUD.get('biografia')?.value;
 
-      // Llamamos al servicio para modificar
-      this.servizo.modificarPerfil(this.perfilSeleccionar.user_id, modificarPerfil).subscribe({
-        next: (response) => {
-          this.cambiar = false;
-          this.archivoSelect = null;
-          this.perfilSeleccionar.telefono = this.perfilCRUD.get('telefono')?.value;
-          this.perfilSeleccionar.red_social_principal = this.perfilCRUD.get('red_social_principal')?.value ?? '';
-          this.perfilSeleccionar.usuario_red_social = this.perfilCRUD.get('usuario_red_social')?.value ?? '';
-          this.perfilSeleccionar.pais = this.perfilCRUD.get('pais')?.value;
-          this.perfilSeleccionar.biografia = this.perfilCRUD.get('biografia')?.value;
-          this.perfilSeleccionar.foto = response.foto;
-          this.carga = false;
-        },
-        error: (erro) => {
-          this.carga = false;
-          if (erro.status == 422) {
-            this.mensajeError = erro.error;
+      if (multimedia) {
+        this.servizo.recibirFirma().subscribe((firma: any) => {
+          this.servizo.subirVideo(multimedia, firma).subscribe({
+            next: (data: any) => {
+              const perfilMultimedia = {
+                ...this.perfilSeleccionar,
+                foto: data.secure_url,
+                public_id: data.public_id,
+                bytes: data.bytes,
+                resource_type: data.resource_type,
+              };
+
+              // Llamamos al servicio para modificar
+              this.servizo.modificarPerfil(this.perfilSeleccionar.user_id, perfilMultimedia).subscribe({
+                next: (response) => {
+                  this.cambiar = false;
+                  this.archivoSelect = null;
+                  perfilMultimedia.telefono = this.perfilCRUD.get('telefono')?.value;
+                  perfilMultimedia.red_social_principal = this.perfilCRUD.get('red_social_principal')?.value ?? '';
+                  perfilMultimedia.usuario_red_social = this.perfilCRUD.get('usuario_red_social')?.value ?? '';
+                  perfilMultimedia.pais = this.perfilCRUD.get('pais')?.value;
+                  perfilMultimedia.biografia = this.perfilCRUD.get('biografia')?.value;
+
+                  this.perfilSeleccionar.foto = response.foto;
+                  this.perfilSeleccionar.public_id = response.public_id;
+                  this.carga = false;
+                  this.perfilCRUD.reset();
+                },
+                error: (erro) => {
+                  this.carga = false;
+                  if (erro.status == 422) {
+                    this.mensajeError = erro.error.message;
+                  }
+                }
+
+              });
+            },
+            error: (erro) => {
+              //console.log('Error al modificar el perfil', erro);
+              if (erro.status == 400 || erro.status == 413) {
+                this.mensajeError = 'La imagen supera el tamaño máximo permitido: 10 MB';
+              }
+              this.carga = false;
+              this.archivoSelect = null;
+              this.loading = false;
+
+            }
+          })
+        })
+
+      } else {
+
+        this.servizo.modificarPerfil(this.perfilSeleccionar.user_id, this.perfilSeleccionar).subscribe({
+          next: (response) => {
+            this.perfilSeleccionar.public_id = response.public_id;
+            this.perfilSeleccionar.foto = response.foto;
+            this.cambiar = false;
+
+            this.archivoSelect = null;
+
+            this.perfilCRUD.reset();
+            this.carga = false;
+          },
+          error: (erro) => {
+            /* console.error('Error al editar el perfil ', erro); */
+            this.carga = false;
+            if (erro.status == 422) {
+              this.mensajeError = erro.error.message;
+            }
+
+            this.archivoSelect = null;
           }
-        }
-
-      });
+        })
+      }
     }
 
   }
@@ -331,7 +380,7 @@ export class PerfilComponent implements OnInit {
           this.carga = false;
           //console.error("Error al modificar el usuario", erro);
           if (erro.status == 403) {
-            this.mensajeError = erro.error;
+            this.mensajeError = erro.error.message;
           }
         }
       });
@@ -366,10 +415,10 @@ export class PerfilComponent implements OnInit {
     this.cambiar = false;
     this.cambiarPlan = false;
     this.cambiarUsuario = false;
+    this.archivoSelect = null;
     this.perfilCRUD.reset();
     this.userCRUD.reset();
     this.planCRUD.reset();
-
   }
 
   ngOnInit(): void {

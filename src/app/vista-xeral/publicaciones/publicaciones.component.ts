@@ -92,42 +92,87 @@ export class PublicacionesComponent implements OnInit {
   modificarPublicacion() {
     this.loading = true;
     this.carga = true;
-    const modificarPublicacion = new FormData();
 
     if (this.publicacionSeleccionar) {
+      let video = this.archivoSelect;
 
-      if (this.archivoSelect) {
-        modificarPublicacion.append('imagen', this.archivoSelect);
+      this.publicacionSeleccionar.titulo = this.formularioCRUDImagen.get('titulo')?.value;
+      this.publicacionSeleccionar.descripcion = this.formularioCRUDImagen.get('descripcion')?.value;
+      this.publicacionSeleccionar.zona_geografica = this.formularioCRUDImagen.get('zona_geografica')?.value;
+
+      if (video) {
+        this.servizo.recibirFirma().subscribe((firma: any) => {
+          this.servizo.subirVideo(video, firma).subscribe({
+            next: (data: any) => {
+              const publicacionMultimedia = {
+                ...this.publicacionSeleccionar,
+                imagen: data.secure_url,
+                public_id: data.public_id,
+                bytes: data.bytes,
+                resource_type: data.resource_type,
+              };
+
+              this.servizo.modificarPublicacion(this.publicacionSeleccionar.id, publicacionMultimedia).subscribe({
+                next: (response) => {
+                  /* console.log(response) */
+                  this.publicacionSeleccionar.titulo = this.formularioCRUDImagen.get('titulo')?.value;
+                  this.publicacionSeleccionar.descripcion = this.formularioCRUDImagen.get('descripcion')?.value;
+                  this.publicacionSeleccionar.zona_geografica = this.formularioCRUDImagen.get('zona_geografica')?.value;
+                  this.publicacionSeleccionar.imagen = response.imagen;
+                  this.publicacionSeleccionar.public_id = response.public_id;
+                  this.formularioCRUDImagen.reset();
+                  this.cambiar = false;
+                  this.loading = false;
+                  this.carga = false;
+                },
+                error: (erro) => {
+                  //console.error("Error al modificar la publicacion", erro)
+                  this.loading = false;
+                  this.carga = false;
+                  if (erro.status == 422) {
+                    this.mensajeError = erro.error.message;
+                  }
+                }
+
+              });
+            },
+            error: (erro) => {
+              /* console.error(erro); */
+              if (erro.status == 400 || erro.status == 413) {
+                this.mensajeError = 'El archivo supera el tamaño máximo permitido.';
+              }
+              this.archivoSelect = null;
+              this.loading = false;
+              this.carga = false;
+            }
+          })
+        })
+
+      } else {
+        this.servizo.modificarPublicacion(this.publicacionSeleccionar.id, this.publicacionSeleccionar).subscribe({
+          next: (response) => {
+            /* console.log(response) */
+            this.publicacionSeleccionar.imagen = response.imagen;
+            this.publicacionSeleccionar.public_id = response.public_id;
+            this.formularioCRUDImagen.reset();
+            this.archivoSelect = null;
+            this.cambiar = false;
+            this.loading = false;
+            this.carga = false;
+          },
+          error: (erro) => {
+            //console.error("Error al modificar la publicacion", erro)
+            this.loading = false;
+            this.carga = false;
+            this.archivoSelect = null;
+            if (erro.status == 422) {
+              this.mensajeError = erro.error;
+            }
+          }
+
+        });
       }
 
-      modificarPublicacion.append('titulo', this.formularioCRUDImagen.get('titulo')?.value);
-      modificarPublicacion.append('descripcion', this.formularioCRUDImagen.get('descripcion')?.value);
-      modificarPublicacion.append('zona_geografica', this.formularioCRUDImagen.get('zona_geografica')?.value);
-      modificarPublicacion.append('_method', 'PUT');
-
-      // Llamamos al servicio para modificar
-      this.servizo.modificarPublicacion(this.publicacionSeleccionar.id, modificarPublicacion).subscribe({
-        next: (response) => {
-          /* console.log(response) */
-          this.publicacionSeleccionar.titulo = this.formularioCRUDImagen.get('titulo')?.value;
-          this.publicacionSeleccionar.descripcion = this.formularioCRUDImagen.get('descripcion')?.value;
-          this.publicacionSeleccionar.zona_geografica = this.formularioCRUDImagen.get('zona_geografica')?.value;
-          this.publicacionSeleccionar.imagen = response.imagen;
-          this.formularioCRUDImagen.reset();
-          this.cambiar = false;
-          this.loading = false;
-          this.carga = false;
-        },
-        error: (erro) => {
-          //console.error("Error al modificar la publicacion", erro)
-          this.loading = false;
-          this.carga = false;
-          if (erro.status == 422) {
-            this.mensajeError = erro.error;
-          }
-        }
-
-      });
     }
   }
 
