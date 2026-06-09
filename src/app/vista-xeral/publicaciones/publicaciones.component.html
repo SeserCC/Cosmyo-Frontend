@@ -38,11 +38,7 @@
                             <input class="input is-dark" type="file" (change)="archivoSeleccionado($event)" />
                         </div>
                         <p *ngIf="faltaArchivo" class="help is-danger">Falta el archivo</p>
-                        <p class="help is-danger" *ngIf="mensajeError?.errors.imagen[0]">
-                            {{mensajeError.errors.imagen[0]}}</p>
-                        <p class="help is-danger"
-                            *ngIf="mensajeError?.errors.imagen[1] && !mensajeError?.errors.imagen[0]">
-                            {{mensajeError.errors.imagen[1]}}</p>
+                        <p class="help is-danger" *ngIf="mensajeError">{{mensajeError}}</p>
                     </div>
                     <p *ngIf="!mensajeError" class="text-white-50 small fst-italic mt-2 mb-0"
                         style="font-size: 0.8rem;">
@@ -101,8 +97,7 @@
                         <ng-container *ngIf="!loading">
                             <div class="control">
                                 <button *ngIf="cambiar" type="button" class="button is-info boton-modificar"
-                                    [disabled]="formularioCRUDImagen.invalid"
-                                    (click)="modificarPublicacion()">
+                                    [disabled]="formularioCRUDImagen.invalid" (click)="modificarPublicacion()">
                                     Modificar
                                 </button>
                             </div>

@@ -239,6 +239,14 @@ textarea::placeholder {
     width: 40%;
 }
 
+#foto-perfil {
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 #videoComentario {
     margin-top: 20px;
     width: 50%;

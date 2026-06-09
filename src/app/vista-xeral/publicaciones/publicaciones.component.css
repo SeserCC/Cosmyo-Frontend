@@ -118,6 +118,7 @@ a {
     border-radius: 8px;
     opacity: 0;
     transform: translateY(20px);
+    object-fit: cover;
     animation: fadeInUp 0.8s ease forwards;
 }
 

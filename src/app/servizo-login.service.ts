@@ -255,7 +255,7 @@ export class ServizoLoginService {
 
   // Modificamos os valores indicando ao servidor
   modificarPublicacion(id: number, body: any) {
-    return this.cliente.post<any>(this.apiBackend + '/publicacion/' + id, body);
+    return this.cliente.put<any>(this.apiBackend + '/publicacion/' + id, body);
   }
 
   mostrarPublicaciones() {
@@ -322,7 +322,7 @@ export class ServizoLoginService {
 
   // Modificamos os valores indicando ao servidor
   modificarPerfil(id: number, body: any) {
-    return this.cliente.post<any>(this.apiBackend + '/perfil/' + id, body);
+    return this.cliente.put<any>(this.apiBackend + '/perfil/' + id, body);
   }
 
   modificarPlan(id: number, body: any) {
