@@ -22,6 +22,8 @@ export class DebateComponent {
 
   foro: any
 
+  fotoPerfil: any;
+
   mostrarMas: number | null;
 
   esconderCheckbox = false;
@@ -118,7 +120,6 @@ export class DebateComponent {
               bytes: data.bytes,
               resource_type: data.resource_type,
             };
-            console.log(comentarioMultimedia);
 
             this.servizo.engadirComentario(comentarioMultimedia).subscribe({
               next: (comentario) => {
@@ -141,7 +142,7 @@ export class DebateComponent {
             })
           },
           error: (erro) => {
-            console.error(erro);
+            /* console.error(erro); */
             if (erro.status == 400 || erro.status == 413) {
               this.mensajeError = 'El archivo supera el tamaño máximo permitido.';
             }
@@ -257,7 +258,7 @@ export class DebateComponent {
             },
             error: (erro) => {
               this.formularioCRUDComentario.get('eliminarImagen')?.setValue(false);
-              console.error(erro);
+              /* console.error(erro); */
               if (erro.status == 400 || erro.status == 413) {
                 this.mensajeError = 'El archivo supera el tamaño máximo permitido.';
               }
@@ -272,9 +273,12 @@ export class DebateComponent {
       } else {
         this.servizo.modificarComentario(this.comentarioSeleccionar.id, this.comentarioSeleccionar).subscribe({
           next: () => {
+
+            if (this.formularioCRUDComentario.get('eliminarImagen')?.value == true) {
+              this.comentarioSeleccionar.foto = null;
+            }
             this.formularioCRUDComentario.get('eliminarImagen')?.setValue(false);
 
-            this.comentarioSeleccionar.foto = null;
 
             if (fileInput) {
               fileInput.value = '';
@@ -348,7 +352,6 @@ export class DebateComponent {
         this.comentarios = response.comentarios.data;
         this.foro = response.foro;
         this.carga = false;
-
         /* (this.comentarios); */
         /* this.paginaActual = response.current_page;
         this.paginasTotales = response.last_page; */

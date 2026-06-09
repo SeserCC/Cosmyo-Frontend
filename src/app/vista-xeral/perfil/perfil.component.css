@@ -161,6 +161,13 @@
     transition: 0.3s;
 }
 
+#foto-perfil {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .contenedor-switch {
     display: flex;
     flex-direction: column;

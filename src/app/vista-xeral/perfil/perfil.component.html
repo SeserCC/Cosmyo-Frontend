@@ -75,11 +75,9 @@
                     <div class="columns">
                         <!-- Foto -->
                         <div class="column is-3 has-text-centered">
-                            <figure class="image is-128x128 is-inline-block"
-                                style="border-radius: 50%; overflow: hidden; box-shadow: 0 8px 24px rgba(2,12,27,0.2);">
-                                <img *ngIf="perfil?.foto; else placeholder" [src]="perfil.foto"
-                                    [alt]="perfil.user.name + ' foto'">
-                            </figure>
+
+                            <img id="foto-perfil" *ngIf="perfil?.foto; else placeholder" [src]="perfil.foto"
+                                [alt]="perfil.user.name + ' foto'">
                             <ng-template #placeholder>
                                 <figure class="image is-128x128 is-inline-block"
                                     style="border-radius: 50%; overflow: hidden; background: #0b132b; display:flex; align-items:center; justify-content:center;">
@@ -267,7 +265,7 @@
                                     <input class="input" type="file" (change)="archivoSeleccionado($event)"
                                         accept="image/*">
                                 </div>
-                                <p class="help is-danger" *ngIf="mensajeError">{{mensajeError.message}}</p>
+                                <p class="help is-danger" *ngIf="mensajeError">{{mensajeError}}</p>
                             </div>
 
                             <!-- Botones -->
@@ -395,7 +393,7 @@
                                     </div>
                                     <div class="field">
                                         <label class="label has-text-warning-light">Email *</label>
-                                    
+
                                         <div class="control">
                                             <input class="input" type="text" formControlName="email"
                                                 placeholder="Email de usuario">
@@ -452,7 +450,7 @@
                                             </p>
                                         </div>
 
-                                        <p class="help is-danger" *ngIf="mensajeError">{{mensajeError?.error}}</p>
+                                        <p class="help is-danger" *ngIf="mensajeError">{{mensajeError}}</p>
                                     </div>
 
                                     <div class="field">

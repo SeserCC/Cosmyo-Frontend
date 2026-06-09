@@ -66,7 +66,7 @@
 
             <input id="seleccionar_archivo" type="file" (change)="cargarArchivo($event)">
 
-            <p class="erro" *ngIf="mensajeError?.errors.imagen">{{mensajeError.message}}</p>
+            <p class="erro" *ngIf="mensajeError">{{mensajeError}}</p>
 
             <p *ngIf="!mensajeError" class="text-white-50 small fst-italic mb-1" style="font-size: 0.8rem;">
                 Peso máximo permitido: 10 MB
