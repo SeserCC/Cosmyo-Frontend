@@ -30,11 +30,77 @@
                                 con
                                 fenómenos celestes destacados.
                             </p>
+                            <ng-container *ngFor="let evento of eventos">
+                                <li class="evento-item">
+                                    <span>{{ evento.fecha | date:'dd/MM/yyyy' }}</span>
 
-                            <li *ngFor="let evento of eventos" class="evento-item">
-                                <span class="is-pulled-right">{{ evento.fecha }}</span>
-                                <span id="evento_descripcion">{{ evento.evento }}</span>
-                            </li>
+                                    <span id="evento_descripcion">
+                                        {{ evento.evento }}
+                                    </span>
+
+                                    <div class="evento-derecha">
+                                        <span id="evento_observacion">
+                                            {{ evento.observacion }}
+                                        </span>
+
+                                        <span>
+                                            {{ evento.fecha | date:'HH:mm' }}
+                                        </span>
+                                        <button (click)="detalles(evento.id!)"><i class="fas fa-chevron-down"
+                                                [class.rotado]="mostrar == evento.id">
+                                            </i></button>
+
+                                    </div>
+
+                                </li>
+                                <li *ngIf="mostrar == evento.id" class="evento-detalle">
+                                    <h2 class="detalle-titulo">{{ evento.evento }}</h2>
+
+                                    <div class="detalle-info">
+                                        <div>
+                                            <small><i class="fas fa-calendar"></i> Fecha</small>
+                                            <span>{{ evento.fecha | date:'dd/MM/yyyy' }}</span>
+                                        </div>
+
+                                        <div>
+                                            <small><i class="fas fa-clock"></i> Hora (aprox)</small>
+                                            <span>{{ evento.fecha | date:'HH:mm' }}</span>
+                                        </div>
+
+                                        <div>
+                                            <small><i class="bi bi-geo-alt-fill"></i> Observación</small>
+                                            <span>{{ evento.observacion}}</span>
+                                        </div>
+
+                                        <div class="visibilidad">
+                                            <small><i class="bi bi-cloud-fill"></i> Visibilidad</small>
+
+                                            <span [ngClass]="{
+                                                'badge-buena': evento.visibilidad == 'Buena',
+                                                'badge-media': evento.visibilidad == 'Media',
+                                                'badge-baja': evento.visibilidad == 'Baja',
+                                                'badge-no-visible': evento.visibilidad == 'No visible'
+                                            }">
+                                                {{ evento.visibilidad }}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <small> <i class="fas fa-compass"></i> Dirección</small>
+                                            <span>{{ evento.direccion }}</span>
+                                        </div>
+
+                                        <div>
+                                            <small> <i class="fas fa-binoculars"></i> Instrumento</small>
+                                            <span>{{ evento.instrumento }}</span>
+                                        </div>
+
+                                    </div>
+                                    <small><i class="bi bi-info-circle-fill"></i> Información</small>
+                                    <div class="detalle-descripcion">
+                                        {{ evento.descripcion }}
+                                    </div>
+                                </li>
+                            </ng-container>
                         </ul>
                     </div>
                 </section>

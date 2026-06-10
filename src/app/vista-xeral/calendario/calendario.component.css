@@ -31,7 +31,7 @@ a {
     /* Reduce la opacidad al pasar el ratón */
 }
 
-.is-pulled-right{
+.is-pulled-right {
     color: white;
 }
 
@@ -172,11 +172,18 @@ a {
     box-shadow: 0 1px 3px rgba(20, 50, 90, 0.5);
     /* Sombra sutil para dar profundidad */
     display: flex;
-    /* Centrar verticalmente */
-    justify-content: flex-start;
-    /* Alinear al inicio horizontalmente */
-    gap: 1rem;
-    /* Espacio entre elementos hijos (nombre y fecha) */
+    align-items: center;
+}
+
+#evento_descripcion {
+    margin-left: 20px;
+}
+
+.evento-derecha {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 /* Texto en negrita para el nombre dentro de evento, sin reducción ni salto de línea */
@@ -201,6 +208,102 @@ a {
     /* Tamaño de fuente algo menor */
     opacity: 0.8;
     /* Ligeramente transparente */
+}
+
+.evento-detalle {
+    background: rgba(15, 35, 65, 0.9);
+    border-left: 4px solid #4a7ed1;
+    border-radius: 8px;
+    margin: 0.5rem 0 1rem;
+    padding: 1rem 1.2rem;
+    color: #f0f4ff;
+
+    animation: aparecerSuave 0.6s ease-out;
+}
+
+.detalle-titulo {
+    margin-bottom: 1rem;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.detalle-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 1rem 0;
+}
+
+.detalle-descripcion {
+    white-space: pre-line;
+}
+
+.detalle-info div {
+    display: flex;
+    flex-direction: column;
+}
+
+small {
+    color: #a4b7dd;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.detalle-info span {
+    color: white;
+    margin-top: 0.2rem;
+}
+
+.badge-buena {
+    background: #1f8f4f;
+    color: white;
+    padding: .3rem .8rem;
+    border-radius: 20px;
+}
+
+.badge-media {
+    background: #c98a1a;
+    color: white;
+    padding: .3rem .8rem;
+    border-radius: 20px;
+}
+
+.badge-baja {
+    background: #b43636;
+    color: white;
+    padding: .3rem .8rem;
+    border-radius: 20px;
+}
+
+.badge-no-visible {
+    background: #000000;
+    color: white;
+    padding: .3rem .8rem;
+    border-radius: 20px;
+}
+
+.rotado {
+    transform: rotate(180deg);
+}
+
+.fa-chevron-down {
+    transition: transform .45s;
+}
+
+@keyframes aparecerSuave {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Clase general para texto gris claro */
@@ -288,12 +391,33 @@ a {
     .evento-item {
         flex-direction: column;
         align-items: flex-start;
-        gap: 5px;
+        gap: 0.5rem;
     }
 
-    .evento-item strong,
-    .evento-item span {
-        white-space: normal;
+    #evento_descripcion {
+        margin-left: 0;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .evento-derecha {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 0;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    #evento_observacion {
+        margin-left: 0;
+        color: #b8c8e6;
+        font-size: 0.9rem;
+    }
+
+    .evento-derecha button {
+        margin-left: auto;
     }
 
     a.flecha-derecha {
