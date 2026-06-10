@@ -101,6 +101,11 @@ export class AdministracionComponent implements OnInit {
     this.formularioCRUDEvento = new FormGroup({
       nombre: new FormControl('', [Validators.required]), // Control para el nombre
       fecha: new FormControl('', [Validators.required]), // Control para la fecha
+      descripcion: new FormControl('', [Validators.required]), // Control para la descripcion
+      direccion: new FormControl('', [Validators.required]), // Control para la direccion
+      visibilidad: new FormControl('', [Validators.required]), // Control para la visibilidad
+      instrumento: new FormControl('', [Validators.required]), // Control para el instrumento
+      observacion: new FormControl('', [Validators.required]), // Control para la observacion
     });
 
     this.formularioCRUDPlan = new FormGroup({
@@ -626,6 +631,11 @@ export class AdministracionComponent implements OnInit {
     this.formularioCRUDEvento.patchValue({
       nombre: evento.evento,
       fecha: evento.fecha,
+      descripcion: evento.descripcion,
+      direccion: evento.direccion,
+      visibilidad: evento.visibilidad,
+      instrumento: evento.instrumento,
+      observacion: evento.observacion
     });
   }
 
@@ -636,6 +646,11 @@ export class AdministracionComponent implements OnInit {
     const nuevoEvento = {
       evento: this.formularioCRUDEvento.value.nombre,
       fecha: this.formularioCRUDEvento.value.fecha,
+      descripcion: this.formularioCRUDEvento.value.descripcion,
+      direccion: this.formularioCRUDEvento.value.direccion,
+      visibilidad: this.formularioCRUDEvento.value.visibilidad,
+      instrumento: this.formularioCRUDEvento.value.instrumento,
+      observacion: this.formularioCRUDEvento.value.observacion,
     }
 
     this.servizo.engadirEvento(nuevoEvento).subscribe({
@@ -675,6 +690,11 @@ export class AdministracionComponent implements OnInit {
       // Actualizamos el tema del foro
       this.eventoSeleccionar.evento = this.formularioCRUDEvento.get('nombre')?.value;
       this.eventoSeleccionar.fecha = this.formularioCRUDEvento.get('fecha')?.value;
+      this.eventoSeleccionar.descripcion = this.formularioCRUDEvento.get('descripcion')?.value;
+      this.eventoSeleccionar.direccion = this.formularioCRUDEvento.get('direccion')?.value;
+      this.eventoSeleccionar.visibilidad = this.formularioCRUDEvento.get('visibilidad')?.value;
+      this.eventoSeleccionar.instrumento = this.formularioCRUDEvento.get('instrumento')?.value;
+      this.eventoSeleccionar.observacion = this.formularioCRUDEvento.get('observacion')?.value;
 
       // Llamamos al servicio para modificar
       this.servizo.modificarEvento(this.eventoSeleccionar.id, this.eventoSeleccionar).subscribe({

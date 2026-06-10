@@ -21,6 +21,8 @@ export class CalendarioComponent implements OnInit {
 
   carga: boolean = true;
 
+  mostrar: number | null = null;
+
   // Array con los nombres de los meses, usado para mostrar el mes actual en texto
   meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -37,6 +39,7 @@ export class CalendarioComponent implements OnInit {
 
     this.servizo.mesActual().subscribe({
       next: (response) => {
+        console.log(response);
         this.eventos = response;
         this.carga = false;
       },
@@ -47,7 +50,9 @@ export class CalendarioComponent implements OnInit {
     })
   }
 
-
+  detalles(id: number) {
+    this.mostrar = this.mostrar == id ? null : id;
+  }
 
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {

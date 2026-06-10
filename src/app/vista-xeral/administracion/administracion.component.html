@@ -49,7 +49,7 @@
                     </li>
                 </ul>
             </div>
-            
+
             <div *ngIf="categoriaSeleccionada === 'usuarios' ">
                 <form [formGroup]="formularioCRUD" class="mb-5">
                     <h2 class="title is-4 has-text-light mb-4">Usuarios</h2>
@@ -501,7 +501,7 @@
                 <form [formGroup]="formularioCRUDEvento" class="mb-5">
                     <!-- Formulario para engadir eventos -->
                     <h2 class="title is-4 has-text-light mb-4">Eventos</h2>
-
+                    <!-- Nombre eventos -->
                     <div class="field">
                         <div class="control">
                             <input class="input has-background-black-ter has-text-light" type="text"
@@ -512,15 +512,86 @@
                             Debes indicar el evento
                         </p>
                     </div>
-
+                    <!-- Fecha evento -->
                     <div class="field">
                         <div class="control">
-                            <input class="input has-background-black-ter has-text-light" type="date"
+                            <input class="input has-background-black-ter has-text-light" type="datetime-local"
                                 placeholder="Fecha del evento" formControlName="fecha">
                         </div>
                         <p *ngIf="formularioCRUDEvento.get('fecha')?.touched && formularioCRUDEvento.get('fecha')?.invalid"
                             class="help is-danger">
-                            Debes indicar la fecha
+                            Debes indicar la fecha y hora
+                        </p>
+                        <p *ngIf="error" class="help is-danger">
+                            {{this.errorMensaje}}
+                        </p>
+                    </div>
+                    <!-- Descripcion evento -->
+                    <div class="field">
+                        <div class="control">
+                            <textarea class="textarea has-background-black-ter has-text-light" placeholder="Descripcion"
+                                formControlName="descripcion"></textarea>
+                        </div>
+                        <p *ngIf="formularioCRUDEvento.get('descripcion')?.touched && formularioCRUDEvento.get('descripcion')?.invalid"
+                            class="help is-danger">
+                            Debes indicar la descripcion del evento
+                        </p>
+                        <p *ngIf="error" class="help is-danger">
+                            {{this.errorMensaje}}
+                        </p>
+                    </div>
+
+                    <!-- Visibilidad del evento -->
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light"
+                                placeholder="Visibilidad del evento" formControlName="visibilidad">
+                        </div>
+                        <p *ngIf="formularioCRUDEvento.get('visibilidad')?.touched && formularioCRUDEvento.get('visibilidad')?.invalid"
+                            class="help is-danger">
+                            Debes indicar la visibilidad del evento
+                        </p>
+                        <p *ngIf="error" class="help is-danger">
+                            {{this.errorMensaje}}
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light"
+                                placeholder="Instrumento del evento" formControlName="instrumento">
+                        </div>
+                        <p *ngIf="formularioCRUDEvento.get('instrumento')?.touched && formularioCRUDEvento.get('instrumento')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el instrumento del evento
+                        </p>
+                        <p *ngIf="error" class="help is-danger">
+                            {{this.errorMensaje}}
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light"
+                                placeholder="Direccion del evento" formControlName="direccion">
+                        </div>
+                        <p *ngIf="formularioCRUDEvento.get('direccion')?.touched && formularioCRUDEvento.get('direccion')?.invalid"
+                            class="help is-danger">
+                            Debes indicar la direccion del evento
+                        </p>
+                        <p *ngIf="error" class="help is-danger">
+                            {{this.errorMensaje}}
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light"
+                                placeholder="Observacion del evento" formControlName="observacion">
+                        </div>
+                        <p *ngIf="formularioCRUDEvento.get('observacion')?.touched && formularioCRUDEvento.get('observacion')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el lugar del evento
                         </p>
                         <p *ngIf="error" class="help is-danger">
                             {{this.errorMensaje}}
@@ -558,7 +629,11 @@
                         <li *ngFor="let evento of eventos" class="mb-3">
                             <div class="columns is-vcentered">
                                 <div class="column is-8 has-text-light">
-                                    {{ evento.evento }} - {{ evento.fecha }}
+                                    {{ evento.evento }} - {{ evento.fecha | date: 'yyyy-MM-dd HH:mm' }} - {{
+                                    evento.descripcion }} - {{
+                                    evento.visibilidad }} - {{
+                                    evento.direccion }} - {{
+                                    evento.instrumento }} - {{ evento.observacion }}
                                 </div>
 
                                 <div class="column is-4 is-flex is-justify-content-flex-end">
