@@ -39,7 +39,6 @@ export class CalendarioComponent implements OnInit {
 
     this.servizo.mesActual().subscribe({
       next: (response) => {
-        console.log(response);
         this.eventos = response;
         this.carga = false;
       },
