@@ -32,7 +32,7 @@
                             </p>
                             <ng-container *ngFor="let evento of eventos">
                                 <li class="evento-item">
-                                    <span>{{ evento.fecha | date:'dd/MM/yyyy' }}</span>
+                                    <span>{{ evento.fecha | date:'d \'de\' MMMM' }}</span>
 
                                     <span id="evento_descripcion">
                                         {{ evento.evento }}
@@ -59,7 +59,7 @@
                                     <div class="detalle-info">
                                         <div>
                                             <small><i class="fas fa-calendar"></i> Fecha</small>
-                                            <span>{{ evento.fecha | date:'dd/MM/yyyy' }}</span>
+                                            <span>{{ evento.fecha | date:'d \'de\' MMMM' }}</span>
                                         </div>
 
                                         <div>
