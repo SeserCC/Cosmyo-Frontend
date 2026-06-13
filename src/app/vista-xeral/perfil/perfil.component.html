@@ -76,14 +76,8 @@
                         <!-- Foto -->
                         <div class="column is-3 has-text-centered">
 
-                            <img id="foto-perfil" *ngIf="perfil?.foto; else placeholder" [src]="perfil.foto"
+                            <img id="foto-perfil" [src]=" perfil.foto || 'media/img/por_defecto.png'"
                                 [alt]="perfil.user.name + ' foto'">
-                            <ng-template #placeholder>
-                                <figure class="image is-128x128 is-inline-block"
-                                    style="border-radius: 50%; overflow: hidden; background: #0b132b; display:flex; align-items:center; justify-content:center;">
-                                    <span style="color:#9fb6ff; font-weight:700;">★</span>
-                                </figure>
-                            </ng-template>
 
                             <div class="user-info-card mt-3 p-4">
                                 <p class="is-size-7 has-text-grey">Registrado</p>
