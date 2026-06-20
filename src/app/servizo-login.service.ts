@@ -29,6 +29,7 @@ export class ServizoLoginService {
   apiURL: string = 'https://67bf735ab2320ee05013c327.mockapi.io/usuarios';
   apiURLcomentario: string = 'https://682f73b7f504aa3c70f41673.mockapi.io/comentarios';
   apiBackend: string = environment.apiBackend;
+  ocultar = 'mensaje-demo-cerrar';
   usuarioActual: any; // Usuario actualmente logeado
   planActual: any; // Usuario actualmente logeado
   tokens$: BehaviorSubject<string>;
@@ -76,6 +77,14 @@ export class ServizoLoginService {
         }
       })
     })
+  }
+
+  ocultarMensaje() {
+    localStorage.setItem(this.ocultar, 'true');
+  }
+
+  estadoMensaje(){
+    return localStorage.getItem(this.ocultar) == 'true';
   }
 
   cerrarSesion(body: any) {
