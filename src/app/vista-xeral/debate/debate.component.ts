@@ -103,9 +103,10 @@ export class DebateComponent {
       }
     }
 
-    let comentario = {
+    let nuevoComentario = {
       texto: this.formularioCRUDComentario.get('texto')?.value,
-      foro_id: String(this.router.snapshot.paramMap.get('foro_id'))
+      foro_id: String(this.router.snapshot.paramMap.get('foro_id')),
+      user: this.usuarioLogueado
     }
 
     if (video) {
@@ -114,7 +115,7 @@ export class DebateComponent {
         this.servizo.subirVideo(video, firma).subscribe({
           next: (data: any) => {
             const comentarioMultimedia = {
-              ...comentario,
+              ...nuevoComentario,
               foto: data.secure_url,
               public_id: data.public_id,
               bytes: data.bytes,
@@ -151,11 +152,12 @@ export class DebateComponent {
         });
       })
     } else {
-      this.servizo.engadirComentario(comentario).subscribe({
+      this.servizo.engadirComentario(nuevoComentario).subscribe({
         next: (comentario) => {
           this.comentarios.push(comentario);
           this.formularioCRUDComentario.reset();
           this.loading = false;
+
         },
         error: (erro) => {
           //console.error('Error al añadir un comentario ', erro);

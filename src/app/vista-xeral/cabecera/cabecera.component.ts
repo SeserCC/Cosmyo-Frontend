@@ -22,9 +22,16 @@ export class CabeceraComponent implements OnInit {
 
   cerrandoSesionCarga = false;
 
+  ocultar = false;
+
   // Constructor del componente, donde se inyectan el servicio de login y el router
   constructor(public servizo: ServizoLoginService, private router: Router, private routerActivate: ActivatedRoute) {
 
+  }
+
+  eliminarMensaje() {
+    this.ocultar = true;
+    this.servizo.ocultarMensaje();
   }
 
   // Método para cerrar sesión
@@ -48,6 +55,8 @@ export class CabeceraComponent implements OnInit {
       //console.log(data);
       this.usuarioActual = data;
     });
+
+    this.ocultar = this.servizo.estadoMensaje();
 
   }
 

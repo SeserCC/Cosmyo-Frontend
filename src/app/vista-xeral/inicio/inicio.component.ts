@@ -18,7 +18,23 @@ export class InicioComponent implements OnInit {
   usuarioActual: any;
   mensaje = '';
 
+  dias: number;
+  horas: number;
+  minutos: number;
+
+  fechaEvento = new Date('2026-08-12T19:30:51').getTime();
+
   constructor(public servizo: ServizoLoginService, @Inject(PLATFORM_ID) private platformId: Object) {
+
+  }
+
+  actualizarTiempo() {
+    const ahora = new Date().getTime();
+    const diferencia = this.fechaEvento - ahora;
+
+    this.dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    this.horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+    this.minutos = Math.floor((diferencia / (1000 * 60)) % 60);
 
   }
 
@@ -35,6 +51,11 @@ export class InicioComponent implements OnInit {
 
       history.replaceState({}, document.title);
     }
+
+    setInterval(() => {
+      this.actualizarTiempo();
+    }, 1000);
+
 
   }
 }
