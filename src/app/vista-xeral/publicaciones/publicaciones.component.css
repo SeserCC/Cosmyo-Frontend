@@ -170,7 +170,7 @@ label {
 }
 
 
-.publicacion_editar {
+#publicacion_editar {
     max-width: 100%;
     position: relative;
     padding: 20px;
@@ -274,6 +274,30 @@ form i {
     margin-right: 5px;
 }
 
+.perfil-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.perfil-header h1 {
+    font-size: 1.5rem;
+    color: white;
+}
+
+#enlace-perfil:hover {
+   color: #185fc9;
+}
+
+#foto-perfil {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 @media (max-width: 480px) {
 
     /* CONTENEDOR GENERAL */
@@ -354,7 +378,7 @@ form i {
     }
 
     /* FORM */
-    .publicacion_editar {
+    #publicacion_editar {
         padding: 15px;
     }
 
@@ -467,7 +491,7 @@ form i {
     }
 
     /* FORM */
-    .publicacion_editar {
+    #publicacion_editar {
         padding: 15px;
     }
 

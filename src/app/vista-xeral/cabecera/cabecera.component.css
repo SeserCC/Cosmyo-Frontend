@@ -32,18 +32,18 @@
     font-size: 25px;
 }
 
-.mensaje-demo {
-    position: relative;
+.alert-header {
+    display: flex;
+    justify-content: flex-end;
 }
 
-.btn-cerrar {
-    position: absolute;
-    right: -50px;
+.btn-close {
     font-size: 10px;
-    cursor: pointer;
-    z-index: 10;
 }
 
+#mensaje {
+    color: #707070;
+}
 
 /* Items */
 .dropdown-item {
