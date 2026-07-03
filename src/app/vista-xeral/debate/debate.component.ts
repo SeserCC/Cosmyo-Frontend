@@ -1,8 +1,8 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, inject, Inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Comentario } from '../../comentario';
 import { ServizoLoginService } from '../../servizo-login.service';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser, Location } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 import { TiempoTranscurridoPipe } from '../../tiempo-transcurrido.pipe';
@@ -16,7 +16,7 @@ import { TiempoTranscurridoPipe } from '../../tiempo-transcurrido.pipe';
 })
 export class DebateComponent {
   // Array donde se almacenan todos los comentarios
-  comentarios: any[];
+  comentarios: any[] = [];
 
   urlMultimedia = '';
 

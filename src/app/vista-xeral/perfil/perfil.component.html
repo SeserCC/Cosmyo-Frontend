@@ -83,19 +83,21 @@
                                 <p class="is-size-7 has-text-grey">Registrado</p>
                                 <p class="has-text-weight-semibold has-text-white">{{ perfil?.fecha_registro |
                                     date:'longDate' }}</p>
+                                <ng-container *ngIf="usuarioActual.id == perfil.user_id">
+                                    <div class="plan-badge mt-2 mb-2">
+                                        <span class="tag is-medium" [ngClass]="premium ? 'is-warning' : 'is-dark'">
+                                            Tipo de plan: {{ premium ? 'PREMIUM' : 'Gratuito' }}
+                                        </span>
+                                    </div>
 
-                                <div class="plan-badge mt-2 mb-2">
-                                    <span class="tag is-medium" [ngClass]="premium ? 'is-warning' : 'is-dark'">
-                                        Tipo de plan: {{ premium ? 'PREMIUM' : 'Gratuito' }}
-                                    </span>
-                                </div>
-
-                                <p class="has-text-weight-semibold has-text-light">Método de pago: {{ plan?.metodo_pago
-                                    ||
-                                    'No disponible' }}</p>
-                                <p class="has-text-weight-semibold has-text-light">Tipo de pago: {{ plan?.tipo_pago ||
-                                    'No disponible' }}</p>
-
+                                    <p class="has-text-weight-semibold has-text-light">Método de pago: {{
+                                        plan?.metodo_pago
+                                        ||
+                                        'No disponible' }}</p>
+                                    <p class="has-text-weight-semibold has-text-light">Tipo de pago: {{ plan?.tipo_pago
+                                        ||
+                                        'No disponible' }}</p>
+                                </ng-container>
                             </div>
 
                         </div>

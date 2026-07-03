@@ -26,12 +26,11 @@
                 </h1>
             </div>
 
-            <span *ngIf="comentarios?.length !==0" class="comentariosCantidad mb-3">
-                {{ comentarios?.length }} comentarios
+            <span *ngIf="comentarios.length !== 0" class="comentariosCantidad mb-3">
+                {{ comentarios.length }} comentarios
             </span>
 
-            <p *ngIf="comentarios?.length === 0"
-                class="mensaje-comentarios-vacio has-text-centered has-text-grey-light">
+            <p *ngIf="comentarios.length === 0" class="mensaje-comentarios-vacio has-text-centered has-text-grey-light">
                 🗨️ Aún no hay comentarios. ¡Sé el primero en compartir tu opinión o iniciar la conversación!
             </p>
 

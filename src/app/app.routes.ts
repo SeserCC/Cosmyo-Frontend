@@ -22,6 +22,7 @@ import { PoliticaPrivacidadComponent } from './vista-xeral/politica-privacidad/p
 import { AuthCallbackComponent } from './vista-xeral/auth-callback/auth-callback.component';
 import { CreacionWebComponent } from './vista-xeral/creacion-web/creacion-web.component';
 import { TecnologiasEmpleadasComponent } from './vista-xeral/tecnologias-empleadas/tecnologias-empleadas.component';
+import { PublicacionComponent } from './vista-xeral/publicacion/publicacion.component';
 
 export const routes: Routes = [
     { path: "", component: InicioComponent, canActivate: [mantenimientoGuard] },
@@ -33,15 +34,16 @@ export const routes: Routes = [
     { path: "publicaciones/:user_id", component: PublicacionesComponent, canActivate: [mantenimientoGuard] },
     { path: "tipoPlan", component: TipoPlanComponent, canActivate: [mantenimientoGuard] },
     { path: "perfil/:user_id", component: PerfilComponent, canActivate: [mantenimientoGuard] },
+    { path: "publicacion/:id", component: PublicacionComponent, canActivate: [mantenimientoGuard] },
     { path: "subirArchivo", component: SubirArchivoComponent, canActivate: [authGuard] },
     { path: "registro", component: RegistroComponent, canActivate: [mantenimientoGuard] },
     { path: "exito", component: ExitoPagoComponent, canActivate: [authGuard] },
     { path: "administracion", component: AdministracionComponent, canActivate: [adminGuard] },
     { path: "login", component: InicioSesionComponent },
-    { path: "prohibido", component: AccesoProhibidoComponent },
-    { path: "politicaPrivacidad", component: PoliticaPrivacidadComponent },
-    { path: "auth-callback", component: AuthCallbackComponent },
-    { path: "sobre-nosotros", component: CreacionWebComponent },
-    { path: "desarrollo-web", component: TecnologiasEmpleadasComponent },
-    { path: "**", component: NoEncontradaComponent },
+    { path: "prohibido", component: AccesoProhibidoComponent, canActivate: [mantenimientoGuard] },
+    { path: "politicaPrivacidad", component: PoliticaPrivacidadComponent, canActivate: [mantenimientoGuard] },
+    { path: "auth-callback", component: AuthCallbackComponent, canActivate: [mantenimientoGuard] },
+    { path: "sobre-nosotros", component: CreacionWebComponent, canActivate: [mantenimientoGuard] },
+    { path: "desarrollo-web", component: TecnologiasEmpleadasComponent, canActivate: [mantenimientoGuard] },
+    { path: "**", component: NoEncontradaComponent, canActivate: [mantenimientoGuard] },
 ];

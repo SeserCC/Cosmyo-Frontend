@@ -1,0 +1,148 @@
+<div class="contenido">
+    <!-- Contenedor principal -->
+    <div class="datos">
+        <!-- Mapa de navegación -->
+        <div id="mapa_navegacion">
+            <a [routerLink]="['/']">
+                <i class="bi bi-house"></i>
+            </a>
+            /
+            <a [routerLink]="['/foto']">Galería</a>
+            /
+            <span id="fotos_videos">{{publicacion?.titulo}}</span>
+        </div>
+
+        <a [routerLink]="['/foto']" class="flecha-derecha">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+
+        <div class="columns is-multiline is-variable is-4 mt-3">
+            <div *ngIf="!publicacion" class="column is-12">
+                <p class="mensaje-galeria-vacia has-text-centered has-text-grey-light">
+                    Ups esta publicación fue eliminada recientemente
+                </p>
+            </div>
+
+            <ng-template #content>
+                <ng-container *ngIf="publicacion">
+
+                    <div class="publicacion-wrapper">
+                        <button title="Anterior" [style.visibility]="anterior ? 'visible' : 'hidden'"
+                            (click)="anteriorPublicacion()" id="anterior-publicacion" class="nav-btn">
+                            <i class="bi bi-caret-left-fill"></i>
+                        </button>
+                        <!-- CONTENIDO -->
+                        <div class="publicacion-box" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)"
+                            *ngIf="!imagenAmpliada">
+
+                            <div id="imagen-publicacion">
+                                <img (click)="ampliarImagen()" [src]="publicacion.imagen" alt="Imagen">
+                            </div>
+
+                            <div class="contenido-publicacion has-text-light">
+                                <h3 class="title is-4">{{ publicacion.titulo }}</h3>
+                                <p class="descripcion subtitle is-6">{{ publicacion.descripcion }}</p>
+
+                                <p class="autor-fecha">
+                                    <span>
+                                        <a id="acceso-perfil" [routerLink]="['/perfil', publicacion.users.id]">
+                                            <img id="foto-perfil" [src]="publicacion.users?.perfil?.foto" alt="avatar">
+                                            {{ publicacion.users.name }}
+                                        </a>
+                                    </span>
+
+                                    <span>
+                                        <i class="bi bi-clock-fill"></i>
+                                        {{ publicacion.created_at | tiempoTranscurrido }}
+                                    </span>
+
+                                    <span>
+                                        <i title="Ubicación" class="bi bi-geo-alt-fill"></i>
+                                        {{ publicacion.zona_geografica }}
+                                    </span>
+                                </p>
+
+
+                            </div>
+
+                            <!-- LIKE -->
+                            <ng-container *ngIf="usuarioActual">
+                                <div class="like-container">
+                                    <button title="Me gusta" (click)="darLike(publicacion.id)">
+                                        <i class="fa fa-heart"
+                                            [style.color]="colorLike[publicacion.id] ? 'red' : 'gray'"></i>
+                                        {{ likes[publicacion.id] }}
+                                    </button>
+
+                                    <div class="loader-container">
+                                        <div *ngIf="loading" class="loader"></div>
+                                    </div>
+                                </div>
+
+                            </ng-container>
+
+                            <ng-container *ngIf="!usuarioActual">
+                                <div class="like-container">
+                                    <button title="Me gusta" [routerLink]="['/login']">
+                                        <i style="color: gray;" class="fa fa-heart"></i>
+                                        {{ likes[publicacion.id] }}
+                                    </button>
+                                </div>
+                            </ng-container>
+
+                        </div>
+                        <button title="Siguiente" [style.visibility]="siguiente ? 'visible' : 'hidden'"
+                            (click)="siguientePublicacion()" id="siguiente-publicacion" class="nav-btn">
+                            <i class="bi bi-caret-right-fill"></i>
+                        </button>
+
+
+                    </div>
+                    <div class="container-sesion">
+                        <p *ngIf="!usuarioActual">Debes <a id="iniciar-sesion" [routerLink]="['/login']">iniciar
+                                sesión</a> para dejar tu like</p>
+                    </div>
+                    <section *ngIf="publicaciones.length > 0" class="more-posts">
+
+                        <div class="more-posts-header">
+                            <div>
+                                <p id="publicaciones-usuarios-mensaje">Más fotografías de {{ publicacion.users.name }}
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="posts-grid">
+
+                            <ng-container *ngFor="let pub of publicaciones">
+
+                                <a class="post" [routerLink]="['/publicacion', pub.id]">
+                                    <img [src]="pub.imagen" [alt]="pub.titulo" />
+                                </a>
+
+                            </ng-container>
+                        </div>
+                        <a [routerLink]="['/publicaciones', publicacion.users.id]" class="view-all">
+                            Ver más →
+                        </a>
+                    </section>
+                    <div *ngIf="imagenAmpliada" (click)="ampliarImagen()">
+                        <p id="mensajeZoom" *ngIf="imagenAmpliada">Zoom con el scroll o con los dedos </p>
+                        <img id="imagenGrande" (wheel)="zoomImagen($event)" [style.transform]="'scale(' + escala + ')'"
+                            [style.transform-origin]="origenX + '% ' + origenY + '%'" [src]="publicacion.imagen"
+                            alt="Publicacion">
+                    </div>
+                </ng-container>
+            </ng-template>
+
+        </div>
+
+        <ng-container *ngIf="carga; else content">
+            <div class="loading-container">
+                <div class="loader loader-big"></div>
+                <p class="has-text-light mt-4">Cargando...</p>
+            </div>
+        </ng-container>
+    </div>
+
+</div>

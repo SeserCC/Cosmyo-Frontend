@@ -5,11 +5,12 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { error } from 'node:console';
+import { TiempoTranscurridoPipe } from '../../tiempo-transcurrido.pipe';
 
 @Component({
   selector: 'app-fotos-videos',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, CommonModule, FormsModule, ReactiveFormsModule, TiempoTranscurridoPipe],
   templateUrl: './fotos-videos.component.html',
   styleUrl: './fotos-videos.component.css'
 })

@@ -8,7 +8,7 @@
             <span id="publicaciones">Tus publicaciones</span>
         </div>
 
-        <a [routerLink]="['/']" class="flecha-derecha">
+        <a (click)="volver()" class="flecha-derecha">
             <i class="bi bi-arrow-left"></i>
         </a>
         <ng-template #content>
@@ -20,20 +20,29 @@
             </ng-container>
 
             <ng-template #otro>
-                <h1 class="has-text-centered has-text-light">
-                    Publicaciones de {{usuarioPublicacionName}}
-                </h1>
+                <div class="perfil-header">
+                    <img id="foto-perfil" [src]="perfil.foto" alt="Foto de perfil">
+
+                    <h1>
+                        Publicaciones de <a id="enlace-perfil" [routerLink]="['/perfil', perfil.id]">{{
+                            usuarioPublicacionName }}</a>
+                    </h1>
+                </div>
             </ng-template>
 
             <div class="publicaciones_mias">
 
-                <form *ngIf="cambiar" [formGroup]="formularioCRUDImagen" class="publicacion_editar">
+                <form *ngIf="cambiar" [formGroup]="formularioCRUDImagen" id="publicacion_editar">
 
                     <!-- Archivo -->
+
                     <div class="field">
                         <label>
                             Imagen
                         </label>
+                        <p class="text-white-50 small fst-italic mt-0 mb-0" style="font-size: 0.8rem;">
+                            Si no añades una imagen se mantiene la anterior *
+                        </p>
                         <div class="control">
                             <input class="input is-dark" type="file" (change)="archivoSeleccionado($event)" />
                         </div>
@@ -51,13 +60,18 @@
                             Título
                         </label>
                         <div class="control">
-                            <input class="input is-dark" type="text" placeholder="Título de la publicación"
-                                formControlName="titulo" />
+                            <input class="input is-dark" type="text" maxlength="125"
+                                placeholder="Título de la publicación" formControlName="titulo" />
                         </div>
-                        <p *ngIf="formularioCRUDImagen.get('titulo')?.touched && formularioCRUDImagen.get('titulo')?.invalid"
+                        <div *ngIf="formularioCRUDImagen.get('titulo')?.touched && formularioCRUDImagen.get('titulo')?.invalid"
                             class="help is-danger">
-                            Debes indicar el título
-                        </p>
+                            <p *ngIf="formularioCRUDImagen.get('titulo')?.hasError('required')">
+                                Debes indicar el título
+                            </p>
+                            <p *ngIf="formularioCRUDImagen.get('titulo')?.hasError('maxlength')">
+                                Límite de caracteres alcanzado
+                            </p>
+                        </div>
                     </div>
 
                     <!-- Zona geográfica -->
@@ -66,13 +80,19 @@
                             Zona geográfica
                         </label>
                         <div class="control">
-                            <input class="input has-background-black-ter has-text-light" type="text"
+                            <input class="input has-background-black-ter has-text-light" maxlength="80" type="text"
                                 placeholder="Zona geográfica" formControlName="zona_geografica">
                         </div>
-                        <p *ngIf="formularioCRUDImagen.get('zona_geografica')?.touched && formularioCRUDImagen.get('zona_geografica')?.invalid"
+                        <div *ngIf="formularioCRUDImagen.get('zona_geografica')?.touched && formularioCRUDImagen.get('zona_geografica')?.invalid"
                             class="help is-danger">
-                            Debes indicar la zona geográfica
-                        </p>
+                            <p *ngIf="formularioCRUDImagen.get('zona_geografica')?.hasError('required')">
+                                Debes indicar la zona geográfica
+                            </p>
+                            <p *ngIf="formularioCRUDImagen.get('zona_geografica')?.hasError('maxlength')">
+                                Límite de caracteres alcanzado
+                            </p>
+                        </div>
+
                     </div>
 
                     <!-- Descripción -->
@@ -124,16 +144,20 @@
 
                             <div class="column is-3">
                                 <figure class="image is-square">
-                                    <img [src]="publicacion.imagen" class="img-publicacion" />
+                                    <a [routerLink]="['/publicacion', publicacion.id]">
+                                        <img [src]="publicacion.imagen" class="img-publicacion" />
+                                    </a>
                                 </figure>
                             </div>
 
                             <div class="column is-6 has-text-light info-div">
                                 <p><span class="info">Título:</span> {{ publicacion.titulo }}</p>
                                 <p> <span class="info">Descripción:</span> {{ publicacion.descripcion }}</p>
+                                <!-- Has añadido este campo -->
+                                <p><span class="info">Zona geografica</span> {{ publicacion.zona_geografica }}</p>
                                 <p>
                                     <span class="info">Fecha:</span>
-                                    {{ publicacion.fecha_alta | date:'yyyy-MM-dd'}}
+                                    {{ publicacion.fecha_alta | tiempoTranscurrido}}
                                 </p>
                             </div>
 

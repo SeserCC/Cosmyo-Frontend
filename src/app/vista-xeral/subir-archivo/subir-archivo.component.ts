@@ -69,8 +69,8 @@ export class SubirArchivoComponent {
 
     let publicacion = {
       titulo: this.formularioPublicacion.get('titulo')?.value,
-      descripcion: this.formularioPublicacion.get('titulo')?.value,
-      zona_geografica: this.formularioPublicacion.get('titulo')?.value,
+      descripcion: this.formularioPublicacion.get('descripcion')?.value,
+      zona_geografica: this.formularioPublicacion.get('zona_geografica')?.value,
     }
 
     this.servizo.recibirFirma().subscribe((firma: any) => {
