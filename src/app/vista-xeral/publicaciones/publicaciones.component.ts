@@ -1,17 +1,18 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Imagen } from '../../imagen';
 import { ServizoLoginService } from '../../servizo-login.service';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser, Location } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Usuario } from '../../usuario';
 import { HttpHeaders } from '@angular/common/http';
 import { switchMap } from 'rxjs';
+import { TiempoTranscurridoPipe } from '../../tiempo-transcurrido.pipe';
 
 @Component({
   selector: 'app-publicaciones',
   standalone: true,
-  imports: [RouterLink, CommonModule, ReactiveFormsModule],
+  imports: [RouterLink, CommonModule, ReactiveFormsModule, TiempoTranscurridoPipe],
   templateUrl: './publicaciones.component.html',
   styleUrl: './publicaciones.component.css'
 })
@@ -19,6 +20,8 @@ export class PublicacionesComponent implements OnInit {
 
   // Array que almacena las publicaciones
   publicaciones: any[];
+
+  perfil: any;
 
   // Publicación seleccionada para edición o visualización
   publicacionSeleccionar: any;
@@ -49,21 +52,24 @@ export class PublicacionesComponent implements OnInit {
 
   loading = false;
 
+  location = inject(Location);
 
   // Constructor donde se inicializa el formulario con sus controles y validaciones
   constructor(private servizo: ServizoLoginService, private router: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) {
     this.formularioCRUDImagen = new FormGroup({
-      titulo: new FormControl('', [Validators.required]),      // Campo obligatorio para el título
+      titulo: new FormControl('', [Validators.required, Validators.maxLength(124)]),      // Campo obligatorio para el título
       descripcion: new FormControl('', [Validators.required]),  // Campo obligatorio para la descripción
-      zona_geografica: new FormControl('', [Validators.required])
+      zona_geografica: new FormControl('', [Validators.required, Validators.maxLength(79)])
     });
+  }
+
+  volver() {
+    this.location.back()
   }
 
   // Método que se ejecuta cuando se selecciona un archivo desde el input file
   archivoSeleccionado(event: any): void {
     this.archivoSelect = event.target.files[0];  // Se guarda el archivo seleccionado    
-
-
   }
 
   // Método para cancelar la edición o creación, reseteando el formulario y la UI
@@ -75,7 +81,15 @@ export class PublicacionesComponent implements OnInit {
 
   // Método para iniciar la edición de una publicación
   editarPublicacion(publicacion: any) {
-    this.cambiar = true;     // Cambiamos estado para mostrar el formulario o la UI de edición         
+    this.cambiar = true;     // Cambiamos estado para mostrar el formulario o la UI de edición      
+
+    setTimeout(() => {
+      document.getElementById('publicacion_editar')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    });
+    
     this.publicacionSeleccionar = publicacion;  // Guardamos la publicación a editar
     // Rellenamos el formulario con los valores actuales de la publicación
     this.formularioCRUDImagen.patchValue({
@@ -207,9 +221,10 @@ export class PublicacionesComponent implements OnInit {
         switchMap(params => {
           return this.servizo.publicacionesUsuario(params['user_id']);
         })
-      ).subscribe(publicaciones => {
+      ).subscribe(response => {
         this.user_id = Number(this.router.snapshot.paramMap.get('user_id'));
-        this.publicaciones = publicaciones;
+        this.publicaciones = response.publicaciones;
+        this.perfil = response.perfil;
         this.carga = false;
 
         this.publicaciones.forEach((pub) => {

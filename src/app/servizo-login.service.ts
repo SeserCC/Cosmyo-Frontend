@@ -83,7 +83,7 @@ export class ServizoLoginService {
     localStorage.setItem(this.ocultar, 'true');
   }
 
-  estadoMensaje(){
+  estadoMensaje() {
     return localStorage.getItem(this.ocultar) == 'true';
   }
 
@@ -271,8 +271,16 @@ export class ServizoLoginService {
     return this.cliente.get<any>(this.apiBackend + '/publicacion');
   }
 
+  mostrarPublicacion(id: number) {
+    return this.cliente.get<any>(this.apiBackend + '/publicacion/' + id);
+  }
+
   publicacionesUsuario(id: number) {
     return this.cliente.get<any>(this.apiBackend + '/publicaciones/' + id);
+  }
+
+  publicacionesRelacionadas(user_id: number, publicacion_id: number) {
+    return this.cliente.get<any>(this.apiBackend + '/usuario/' + user_id + '/publicaciones-relacionadas/' + publicacion_id);
   }
 
   buscadorPublicaciones(publicacion: string) {

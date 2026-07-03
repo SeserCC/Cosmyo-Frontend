@@ -74,7 +74,7 @@
 
                             <li>
                                 <a class="dropdown-item" [routerLink]="['/subirArchivo']">
-                                    Subir imagen
+                                    Subir publicación
                                 </a>
                             </li>
 
@@ -116,13 +116,23 @@
         </div>
     </div>
 </nav>
-<div class="container mt-3 mensaje-demo" *ngIf="!ocultar">
-    <button type="button" class="btn-close btn-cerrar" aria-label="Cerrar" (click)="eliminarMensaje()"></button>
+<div class="mensaje-demo" *ngIf="!ocultar">
 
-    <div class="alert border text-center small py-2" style="background-color:#f5f6f7; color:#555;" role="alert">
+    <div class="alert border py-2 mb-0" role="alert">
 
-        <a id="sobre-nosotros" [routerLink]="['/sobre-nosotros']">Proyecto de demostración</a> ·
-        Esta plataforma forma parte de un proyecto personal de desarrollo web creado con fines educativos.
+        <div class="alert-header">
+            <button type="button" class="btn-close" aria-label="Cerrar" (click)="eliminarMensaje()">
+            </button>
+        </div>
+
+        <div class="alert-body text-center small mb-2">
+            <a id="sobre-nosotros" [routerLink]="['/sobre-nosotros']">
+                Proyecto de demostración
+            </a>
+            <span id="mensaje">· Esta plataforma forma parte de un proyecto personal de desarrollo web creado con fines
+                educativos.</span>
+        </div>
+
     </div>
 
 </div>
