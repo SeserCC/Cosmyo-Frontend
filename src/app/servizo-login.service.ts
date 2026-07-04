@@ -30,6 +30,7 @@ export class ServizoLoginService {
   apiURLcomentario: string = 'https://682f73b7f504aa3c70f41673.mockapi.io/comentarios';
   apiBackend: string = environment.apiBackend;
   ocultar = 'mensaje-demo-cerrar';
+  ocultarDesliz = 'mensaje-desliz-cerrar';
   usuarioActual: any; // Usuario actualmente logeado
   planActual: any; // Usuario actualmente logeado
   tokens$: BehaviorSubject<string>;
@@ -79,12 +80,20 @@ export class ServizoLoginService {
     })
   }
 
-  ocultarMensaje() {
+  ocultarMensajeDemo() {
     localStorage.setItem(this.ocultar, 'true');
+  }
+
+  ocultarMensajeDesliz() {
+    localStorage.setItem(this.ocultarDesliz, 'true');
   }
 
   estadoMensaje() {
     return localStorage.getItem(this.ocultar) == 'true';
+  }
+
+  estadoMensajeDesliz() {
+    return localStorage.getItem(this.ocultarDesliz) == 'true';
   }
 
   cerrarSesion(body: any) {

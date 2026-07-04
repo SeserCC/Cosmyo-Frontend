@@ -25,9 +25,13 @@ export class PublicacionComponent implements OnInit {
   imagenAmpliada = false;
   anterior: any;
   siguiente: any;
+  ocultarDesliz = false;
+  esMovil = false;
   /* navegando = false; */
   touchStartX = 0;
   touchEndX = 0;
+  touchStartY = 0;
+  touchEndY = 0;
 
   origenX = 0;
   origenY = 0;
@@ -38,6 +42,11 @@ export class PublicacionComponent implements OnInit {
 
   // Constructor del componente, se inyecta el servicio de login y el router
   constructor(private servizo: ServizoLoginService, private router: ActivatedRoute, private routerR: Router, @Inject(PLATFORM_ID) private platform_id: Object) {
+  }
+
+  eliminarMensaje() {
+    this.ocultarDesliz = true;
+    this.servizo.ocultarMensajeDesliz();
   }
 
   ampliarImagen() {
@@ -101,25 +110,40 @@ export class PublicacionComponent implements OnInit {
   }
 
   onTouchStart(event: TouchEvent) {
+    if (event.touches.length > 1) {
+      return;
+    }
+
     this.touchStartX = event.changedTouches[0].clientX;
+    this.touchStartY = event.changedTouches[0].clientY;
   }
 
   onTouchEnd(event: TouchEvent) {
     this.touchEndX = event.changedTouches[0].clientX;
+    this.touchStartY = event.changedTouches[0].clientY;
 
     this.detectarSwipe();
   }
 
   detectarSwipe() {
 
-    const distancia = this.touchEndX - this.touchStartX;
-
-    // Ignorar movimientos pequeños
-    if (Math.abs(distancia) < 60) {
+    if (window.visualViewport && window.visualViewport.scale > 1) {
       return;
     }
 
-    if (distancia < 0) {
+    const distanciaX = this.touchEndX - this.touchStartX;
+    const distanciaY = this.touchEndY - this.touchStartY;
+
+    // Ignorar movimientos pequeños
+    if (Math.abs(distanciaX) < 60) {
+      return;
+    }
+
+    if (Math.abs(distanciaY) > Math.abs(distanciaX)) {
+      return;
+    }
+
+    if (distanciaX < 0) {
       this.siguientePublicacion();
     } else {
       this.anteriorPublicacion();
@@ -234,6 +258,16 @@ export class PublicacionComponent implements OnInit {
         this.usuarioActual = usuario;
         //console.log(this.usuarioActual);
       });
+
+      this.esMovil = window.innerWidth <= 568;
+
+      this.ocultarDesliz = this.servizo.estadoMensajeDesliz();
+
+      if (this.esMovil) {
+        setTimeout(() => {
+          this.eliminarMensaje();
+        }, 7000);
+      }
 
     }
 
