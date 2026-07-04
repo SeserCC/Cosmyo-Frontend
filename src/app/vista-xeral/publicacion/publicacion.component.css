@@ -71,6 +71,27 @@ a {
     transform: scale(1.1);
 }
 
+#mensaje-deslizamiento {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgb(17 17 17);
+    color: rgb(179, 179, 179);
+    opacity: 1;
+    transition: opacity .5s ease;
+    font-size: 0.8rem;
+    z-index: 98;
+}
+
+#mensaje-deslizamiento.oculto {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .loading-container {
     height: 60vh;
     /* o 100vh si quieres pantalla completa */
@@ -323,15 +344,12 @@ button i:hover {
 }
 
 .loader {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     border: 4px solid rgba(255, 255, 255, 0.2);
     border-top-color: #38bdf8;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
 }
 
 @keyframes spin {
@@ -517,10 +535,6 @@ button i:hover {
     .flecha-derecha i {
         font-size: 1.5rem;
     }
-
-    /* .container-sesion {
-        justify-content: center;
-    } */
 
     .like-container {
         display: flex;
