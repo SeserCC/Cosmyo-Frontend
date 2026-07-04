@@ -135,11 +135,11 @@ export class PublicacionComponent implements OnInit {
     const distanciaY = this.touchEndY - this.touchStartY;
 
     // Ignorar movimientos pequeños
-    if (Math.abs(distanciaX) < 60) {
+    if (Math.abs(distanciaX) < 20) {
       return;
     }
 
-    if (Math.abs(distanciaY) > Math.abs(distanciaX)) {
+    if (1.2 * Math.abs(distanciaY) > Math.abs(distanciaX)) {
       return;
     }
 
