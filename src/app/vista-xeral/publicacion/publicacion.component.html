@@ -1,4 +1,4 @@
-<div class="contenido">
+<div (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)" class="contenido">
     <!-- Contenedor principal -->
     <div class="datos">
         <!-- Mapa de navegación -->
@@ -16,8 +16,11 @@
             <i class="bi bi-arrow-left"></i>
         </a>
 
+        <p *ngIf="esMovil" [class.oculto]="ocultarDesliz" id="mensaje-deslizamiento"> <i class="bi bi-hand-index-thumb"
+                style="font-size: 0.9rem;"></i> Desliza para cambiar de fotografía</p>
+
         <div class="columns is-multiline is-variable is-4 mt-3">
-            <div *ngIf="!publicacion" class="column is-12">
+            <div *ngIf="!publicacion && !carga" class="column is-12">
                 <p class="mensaje-galeria-vacia has-text-centered has-text-grey-light">
                     Ups esta publicación fue eliminada recientemente
                 </p>
@@ -32,8 +35,7 @@
                             <i class="bi bi-caret-left-fill"></i>
                         </button>
                         <!-- CONTENIDO -->
-                        <div class="publicacion-box" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)"
-                            *ngIf="!imagenAmpliada">
+                        <div class="publicacion-box" *ngIf="!imagenAmpliada">
 
                             <div id="imagen-publicacion">
                                 <img (click)="ampliarImagen()" [src]="publicacion.imagen" alt="Imagen">

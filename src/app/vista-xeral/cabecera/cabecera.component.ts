@@ -31,7 +31,7 @@ export class CabeceraComponent implements OnInit {
 
   eliminarMensaje() {
     this.ocultar = true;
-    this.servizo.ocultarMensaje();
+    this.servizo.ocultarMensajeDemo();
   }
 
   // Método para cerrar sesión
