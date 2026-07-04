@@ -75,10 +75,7 @@
                                             [style.color]="colorLike[publicacion.id] ? 'red' : 'gray'"></i>
                                         {{ likes[publicacion.id] }}
                                     </button>
-
-                                    <div class="loader-container">
-                                        <div *ngIf="loading" class="loader"></div>
-                                    </div>
+                                    <div *ngIf="loading" class="loader"></div>
                                 </div>
 
                             </ng-container>
