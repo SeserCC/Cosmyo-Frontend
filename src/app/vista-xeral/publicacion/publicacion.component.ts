@@ -120,7 +120,7 @@ export class PublicacionComponent implements OnInit {
 
   onTouchEnd(event: TouchEvent) {
     this.touchEndX = event.changedTouches[0].clientX;
-    this.touchStartY = event.changedTouches[0].clientY;
+    this.touchEndY = event.changedTouches[0].clientY;
 
     this.detectarSwipe();
   }
@@ -135,11 +135,11 @@ export class PublicacionComponent implements OnInit {
     const distanciaY = this.touchEndY - this.touchStartY;
 
     // Ignorar movimientos pequeños
-    if (Math.abs(distanciaX) < 20) {
+    if (Math.abs(distanciaX) < 60) {
       return;
     }
 
-    if (1.2 * Math.abs(distanciaY) > Math.abs(distanciaX)) {
+    if (1.8 * Math.abs(distanciaY) > Math.abs(distanciaX)) {
       return;
     }
 
