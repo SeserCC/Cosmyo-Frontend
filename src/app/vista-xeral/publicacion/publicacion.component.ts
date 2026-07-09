@@ -131,11 +131,15 @@ export class PublicacionComponent implements OnInit {
       return;
     }
 
+    if (this.imagenAmpliada) {
+      return;
+    }
+
     const distanciaX = this.touchEndX - this.touchStartX;
     const distanciaY = this.touchEndY - this.touchStartY;
 
     // Ignorar movimientos pequeños
-    if (Math.abs(distanciaX) < 60) {
+    if (Math.abs(distanciaX) < 80) {
       return;
     }
 
