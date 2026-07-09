@@ -237,7 +237,7 @@ export class PublicacionComponent implements OnInit {
   publicacionesRelacionadas() {
     this.servizo.publicacionesRelacionadas(this.publicacion.user_id, this.publicacion.id).subscribe({
       next: (publicaciones) => {
-        this.publicaciones = publicaciones;
+        this.publicaciones = publicaciones.data;
         this.carga = false;
       },
 
