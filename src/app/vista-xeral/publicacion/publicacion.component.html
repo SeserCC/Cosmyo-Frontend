@@ -38,7 +38,7 @@
                         <div class="publicacion-box" *ngIf="!imagenAmpliada">
 
                             <div id="imagen-publicacion">
-                                <img (click)="ampliarImagen()" [src]="publicacion.imagen" alt="Imagen">
+                                <img (click)="ampliarImagen()" [src]="publicacion.media" alt="Imagen">
                             </div>
 
                             <div class="contenido-publicacion has-text-light">
@@ -116,7 +116,7 @@
                             <ng-container *ngFor="let pub of publicaciones">
 
                                 <a class="post" [routerLink]="['/publicacion', pub.id]">
-                                    <img [src]="pub.imagen" [alt]="pub.titulo" />
+                                    <img [src]="pub.miniatura" [alt]="pub.titulo" />
                                 </a>
 
                             </ng-container>
@@ -128,7 +128,7 @@
                     <div *ngIf="imagenAmpliada" (click)="ampliarImagen()">
                         <p id="mensajeZoom" *ngIf="imagenAmpliada">Zoom con el scroll o con los dedos </p>
                         <img id="imagenGrande" (wheel)="zoomImagen($event)" [style.transform]="'scale(' + escala + ')'"
-                            [style.transform-origin]="origenX + '% ' + origenY + '%'" [src]="publicacion.imagen"
+                            [style.transform-origin]="origenX + '% ' + origenY + '%'" [src]="publicacion.original"
                             alt="Publicacion">
                     </div>
                 </ng-container>

@@ -64,9 +64,6 @@ export class FotosVideosComponent implements OnInit {
       next: (response) => {
 
         this.publicaciones = response.publicacions;
-        this.likes = response.likes;
-        this.usuarioActual = response.user;
-        this.colorLike = response.userActualLike;
         this.carga = false;
       },
       error: (err) => {
@@ -75,51 +72,10 @@ export class FotosVideosComponent implements OnInit {
     })
   }
 
-  darLike(publicacion_id: number) {
-    if (!this.usuarioActual) {
-      this.mensajeSesion = 'Primero debes iniciar sesión';
-      return;
-    }
-    const estado = this.colorLike[publicacion_id];
-
-    const likePublicacion = {
-      user_id: this.usuarioActual.id,
-      publicacion_id: publicacion_id,
-      like: !estado,
-      _method: "PUT",
-    }
-    this.servizo.darLike(publicacion_id, likePublicacion).subscribe({
-      next: (response) => {
-        this.colorLike[publicacion_id] = response.like;
-        this.likes[publicacion_id] = response.likes;
-
-      },
-      error: (err) => {
-        //console.error("Error en el like de la publicacion", err);
-
-      }
-    })
-
-  }
-
-  mostrarUsuarios() {
-    this.servizo.mostrarUsuarios().subscribe({
-      next: (response) => {
-        this.usuarios = response;
-
-      },
-      error: (err) => {
-        //console.error('❌ Error al mostrar los usuarios', err);
-
-      }
-    })
-  }
-
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
     if (isPlatformBrowser(this.platform_id)) {
       this.mostrarPublicaciones();
-      this.mostrarUsuarios();
       this.servizo.usuarioActual$.subscribe((usuario) => {
         this.usuarioActual = usuario;
         //console.log(this.usuarioActual);

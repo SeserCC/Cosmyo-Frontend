@@ -88,7 +88,7 @@ export class SubirArchivoComponent {
             next: (publicacion) => {
               this.formularioPublicacion.reset();
               this.loading = false;
-              this.router.navigate(['/foto'])
+              this.router.navigate(['/publicacion', publicacion.id]);
             },
             error: (erro) => {
               //console.error('Error al subir la publicacion', erro);

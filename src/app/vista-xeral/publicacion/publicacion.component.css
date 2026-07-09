@@ -176,7 +176,7 @@ div:has(#imagenGrande) {
     justify-content: center;
     align-items: center;
 
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0);
     z-index: 99;
 }
 
