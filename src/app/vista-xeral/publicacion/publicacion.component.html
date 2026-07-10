@@ -101,30 +101,39 @@
                         <p *ngIf="!usuarioActual">Debes <a id="iniciar-sesion" [routerLink]="['/login']">iniciar
                                 sesión</a> para dejar tu like</p>
                     </div>
-                    <section *ngIf="publicaciones.length > 0" class="more-posts">
+                    <ng-template #imagenes>
+                        <section *ngIf="publicaciones.length > 0" class="more-posts">
+                            <!-- AÑADIR ICONO DE CARGA -->
+                            <div class="more-posts-header">
+                                <div>
+                                    <p id="publicaciones-usuarios-mensaje">Más fotografías de {{ publicacion.users.name
+                                        }}
+                                    </p>
+                                </div>
 
-                        <div class="more-posts-header">
-                            <div>
-                                <p id="publicaciones-usuarios-mensaje">Más fotografías de {{ publicacion.users.name }}
-                                </p>
                             </div>
 
+                            <div class="posts-grid">
+
+                                <ng-container *ngFor="let pub of publicaciones">
+
+                                    <a class="post" [routerLink]="['/publicacion', pub.id]">
+                                        <img [src]="pub.miniatura" [alt]="pub.titulo" />
+                                    </a>
+
+                                </ng-container>
+                            </div>
+                            <a [routerLink]="['/publicaciones', publicacion.users.id]" class="view-all">
+                                Ver más →
+                            </a>
+                        </section>
+                    </ng-template>
+                    <ng-container *ngIf="cargaImagenesRelacionadas; else imagenes">
+                        <div class="loading-container">
+                            <div class="loader loader-big"></div>
                         </div>
+                    </ng-container>
 
-                        <div class="posts-grid">
-
-                            <ng-container *ngFor="let pub of publicaciones">
-
-                                <a class="post" [routerLink]="['/publicacion', pub.id]">
-                                    <img [src]="pub.miniatura" [alt]="pub.titulo" />
-                                </a>
-
-                            </ng-container>
-                        </div>
-                        <a [routerLink]="['/publicaciones', publicacion.users.id]" class="view-all">
-                            Ver más →
-                        </a>
-                    </section>
                     <div *ngIf="imagenAmpliada" (click)="ampliarImagen()">
                         <p id="mensajeZoom" *ngIf="imagenAmpliada">Zoom con el scroll o con los dedos </p>
                         <img id="imagenGrande" (wheel)="zoomImagen($event)" [style.transform]="'scale(' + escala + ')'"
