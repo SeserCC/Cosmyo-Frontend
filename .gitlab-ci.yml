@@ -15,7 +15,8 @@ cosmyo-build:
     - npm ci
   script:
     - npm run build --configuration=production
-    - curl https://api.cosmyo.com/sitemap.xml -o dist/cosmyo/browser/sitemap.xml
+    - curl --fail https://api.cosmyo.com/sitemap.xml -o dist/cosmyo/browser/sitemap.xml
+    - ls -la dist/cosmyo/browser
     - mv dist/cosmyo/browser/index.csr.html dist/cosmyo/browser/index.html
   artifacts:
     paths:
