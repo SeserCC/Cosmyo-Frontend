@@ -151,6 +151,10 @@ export class ForoComponent implements OnInit {
     this.servizo.mostrarForos().subscribe({
       next: (response) => {
         this.foros = response;
+        this.servizo.actualizarMeta(
+          'Comunidades | Cosmyo',
+          'Lista de comunidades de usuarios acerca de astrofotografía'
+        );
         this.carga = false;
       },
       error: (err) => {

@@ -353,6 +353,10 @@ export class DebateComponent {
       next: (response) => {
         this.comentarios = response.comentarios.data;
         this.foro = response.foro;
+        this.servizo.actualizarMeta(
+          this.foro.tema + ' | Cosmyo',
+          'Consejos de astrofotografia, debates y más'
+        );
         this.carga = false;
         /* (this.comentarios); */
         /* this.paginaActual = response.current_page;

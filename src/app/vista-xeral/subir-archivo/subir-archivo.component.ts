@@ -14,7 +14,7 @@ import { HttpHeaders } from '@angular/common/http';
   templateUrl: './subir-archivo.component.html',
   styleUrl: './subir-archivo.component.css'
 })
-export class SubirArchivoComponent {
+export class SubirArchivoComponent implements OnInit {
   // Array que contiene todas las imágenes/publicaciones
   publicaciones: any[] = [];
   nombreArchivo = '';
@@ -110,6 +110,13 @@ export class SubirArchivoComponent {
     })
 
 
+  }
+
+  ngOnInit(): void {
+    this.servizo.actualizarMeta(
+      'Subir publicación | Cosmyo',
+      'Nueva publicación'
+    );
   }
 
 }
