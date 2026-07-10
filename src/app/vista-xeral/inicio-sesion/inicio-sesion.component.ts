@@ -15,7 +15,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './inicio-sesion.component.html',
   styleUrl: './inicio-sesion.component.css'
 })
-export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecutar código al inicializarse
+export class InicioSesionComponent implements OnInit { // Implementa la interfaz OnInit para ejecutar código al inicializarse
 
   // Formulario reactivo para la autenticación del usuario
   formularioLogin: FormGroup;
@@ -69,33 +69,38 @@ export class InicioSesionComponent { // Implementa la interfaz OnInit para ejecu
     const loginData = { email: this.formularioLogin.value.usuario, password: this.formularioLogin.value.contrasinal };
 
     this.servizo.login(loginData).subscribe({
-        next: (response) => {
-          this.abriendoSesionCarga = false;
-          if (response.user.rol == "admin") {
-            this.router.navigate(['/administracion']);
-          } else {
-            this.router.navigate(['/']);
-          }
-        },
-
-        error: (err) => {
-          this.abriendoSesionCarga = false;
-
-          //console.error('❌ Error login', err);
-          if (err.status == 401) {
-            this.errorMensaje = err.error.error;
-            this.formularioLogin.reset()
-          } else if (err.status == '422') {
-            this.errorMensaje = "Correo inválido, ej: ton618@example.com"
-          } else if (err.status == '503') {
-            this.errorMensaje = "Estamos en mantenimiento, prueba más tarde";
-          } else {
-            this.errorMensaje = "Error inesperado del servidor";
-            //console.error("El servidor no responde correctemante", err);
-          }
-
+      next: (response) => {
+        this.abriendoSesionCarga = false;
+        if (response.user.rol == "admin") {
+          this.router.navigate(['/administracion']);
+        } else {
+          this.router.navigate(['/']);
         }
-      });
-  }
+      },
 
+      error: (err) => {
+        this.abriendoSesionCarga = false;
+
+        //console.error('❌ Error login', err);
+        if (err.status == 401) {
+          this.errorMensaje = err.error.error;
+          this.formularioLogin.reset()
+        } else if (err.status == '422') {
+          this.errorMensaje = "Correo inválido, ej: ton618@example.com"
+        } else if (err.status == '503') {
+          this.errorMensaje = "Estamos en mantenimiento, prueba más tarde";
+        } else {
+          this.errorMensaje = "Error inesperado del servidor";
+          //console.error("El servidor no responde correctemante", err);
+        }
+
+      }
+    });
+  }
+  ngOnInit(): void {
+    this.servizo.actualizarMeta(
+      'Inicio de sesión | Cosmyo',
+      'Acceso al login'
+    );
+  }
 }

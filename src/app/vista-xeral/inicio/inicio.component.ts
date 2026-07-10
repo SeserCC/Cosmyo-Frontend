@@ -46,7 +46,10 @@ export class InicioComponent implements OnInit {
         this.usuarioActual = data;
         //console.log(data);
       });
-
+      this.servizo.actualizarMeta(
+        'Cosmyo - Red social de astrofotografía',
+        'Pantalla de inicio'
+      );
       this.mensaje = history.state.mensaje;
 
       history.replaceState({}, document.title);

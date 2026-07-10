@@ -994,6 +994,11 @@ export class AdministracionComponent implements OnInit {
 
       });
 
+      this.servizo.actualizarMeta(
+        'Administración | Cosmyo',
+        'Panel de control'
+      );
+
 
       if (this.servizo.token) {
 

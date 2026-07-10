@@ -89,7 +89,7 @@ export class PublicacionesComponent implements OnInit {
         block: 'start'
       })
     });
-    
+
     this.publicacionSeleccionar = publicacion;  // Guardamos la publicación a editar
     // Rellenamos el formulario con los valores actuales de la publicación
     this.formularioCRUDImagen.patchValue({
@@ -225,6 +225,10 @@ export class PublicacionesComponent implements OnInit {
         this.user_id = Number(this.router.snapshot.paramMap.get('user_id'));
         this.publicaciones = response.publicaciones;
         this.perfil = response.perfil;
+        this.servizo.actualizarMeta(
+          'Tus publicaciones | Cosmyo',
+          'Las publicaciones creadas por el usuario'
+        );
         this.carga = false;
 
         this.publicaciones.forEach((pub) => {

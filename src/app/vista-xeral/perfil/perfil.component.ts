@@ -428,11 +428,16 @@ export class PerfilComponent implements OnInit {
       });
 
       this.router.params.pipe(
+
         switchMap(params => {
           return this.servizo.mostrarPerfil(params['user_id']);
         })
       ).subscribe(perfil => {
         this.perfil = perfil;
+        this.servizo.actualizarMeta(
+          perfil.user.name + ' | Cosmyo',
+          'Perfil del usuario'
+        );
         this.carga = false;
 
       })

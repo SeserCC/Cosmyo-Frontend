@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ServizoLoginService } from '../../servizo-login.service';
 
 @Component({
   selector: 'app-creacion-web',
@@ -8,6 +9,14 @@ import { RouterLink } from '@angular/router';
   templateUrl: './creacion-web.component.html',
   styleUrl: './creacion-web.component.css'
 })
-export class CreacionWebComponent {
+export class CreacionWebComponent implements OnInit {
+  constructor(private servizo: ServizoLoginService) {
 
+  }
+  ngOnInit(): void {
+    this.servizo.actualizarMeta(
+      'Sobre nosotros | Cosmyo',
+      'Historia de la creación de Cosmyo'
+    );
+  }
 }

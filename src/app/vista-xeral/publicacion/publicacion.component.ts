@@ -187,6 +187,10 @@ export class PublicacionComponent implements OnInit {
         this.anterior = response.anterior;
         this.colorLike = response.userActualLike;
         this.publicacionesRelacionadas();
+        this.servizo.actualizarMeta(
+          this.publicacion.titulo + ' | Cosmyo',
+          this.publicacion.descripcion
+        )
         this.carga = false;
       },
       error: (err) => {

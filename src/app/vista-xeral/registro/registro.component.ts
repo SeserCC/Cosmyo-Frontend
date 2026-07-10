@@ -14,7 +14,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
 })
-export class RegistroComponent {
+export class RegistroComponent implements OnInit {
 
   formularioRegistro: FormGroup;
   usuarios: any[];
@@ -97,5 +97,10 @@ export class RegistroComponent {
 
 
   }
-
+  ngOnInit(): void {
+    this.servizo.actualizarMeta(
+      'Registro | Cosmyo',
+      'Creación de cuenta nueva'
+    );
+  }
 }
