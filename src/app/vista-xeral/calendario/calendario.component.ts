@@ -40,6 +40,10 @@ export class CalendarioComponent implements OnInit {
     this.servizo.mesActual().subscribe({
       next: (response) => {
         this.eventos = response;
+        this.servizo.actualizarMeta(
+          'Calendario astronómico | Cosmyo',
+          'Calendario del mes de ' + this.nombreMesActual
+        )
         this.carga = false;
       },
       error: (err) => {

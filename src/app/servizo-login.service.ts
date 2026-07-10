@@ -9,6 +9,7 @@ import { Comentario } from './comentario';
 import { Evento } from './evento';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
+import { Meta, Title } from '@angular/platform-browser';
 
 
 @Injectable({
@@ -39,7 +40,7 @@ export class ServizoLoginService {
   sesionCargada$: BehaviorSubject<any>; // Comprobacion de la sesion
   cargando$: BehaviorSubject<boolean>; // Comprobacion de la sesion
 
-  constructor(private cliente: HttpClient, @Inject(PLATFORM_ID) private plataformId: Object, private router: Router) {
+  constructor(private cliente: HttpClient, @Inject(PLATFORM_ID) private plataformId: Object, private router: Router, private title: Title, private meta: Meta) {
     //this.usuarios$ = new BehaviorSubject(this.usuarios); // Inicializa el BehaviorSubject con la lista de usuarios
     // this.foros$ = new BehaviorSubject(this.foros); // Inicializa el BehaviorSubject con la lista de foros
     // this.comentarios$ = new BehaviorSubject(this.comentarios); // Inicializa el BehaviorSubject con la lista de comentarios
@@ -57,6 +58,15 @@ export class ServizoLoginService {
       this.tokens$.next(this.token);
 
     }
+  }
+
+  actualizarMeta(title: string, description: string) {
+    this.title.setTitle(title);
+
+    this.meta.updateTag({
+      name: 'description',
+      content: description
+    })
   }
 
   registro(body: any) {

@@ -62,8 +62,11 @@ export class FotosVideosComponent implements OnInit {
   mostrarPublicaciones() {
     this.servizo.mostrarPublicaciones().subscribe({
       next: (response) => {
-
         this.publicaciones = response.publicacions;
+        this.servizo.actualizarMeta(
+          'Galería | Cosmyo',
+          'Galería de imagenes de astrofotografía realizadas por los usuarios'
+        );
         this.carga = false;
       },
       error: (err) => {

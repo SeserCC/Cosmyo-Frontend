@@ -43,10 +43,13 @@ export class TipoPlanComponent implements OnInit {
       this.servizo.usuarioActual$.subscribe((data) => {
         //console.log(data);
         this.usuarioActual = data;
-
+        this.servizo.actualizarMeta(
+          'Tipo de plan | Cosmyo',
+          'Escoge entre dos tipos de plan: Lite o Premium'
+        );
         if (this.usuarioActual) {
           this.esPremium();
-          
+
         } else {
           this.carga = false;
 
