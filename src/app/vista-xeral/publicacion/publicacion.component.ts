@@ -15,6 +15,7 @@ import { switchMap } from 'rxjs';
 export class PublicacionComponent implements OnInit {
   publicacion: any;
   carga: boolean = true;
+  cargaImagenesRelacionadas: boolean = true;
   user_id: number;
   publicaciones: any[] = [];
   usuarioActual: any;
@@ -243,11 +244,13 @@ export class PublicacionComponent implements OnInit {
       next: (publicaciones) => {
         this.publicaciones = publicaciones.data;
         this.carga = false;
+        this.cargaImagenesRelacionadas = false;
       },
 
       error: (erro) => {
         //console.error('Error al cargar las publicaciones del usuario', erro);
         this.carga = false;
+        this.cargaImagenesRelacionadas = false;
       }
     })
   }
