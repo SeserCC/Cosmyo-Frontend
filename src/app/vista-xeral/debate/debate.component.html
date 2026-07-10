@@ -55,7 +55,7 @@
                     <div id="usuario1_info">
                         <a [routerLink]="['/perfil', comentario.user_id]" id="nombre_usuario"> <img id="foto-perfil"
                                 [src]="comentario.user?.perfil?.foto" alt="avatar">{{comentario.user?.name}}</a>
-                        <p id="fecha_hora">{{comentario?.fecha_hora | tiempoTranscurrido}}</p>
+                        <p id="fecha_hora">{{comentario?.created_at | tiempoTranscurrido}}</p>
                     </div>
 
                     <div id="usuario1_texto">
@@ -177,7 +177,7 @@
 
         <ng-container *ngIf="carga; else content">
             <div class="loading-container">
-                <div class="loader loader--centered"></div>
+                <div class="loader loader-big"></div>
                 <p class="has-text-light mt-4">Cargando...</p>
             </div>
         </ng-container>

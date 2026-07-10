@@ -81,7 +81,7 @@
 
                             <div class="user-info-card mt-3 p-4">
                                 <p class="is-size-7 has-text-grey">Registrado</p>
-                                <p class="has-text-weight-semibold has-text-white">{{ perfil?.fecha_registro |
+                                <p class="has-text-weight-semibold has-text-white">{{ perfil?.created_at |
                                     date:'longDate' }}</p>
                                 <ng-container *ngIf="usuarioActual.id == perfil.user_id">
                                     <div class="plan-badge mt-2 mb-2">
