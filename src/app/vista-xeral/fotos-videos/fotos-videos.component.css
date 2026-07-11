@@ -73,8 +73,7 @@ a {
 }
 
 .loading-container {
-    height: 60vh;
-    /* o 100vh si quieres pantalla completa */
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
