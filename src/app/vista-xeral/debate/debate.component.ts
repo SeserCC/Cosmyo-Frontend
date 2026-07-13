@@ -105,7 +105,7 @@ export class DebateComponent {
 
     let nuevoComentario = {
       texto: this.formularioCRUDComentario.get('texto')?.value,
-      foro_id: String(this.router.snapshot.paramMap.get('foro_id')),
+      foro_id: String(this.router.snapshot.paramMap.get('id')),
       user: this.usuarioLogueado
     }
 
@@ -213,7 +213,7 @@ export class DebateComponent {
       }
 
       this.comentarioSeleccionar.texto = this.formularioCRUDComentario.get('texto')?.value;
-      this.comentarioSeleccionar.foro_id = String(this.router.snapshot.paramMap.get('foro_id'));
+      this.comentarioSeleccionar.foro_id = String(this.router.snapshot.paramMap.get('id'));
 
       if (video) {
         this.servizo.recibirFirma().subscribe((firma: any) => {
@@ -230,7 +230,7 @@ export class DebateComponent {
 
               this.servizo.modificarComentario(this.comentarioSeleccionar.id, comentarioMultimedia).subscribe({
                 next: (data) => {
-                  comentarioMultimedia.foro_id = String(this.router.snapshot.paramMap.get('foro_id'));
+                  comentarioMultimedia.foro_id = String(this.router.snapshot.paramMap.get('id'));
                   comentarioMultimedia.texto = this.formularioCRUDComentario.get('texto')?.value;
                   this.formularioCRUDComentario.get('eliminarImagen')?.setValue(false);
                   if (data.foto) {
@@ -348,10 +348,11 @@ export class DebateComponent {
   } */
 
   mostrarComentariosForos() {
+    const id = Number(this.router.snapshot.paramMap.get('id'));
 
-    this.servizo.mostrarComentariosForos(Number(this.router.snapshot.paramMap.get('foro_id'))).subscribe({
+    this.servizo.mostrarComentariosForos(id).subscribe({
       next: (response) => {
-        this.comentarios = response.comentarios.data;
+        this.comentarios = response.comentarios;
         this.foro = response.foro;
         this.servizo.actualizarMeta(
           this.foro.tema + ' | Cosmyo',

@@ -7,12 +7,12 @@
                 <i class="bi bi-house"></i>
             </a>
             /
-            <a [routerLink]="['/foto']">Galería</a>
+            <a [routerLink]="['/galeria']">Galería</a>
             /
             <span id="fotos_videos">{{publicacion?.titulo}}</span>
         </div>
 
-        <a [routerLink]="['/foto']" class="flecha-derecha">
+        <a [routerLink]="['/galeria']" class="flecha-derecha">
             <i class="bi bi-arrow-left"></i>
         </a>
 
@@ -47,7 +47,8 @@
 
                                 <p class="autor-fecha">
                                     <span>
-                                        <a id="acceso-perfil" [routerLink]="['/perfil', publicacion.users.id]">
+                                        <a id="acceso-perfil"
+                                            [routerLink]="['/perfil', publicacion.users.id, publicacion.users.slug]">
                                             <img id="foto-perfil" [src]="publicacion.users?.perfil?.foto" alt="avatar">
                                             {{ publicacion.users.name }}
                                         </a>
@@ -103,7 +104,6 @@
                     </div>
                     <ng-template #imagenes>
                         <section *ngIf="publicaciones.length > 0" class="more-posts">
-                            <!-- AÑADIR ICONO DE CARGA -->
                             <div class="more-posts-header">
                                 <div>
                                     <p id="publicaciones-usuarios-mensaje">Más fotografías de {{ publicacion.users.name
@@ -117,8 +117,8 @@
 
                                 <ng-container *ngFor="let pub of publicaciones">
 
-                                    <a class="post" [routerLink]="['/publicacion', pub.id]">
-                                        <img [src]="pub.miniatura" [alt]="pub.titulo" />
+                                    <a class="post" [routerLink]="['/publicacion', pub.id, pub.slug]">
+                                        <img [src]="pub.miniatura" [title]="pub.titulo" [alt]="pub.titulo" />
                                     </a>
 
                                 </ng-container>

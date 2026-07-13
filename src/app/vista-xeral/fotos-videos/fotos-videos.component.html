@@ -41,9 +41,10 @@
             <ng-template #content>
                 <div class="columns is-multiline is-mobile">
 
-                    <div title="{{publicacion.titulo}}" *ngFor="let publicacion of publicaciones" class="column is-2-desktop is-2-tablet is-4-mobile">
+                    <div title="{{publicacion.titulo}}" *ngFor="let publicacion of publicaciones"
+                        class="column is-2-desktop is-2-tablet is-4-mobile">
 
-                        <a [routerLink]="['/publicacion', publicacion.id]">
+                        <a [routerLink]="['/publicacion', publicacion.id, publicacion.slug]">
                             <div class="imagen-publicacion">
                                 <img [src]="publicacion.miniatura" alt="Publicacion">
                             </div>

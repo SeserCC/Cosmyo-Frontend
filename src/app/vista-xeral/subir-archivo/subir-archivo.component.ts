@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ServizoLoginService } from '../../servizo-login.service';
-import { Imagen } from '../../imagen';
-import { CommonModule } from '@angular/common';
-import { Usuario } from '../../usuario';
-import { HttpHeaders } from '@angular/common/http';
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-subir-archivo',
@@ -19,6 +16,11 @@ export class SubirArchivoComponent implements OnInit {
   publicaciones: any[] = [];
   nombreArchivo = '';
 
+  location = inject(Location);
+
+  volver() {
+    this.location.back();
+  }
   // Formulario reactivo para añadir una publicación (imagen)
   formularioPublicacion: FormGroup;
 
