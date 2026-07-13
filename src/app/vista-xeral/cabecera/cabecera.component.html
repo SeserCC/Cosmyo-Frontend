@@ -24,7 +24,7 @@
                     <a class="nav-link" [routerLink]="['/foro']">Foros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/foto']">Galería</a>
+                    <a class="nav-link" [routerLink]="['/galeria']">Galería</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/tipoPlan']">Planes</a>
@@ -61,7 +61,8 @@
                             </li>
 
                             <li>
-                                <a class="dropdown-item" [routerLink]="['/perfil', usuarioActual?.id]">
+                                <a class="dropdown-item"
+                                    [routerLink]="['/perfil', usuarioActual?.id, usuarioActual.slug]">
                                     Perfil
                                 </a>
                             </li>

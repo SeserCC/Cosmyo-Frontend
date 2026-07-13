@@ -86,7 +86,7 @@
                             </div>
                         </ng-container>
                     </ng-container>
-                    <a id="enlace-foro" [routerLink]="['/debate', foro.id]">{{foro.tema}}</a>
+                    <a id="enlace-foro" [routerLink]="['/debate', foro.id, foro.slug]">{{foro.tema}}</a>
 
                     <p *ngIf="foro.user?.name" id="creador-foro">Creado por <a
                             [routerLink]="['/perfil', foro.user_id]">{{foro.user?.name}}</a> - {{ (foro.created_at ||
