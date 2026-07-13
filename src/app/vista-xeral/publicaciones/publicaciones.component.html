@@ -144,8 +144,8 @@
 
                             <div class="column is-3">
                                 <figure class="image is-square">
-                                    <a [routerLink]="['/publicacion', publicacion.id]">
-                                        <img [src]="publicacion.imagen" class="img-publicacion" />
+                                    <a [routerLink]="['/publicacion', publicacion.id, publicacion.slug]">
+                                        <img [src]="publicacion.miniatura" class="img-publicacion" />
                                     </a>
                                 </figure>
                             </div>

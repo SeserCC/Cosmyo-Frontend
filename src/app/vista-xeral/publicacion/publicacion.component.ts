@@ -28,7 +28,6 @@ export class PublicacionComponent implements OnInit {
   siguiente: any;
   ocultarDesliz = false;
   esMovil = false;
-  /* navegando = false; */
   touchStartX = 0;
   touchEndX = 0;
   touchStartY = 0;
@@ -56,33 +55,19 @@ export class PublicacionComponent implements OnInit {
   }
 
   siguientePublicacion() {
-    /* if (this.navegando) {
-      return;
-    }
 
-    this.navegando = true; */
-
-    this.routerR.navigate(['/publicacion/' + (this.siguiente.id)])/* .then(() => {
-      this.navegando = false;
-    }) */;
+    this.routerR.navigate(['/publicacion', this.siguiente.id, this.siguiente.slug])
   }
 
   anteriorPublicacion() {
-    /* if (this.navegando) {
-      return;
-    }
 
-    this.navegando = true; */
-
-    this.routerR.navigate(['/publicacion/' + (this.anterior.id)])/* .then(() => {
-      this.navegando = false;
-    }) */;
+    this.routerR.navigate(['/publicacion', this.anterior.id, this.anterior.slug])
   }
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
 
-    if (this.carga || this.loading/*  || this.navegando */) {
+    if (this.carga || this.loading) {
       return;
     }
 
@@ -103,7 +88,7 @@ export class PublicacionComponent implements OnInit {
         if (this.imagenAmpliada) {
           this.ampliarImagen();
         } else {
-          this.routerR.navigate(['/foto']);
+          this.routerR.navigate(['/galeria']);
         }
 
         break;
@@ -179,7 +164,9 @@ export class PublicacionComponent implements OnInit {
 
   /* Cambiar para mostrar solo una publicacion */
   mostrarPublicacion() {
-    this.servizo.mostrarPublicacion(Number(this.router.snapshot.paramMap.get('id'))).subscribe({
+    const id = Number(this.router.snapshot.paramMap.get('id'));
+
+    this.servizo.mostrarPublicacion(id).subscribe({
       next: (response) => {
         this.publicacion = response.publicacion;
         this.likes = response.likes;
@@ -230,19 +217,6 @@ export class PublicacionComponent implements OnInit {
 
   }
 
-  mostrarUsuarios() {
-    this.servizo.mostrarUsuarios().subscribe({
-      next: (response) => {
-        this.usuarios = response;
-
-      },
-      error: (err) => {
-        //console.error('❌ Error al mostrar los usuarios', err);
-
-      }
-    })
-  }
-
   publicacionesRelacionadas() {
     this.servizo.publicacionesRelacionadas(this.publicacion.user_id, this.publicacion.id).subscribe({
       next: (publicaciones) => {
@@ -259,12 +233,10 @@ export class PublicacionComponent implements OnInit {
     })
   }
 
-
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
     if (isPlatformBrowser(this.platform_id)) {
       this.mostrarPublicacion();
-      this.mostrarUsuarios();
       this.servizo.usuarioActual$.subscribe((usuario) => {
         this.usuarioActual = usuario;
         //console.log(this.usuarioActual);
