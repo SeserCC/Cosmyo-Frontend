@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ServizoLoginService } from '../../servizo-login.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -67,6 +67,22 @@ export class ForoComponent implements OnInit {
 
   toggleMenu(id: number) {
     this.menuAbierto = this.menuAbierto === id ? null : id;
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onkeyDown(event: KeyboardEvent) {
+    if (event.key == 'Escape') {
+      this.menuAbierto = null;
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    let target = event.target as HTMLElement;
+
+    if (!target.closest('.menu_opciones')) {
+      this.menuAbierto = null;
+    }
   }
 
   // Método para mostrar el formulario de creación/edición

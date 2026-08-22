@@ -4,7 +4,6 @@ import { CalendarioComponent } from './vista-xeral/calendario/calendario.compone
 import { FotosVideosComponent } from './vista-xeral/fotos-videos/fotos-videos.component';
 import { DebateComponent } from './vista-xeral/debate/debate.component';
 import { ForoComponent } from './vista-xeral/foro/foro.component';
-import { PublicacionesComponent } from './vista-xeral/publicaciones/publicaciones.component';
 import { TipoPlanComponent } from './vista-xeral/tipo-plan/tipo-plan.component';
 import { SubirArchivoComponent } from './vista-xeral/subir-archivo/subir-archivo.component';
 import { InicioSesionComponent } from './vista-xeral/inicio-sesion/inicio-sesion.component';
@@ -31,7 +30,6 @@ export const routes: Routes = [
     { path: "galeria", component: FotosVideosComponent, canActivate: [mantenimientoGuard] },
     { path: "debate/:id/:slug", component: DebateComponent, canActivate: [mantenimientoGuard] },
     { path: "foro", component: ForoComponent, canActivate: [mantenimientoGuard] },
-    { path: "publicaciones/:user_id", component: PublicacionesComponent, canActivate: [mantenimientoGuard] },
     { path: "tipoPlan", component: TipoPlanComponent, canActivate: [mantenimientoGuard] },
     { path: "perfil/:user_id/:slug", component: PerfilComponent, canActivate: [mantenimientoGuard] },
     { path: "publicacion/:id/:slug", component: PublicacionComponent, canActivate: [mantenimientoGuard] },

@@ -15,6 +15,7 @@ import { switchMap } from 'rxjs';
 export class PublicacionComponent implements OnInit {
   publicacion: any;
   carga: boolean = true;
+  mensaje = '';
   cargaImagenesRelacionadas: boolean = true;
   user_id: number;
   publicaciones: any[] = [];
@@ -22,6 +23,7 @@ export class PublicacionComponent implements OnInit {
   likes: number[] = [];
   colorLike: boolean[] = [];
   mensajeSesion = '';
+  mostrarEquipos = false;
   loading = false;
   imagenAmpliada = false;
   anterior: any;
@@ -252,6 +254,15 @@ export class PublicacionComponent implements OnInit {
         }, 7000);
       }
 
+      this.mensaje = history.state.mensaje;
+
+      if (this.mensaje) {
+        setTimeout(() => {
+          this.mensaje = '';
+        }, 5000);
+      }
+
+      history.replaceState({}, document.title);
     }
 
   }

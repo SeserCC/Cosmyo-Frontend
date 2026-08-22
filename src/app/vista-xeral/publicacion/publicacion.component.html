@@ -1,5 +1,6 @@
 <div (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)" class="contenido">
     <!-- Contenedor principal -->
+
     <div class="datos">
         <!-- Mapa de navegación -->
         <div id="mapa_navegacion">
@@ -19,6 +20,11 @@
         <p *ngIf="esMovil" [class.oculto]="ocultarDesliz" id="mensaje-deslizamiento"> <i class="bi bi-hand-index-thumb"
                 style="font-size: 0.9rem;"></i> Desliza para cambiar de fotografía</p>
 
+        <div [class.oculto]="!mensaje" class="mensaje-exito">
+            <i class="bi bi-check-circle"></i>
+            {{ mensaje }}
+        </div>
+        
         <div class="columns is-multiline is-variable is-4 mt-3">
             <div *ngIf="!publicacion && !carga" class="column is-12">
                 <p class="mensaje-galeria-vacia has-text-centered has-text-grey-light">
@@ -45,6 +51,45 @@
                                 <h3 class="title is-4">{{ publicacion.titulo }}</h3>
                                 <p class="descripcion subtitle is-6">{{ publicacion.descripcion }}</p>
 
+                                <div class="equipos-dropdown" *ngIf="publicacion.equipos?.length">
+
+                                    <button type="button" class="equipos-dropdown-btn"
+                                        (click)="mostrarEquipos = !mostrarEquipos">
+
+                                        <i class="bi bi-camera"></i>
+
+                                        <span>Equipos utilizados</span>
+
+                                        <span class="equipos-count">
+                                            {{ publicacion.equipos.length }}
+                                        </span>
+
+                                        <i class="bi bi-chevron-down" [class.rotada]="mostrarEquipos">
+                                        </i>
+
+                                    </button>
+
+                                    <div class="equipos-dropdown-content" [class.abierto]="mostrarEquipos">
+
+                                        <div class="equipos-publicacion">
+
+                                            <span class="equipo-tag" *ngFor="let equipo of publicacion.equipos">
+
+                                                <span class="equipo-nombre">
+                                                    {{ equipo.marca }} {{ equipo.modelo }}
+                                                </span>
+
+                                                <span class="equipo-tipo">
+                                                    {{ equipo.tipos.nombre }}
+                                                </span>
+
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
                                 <p class="autor-fecha">
                                     <span>
                                         <a id="acceso-perfil"
@@ -55,7 +100,7 @@
                                     </span>
 
                                     <span>
-                                        <i class="bi bi-clock-fill"></i>
+                                        <i title="Fecha" class="bi bi-clock-fill"></i>
                                         {{ publicacion.created_at | tiempoTranscurrido }}
                                     </span>
 
@@ -123,7 +168,8 @@
 
                                 </ng-container>
                             </div>
-                            <a [routerLink]="['/publicaciones', publicacion.users.id]" class="view-all">
+                            <a [routerLink]="['/perfil', publicacion.users.id, publicacion.users.slug]"
+                                class="view-all">
                                 Ver más →
                             </a>
                         </section>
