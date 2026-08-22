@@ -1,4 +1,4 @@
-import { Component, inject, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, inject, Inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Comentario } from '../../comentario';
 import { ServizoLoginService } from '../../servizo-login.service';
@@ -84,6 +84,22 @@ export class DebateComponent {
       this.mostrarMas = id;
     }
 
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onkeyDown(event: KeyboardEvent) {
+    if (event.key == 'Escape') {
+      this.menuAbierto = null;
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    let target = event.target as HTMLElement;
+
+    if (!target.closest('.menu_opciones')) {
+      this.menuAbierto = null;
+    }
   }
 
   archivoSeleccionado(event: any): void {

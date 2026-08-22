@@ -47,6 +47,12 @@
                     <li [class.is-active]="categoriaSeleccionada === 'gratuitos'">
                         <a (click)="seleccionarCategoria('gratuitos')">Gratuitos</a>
                     </li>
+                    <li [class.is-active]="categoriaSeleccionada === 'tipos'">
+                        <a (click)="seleccionarCategoria('tipos')">Tipos</a>
+                    </li>
+                    <li [class.is-active]="categoriaSeleccionada === 'equipos'">
+                        <a (click)="seleccionarCategoria('equipos')">Equipos</a>
+                    </li>
                 </ul>
             </div>
 
@@ -1035,7 +1041,164 @@
                     </ul>
                 </div>
             </div>
+            <div *ngIf="categoriaSeleccionada === 'tipos'">
+                <form [formGroup]="formularioCRUDTipo" class="mb-5">
+                    <!-- Formulario para engadir eventos -->
+                    <h2 class="title is-4 has-text-light mb-4">Tipos</h2>
 
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" placeholder="Nombre del tipo"
+                                formControlName="nombre">
+                        </div>
+                        <p *ngIf="formularioCRUDTipo.get('nombre')?.touched && formularioCRUDTipo.get('nombre')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el nombre del tipo de equipo
+                        </p>
+                        <!-- Añadir mensaje de error al intentar añadir un tipo ya incluido -->
+                    </div>
+
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button type="button" (click)="engadirTipo()" *ngIf="!cambiar"
+                                [disabled]="formularioCRUDTipo.invalid" class="button is-link">
+                                Añadir Tipo
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button type="button" (click)="modificarTipo()" *ngIf="cambiar"
+                                [disabled]="formularioCRUDTipo.invalid" class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+
+                        <div class="control">
+                            <button type="button" (click)="cancelar(formularioCRUDTipo)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <!-- Lista de planes -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de tipos</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <p *ngIf="tipos?.length == 0">No hay tipos</p>
+
+                        <li *ngFor="let tipo of tipos" class="mb-3">
+                            <div class="columns is-vcentered">
+                                <div class="column is-8 has-text-light">
+                                    {{tipo.nombre}}
+                                </div>
+
+                                <div class="column is-4 is-flex is-justify-content-flex-end">
+                                    <button class="button is-small is-warning mr-2" type="button"
+                                        (click)="editarTipo(tipo)">Editar</button>
+                                    <button class="button is-small is-danger" type="button"
+                                        (click)="eliminarTipo(tipo.id)">Eliminar</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div *ngIf="categoriaSeleccionada === 'equipos'">
+                <form [formGroup]="formularioCRUDEquipo" class="mb-5">
+                    <!-- Formulario para engadir eventos -->
+                    <h2 class="title is-4 has-text-light mb-4">Tipos</h2>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" placeholder="Marca del equipo"
+                                formControlName="marca">
+                        </div>
+                        <p *ngIf="formularioCRUDEquipo.get('marca')?.touched && formularioCRUDEquipo.get('marca')?.invalid"
+                            class="help is-danger">
+                            Debes indicar la marca del equipo
+                        </p>
+
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-black-ter has-text-light" placeholder="Modelo del equipo"
+                                formControlName="modelo">
+                        </div>
+                        <p *ngIf="formularioCRUDEquipo.get('modelo')?.touched && formularioCRUDEquipo.get('modelo')?.invalid"
+                            class="help is-danger">
+                            Debes indicar el modelo del equipo
+                        </p>
+
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth has-background-black-ter">
+                                <select formControlName="tipo_id" class="has-background-black-ter has-text-light">
+                                    <option value="" selected>Selecciona un tipo</option>
+                                    <ng-container *ngFor="let tipo of tipos">
+                                        <option value={{tipo.id}}>{{tipo.nombre}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <p *ngIf="formularioCRUDEquipo.get('tipo_id')?.touched && formularioCRUDEquipo.get('tipo_id')?.invalid"
+                            class="help is-danger">
+                            Debes seleccionar un tipo de equipo
+                        </p>
+                    </div>
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <button type="button" (click)="engadirEquipo()" *ngIf="!cambiar"
+                                [disabled]="formularioCRUDEquipo.invalid" class="button is-link">
+                                Añadir Equipo
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button type="button" (click)="modificarEquipo()" *ngIf="cambiar"
+                                [disabled]="formularioCRUDEquipo.invalid" class="button is-success">
+                                Modificar
+                            </button>
+                        </div>
+
+                        <div class="control">
+                            <button type="button" (click)="cancelar(formularioCRUDEquipo)" class="button is-warning">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <!-- Lista de planes -->
+                <h2 class="title is-4 has-text-light mb-4">Lista de equipos</h2>
+
+                <div class="box has-background-black-ter">
+                    <ul>
+                        <p *ngIf="equipos?.length == 0">No hay equipos</p>
+
+                        <li *ngFor="let equipo of equipos" class="mb-3">
+                            <div class="columns is-vcentered">
+                                <div class="column is-8 has-text-light">
+                                    {{equipo.marca}} - {{equipo.modelo}}
+                                </div>
+
+                                <div class="column is-4 is-flex is-justify-content-flex-end">
+                                    <button class="button is-small is-warning mr-2" type="button"
+                                        (click)="editarEquipo(equipo)">Editar</button>
+                                    <button class="button is-small is-danger" type="button"
+                                        (click)="eliminarEquipo(equipo.id)">Eliminar</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <!-- <ng-container *ngIf="carga; else loaded">

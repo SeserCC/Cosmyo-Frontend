@@ -53,8 +53,9 @@
                         </ng-container>
                     </ng-container>
                     <div id="usuario1_info">
-                        <a [routerLink]="['/perfil', comentario.user_id]" id="nombre_usuario"> <img id="foto-perfil"
-                                [src]="comentario.user?.perfil?.foto" alt="avatar">{{comentario.user?.name}}</a>
+                        <a [routerLink]="['/perfil', comentario.user_id, foro.slug]" id="nombre_usuario"> <img
+                                id="foto-perfil" [src]="comentario.user?.perfil?.foto"
+                                alt="avatar">{{comentario.user?.name}}</a>
                         <p id="fecha_hora">{{comentario?.created_at | tiempoTranscurrido}}</p>
                     </div>
 

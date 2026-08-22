@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ServizoLoginService } from '../../servizo-login.service';
@@ -15,12 +15,14 @@ export class SubirArchivoComponent implements OnInit {
   // Array que contiene todas las imágenes/publicaciones
   publicaciones: any[] = [];
   nombreArchivo = '';
+  mostrarEquipos: boolean;
+  cargaEquipos: boolean;
+  equipoEscogido: any[] = [];
 
   location = inject(Location);
+  equipos: any[];
+  formularioEquipo: FormGroup;
 
-  volver() {
-    this.location.back();
-  }
   // Formulario reactivo para añadir una publicación (imagen)
   formularioPublicacion: FormGroup;
 
@@ -40,7 +42,11 @@ export class SubirArchivoComponent implements OnInit {
       titulo: new FormControl('', [Validators.required, Validators.minLength(4)]),       // Campo título obligatorio y mínimo 4 caracteres
       descripcion: new FormControl('', [Validators.required, Validators.minLength(4)]),  // Campo descripción obligatorio y mínimo 4 caracteres
       zona_geografica: new FormControl('', [Validators.required, Validators.minLength(4)]),  // Campo descripción obligatorio y mínimo 4 caracteres
-    })
+    });
+
+    this.formularioEquipo = new FormGroup({
+      modelo: new FormControl(''),
+    });
   }
 
   // Método que se ejecuta cuando el usuario selecciona un archivo desde el input file
@@ -54,6 +60,79 @@ export class SubirArchivoComponent implements OnInit {
       this.faltaArchivo = false;
       this.nombreArchivo = '';
     }
+
+  }
+
+  mostrarListaEquipos() {
+    this.servizo.mostrarEquipos().subscribe({
+      next: (response) => {
+        this.equipos = response;
+      },
+      error: (erro) => {
+        /* console.error('Error al devolver los equipos', erro); */
+      }
+    });
+  }
+
+  volver() {
+    this.location.back();
+  }
+
+  listarEquipos() {
+    this.mostrarEquipos = true;
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onkeyDown(event: KeyboardEvent) {
+    if (event.key == 'Escape') {
+      this.mostrarEquipos = false;
+    }
+  }
+
+  guardarEquipos(equipo: any) {
+    this.equipoEscogido.push(equipo);
+    this.actualizarEquipos(this.equipos);
+  }
+
+  eliminarEquipo(equipo_id: number) {
+    this.equipoEscogido = this.equipoEscogido.filter(equip => equip.id != equipo_id);
+    this.actualizarEquipos(this.equipos);
+  }
+
+  actualizarEquipos(equipos: any[] = []) {
+    equipos.forEach(equipo => {
+      equipo.guardado = this.equipoEscogido.some(usuarioEquipo => usuarioEquipo.id == equipo.id);
+    });
+  }
+
+  cancelarEquipo() {
+    this.mostrarEquipos = false;
+    this.buscadorEquipos('');
+    this.formularioEquipo.reset();
+  }
+
+  buscadorEquipos(equipo: string) {
+    if (equipo == null) {
+      equipo = '';
+    }
+    this.cargaEquipos = true;
+    this.servizo.buscadorEquipos(equipo).subscribe({
+      next: (response) => {
+        this.equipos = response.equipos;
+        /* console.log(response); */
+        this.actualizarEquipos(this.equipos);
+        /* this.actualizarEquipos(this.equipos); */
+        this.cargaEquipos = false;
+      },
+      error: (erro) => {
+        this.cargaEquipos = false;
+
+        //console.error('Error en el filtro de publicaciones', erro);
+        if (erro.status == 404) {
+          this.mensajeError = erro.error;
+        }
+      }
+    })
 
   }
 
@@ -78,19 +157,22 @@ export class SubirArchivoComponent implements OnInit {
     this.servizo.recibirFirma().subscribe((firma: any) => {
       this.servizo.subirVideo(this.archivoSelect!, firma).subscribe({
         next: (data: any) => {
+          /* Guarda en un array los ids de los equipos */
+          const equiposIds = this.equipoEscogido.map(equipo => equipo.id);
           const publicacionMultimedia = {
             ...publicacion,
             imagen: data.secure_url,
             public_id: data.public_id,
             bytes: data.bytes,
             resource_type: data.resource_type,
+            equipos: equiposIds,
           };
 
           this.servizo.engadirPublicacion(publicacionMultimedia).subscribe({
             next: (publicacion) => {
               this.formularioPublicacion.reset();
               this.loading = false;
-              this.router.navigate(['/publicacion', publicacion.id]);
+              this.router.navigate(['/publicacion', publicacion.id, publicacion.slug]);
             },
             error: (erro) => {
               //console.error('Error al subir la publicacion', erro);
@@ -115,6 +197,8 @@ export class SubirArchivoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mostrarListaEquipos();
+    this.actualizarEquipos(this.equipos);
     this.servizo.actualizarMeta(
       'Subir publicación | Cosmyo',
       'Nueva publicación'

@@ -93,11 +93,16 @@ h3{
     /* Muestra la línea completa al hacer hover */
 }
 
+.content-linkedin{
+    display: flex;
+    flex-direction: column;
+}
+
 /* Contenedor para íconos de redes sociales */
 .redes-sociales {
     display: flex;
     justify-content: center;
-    /* Centra horizontalmente */
+    align-items: flex-start;
     gap: 10px;
     margin-top: 10px;
 }
@@ -110,7 +115,6 @@ h3{
     color: white;
     text-decoration: none;
 }
-
 
 /* Estilo de la franja inferior con derechos de autor */
 .copy {
@@ -126,9 +130,6 @@ h3{
     /* Línea superior sutil */
 }
 
-/* ===== RESPONSIVE ===== */
-
-/* Tablets */
 @media (max-width: 992px) {
     .contenedor {
         justify-content: space-between;

@@ -1,3 +1,65 @@
+<ng-container *ngIf="mostrarEquipos">
+    <div class="modal-overlay-equipos">
+
+        <div class="modal-box-equipos">
+
+            <div class="modal-header">
+                <h3>Agregar equipos</h3>
+                <p>Busca y añade equipos a tu publicación</p>
+            </div>
+            <form [formGroup]="formularioEquipo">
+                <div class="field">
+                    <div class="control has-icons-left">
+                        <input class="input buscador-equipo" formControlName="modelo" type="text"
+                            placeholder="Buscar cámara, telescopio, montura..." />
+
+                        <span class="icon is-left">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <button (click)="buscadorEquipos(formularioEquipo.get('modelo')?.value)">Buscar</button>
+            </form>
+            <ng-template #listaEquipos>
+                <div class="equipos-lista">
+                    <ng-container *ngFor="let equipo of equipos">
+                        <div class="equipo-card mt-1">
+                            <div class="equipo-info">
+                                <span class="equipo-nombre">
+                                    {{ equipo.marca }} {{ equipo.modelo }}
+                                </span>
+
+                                <span class="tag is-info is-light">
+                                    {{ equipo.tipos.nombre }}
+                                </span>
+                            </div>
+
+                            <button [disabled]="equipo.guardado" [class.button-anadido]="equipo.guardado"
+                                id="guardar-equipo" (click)="guardarEquipos(equipo)">
+                                {{ equipo.guardado ? 'Añadido' : 'Añadir' }}
+                            </button>
+                        </div>
+                    </ng-container>
+
+                </div>
+
+                <div class="modal-actions-equipos">
+                    <button class="button is-light" (click)="cancelarEquipo()">
+                        Listo
+                    </button>
+                </div>
+            </ng-template>
+            <ng-container *ngIf="cargaEquipos; else listaEquipos">
+                <div class="loading-container">
+                    <div class="loader"></div>
+                </div>
+            </ng-container>
+
+        </div>
+
+    </div>
+</ng-container>
 <div class="contenido">
     <!-- Formulario para subir archivos -->
 
@@ -28,6 +90,38 @@
                 class="erro">
                 Debes indicar el titulo
             </div>
+
+            <div class="equipo_info">
+                <div class="d-flex align-items-center gap-2">
+                    <label id="equipo">Equipo</label>
+                    <span class="text-white-50 small fst-italic" style="font-size: 0.8rem;">
+                        (Opcional)
+                    </span>
+                </div>
+                <button type="button" class="button is-small is-dark" title="Nuevo equipo" (click)="listarEquipos()">
+                    <i class="bi bi-plus-circle"></i>
+                </button>
+            </div>
+
+            <div class="equipos-tags" *ngIf="equipoEscogido.length > 0">
+                <div class="equipo-tag" *ngFor="let equipo of equipoEscogido">
+                    <button type="button" class="btn-eliminar-equipo" title="Eliminar equipo"
+                        (click)="eliminarEquipo(equipo.id)"><i class="bi bi-dash-circle eliminar-equipo"></i></button>
+                    <div class="equipo-info">
+                        <span class="equipo-nombre">
+                            {{ equipo.marca }} {{ equipo.modelo }}
+                        </span>
+
+                        <span class="tag is-info is-light">
+                            {{ equipo.tipos.nombre }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- <div *ngIf="formularioPublicacion.get('equipo')?.touched && formularioPublicacion.get('equipo')?.invalid"
+                class="erro">
+                Debes añadir al menos el equipo
+            </div> -->
 
             <!-- Campo para ingresar la descripción del archivo -->
             <div id="descripcion_info">

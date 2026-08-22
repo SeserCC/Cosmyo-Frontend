@@ -298,6 +298,10 @@ export class ServizoLoginService {
     return this.cliente.get<any>(this.apiBackend + '/publicaciones/' + id);
   }
 
+  forosUsuario(id: number) {
+    return this.cliente.get<any>(this.apiBackend + '/foros/' + id);
+  }
+
   publicacionesRelacionadas(user_id: number, publicacion_id: number) {
     return this.cliente.get<any>(this.apiBackend + '/usuario/' + user_id + '/publicaciones-relacionadas/' + publicacion_id);
   }
@@ -405,9 +409,51 @@ export class ServizoLoginService {
     return this.cliente.get<any>(this.apiBackend + '/mesActual');
   }
 
-  /*
-  subscribirseComentario$(): Observable<Comentario[]> {
-    return this.comentarios$.asObservable();
-  } */
+  mostrarTipos() {
+    return this.cliente.get<any>(this.apiBackend + '/tipo');
+  }
 
+  engadirTipo(body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/tipo', body);
+  }
+
+  modificarTipo(id: number, body: any) {
+    return this.cliente.put<any>(this.apiBackend + '/tipo/' + id, body);
+  }
+
+  eliminarTipo(id: number) {
+    return this.cliente.delete<any>(this.apiBackend + '/tipo/' + id);
+  }
+
+  mostrarEquipos() {
+    return this.cliente.get<any>(this.apiBackend + '/equipo');
+  }
+
+  engadirEquipo(body: any) {
+    return this.cliente.post<any>(this.apiBackend + '/equipo', body);
+  }
+
+  modificarEquipo(id: number, body: any) {
+    return this.cliente.put<any>(this.apiBackend + '/equipo/' + id, body);
+  }
+
+  eliminarEquipo(id: number) {
+    return this.cliente.delete<any>(this.apiBackend + '/equipo/' + id);
+  }
+
+  eliminarEquipoUsuario(user_id: number, equipo_id: number) {
+    return this.cliente.delete<any>(this.apiBackend + '/eliminarEquipoUsuario/' + user_id + '/' + equipo_id);
+  }
+
+  guardarEquipoUsuario(user_id: number, equipo_id: number) {
+    return this.cliente.get<any>(this.apiBackend + '/guardarEquipo/' + user_id + '/' + equipo_id);
+  }
+
+  buscadorEquipos(equipo: string) {
+    return this.cliente.get<any>(this.apiBackend + '/buscadorEquipos?modelo=' + equipo);
+  }
+
+  equiposUsuario(user_id: number) {
+    return this.cliente.get<any>(this.apiBackend + '/equipoUsuario/' + user_id);
+  }
 }

@@ -79,7 +79,125 @@ a {
     transform: scale(1.1);
 }
 
+#guardar-equipo {
+    background: linear-gradient(90deg, #1a237e, #0d47a1);
+    padding: .6rem 1.4rem;
+    border-radius: 12px;
+    color: #fff;
+    transition: all .25s ease;
+}
+
+#guardar-equipo:hover {
+    transform: scale(1.1);
+}
+
+#guardar-equipo:disabled {
+    transform: scale(1);
+}
+
+.modal-overlay-equipos {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+}
+
+.modal-box-equipos {
+    width: 90%;
+    max-width: auto;
+    max-height: auto;
+    background: #1e1e1e;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .4);
+}
+
+.modal-header {
+    margin-bottom: 1rem;
+}
+
+.modal-header h3 {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.modal-header p {
+    color: #bdbdbd;
+    font-size: .9rem;
+}
+
+.buscador-equipo {
+    background: #2a2a2a;
+    border: 1px solid #404040;
+    color: white;
+}
+
+.buscador-equipo::placeholder {
+    color: #9a9a9a;
+}
+
+.equipos-lista {
+    margin-top: 1rem;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.equipo-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2a2a2a;
+    border: 1px solid #3d3d3d;
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.75rem;
+    transition: all .2s ease;
+}
+
+.equipo-card:hover {
+    border-color: #4a90e2;
+    transform: translateY(-2px);
+}
+
+.equipo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.equipo-nombre {
+    color: white;
+    font-weight: 600;
+}
+
+.modal-actions-equipos {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.button-anadido {
+    background: #3d3d3d !important;
+    color: #bdbdbd !important;
+    border: 1px solid #5a5a5a !important;
+    cursor: not-allowed !important;
+    opacity: 1 !important;
+}
+
+.button-anadido:hover {
+    background: #3d3d3d !important;
+    color: #bdbdbd !important;
+    transform: none;
+}
+
 /* Aplica estilos tanto al contenedor del título como al de la descripción */
+.equipo_info,
 .titulo_info,
 #descripcion_info,
 .zona_geografica_info,
@@ -97,24 +215,33 @@ a {
     animation: fadeInUp 1s ease forwards;
 }
 
+.equipo_info {
+    width: 10%;
+}
+
 .titulo_info {
     margin-top: 20px;
     animation-delay: 0.4s;
 }
 
-#descripcion_info {
-    animation-delay: 0.4s;
-}
-
-.zona_geografica_info {
+.equipo_info {
     animation-delay: 0.8s;
 }
 
-.descripcion_archivo {
+#descripcion_info {
     animation-delay: 1s;
 }
 
+.zona_geografica_info {
+    animation-delay: 1.2s;
+}
+
+.descripcion_archivo {
+    animation-delay: 1.4s;
+}
+
 /* Estilo para el texto del título y la descripción */
+#equipo,
 #texto_titulo,
 #texto_descripcion,
 #texto_zona_geografica {
@@ -169,11 +296,72 @@ a {
 
 label>.fa-solid.fa-upload {
     font-size: 35px;
-    /* Tamaño grande para destacar el ícono */
 }
 
 #seleccionar_archivo {
     display: none;
+}
+
+.equipos-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 15px;
+}
+
+.equipo-tag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #2b2b2b;
+    border: 1px solid #444;
+    padding: 8px 14px;
+    transition: all .2s ease;
+}
+
+.eliminar-equipo {
+    font-size: 1rem;
+    color: #ff4d4f;
+    transition: transform .2s, color .2s;
+}
+
+.eliminar-equipo:hover {
+    color: #ff7875;
+    transform: scale(1.15);
+}
+
+.btn-eliminar-equipo {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: opacity .2s ease,
+        visibility .2s ease,
+        transform .2s ease;
+
+}
+
+.equipo-tag:hover .btn-eliminar-equipo {
+    border-color: #3273dc;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-1px);
 }
 
 /* 🔄 Spinner */
@@ -243,7 +431,8 @@ label>.fa-solid.fa-upload {
     word-break: break-all;
 }
 
-button {
+/* Cambiar esto */
+#enlace_subir_archivo {
     border: none;
     /* Fondo oscuro */
     font-size: 16px;
@@ -276,15 +465,20 @@ a>button>.fa-solid.fa-upload {
 }
 
 /* Estilo de hover para los botones */
-button:hover {
+#enlace_subir_archivo:hover {
     filter: brightness(0.85);
     transform: translateY(20px) scale(1.6);
 }
 
-button:disabled {
-  opacity: 0.5 !important;
-  cursor: not-allowed !important;
-  filter: brightness(1) !important;
+#guardar-equipo {
+    opacity: 1;
+    animation: none;
+}
+
+#enlace_subir_archivo:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    filter: brightness(1) !important;
 }
 
 .erro {
