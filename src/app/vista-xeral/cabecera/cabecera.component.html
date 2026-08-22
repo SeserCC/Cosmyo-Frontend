@@ -37,82 +37,71 @@
                 </li>
             </ul>
 
-            <ng-container>
-                <ul class="nav-item ms-auto">
-                    <a class="nav-link dropdown-toggle d-flex align-items-center" role="button"
-                        data-bs-toggle="dropdown">
+            <ul class="nav-item ms-auto d-flex align-items-center">
+                <ng-container *ngIf="usuarioActual">
+                    <a title="Subir publicación" class="nav-link me-2 mr-5" [routerLink]="['/subirArchivo']"><i
+                            class="bi bi-upload" style="color: white; font-size: 1.2rem;"></i></a>
+                </ng-container>
 
-                        <i class="bi bi-person"></i>
-                    </a>
+                <a class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown">
+                    <i title="Acceso al perfil" class="bi bi-person"></i>
+                </a>
 
-                    <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
+                <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
 
-                        <ng-container *ngIf="usuarioActual">
+                    <ng-container *ngIf="usuarioActual">
 
-                            <!-- Cabecera -->
-                            <li>
-                                <h6 class="dropdown-header custom-header">
-                                    {{usuarioActual?.name}}
-                                </h6>
-                            </li>
+                        <!-- Cabecera -->
+                        <li>
+                            <h6 class="dropdown-header custom-header">
+                                {{usuarioActual?.name}}
+                            </h6>
+                        </li>
 
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                            <li>
-                                <a class="dropdown-item"
-                                    [routerLink]="['/perfil', usuarioActual?.id, usuarioActual.slug]">
-                                    Perfil
-                                </a>
-                            </li>
+                        <li>
+                            <a class="dropdown-item" [routerLink]="['/perfil', usuarioActual?.id, usuarioActual.slug]">
+                                Perfil
+                            </a>
+                        </li>
 
-                            <li>
-                                <a class="dropdown-item" [routerLink]="['/publicaciones', usuarioActual?.id]">
-                                    Tus publicaciones
-                                </a>
-                            </li>
+                        <li *ngIf="usuarioActual.rol == 'admin'">
+                            <a class="dropdown-item admin-item" [routerLink]="['/administracion']">
+                                Administración
+                            </a>
+                        </li>
 
-                            <li>
-                                <a class="dropdown-item" [routerLink]="['/subirArchivo']">
-                                    Subir publicación
-                                </a>
-                            </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                            <li *ngIf="usuarioActual.rol == 'admin'">
-                                <a class="dropdown-item admin-item" [routerLink]="['/administracion']">
-                                    Administración
-                                </a>
-                            </li>
+                        <li>
+                            <button type="button" class="dropdown-item logout-btn" (click)="cerrarSesion()">
+                                Cerrar sesión
+                            </button>
+                        </li>
 
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                    </ng-container>
 
-                            <li>
-                                <button type="button" class="dropdown-item logout-btn" (click)="cerrarSesion()">
-                                    Cerrar sesión
-                                </button>
-                            </li>
+                    <ng-container *ngIf="!usuarioActual">
+                        <li>
+                            <a class="dropdown-item" [routerLink]="['/login']">
+                                Iniciar sesión
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" [routerLink]="['/registro']">
+                                Registrarse
+                            </a>
+                        </li>
+                    </ng-container>
 
-                        </ng-container>
-
-                        <ng-container *ngIf="!usuarioActual">
-                            <li>
-                                <a class="dropdown-item" [routerLink]="['/login']">
-                                    Iniciar sesión
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" [routerLink]="['/registro']">
-                                    Registrarse
-                                </a>
-                            </li>
-                        </ng-container>
-
-                    </ul>
                 </ul>
-            </ng-container>
+            </ul>
+
 
         </div>
     </div>

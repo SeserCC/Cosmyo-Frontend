@@ -21,6 +21,8 @@ export class AdministracionComponent implements OnInit {
   formularioCRUDComentario: FormGroup;
   formularioCRUDEvento: FormGroup;
   formularioCRUDPlan: FormGroup;
+  formularioCRUDTipo: FormGroup;
+  formularioCRUDEquipo: FormGroup;
   perfilCRUD: FormGroup;
   fotosComentarios = "http://localhost:8000/img/comentarios/";
   fotosPublicaciones = "http://localhost:8000/img/publicaciones/";
@@ -37,6 +39,8 @@ export class AdministracionComponent implements OnInit {
   publicaciones: any[];
   eventos: any[];
   planes: any[];
+  tipos: any[];
+  equipos: any[];
   perfilSeleccionar: any;
   gratuitoSeleccionar: any;
   premiumSeleccionar: any;
@@ -47,6 +51,8 @@ export class AdministracionComponent implements OnInit {
   publicacionSeleccionar: any;
   eventoSeleccionar: any;
   planSeleccionar: any;
+  tipoSeleccionar: any;
+  equipoSeleccionar: any;
   cambiar: boolean = false;
   gratuito: boolean = false;
   admin: boolean = false;
@@ -123,6 +129,16 @@ export class AdministracionComponent implements OnInit {
       tamano_maximo_archivo: new FormControl('', [Validators.required]), // Control para la insignia
       limite_publicacion: new FormControl('', [Validators.required]), // Control para la insignia
     });
+
+    this.formularioCRUDTipo = new FormGroup({
+      nombre: new FormControl('', [Validators.required])
+    });
+
+    this.formularioCRUDEquipo = new FormGroup({
+      marca: new FormControl('', [Validators.required]),
+      modelo: new FormControl('', [Validators.required]),
+      tipo_id: new FormControl('', [Validators.required])
+    });
   }
 
   archivoSeleccionado(event: any): void {
@@ -159,6 +175,7 @@ export class AdministracionComponent implements OnInit {
       descargas: 0,
       estado: '',
       foro_id: '',
+      tipo_id: '',
       insignia: ''
     });   // Reiniciamos el formulario
 
@@ -975,6 +992,169 @@ export class AdministracionComponent implements OnInit {
     }
   }
 
+  /* NUEVAS TABLAS */
+  mostrarTipos() {
+
+    this.servizo.mostrarTipos().subscribe({
+      next: (response) => {
+        this.tipos = response;
+      },
+      error: (err) => {
+        //console.error('❌ Error al mostrar los foros', err);
+        //Mensaje de error
+
+      }
+    })
+  }
+
+  //Funcion para añadir el foro llamando al servicio
+  engadirTipo() {
+    const nuevoTipo = {
+      nombre: this.formularioCRUDTipo.value.nombre,
+    }
+
+    this.servizo.engadirTipo(nuevoTipo).subscribe({
+      next: (tipo) => {
+        //Añadimos el tema mediante suscripcion
+        this.tipos.push(tipo);
+        this.formularioCRUDTipo.reset();
+      },
+      error: (erro) => {
+        //console.error('Error al añadir un foro:', erro);
+      }
+    });
+  }
+
+  // Método para editar un tipo
+  editarTipo(tipo: any) {
+    this.cambiar = true; // Activamos el modo edición
+    this.tipoSeleccionar = tipo; // Guardamos el tipo seleccionado
+    // Rellenamos el formulario con los datos del tipo
+    this.formularioCRUDTipo.patchValue({
+      nombre: tipo.nombre
+    });
+  }
+
+  // Método para guardar la modificación de un foro
+  modificarTipo() {
+    this.cambiar = false;
+
+    if (this.tipoSeleccionar) {
+      // Actualizamos el tema del foro
+      this.tipoSeleccionar.nombre = this.formularioCRUDTipo.get('nombre')?.value;
+
+      // Llamamos al servicio para modificar
+      this.servizo.modificarTipo(this.tipoSeleccionar.id, this.tipoSeleccionar).subscribe({
+        next: () => {
+          this.formularioCRUDTipo.reset(); // Limpiamos el formulario
+        },
+        error: (erro) => {
+          //console.error("Error en el modificar del foro", erro)
+        }
+      });
+    }
+  }
+
+  // Método para eliminar un foro por su ID
+  eliminarTipo(id: number) {
+    this.servizo.eliminarTipo(id).subscribe({
+      next: () => {
+        // Eliminamos el foro del array local
+        this.tipos = this.tipos.filter(tipo => tipo.id !== id);
+      },
+      error: (erro) => {
+        //console.error('Error al eliminar el foro', erro)
+
+      }
+    });
+  }
+
+  mostrarEquipos() {
+
+    this.servizo.mostrarEquipos().subscribe({
+      next: (response) => {
+        this.equipos = response;
+      },
+      error: (err) => {
+        //console.error('❌ Error al mostrar los equipos', err);
+        //Mensaje de error
+
+      }
+    })
+  }
+
+  //Funcion para añadir el equipo llamando al servicio
+  engadirEquipo() {
+    const nuevoEquipo = {
+      marca: this.formularioCRUDEquipo.value.marca,
+      modelo: this.formularioCRUDEquipo.value.modelo,
+      tipo_id: this.formularioCRUDEquipo.value.tipo_id,
+    }
+
+    this.servizo.engadirEquipo(nuevoEquipo).subscribe({
+      next: (equipo) => {
+        //Añadimos el tema mediante suscripcion
+        this.equipos.push(equipo);
+        this.formularioCRUDEquipo.reset({
+          tipo_id: ''
+        });
+      },
+      error: (erro) => {
+        //console.error('Error al añadir un equipo:', erro);
+      }
+    });
+  }
+
+  // Método para editar un equipo
+  editarEquipo(equipo: any) {
+    this.cambiar = true; // Activamos el modo edición
+    this.equipoSeleccionar = equipo; // Guardamos el equipo seleccionado
+    // Rellenamos el formulario con los datos del equipo
+    this.formularioCRUDEquipo.patchValue({
+      marca: equipo.marca,
+      modelo: equipo.modelo,
+      tipo_id: equipo.tipo_id
+    });
+  }
+
+  // Método para guardar la modificación de un equipo
+  modificarEquipo() {
+    this.cambiar = false;
+
+    if (this.equipoSeleccionar) {
+
+      this.equipoSeleccionar.marca = this.formularioCRUDEquipo.get('marca')?.value;
+      this.equipoSeleccionar.modelo = this.formularioCRUDEquipo.get('modelo')?.value;
+      this.equipoSeleccionar.tipo_id = this.formularioCRUDEquipo.get('tipo_id')?.value;
+
+      // Llamamos al servicio para modificar
+      this.servizo.modificarEquipo(this.equipoSeleccionar.id, this.equipoSeleccionar).subscribe({
+        next: () => {
+          this.formularioCRUDEquipo.reset({
+            tipo_id: ''
+          }); // Limpiamos el formulario
+        },
+        error: (erro) => {
+          //console.error("Error en el modificar del equipo", erro)
+        }
+      });
+    }
+  }
+
+  // Método para eliminar un equipo por su ID
+  eliminarEquipo(id: number) {
+    this.servizo.eliminarEquipo(id).subscribe({
+      next: () => {
+        // Eliminamos el equipo del array local
+        this.equipos = this.equipos.filter(equipo => equipo.id !== id);
+      },
+      error: (erro) => {
+        //console.error('Error al eliminar el equipo', erro)
+
+      }
+    });
+  }
+
   // Método ejecutado al iniciar el componente, carga todos los datos desde el servicio
   ngOnInit(): void {
     if (isPlatformBrowser(this.platform_id)) {
@@ -1019,6 +1199,10 @@ export class AdministracionComponent implements OnInit {
         this.mostrarPremiums();
 
         this.mostrarGratuitos();
+
+        this.mostrarTipos();
+
+        this.mostrarEquipos();
 
       }
     }

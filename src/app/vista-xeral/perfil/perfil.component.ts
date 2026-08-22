@@ -1,33 +1,53 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ServizoLoginService } from '../../servizo-login.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { switchMap, tap } from 'rxjs';
+import { forkJoin, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
 export class PerfilComponent implements OnInit {
   perfil: any;
   plan: any;
+  foros: any;
   valor_insignia: any;
   perfilSeleccionar: any;
+  user_id: number;
+  publicaciones: any[];
+  publicacionSeleccionar: any;
+  equipoSeleccionar: any;
   planSeleccionar: any;
+  mostrarInfo: boolean;
+  mostrarEquipos: 'perfil' | 'publicacion' | null = null;
+  tipoEliminacion: 'equipo' | 'publicacion' | null = null;
+  equipos: any[];
+  equiposOriginales: any[] = [];
+  equiposOriginalesPub: any[] = [];
+  equipoEscogido: any[] = [];
+  equiposUsuario: any[];
   usuarios: any[];
   mostrarMensajeConfirmacion: boolean = false;
+  mostrarConfiguracion: boolean = false;
   perfilCRUD: FormGroup;
+  publicacionCRUD: FormGroup;
   userCRUD: FormGroup;
   planCRUD: FormGroup;
+  equipoCRUD: FormGroup;
   desactivar: boolean;
   cambiar: boolean;
   premium: boolean;
+  menuAbierto: number | null = null;
+  mostrarMas: number | null;
+  mensajeEquipos: any;
   mensajeError: any;
+  cambiarPublicacion: boolean;
   cambiarPlan: boolean;
   cambiarUsuario: boolean;
   perfilFoto = "http://localhost:8000/img/perfiles/";
@@ -35,6 +55,7 @@ export class PerfilComponent implements OnInit {
   mostrarActual: string = 'password';
   mostrarContrasinal: string = 'password';
   carga: boolean = true;
+  cargaEquipos: boolean;
   mostrarConfirmacion: string = 'password';
   loading = false;
 
@@ -43,8 +64,6 @@ export class PerfilComponent implements OnInit {
   constructor(private servizo: ServizoLoginService, private router: ActivatedRoute, private routerR: Router, @Inject(PLATFORM_ID) private platformId: Object) {
     this.perfilCRUD = new FormGroup({
       telefono: new FormControl('', [Validators.minLength(9)]),
-      red_social_principal: new FormControl(''),
-      usuario_red_social: new FormControl(''),
       pais: new FormControl('', [Validators.required]),
       biografia: new FormControl('', [Validators.required]),
     });
@@ -62,6 +81,357 @@ export class PerfilComponent implements OnInit {
       contrasena_confirmacion: new FormControl(''),
     });
 
+    this.publicacionCRUD = new FormGroup({
+      titulo: new FormControl('', [Validators.required, Validators.maxLength(124)]),      // Campo obligatorio para el título
+      descripcion: new FormControl('', [Validators.required]),  // Campo obligatorio para la descripción
+      zona_geografica: new FormControl('', [Validators.required, Validators.maxLength(79)])
+    });
+
+
+    this.equipoCRUD = new FormGroup({
+      modelo: new FormControl(''),
+    });
+
+  }
+
+  toggleMenu(id: number) {
+    this.menuAbierto = this.menuAbierto === id ? null : id;
+  }
+
+  listarEquipos() {
+    this.mostrarEquipos = 'perfil';
+    this.actualizarEquipos(this.equipos);
+  }
+
+  listarEquiposPub() {
+    this.mostrarEquipos = 'publicacion';
+  }
+
+  reducirInfo(id: number) {
+    if (this.mostrarMas == id) {
+      this.mostrarMas = null
+    } else {
+      this.mostrarMas = id;
+    }
+
+  }
+
+  seleccionarEquipo(equipo: any) {
+    if (this.mostrarEquipos == 'perfil') {
+      this.guardarEquipos(equipo.id);
+
+    } else if (this.mostrarEquipos == 'publicacion') {
+      this.guardarEquiposPub(equipo);
+    }
+
+  }
+
+  guardarEquiposPub(equipo: any) {
+    this.publicacionSeleccionar.equipos.push(equipo);
+    this.equipoEscogido = this.publicacionSeleccionar.equipos;
+    this.actualizarEquipos(this.equipos);
+    /* const equiposIds = this.publicacionSeleccionar.equipos.map((equipo: any) => equipo.id); */
+  }
+
+  eliminarEquipoPub(equipo_id: number) {
+    this.publicacionSeleccionar.equipos = this.publicacionSeleccionar.equipos.filter((equip: any) => equip.id != equipo_id);
+    this.equipoEscogido = this.publicacionSeleccionar.equipos;
+    this.actualizarEquipos(this.equipos);
+    /* const equiposIds = this.publicacionSeleccionar.equipos.map((equipo: any) => equipo.id); */
+  }
+
+  actualizarEquipos(equipos: any[]) {
+    /* console.log(this.mostrarEquipos); */
+    /* Bucle para recorrer los equipos y devolver true si encuentra relacion */
+    equipos.forEach(equipo => {
+      const listarEquipos = this.mostrarEquipos == 'perfil' ? this.equiposUsuario : this.equipoEscogido;
+
+      equipo.guardado = listarEquipos.some(equipoLista => equipoLista.id == equipo.id);
+    });
+  }
+
+  buscadorEquipos(equipo: string) {
+    this.mensajeEquipos = null;
+    if (equipo == null) {
+      equipo = '';
+    }
+    this.cargaEquipos = true;
+    this.servizo.buscadorEquipos(equipo).subscribe({
+      next: (response) => {
+        this.equipos = response.equipos;
+
+        this.actualizarEquipos(this.equipos);
+        this.cargaEquipos = false;
+      },
+      error: (erro) => {
+        this.cargaEquipos = false;
+
+        //console.error('Error en el filtro de publicaciones', erro);
+        if (erro.status == 404) {
+          this.mensajeEquipos = erro.error.message;
+        }
+      }
+    })
+
+  }
+
+  guardarEquipos(equipo_id: number) {
+    this.carga = true;
+    this.servizo.guardarEquipoUsuario(this.user_id, equipo_id).subscribe({
+      next: (equipo) => {
+        const equipoActualizado = this.equipos.find(e => e.id == equipo_id);
+
+        if (equipoActualizado) {
+          this.equiposUsuario.push(equipo);
+        }
+        this.actualizarEquipos(this.equipos);
+        this.actualizarEquipos(this.equiposOriginales);
+
+        this.carga = false;
+      },
+      error: (erro) => {
+        /* console.error('Error al añadir el equipo', erro); */
+        this.mostrarEquipos = null;
+        this.carga = false;
+
+      }
+    })
+  }
+
+  mensajeEliminacionEquipo(equipo: any) {
+    this.tipoEliminacion = 'equipo';
+    this.equipoSeleccionar = equipo;
+  }
+
+  mensajeEliminacionPub(publicacion: any) {
+    this.tipoEliminacion = 'publicacion';
+    this.publicacionSeleccionar = publicacion;
+  }
+
+  confirmarEliminacion() {
+
+    if (this.tipoEliminacion == 'equipo') {
+      this.eliminarEquipo();
+    }
+
+    if (this.tipoEliminacion == 'publicacion') {
+      this.eliminarPublicacion(this.publicacionSeleccionar.id);
+    }
+
+  }
+
+  eliminarEquipo() {
+    this.tipoEliminacion = null;
+    this.carga = true;
+    let equipo_id = Number(this.equipoSeleccionar.id);
+    this.servizo.eliminarEquipoUsuario(this.user_id, equipo_id).subscribe({
+      next: (response) => {
+        const equipoActualizado = this.equipos.find(e => e.id == equipo_id);
+
+        if (equipoActualizado) {
+          this.equiposUsuario = this.equiposUsuario.filter(equip => equip.id !== equipo_id);
+        }
+        this.actualizarEquipos(this.equipos);
+
+        this.actualizarEquipos(this.equiposOriginales);
+
+        this.carga = false;
+      },
+      error: (erro) => {
+        /* console.error('Error en la eliminación del equipo', erro); */
+        this.carga = false;
+
+      }
+    }
+    )
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onkeyDown(event: KeyboardEvent) {
+    if (event.key == 'Escape') {
+      this.menuAbierto = null;
+      this.mostrarConfiguracion = false;
+      /* this.confirmacionEliminacionEquipo = false; */
+      this.mostrarEquipos = null;
+
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    let target = event.target as HTMLElement;
+
+    if (!target.closest('.menu_opciones')) {
+      this.menuAbierto = null;
+    }
+
+    if (!target.closest('.menu-configuracion')) {
+      this.mostrarConfiguracion = false;
+
+    }
+  }
+  // Método para iniciar la edición de una publicación
+  editarPublicacion(publicacion: any) {
+    /* this.mostrarEquipos = 'publicacion'; */
+    this.mensajeError = null;
+    this.mensajeEquipos = null;
+    this.cambiarPublicacion = true;     // Cambiamos estado para mostrar el formulario o la UI de edición      
+
+    setTimeout(() => {
+      document.querySelector('.datos-publicacion')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    });
+
+    this.publicacionSeleccionar = publicacion;  // Guardamos la publicación a editar
+
+    this.equiposOriginalesPub = [...publicacion.equipos];
+
+    const pub = this.publicaciones.find(publicacion => publicacion.id == this.publicacionSeleccionar.id);
+    this.equipoEscogido = pub.equipos ?? [];
+
+    /* equipo.guardado = listarEquipos.some(equipoLista => equipoLista.id == equipo.id); */
+    this.actualizarEquipos(this.equipos);
+
+    // Rellenamos el formulario con los valores actuales de la publicación
+    this.publicacionCRUD.patchValue({
+      titulo: publicacion.titulo,
+      descripcion: publicacion.descripcion,
+      zona_geografica: publicacion.zona_geografica == "undefined" ? '' : publicacion.zona_geografica,
+    });
+
+    this.archivoSelect = null;
+
+  }
+
+  // Método para modificar una publicación existente
+  modificarPublicacion() {
+    this.carga = true;
+    /* Guarda en un array los ids de los equipos */
+
+    const equiposIds = this.publicacionSeleccionar.equipos.map((equipo: any) => equipo.id);
+
+    if (this.publicacionSeleccionar) {
+      let video = this.archivoSelect;
+
+      this.publicacionSeleccionar.titulo = this.publicacionCRUD.get('titulo')?.value;
+      this.publicacionSeleccionar.descripcion = this.publicacionCRUD.get('descripcion')?.value;
+      this.publicacionSeleccionar.zona_geografica = this.publicacionCRUD.get('zona_geografica')?.value;
+      this.publicacionSeleccionar.equipos = equiposIds;
+
+      if (video) {
+        this.servizo.recibirFirma().subscribe((firma: any) => {
+          this.servizo.subirVideo(video, firma).subscribe({
+            next: (data: any) => {
+
+              const publicacionMultimedia = {
+                ...this.publicacionSeleccionar,
+                imagen: data.secure_url,
+                public_id: data.public_id,
+                bytes: data.bytes,
+                resource_type: data.resource_type,
+              };
+
+              this.servizo.modificarPublicacion(this.publicacionSeleccionar.id, publicacionMultimedia).subscribe({
+                next: (response) => {
+                  this.routerR.navigate(['/publicacion', response.slug], {
+                    state: {
+                      mensaje: 'Publicación actualizada correctamente'
+                    }
+                  });
+                  /* console.log(response) */
+                  this.publicacionSeleccionar.titulo = this.publicacionCRUD.get('titulo')?.value;
+                  this.publicacionSeleccionar.descripcion = this.publicacionCRUD.get('descripcion')?.value;
+                  this.publicacionSeleccionar.zona_geografica = this.publicacionCRUD.get('zona_geografica')?.value;
+                  this.publicacionSeleccionar.imagen = response.imagen;
+                  this.publicacionSeleccionar.public_id = response.public_id;
+                  this.publicacionSeleccionar.equipos = response.equipos;
+                  this.publicacionCRUD.reset();
+                  this.cambiarPublicacion = false;
+                  this.carga = false;
+                },
+                error: (erro) => {
+                  //console.error("Error al modificar la publicacion", erro)
+                  this.carga = false;
+                  if (erro.status == 422) {
+                    this.mensajeError = erro.error.message;
+                  }
+
+                }
+
+              });
+            },
+            error: (erro) => {
+              /* console.error(erro); */
+              if (erro.status == 400 || erro.status == 413) {
+                this.mensajeError = 'El archivo supera el tamaño máximo permitido.';
+              }
+              this.archivoSelect = null;
+              this.carga = false;
+            }
+          })
+        })
+
+      } else {
+        this.servizo.modificarPublicacion(this.publicacionSeleccionar.id, this.publicacionSeleccionar).subscribe({
+          next: (response) => {
+            /* console.log(response) */
+            this.routerR.navigate(['/publicacion', response.id, response.slug], {
+              state: {
+                mensaje: 'Publicación actualizada correctamente'
+              }
+            });
+            this.publicacionSeleccionar.imagen = response.imagen;
+            this.publicacionSeleccionar.public_id = response.public_id;
+            this.publicacionSeleccionar.equipos = response.equipos;
+            this.publicacionCRUD.reset();
+            this.archivoSelect = null;
+            this.cambiarPublicacion = false;
+            this.carga = false;
+            /* MENSAJE DE QUE LA PUBLICACION FUE EDITADA CORRECTAMENTE */
+          },
+          error: (erro) => {
+            //console.error("Error al modificar la publicacion", erro)
+            this.carga = false;
+            this.archivoSelect = null;
+            if (erro.status == 422) {
+              this.mensajeError = erro.error;
+            }
+          }
+
+        });
+      }
+
+    }
+  }
+
+  // Método para eliminar una publicación por su ID
+  eliminarPublicacion(id: number) {
+    this.tipoEliminacion = null;
+    this.carga = true;
+    this.servizo.eliminarPublicacion(id).subscribe({
+      next: () => {
+        // Eliminamos el foro del array local
+        this.publicaciones = this.publicaciones.filter(publicacion => publicacion.id !== id);
+        this.carga = false;
+
+      },
+      error: (erro) => {
+
+        this.carga = false;
+        //console.error(erro)
+
+      }
+    });
+  }
+
+  mostrarDatos() {
+    this.mostrarInfo = !this.mostrarInfo;
+    this.cambiar = false;
+    this.cambiarPlan = false;
+    this.cambiarPublicacion = false;
+    this.cambiarUsuario = false;
   }
 
   mostrarPasswActual() {
@@ -166,13 +536,17 @@ export class PerfilComponent implements OnInit {
     this.cambiarPlan = false;
     this.cambiarUsuario = false;// Activamos el modo edición
     this.perfilSeleccionar = this.perfil;
-    /* console.log(this.perfilSeleccionar); */
+
+    setTimeout(() => {
+      document.getElementById('editar-perfil')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    });
 
     this.perfilCRUD.patchValue({
       telefono: this.perfil.telefono,
-      red_social_principal: this.perfil.red_social_principal,
       biografia: this.perfil.biografia,
-      usuario_red_social: this.perfil.usuario_red_social,
       pais: this.perfil.pais,
     });
   }
@@ -181,7 +555,12 @@ export class PerfilComponent implements OnInit {
     this.cambiarUsuario = true;// Activamos el modo edición
     this.cambiarPlan = false
     this.cambiar = false
-    //(this.perfilSeleccionar) // Guardamos el foro seleccionado
+    setTimeout(() => {
+      document.getElementById('editar-usuario')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    });
     // Rellenamos el formulario con los datos del foro
     this.userCRUD.patchValue({
       nombre: this.usuarioActual.name,
@@ -193,7 +572,12 @@ export class PerfilComponent implements OnInit {
     this.cambiarUsuario = false;// Activamos el modo edición
     this.cambiar = false;// Activamos el modo edición
     this.cambiarPlan = true; // Activamos el modo edición
-    //console.log(this.plan);
+    setTimeout(() => {
+      document.getElementById('editar-plan')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      })
+    });
     this.planCRUD.patchValue({
 
       tipo_pago: this.plan.tipo_pago ?? '',
@@ -212,8 +596,6 @@ export class PerfilComponent implements OnInit {
       let multimedia = this.archivoSelect;
 
       this.perfilSeleccionar.telefono = this.perfilCRUD.get('telefono')?.value;
-      this.perfilSeleccionar.red_social_principal = this.perfilCRUD.get('red_social_principal')?.value;
-      this.perfilSeleccionar.usuario_red_social = this.perfilCRUD.get('usuario_red_social')?.value;
       this.perfilSeleccionar.pais = this.perfilCRUD.get('pais')?.value;
       this.perfilSeleccionar.biografia = this.perfilCRUD.get('biografia')?.value;
 
@@ -235,8 +617,6 @@ export class PerfilComponent implements OnInit {
                   this.cambiar = false;
                   this.archivoSelect = null;
                   perfilMultimedia.telefono = this.perfilCRUD.get('telefono')?.value;
-                  perfilMultimedia.red_social_principal = this.perfilCRUD.get('red_social_principal')?.value ?? '';
-                  perfilMultimedia.usuario_red_social = this.perfilCRUD.get('usuario_red_social')?.value ?? '';
                   perfilMultimedia.pais = this.perfilCRUD.get('pais')?.value;
                   perfilMultimedia.biografia = this.perfilCRUD.get('biografia')?.value;
 
@@ -413,12 +793,33 @@ export class PerfilComponent implements OnInit {
   cancelar() {
     this.desactivar = false;
     this.cambiar = false;
+    this.cambiarPublicacion = false;
     this.cambiarPlan = false;
     this.cambiarUsuario = false;
     this.archivoSelect = null;
+    this.publicacionSeleccionar.equipos = [...this.equiposOriginalesPub];
+    this.equipoEscogido = [...this.equiposOriginalesPub];
+    this.actualizarEquipos(this.equipos);
     this.perfilCRUD.reset();
+    this.publicacionCRUD.reset();
     this.userCRUD.reset();
     this.planCRUD.reset();
+    setTimeout(() => {
+      document.querySelector('section.section')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    });
+  }
+
+  cancelarEquipo() {
+    this.tipoEliminacion = null;
+    this.mostrarEquipos = null;
+    this.equipos = [...this.equiposOriginales];
+    /* this.actualizarEquipos(this.equipos); */
+    /* LA LISTA DE EQUIPOS DEL USUARIO ESTÁ DESINCRONIZADO */
+    this.equipoCRUD.reset();
+    /* this.buscadorEquipos(''); */
   }
 
   ngOnInit(): void {
@@ -429,11 +830,26 @@ export class PerfilComponent implements OnInit {
 
       this.router.params.pipe(
 
-        switchMap(params => {
-          return this.servizo.mostrarPerfil(params['user_id']);
-        })
-      ).subscribe(perfil => {
+        switchMap(params =>
+          forkJoin({
+            publicaciones: this.servizo.publicacionesUsuario(params['user_id']),
+            foros: this.servizo.forosUsuario(params['user_id']),
+            perfil: this.servizo.mostrarPerfil(params['user_id']),
+            equipos: this.servizo.mostrarEquipos(),
+            equiposUsuario: this.servizo.equiposUsuario(params['user_id']),
+          })
+
+        )
+      ).subscribe(({ publicaciones, equipos, equiposUsuario, foros, perfil }) => {
+        this.publicaciones = publicaciones.publicaciones;
+        this.equiposOriginales = equipos;
+        this.equipos = [...equipos];
+        this.equiposUsuario = equiposUsuario;
+        this.actualizarEquipos(this.equipos);
+
+        this.foros = foros.foros;
         this.perfil = perfil;
+        this.user_id = Number(this.router.snapshot.paramMap.get('user_id'));
         this.servizo.actualizarMeta(
           perfil.user.name + ' | Cosmyo',
           'Perfil del usuario'
