@@ -79,11 +79,11 @@ export class PublicacionComponent implements OnInit {
 
     switch (event.key) {
       case 'ArrowLeft':
-        this.anteriorPublicacion();
+        this.siguientePublicacion();
         break;
 
       case 'ArrowRight':
-        this.siguientePublicacion();
+        this.anteriorPublicacion();
         break;
 
       case 'Escape':
