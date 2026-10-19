@@ -24,7 +24,7 @@
             <i class="bi bi-check-circle"></i>
             {{ mensaje }}
         </div>
-        
+
         <div class="columns is-multiline is-variable is-4 mt-3">
             <div *ngIf="!publicacion && !carga" class="column is-12">
                 <p class="mensaje-galeria-vacia has-text-centered has-text-grey-light">
@@ -36,8 +36,8 @@
                 <ng-container *ngIf="publicacion">
 
                     <div class="publicacion-wrapper">
-                        <button title="Anterior" [style.visibility]="anterior ? 'visible' : 'hidden'"
-                            (click)="anteriorPublicacion()" id="anterior-publicacion" class="nav-btn">
+                        <button title="Siguiente" [style.visibility]="siguiente ? 'visible' : 'hidden'"
+                            (click)="siguientePublicacion()" id="siguiente-publicacion" class="nav-btn">
                             <i class="bi bi-caret-left-fill"></i>
                         </button>
                         <!-- CONTENIDO -->
@@ -136,10 +136,12 @@
                             </ng-container>
 
                         </div>
-                        <button title="Siguiente" [style.visibility]="siguiente ? 'visible' : 'hidden'"
-                            (click)="siguientePublicacion()" id="siguiente-publicacion" class="nav-btn">
+
+                        <button title="Anterior" [style.visibility]="anterior ? 'visible' : 'hidden'"
+                            (click)="anteriorPublicacion()" id="anterior-publicacion" class="nav-btn">
                             <i class="bi bi-caret-right-fill"></i>
                         </button>
+                        <!-- LOS BOTONES ESTÁN MAL COLOCADOS -->
 
 
                     </div>
